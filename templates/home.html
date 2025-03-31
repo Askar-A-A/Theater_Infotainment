@@ -5,29 +5,31 @@
 {% block title %}TOSCA{% endblock %}
 
 {% block extra_css %}
-<!-- Add Font Awesome CDN -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
-    /* Main container */
+    /* Theater container styles */
     .theater-container {
-        background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9));
-        min-height: 100vh;
+        width: 1280px;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         padding: 20px;
+        position: relative;
+        height: 100%;
+        box-sizing: border-box;
     }
 
-    /* Header */
+    /* Opera header styles */
     .opera-header {
         text-align: center;
-        margin-bottom: 40px;
+        margin-bottom: 25px;
+        width: 100%;
+        max-width: 1160px;
     }
 
     .opera-title {
         font-size: 36px;
-        color: #d4af37; /* Gold color */
+        color: #d4af37;
         margin: 0;
         font-family: 'Playfair Display', serif;
     }
@@ -38,13 +40,55 @@
         margin-top: 10px;
     }
 
-    /* Menu Grid */
+    /* Main content layout */
+    .main-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 25px;
+        width: 100%;
+        max-width: 1160px;
+        padding-right: 60px;
+    }
+
+    /* Today's Performance section - Icon centered, text below */
+    .today-section {
+        background: rgba(0,0,0,0.7);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 10px;
+        padding: 30px 20px; /* Added more vertical padding */
+        height: auto;
+        display: flex;
+        flex-direction: column; /* Changed to column layout */
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .today-section:hover {
+        background: rgba(255,255,255,0.1);
+        transform: translateY(-5px);
+    }
+
+    .today-icon {
+        font-size: 6.0em; /* Increased for emphasis */
+        color: #d4af37;
+        margin-bottom: 15px; /* Changed from margin-right to margin-bottom */
+    }
+
+    .today-title {
+        font-size: 36px; /* Increased from 20px */
+        color: #fff;
+        margin: 0;
+        text-align: center; /* Changed from left to center */
+        font-weight: bold;
+    }
+
+    /* Menu Grid styles */
     .menu-grid {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 30px;
-        max-width: 800px;
-        width: 100%;
+        grid-template-rows: repeat(5, 1fr);
+        gap: 15px;
     }
 
     .menu-item {
@@ -55,6 +99,8 @@
         text-align: center;
         cursor: pointer;
         transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
     }
 
     .menu-item:hover {
@@ -63,54 +109,17 @@
     }
 
     .menu-icon {
-        font-size: 2.5em;
+        font-size: 2em;
         color: #d4af37;
-        margin-bottom: 15px;
+        margin-right: 15px;
+        min-width: 30px;
     }
 
     .menu-title {
         color: #fff;
         font-size: 20px;
         margin: 0;
-    }
-
-    /* Navigation Icons */
-    .nav-icons {
-        position: fixed;
-        right: 20px;
-        top: 50%;
-        transform: translateY(-50%);
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .nav-icon {
-        width: 40px;
-        height: 40px;
-        background: rgba(0,0,0,0.7);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: background 0.3s ease;
-    }
-
-    .nav-icon i {
-        color: #fff;
-        font-size: 1.2em;
-    }
-
-    .nav-icon:hover {
-        background: rgba(255,255,255,0.1);
-    }
-
-    /* Resolution adjustments */
-    @media screen and (height: 400px) {
-        .opera-title { font-size: 28px; }
-        .menu-grid { gap: 20px; }
-        .menu-item { padding: 15px; }
+        text-align: left;
     }
 </style>
 {% endblock %}
@@ -124,37 +133,35 @@
         </div>
     </div>
 
-    <div class="menu-grid">
-        <div class="menu-item">
-            <i class="fas fa-newspaper menu-icon"></i>
-            <h2 class="menu-title">News</h2>
+    <div class="main-content">
+        <!-- Today's Performance (icon centered, text below) -->
+        <div class="today-section">
+            <i class="fas fa-ticket-alt today-icon"></i>
+            <h2 class="today-title">Today's Performance</h2>
         </div>
-        <div class="menu-item">
-            <i class="fas fa-theater-masks menu-icon"></i>
-            <h2 class="menu-title">About us</h2>
-        </div>
-        <div class="menu-item">
-            <i class="fas fa-question-circle menu-icon"></i>
-            <h2 class="menu-title">Questions & Answers</h2>
-        </div>
-        <div class="menu-item">
-            <i class="fas fa-envelope menu-icon"></i>
-            <h2 class="menu-title">Newsletter</h2>
-        </div>
-    </div>
-
-    <div class="nav-icons">
-        <div class="nav-icon">
-            <i class="fas fa-home"></i>
-        </div>
-        <div class="nav-icon">
-            <i class="fas fa-cog"></i>
-        </div>
-        <div class="nav-icon">
-            <i class="fas fa-question"></i>
-        </div>
-        <div class="nav-icon">
-            <i class="fas fa-power-off"></i>
+        
+        <!-- Menu Items (Right column) -->
+        <div class="menu-grid">
+            <div class="menu-item">
+                <i class="fas fa-calendar-alt menu-icon"></i>
+                <h2 class="menu-title">Events & Season</h2>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-theater-masks menu-icon"></i>
+                <h2 class="menu-title">About us</h2>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-question-circle menu-icon"></i>
+                <h2 class="menu-title">Questions & Answers</h2>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-comments menu-icon"></i>
+                <h2 class="menu-title">Audience Feedback</h2>
+            </div>
+            <div class="menu-item">
+                <i class="fas fa-handshake menu-icon"></i>
+                <h2 class="menu-title">Sponsors & Advertising</h2>
+            </div>
         </div>
     </div>
 </div>

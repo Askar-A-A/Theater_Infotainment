@@ -3,7 +3,10 @@
 <html>
 <head>
     <title>{% block title %}Theater Display{% endblock title %}</title>
-    <meta name="viewport" content="width=1280, initial-scale=1">
+    <meta name="viewport" content="width=1280, height=800, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Add Playfair Display font for the navbar -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap">
     {% render_block "css" %}
     <style>
         /* Reset and base styles */
@@ -17,98 +20,103 @@
             margin: 0;
             padding: 0;
             width: 1280px;
-            min-height: 100vh;
-            background: linear-gradient(to bottom, #1a1a1a, #000);
+            height: 800px; /* Default height */
+            max-height: 100%;
             color: #fff;
             font-family: 'Arial', sans-serif;
             line-height: 1.6;
+            overflow: hidden;
         }
 
-        /* Header and Navigation */
-        .theater-header {
-            background: rgba(0, 0, 0, 0.9);
-            padding: 20px;
-            border-bottom: 1px solid #333;
-        }
-
-        .site-title {
-            font-size: 24px;
-            color: #fff;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .nav {
-            display: flex;
-            justify-content: center;
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .nav li {
-            margin: 0 15px;
-        }
-
-        .nav a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 18px;
-            padding: 10px 20px;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .nav a:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-        }
-
-        /* Main Content Area */
+        /* Define standard content wrapper */
         .content-wrapper {
-            padding: 40px;
-            max-width: 1200px;
-            margin: 0 auto;
+            width: 1280px;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9));
         }
 
-        /* Content Sections */
-        .content-section {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            padding: 30px;
-            margin-bottom: 30px;
+        /* Simple navbar that overlays at the top */
+        .navbar {
+            position: absolute;
+            top: 10px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            z-index: 10;
+            pointer-events: none; /* Allows clicking through to elements below */
+        }
+        
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 60px;
+            font-weight: 700;
+            color: #d4af37; /* Golden color */
+            text-decoration: none;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 3px;
+            pointer-events: auto; /* Re-enable pointer events just for the brand */
+        }
+        
+        .navbar-brand::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #d4af37; /* Golden underline */
         }
 
-        h1, h2, h3 {
+        /* Navigation Icons */
+        .nav-icons {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            z-index: 100;
+        }
+
+        .nav-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(0,0,0,0.7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .nav-icon i {
             color: #fff;
-            margin-bottom: 20px;
+            font-size: 1.2em;
         }
 
-        h1 { font-size: 36px; }
-        h2 { font-size: 28px; }
-        h3 { font-size: 24px; }
-
-        p {
-            margin-bottom: 15px;
-            font-size: 18px;
-            color: #ccc;
+        .nav-icon:hover {
+            background: rgba(31, 254, 1, 0.73);
         }
 
-        /* Resolution-specific adjustments */
+        /* Responsive adjustments */
         @media screen and (height: 400px) {
-            .content-wrapper {
-                padding: 20px;
-                max-height: 360px;
-                overflow-y: auto;
+            body { 
+                height: 400px;
+            }
+            
+            .navbar-brand {
+                font-size: 24px;
             }
         }
 
         @media screen and (height: 800px) {
-            .content-wrapper {
-                padding: 30px;
-                max-height: 760px;
-                overflow-y: auto;
+            body { 
+                height: 800px;
             }
         }
     </style>
@@ -116,16 +124,29 @@
 </head>
 <body>
     {% cms_toolbar %}
-    <header class="theater-header">
-        <h1 class="site-title">Theater Infotainment</h1>
-        <nav>
-            <ul class="nav">
-                {% show_menu 0 0 100 100 %}
-            </ul>
-        </nav>
-    </header>
     <div class="content-wrapper">
+        <!-- Simple overlay navbar -->
+        <div class="navbar">
+            <a href="/" class="navbar-brand">TOSCA</a>
+        </div>
+        
         {% block content %}{% endblock content %}
+        
+        <!-- Navigation Icons -->
+        <div class="nav-icons">
+            <div class="nav-icon">
+                <i class="fas fa-home"></i>
+            </div>
+            <div class="nav-icon">
+                <i class="fas fa-cog"></i>
+            </div>
+            <div class="nav-icon">
+                <i class="fas fa-question"></i>
+            </div>
+            <div class="nav-icon">
+                <i class="fas fa-power-off"></i>
+            </div>
+        </div>
     </div>
     {% render_block "js" %}
 </body>

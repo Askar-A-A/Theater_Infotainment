@@ -143,12 +143,9 @@ STATICFILES_DIRS = [
 
 # CMS settings
 CMS_TEMPLATES = [
-    ('home.html', 'Theater Home Page'),
-    ('events.html', 'Events Page'),
-    ('cast.html', 'Cast & Crew Page'),
-    ('feedback.html', 'Feedback Page'),
-    ('sponsors.html', 'Sponsors Page'),
-    ('about.html', 'About Page'),
+    ('base.html', 'Base Template'),
+    ('home.html', 'Home Template'),
+    ('about.html', 'About Us Template'),
 ]
 
 SITE_ID = 1
@@ -160,3 +157,6 @@ CMS_CONFIRM_VERSION4 = True
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 CMS_PERMISSION = True
+
+# This might be causing the issue if it exists in your settings
+CMS_TEMPLATE_INHERITANCE = False
