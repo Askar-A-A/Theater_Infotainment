@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+{% load cms_tags %}
+{% load static %}
+
+{% block title %}TOSCA{% endblock %}
+
+{% block extra_css %}
+<!-- Add Font Awesome CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+    /* Main container */
+    .theater-container {
+        background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9));
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    /* Header */
+    .opera-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .opera-title {
+        font-size: 36px;
+        color: #d4af37; /* Gold color */
+        margin: 0;
+        font-family: 'Playfair Display', serif;
+    }
+
+    .opera-time {
+        color: #fff;
+        font-size: 18px;
+        margin-top: 10px;
+    }
+
+    /* Menu Grid */
+    .menu-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+        max-width: 800px;
+        width: 100%;
+    }
+
+    .menu-item {
+        background: rgba(0,0,0,0.7);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .menu-item:hover {
+        background: rgba(255,255,255,0.1);
+        transform: translateY(-5px);
+    }
+
+    .menu-icon {
+        font-size: 2.5em;
+        color: #d4af37;
+        margin-bottom: 15px;
+    }
+
+    .menu-title {
+        color: #fff;
+        font-size: 20px;
+        margin: 0;
+    }
+
+    /* Navigation Icons */
+    .nav-icons {
+        position: fixed;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .nav-icon {
+        width: 40px;
+        height: 40px;
+        background: rgba(0,0,0,0.7);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    .nav-icon i {
+        color: #fff;
+        font-size: 1.2em;
+    }
+
+    .nav-icon:hover {
+        background: rgba(255,255,255,0.1);
+    }
+
+    /* Resolution adjustments */
+    @media screen and (height: 400px) {
+        .opera-title { font-size: 28px; }
+        .menu-grid { gap: 20px; }
+        .menu-item { padding: 15px; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="theater-container">
+    <div class="opera-header">
+        <h1 class="opera-title">{% placeholder "opera_title" default "Giacomo Puccini TOSCA" %}</h1>
+        <div class="opera-time">
+            {% placeholder "show_time" default "Start: 19:30 End: 22:15" %}
+        </div>
+    </div>
+
+    <div class="menu-grid">
+        <div class="menu-item">
+            <i class="fas fa-newspaper menu-icon"></i>
+            <h2 class="menu-title">News</h2>
+        </div>
+        <div class="menu-item">
+            <i class="fas fa-theater-masks menu-icon"></i>
+            <h2 class="menu-title">About us</h2>
+        </div>
+        <div class="menu-item">
+            <i class="fas fa-question-circle menu-icon"></i>
+            <h2 class="menu-title">Questions & Answers</h2>
+        </div>
+        <div class="menu-item">
+            <i class="fas fa-envelope menu-icon"></i>
+            <h2 class="menu-title">Newsletter</h2>
+        </div>
+    </div>
+
+    <div class="nav-icons">
+        <div class="nav-icon">
+            <i class="fas fa-home"></i>
+        </div>
+        <div class="nav-icon">
+            <i class="fas fa-cog"></i>
+        </div>
+        <div class="nav-icon">
+            <i class="fas fa-question"></i>
+        </div>
+        <div class="nav-icon">
+            <i class="fas fa-power-off"></i>
+        </div>
+    </div>
+</div>
+{% endblock content %}
