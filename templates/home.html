@@ -4,11 +4,20 @@
 
 {% block title %}TOSCA{% endblock %}
 
+{% block wrapper_style %}
+<style>
+    /* Ensure home page has no scrolling */
+    .content-wrapper {
+        overflow: hidden;
+    }
+</style>
+{% endblock %}
+
 {% block extra_css %}
 <style>
     /* Theater container styles */
     .theater-container {
-        width: 1280px;
+        width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -17,6 +26,40 @@
         position: relative;
         height: 100%;
         box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    /* Navbar brand styles specifically for home page */
+    .navbar {
+        position: absolute;
+        top: 10px;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        z-index: 10;
+        pointer-events: none; 
+    }
+    
+    .navbar-brand {
+        font-family: 'Playfair Display', serif;
+        font-size: 60px;
+        font-weight: 700;
+        color: #d4af37;
+        text-decoration: none;
+        position: relative;
+        display: inline-block;
+        padding-bottom: 3px;
+        pointer-events: auto; 
+    }
+    
+    .navbar-brand::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: #d4af37; 
     }
 
     /* Opera header styles */
@@ -55,10 +98,10 @@
         background: rgba(0,0,0,0.7);
         border: 1px solid rgba(255,255,255,0.1);
         border-radius: 10px;
-        padding: 30px 20px; /* Added more vertical padding */
+        padding: 30px 20px;
         height: auto;
         display: flex;
-        flex-direction: column; /* Changed to column layout */
+        flex-direction: column;
         align-items: center;
         justify-content: center;
         cursor: pointer;
@@ -71,16 +114,16 @@
     }
 
     .today-icon {
-        font-size: 6.0em; /* Increased for emphasis */
+        font-size: 6.0em;
         color: #d4af37;
-        margin-bottom: 15px; /* Changed from margin-right to margin-bottom */
+        margin-bottom: 15px;
     }
 
     .today-title {
-        font-size: 36px; /* Increased from 20px */
+        font-size: 36px;
         color: #fff;
         margin: 0;
-        text-align: center; /* Changed from left to center */
+        text-align: center;
         font-weight: bold;
     }
 
@@ -121,13 +164,28 @@
         margin: 0;
         text-align: left;
     }
+
+    .opera-composer {
+        color: #fff;
+        font-size: 18px;
+        margin-top: 5px;
+        font-style: italic;
+    }
 </style>
 {% endblock %}
 
 {% block content %}
+<!-- Navbar here, just for the home page -->
+<div class="navbar">
+    <a href="/" class="navbar-brand">TOSCA</a>
+</div>
+
 <div class="theater-container">
     <div class="opera-header">
-        <h1 class="opera-title">{% placeholder "opera_title" default "Giacomo Puccini TOSCA" %}</h1>
+        <h1 class="opera-title">{% placeholder "opera_title" default "TOSCA" %}</h1>
+        <div class="opera-composer">
+            {% placeholder "opera_composer" default "Giacomo Puccini" %}
+        </div>
         <div class="opera-time">
             {% placeholder "show_time" default "Start: 19:30 End: 22:15" %}
         </div>

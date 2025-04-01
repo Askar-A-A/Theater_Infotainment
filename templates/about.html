@@ -4,67 +4,276 @@
 
 {% block title %}About Us - TOSCA{% endblock %}
 
-{% block extra_css %}
+{% block wrapper_style %}
 <style>
-    .about-container {
-        width: 100%;
-        height: 100%;
-        padding: 80px 60px 20px 20px;
-        box-sizing: border-box;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .about-content {
-        max-width: 800px;
-        padding: 30px;
-        background: rgba(0,0,0,0.7);
-        border: 1px solid rgba(255,255,255,0.1);
-        border-radius: 10px;
-    }
-
-    .about-title {
-        font-size: 32px;
-        color: #d4af37;
-        margin-bottom: 20px;
-        text-align: center;
-        font-family: 'Playfair Display', serif;
-    }
-
-    .about-text {
-        color: #fff;
-        line-height: 1.8;
-        font-size: 16px;
-        margin-bottom: 20px;
-    }
-
-    @media screen and (height: 400px) {
-        .about-container {
-            padding-top: 60px;
-        }
-        
-        .about-title {
-            font-size: 24px;
-            margin-bottom: 15px;
-        }
-        
-        .about-text {
-            font-size: 14px;
-            line-height: 1.6;
-        }
+    /* Enable scrolling for about page */
+    .content-wrapper {
+        overflow: auto;
     }
 </style>
 {% endblock %}
 
+{% block extra_css %}
+<style>
+    .theater-container {
+        width: 1280px;
+        height: 100%;
+        position: relative;
+        box-sizing: border-box;
+        overflow: hidden; /* Hide any potential overflow */
+    }
+
+    /* This is the main change - setting up scroll snapping */
+    .main-content {
+        height: 100%;
+        width: 100%;
+        overflow-y: scroll;
+        scroll-snap-type: y mandatory; /* Force snap to sections */
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling on touch devices */
+    }
+
+    .content-section {
+        height: 100vh; /* Full viewport height */
+        width: 100%;
+        scroll-snap-align: start; /* Snap to start of section */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 80px 70px 40px 40px; /* Added top padding for the header */
+        box-sizing: border-box;
+        /* Removed section background colors to allow base gradient to show through */
+    }
+
+    /* Content styling */
+    .content-box {
+        background: rgba(0,0,0,0.7);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 10px;
+        padding: 40px;
+        width: 90%;
+        max-width: 1000px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .section-icon {
+        font-size: 48px;
+        color: #d4af37;
+        margin-bottom: 30px;
+    }
+
+    .section-title {
+        font-size: 32px;
+        color: #d4af37;
+        margin-bottom: 30px;
+        font-family: 'Playfair Display', serif;
+        text-align: center;
+    }
+
+    .section-content {
+        color: #fff;
+        font-size: 18px;
+        line-height: 1.8;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    /* Stats grid styling */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .stat-item {
+        text-align: center;
+        padding: 20px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 8px;
+    }
+
+    .stat-number {
+        font-size: 36px;
+        color: #d4af37;
+        margin-bottom: 10px;
+    }
+
+    .stat-label {
+        color: #fff;
+        font-size: 16px;
+    }
+
+    /* Timeline styling */
+    .timeline-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 30px;
+        width: 100%;
+    }
+
+    .year {
+        color: #d4af37;
+        font-size: 24px;
+        width: 100px;
+        flex-shrink: 0;
+    }
+
+    .timeline-content {
+        color: #fff;
+        margin-left: 20px;
+        text-align: left;
+    }
+
+    /* Scroll indicators */
+    .scroll-indicator {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: #d4af37;
+        font-size: 24px;
+        animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% {
+            transform: translateY(0) translateX(-50%);
+        }
+        40% {
+            transform: translateY(-15px) translateX(-50%);
+        }
+        60% {
+            transform: translateY(-7px) translateX(-50%);
+        }
+    }
+
+    /* Removed the section background variation classes completely */
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="about-container">
-    <div class="about-content">
-        <h1 class="about-title">{% placeholder "about_title" default "WIENER STAATSOPER AT A GLANCE" %}</h1>
-        
-        <p class="about-text">
-            {% placeholder "about_text" default "Wiener Staatsoper is one of the leading opera houses in the world. Its past is steeped in tradition. Its present is alive with richly varied performances and events. Each season, the schedule features 350 performances of more than 60 different operas and ballets. Every night, you can witness world-class artists alongside the permanent ensemble members on the stage and at the conductor's desk, accompanied by a unique orchestra: the orchestra of Wiener Staatsoper, whose members at the same time make up the Vienna Philharmonic Orchestra." %}
-        </p>
+<div class="theater-container">
+    <div class="main-content">
+        <!-- Overview Section -->
+        <div class="content-section">
+            <div class="content-box">
+                <i class="fas fa-theater-masks section-icon"></i>
+                <h2 class="section-title">Welcome to Wiener Staatsoper</h2>
+                <p class="section-content">
+                    Wiener Staatsoper is one of the leading opera houses in the world. Its past is steeped in tradition. Its present is alive with richly varied performances and events. Each season, the schedule features 350 performances of more than 60 different operas and ballets.
+                </p>
+                <p class="section-content">
+                    Our commitment to excellence in opera and classical music has made us a cornerstone of Vienna's rich cultural heritage and a beacon of artistic achievement worldwide.
+                </p>
+            </div>
+            <div class="scroll-indicator">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+
+        <!-- Statistics Section -->
+        <div class="content-section">
+            <div class="content-box">
+                <i class="fas fa-chart-bar section-icon"></i>
+                <h2 class="section-title">By the Numbers</h2>
+                <p class="section-content">
+                    Experience the grandeur of Wiener Staatsoper through our impressive statistics
+                </p>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">350+</div>
+                        <div class="stat-label">Performances per Season</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">60</div>
+                        <div class="stat-label">Different Productions</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">1,709</div>
+                        <div class="stat-label">Seating Capacity</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">150+</div>
+                        <div class="stat-label">Orchestra Members</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">2,000+</div>
+                        <div class="stat-label">Employees</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">5</div>
+                        <div class="stat-label">World Premieres per Year</div>
+                    </div>
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+
+        <!-- History Section -->
+        <div class="content-section">
+            <div class="content-box">
+                <i class="fas fa-history section-icon"></i>
+                <h2 class="section-title">Our Rich History</h2>
+                <div class="timeline-item">
+                    <div class="year">1869</div>
+                    <div class="timeline-content">
+                        Opening of the Vienna Court Opera with Mozart's Don Juan in the presence of Emperor Franz Joseph and Empress Elisabeth
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="year">1897</div>
+                    <div class="timeline-content">
+                        Gustav Mahler becomes director of the Vienna Court Opera, ushering in a new golden age
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="year">1945</div>
+                    <div class="timeline-content">
+                        Reopening after World War II with Mozart's Figaro under Josef Krips
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="year">1969</div>
+                    <div class="timeline-content">
+                        Centennial celebration with a new production of Richard Strauss's Der Rosenkavalier
+                    </div>
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+
+        <!-- Awards & Recognition -->
+        <div class="content-section">
+            <div class="content-box">
+                <i class="fas fa-award section-icon"></i>
+                <h2 class="section-title">Awards & Recognition</h2>
+                <p class="section-content">
+                    Throughout our history, Wiener Staatsoper has received numerous accolades and recognition for our contribution to the arts and culture.
+                </p>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <i class="fas fa-star section-icon" style="font-size: 24px; margin-bottom: 15px;"></i>
+                        <div class="stat-label">Best Opera House of the Year 2022</div>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-medal section-icon" style="font-size: 24px; margin-bottom: 15px;"></i>
+                        <div class="stat-label">Cultural Heritage Award</div>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-trophy section-icon" style="font-size: 24px; margin-bottom: 15px;"></i>
+                        <div class="stat-label">Excellence in Classical Music</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-{% endblock content %}
+{% endblock %}

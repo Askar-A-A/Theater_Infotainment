@@ -146,6 +146,7 @@ CMS_TEMPLATES = [
     ('base.html', 'Base Template'),
     ('home.html', 'Home Template'),
     ('about.html', 'About Us Template'),
+    ('today.html', 'Today Template'),
 ]
 
 SITE_ID = 1
