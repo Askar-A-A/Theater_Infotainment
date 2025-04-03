@@ -1,0 +1,316 @@
+{% extends "base.html" %}
+{% load cms_tags %}
+{% load static %}
+
+{% block title %}Events & Season - TOSCA{% endblock %}
+
+{% block wrapper_style %}
+<style>
+    /* Enable horizontal scrolling for events page */
+    .content-wrapper {
+        overflow: hidden;
+    }
+</style>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .theater-container {
+        width: 1280px;
+        height: 100%;
+        position: relative;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    /* Setup horizontal scroll snapping */
+    .main-content {
+        height: 100%;
+        width: 100%;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        display: flex;
+        scroll-behavior: smooth;
+    }
+
+    .content-section {
+        min-width: 100%;
+        height: 100vh;
+        scroll-snap-align: start;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 80px 40px 40px;
+        box-sizing: border-box;
+    }
+
+    /* Page title */
+    .page-header {
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        z-index: 10;
+    }
+
+    .page-title {
+        font-size: 40px;
+        color: #d4af37;
+        font-family: 'Playfair Display', serif;
+    }
+
+    /* Events grid */
+    .events-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+        width: 100%;
+        max-width: 1080px;
+    }
+
+    .event-card {
+        background: rgba(0,0,0,0.7);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 10px;
+        padding: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-decoration: none;
+    }
+
+    .event-card:hover {
+        background: rgba(255,255,255,0.1);
+        transform: translateY(-5px);
+    }
+
+    .event-image {
+        width: 100%;
+        height: 200px;
+        background-size: cover;
+        background-position: center;
+        border-radius: 5px;
+        margin-bottom: 15px;
+    }
+
+    .event-title {
+        font-size: 24px;
+        color: #d4af37;
+        margin-bottom: 10px;
+        text-align: center;
+        font-family: 'Playfair Display', serif;
+    }
+
+    .event-composer {
+        color: #fff;
+        font-style: italic;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    .event-date {
+        color: #fff;
+        font-size: 14px;
+        text-align: center;
+    }
+
+    /* Scroll indicators */
+    .scroll-indicators {
+        position: absolute;
+        bottom: 10%;
+        left: 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .scroll-dot {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.3);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .scroll-dot.active {
+        background: #d4af37;
+    }
+
+    /* Navigation arrows */
+    .nav-arrow {
+        position: absolute;
+        top: 18%;
+        transform: translateY(-50%);
+        color: #d4af37;
+        font-size: 36px;
+        cursor: pointer;
+        z-index: 10;
+        transition: all 0.3s ease;
+        background: rgba(0,0,0,0.5);
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .nav-arrow:hover {
+        background: rgba(0,0,0,0.8);
+    }
+
+    .nav-arrow.prev {
+        left: 20px;
+    }
+
+    .nav-arrow.next {
+        right: 20px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="theater-container">
+    <div class="page-header">
+        <h1 class="page-title">Events & Season</h1>
+    </div>
+
+    <!-- Navigation Arrows -->
+    <div class="nav-arrow prev">
+        <i class="fas fa-chevron-left"></i>
+    </div>
+    <div class="nav-arrow next">
+        <i class="fas fa-chevron-right"></i>
+    </div>
+
+    <div class="main-content">
+        <!-- Page 1 -->
+        <div class="content-section">
+            <div class="events-grid">
+                <div class="event-card">
+                    <div class="event-image" style="background-image: url('path/to/salome-image.jpg');">
+                        <i class="fas fa-theater-masks" style="font-size: 48px; color: #d4af37; display: flex; height: 100%; align-items: center; justify-content: center;"></i>
+                    </div>
+                    <h2 class="event-title">Salome</h2>
+                    <div class="event-composer">Richard Strauss</div>
+                    <div class="event-date">16.8. - 25.11.2024</div>
+                </div>
+
+                <div class="event-card">
+                    <div class="event-image" style="background-image: url('path/to/carmen-image.jpg');">
+                        <i class="fas fa-theater-masks" style="font-size: 48px; color: #d4af37; display: flex; height: 100%; align-items: center; justify-content: center;"></i>
+                    </div>
+                    <h2 class="event-title">Carmen</h2>
+                    <div class="event-composer">Georges Bizet</div>
+                    <div class="event-date">20.8. - 30.11.2024</div>
+                </div>
+
+                <div class="event-card">
+                    <div class="event-image" style="background-image: url('path/to/rigoletto-image.jpg');">
+                        <i class="fas fa-theater-masks" style="font-size: 48px; color: #d4af37; display: flex; height: 100%; align-items: center; justify-content: center;"></i>
+                    </div>
+                    <h2 class="event-title">Rigoletto</h2>
+                    <div class="event-composer">Giuseppe Verdi</div>
+                    <div class="event-date">25.8. - 5.12.2024</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 2 -->
+        <div class="content-section">
+            <div class="events-grid">
+                <div class="event-card">
+                    <div class="event-image" style="background-image: url('path/to/magic-flute-image.jpg');">
+                        <i class="fas fa-theater-masks" style="font-size: 48px; color: #d4af37; display: flex; height: 100%; align-items: center; justify-content: center;"></i>
+                    </div>
+                    <h2 class="event-title">The Magic Flute</h2>
+                    <div class="event-composer">Wolfgang Amadeus Mozart</div>
+                    <div class="event-date">1.9. - 10.12.2024</div>
+                </div>
+
+                <div class="event-card">
+                    <div class="event-image" style="background-image: url('path/to/turandot-image.jpg');">
+                        <i class="fas fa-theater-masks" style="font-size: 48px; color: #d4af37; display: flex; height: 100%; align-items: center; justify-content: center;"></i>
+                    </div>
+                    <h2 class="event-title">Turandot</h2>
+                    <div class="event-composer">Giacomo Puccini</div>
+                    <div class="event-date">5.9. - 15.12.2024</div>
+                </div>
+
+                <div class="event-card">
+                    <div class="event-image" style="background-image: url('path/to/aida-image.jpg');">
+                        <i class="fas fa-theater-masks" style="font-size: 48px; color: #d4af37; display: flex; height: 100%; align-items: center; justify-content: center;"></i>
+                    </div>
+                    <h2 class="event-title">Aida</h2>
+                    <div class="event-composer">Giuseppe Verdi</div>
+                    <div class="event-date">10.9. - 20.12.2024</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll Indicators -->
+    <div class="scroll-indicators">
+        <div class="scroll-dot active"></div>
+        <div class="scroll-dot"></div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const mainContent = document.querySelector('.main-content');
+        const dots = document.querySelectorAll('.scroll-dot');
+        const prevArrow = document.querySelector('.nav-arrow.prev');
+        const nextArrow = document.querySelector('.nav-arrow.next');
+        let currentPage = 0;
+
+        // Update active dot based on scroll position
+        function updateDots() {
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentPage);
+            });
+        }
+
+        // Scroll to specific page
+        function scrollToPage(pageIndex) {
+            currentPage = pageIndex;
+            mainContent.scrollTo({
+                left: pageIndex * mainContent.offsetWidth,
+                behavior: 'smooth'
+            });
+            updateDots();
+        }
+
+        // Click handlers for dots
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => scrollToPage(index));
+        });
+
+        // Click handlers for arrows
+        prevArrow.addEventListener('click', () => {
+            if (currentPage > 0) scrollToPage(currentPage - 1);
+        });
+
+        nextArrow.addEventListener('click', () => {
+            if (currentPage < dots.length - 1) scrollToPage(currentPage + 1);
+        });
+
+        // Update dots on scroll
+        mainContent.addEventListener('scroll', () => {
+            const newPage = Math.round(mainContent.scrollLeft / mainContent.offsetWidth);
+            if (newPage !== currentPage) {
+                currentPage = newPage;
+                updateDots();
+            }
+        });
+    });
+</script>
+{% endblock %}

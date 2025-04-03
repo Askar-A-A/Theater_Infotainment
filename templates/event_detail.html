@@ -1,0 +1,205 @@
+{% extends "base.html" %}
+{% load cms_tags %}
+{% load static %}
+
+{% block title %}{{ event.title }} - TOSCA{% endblock %}
+
+{% block extra_css %}
+<style>
+    .event-detail-container {
+        width: 1280px;
+        height: 100vh;
+        position: relative;
+        overflow-y: auto;
+    }
+
+    .event-header {
+        height: 40vh;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        display: flex;
+        align-items: flex-end;
+    }
+
+    .header-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.8) 100%);
+    }
+
+    .event-title-container {
+        padding: 40px;
+        position: relative;
+        z-index: 2;
+        width: 100%;
+    }
+
+    .event-title {
+        font-size: 48px;
+        color: #fff;
+        margin-bottom: 10px;
+        font-family: 'Playfair Display', serif;
+    }
+
+    .event-composer {
+        font-size: 24px;
+        color: #d4af37;
+        font-style: italic;
+        margin-bottom: 15px;
+    }
+
+    .event-dates {
+        font-size: 18px;
+        color: #fff;
+    }
+
+    .event-content {
+        padding: 40px;
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 40px;
+    }
+
+    .event-description {
+        color: #fff;
+        line-height: 1.8;
+    }
+
+    .event-description h2 {
+        color: #d4af37;
+        font-size: 28px;
+        margin-bottom: 20px;
+        font-family: 'Playfair Display', serif;
+    }
+
+    .event-description p {
+        margin-bottom: 20px;
+    }
+
+    .event-sidebar {
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        padding: 30px;
+    }
+
+    .event-info-item {
+        margin-bottom: 25px;
+    }
+
+    .info-label {
+        color: #d4af37;
+        font-size: 18px;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    .info-value {
+        color: #fff;
+    }
+
+    .cast-member {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        color: #fff;
+    }
+
+    .cast-role {
+        color: #d4af37;
+        font-style: italic;
+    }
+
+    .back-button {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 12px 25px;
+        background: rgba(212, 175, 55, 0.2);
+        color: #d4af37;
+        text-decoration: none;
+        border: 1px solid #d4af37;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+
+    .back-button:hover {
+        background: rgba(212, 175, 55, 0.4);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="event-detail-container">
+    <!-- Event Header -->
+    <div class="event-header" style="background-image: url('{% static 'images/events/salome-header.jpg' %}');">
+        <div class="header-overlay"></div>
+        <div class="event-title-container">
+            <h1 class="event-title">Salome</h1>
+            <div class="event-composer">Richard Strauss</div>
+            <div class="event-dates">16.8. - 25.11.2024</div>
+        </div>
+    </div>
+    
+    <!-- Event Content -->
+    <div class="event-content">
+        <div class="event-description">
+            <h2>About the Performance</h2>
+            <p>Based on Oscar Wilde's play of the same name, Richard Strauss's opera Salome is a powerful one-act drama that shocked audiences when it premiered in 1905. The opera tells the biblical story of Salome, stepdaughter of Herod, who develops an unhealthy obsession with the prophet Jochanaan (John the Baptist).</p>
+            
+            <p>When Jochanaan rejects her advances, Salome performs the infamous "Dance of the Seven Veils" for her stepfather in exchange for Jochanaan's head on a silver platter. The opera culminates in Salome's disturbing final monologue as she addresses the severed head.</p>
+            
+            <p>Strauss's revolutionary score features dissonant harmonies and modern tonality that perfectly captures the opera's themes of obsession, desire, and moral corruption. This production, directed by the acclaimed Emma Richardson, presents a contemporary vision of this classic work while honoring its musical complexity.</p>
+            
+            <h2>Director's Note</h2>
+            <p>Our production of Salome explores the psychological dimensions of desire and rejection, power and helplessness. The minimalist staging allows the powerful music and performances to take center stage, while subtle lighting creates the oppressive atmosphere of Herod's palace.</p>
+        </div>
+        
+        <div class="event-sidebar">
+            <div class="event-info-item">
+                <div class="info-label">Duration</div>
+                <div class="info-value">Approximately 1 hour 40 minutes, no intermission</div>
+            </div>
+            
+            <div class="event-info-item">
+                <div class="info-label">Language</div>
+                <div class="info-value">Performed in German with English subtitles</div>
+            </div>
+            
+            <div class="event-info-item">
+                <div class="info-label">Conductor</div>
+                <div class="info-value">Martina Bergmann</div>
+            </div>
+            
+            <div class="event-info-item">
+                <div class="info-label">Director</div>
+                <div class="info-value">Emma Richardson</div>
+            </div>
+            
+            <div class="event-info-item">
+                <div class="info-label">Principal Cast</div>
+                <div class="cast-list">
+                    <div class="cast-member">
+                        <span>Maria Klausner</span>
+                        <span class="cast-role">Salome</span>
+                    </div>
+                    <div class="cast-member">
+                        <span>Thomas Reichmann</span>
+                        <span class="cast-role">Jochanaan</span>
+                    </div>
+                    <div class="cast-member">
+                        <span>Karl Weber</span>
+                        <span class="cast-role">Herod</span>
+                    </div>
+                    <div class="cast-member">
+                        <span>Elisabeth Schön</span>
+                        <span class="cast-role">Herodias</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

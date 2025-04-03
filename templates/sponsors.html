@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load cms_tags %}
+{% load static %}
+
+{% block title %}Sponsors - TOSCA{% endblock %}
+
+{% block extra_css %}
+<style>
+    .sponsors-container {
+        width: 1280px;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 40px;
+        box-sizing: border-box;
+    }
+
+    .theater-logo {
+        width: 80px;
+        height: auto;
+        margin-bottom: 20px;
+    }
+
+    .theater-name {
+        font-size: 36px;
+        color: #fff;
+        text-align: center;
+        margin-bottom: 40px;
+        font-family: 'Playfair Display', serif;
+    }
+
+    .divider {
+        width: 60%;
+        height: 1px;
+        background: rgba(255, 255, 255, 0.3);
+        margin: 30px 0;
+    }
+
+    .sponsor-category {
+        font-size: 24px;
+        color: #fff;
+        text-align: center;
+        margin: 30px 0;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+    }
+
+    .sponsor-logos {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 60px;
+        margin: 30px 0;
+    }
+
+    .sponsor-logo {
+        height: 40px;
+        width: auto;
+        filter: brightness(1.2);
+    }
+
+    .copyright {
+        position: absolute;
+        bottom: 40px;
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 14px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="sponsors-container">
+    <!-- Theater Logo -->
+    <img src="{% static 'images/theater-logo.png' %}" alt="Wiener Staatsoper" class="theater-logo">
+    <h1 class="theater-name">WIENER STAATSOPER</h1>
+
+    <div class="divider"></div>
+
+    <!-- General Sponsors -->
+    <h2 class="sponsor-category">GENERALSPONOREN DER WIENER STAATSOPER</h2>
+    
+    <div class="sponsor-logos">
+        <img src="{% static 'images/sponsors/lexus.png' %}" alt="Lexus" class="sponsor-logo">
+        <img src="{% static 'images/sponsors/artomv.png' %}" alt="ART/ÖMV" class="sponsor-logo">
+        <img src="{% static 'images/sponsors/omv.png' %}" alt="ÖMV" class="sponsor-logo">
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Copyright -->
+    <div class="copyright">© 2024 Wiener Staatsoper GmbH</div>
+</div>
+{% endblock %}
