@@ -33,6 +33,10 @@ INSTALLED_APPS = [
     'sekizai',
     'treebeard',
     'djangocms_text_ckeditor',
+    'easy_thumbnails',
+    'filer',
+    'mptt',
+    'djangocms_picture',
 ]
 
 MIDDLEWARE = [
@@ -165,3 +169,12 @@ CMS_PERMISSION = True
 
 # This might be causing the issue if it exists in your settings
 CMS_TEMPLATE_INHERITANCE = False
+
+THUMBNAIL_PROCESSORS = (
+    'easy_thumbnails.processors.colorspace',
+    'easy_thumbnails.processors.autocrop',
+    'filer.thumbnail_processors.scale_and_crop_with_subject_location',
+    'easy_thumbnails.processors.filters',
+)
+
+THUMBNAIL_HIGH_RESOLUTION = True

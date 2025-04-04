@@ -2,7 +2,7 @@
 {% load cms_tags %}
 {% load static %}
 
-{% block title %}About Us - TOSCA{% endblock %}
+{% block title %}About Us - {% placeholder "theater_name_short" default "[Enter your theater name]" %}{% endblock %}
 
 {% block wrapper_style %}
 <style>
@@ -77,7 +77,6 @@
         font-size: 18px;
         line-height: 1.8;
         text-align: center;
-        margin-bottom: 30px;
     }
 
     /* Stats grid styling */
@@ -131,7 +130,7 @@
     /* Scroll indicators */
     .scroll-indicator {
         position: absolute;
-        bottom: 20px;
+        bottom: 10%;
         left: 50%;
         transform: translateX(-50%);
         color: #d4af37;
@@ -161,57 +160,51 @@
         <!-- Overview Section -->
         <div class="content-section">
             <div class="content-box">
-                <i class="fas fa-theater-masks section-icon"></i>
-                <h2 class="section-title">Welcome to Wiener Staatsoper</h2>
+                <i class="fas fa-landmark section-icon"></i>
+                <h2 class="section-title">{% placeholder "welcome_title" default "[Enter your welcome section title, e.g. 'Welcome to Your Theater']" %}</h2>
                 <p class="section-content">
-                    Wiener Staatsoper is one of the leading opera houses in the world. Its past is steeped in tradition. Its present is alive with richly varied performances and events. Each season, the schedule features 350 performances of more than 60 different operas and ballets.
+                    {% placeholder "welcome_paragraph_1" default "[Enter your first introductory paragraph about your theater's profile and offerings]" %}
                 </p>
                 <p class="section-content">
-                    Our commitment to excellence in opera and classical music has made us a cornerstone of Vienna's rich cultural heritage and a beacon of artistic achievement worldwide.
+                    {% placeholder "welcome_paragraph_2" default "[Enter your second paragraph about your theater's mission or cultural importance]" %}
                 </p>
-            </div>
-            <div class="scroll-indicator">
-                <i class="fas fa-chevron-down"></i>
             </div>
         </div>
 
         <!-- Statistics Section -->
         <div class="content-section">
             <div class="content-box">
-                <i class="fas fa-chart-bar section-icon"></i>
-                <h2 class="section-title">By the Numbers</h2>
+                <i class="fas fa-landmark section-icon"></i>
+                <h2 class="section-title">{% placeholder "stats_title" default "[Enter your statistics section title, e.g. 'By the Numbers']" %}</h2>
                 <p class="section-content">
-                    Experience the grandeur of Wiener Staatsoper through our impressive statistics
+                    {% placeholder "stats_intro" default "[Enter a brief introduction to your theater's statistics]" %}
                 </p>
                 <div class="stats-grid">
                     <div class="stat-item">
-                        <div class="stat-number">350+</div>
-                        <div class="stat-label">Performances per Season</div>
+                        <div class="stat-number">{% placeholder "stat_1_number" default "[Number]" %}</div>
+                        <div class="stat-label">{% placeholder "stat_1_label" default "[Label for statistic 1, e.g. 'Performances per Season']" %}</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-number">60</div>
-                        <div class="stat-label">Different Productions</div>
+                        <div class="stat-number">{% placeholder "stat_2_number" default "[Number]" %}</div>
+                        <div class="stat-label">{% placeholder "stat_2_label" default "[Label for statistic 2, e.g. 'Different Productions']" %}</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-number">1,709</div>
-                        <div class="stat-label">Seating Capacity</div>
+                        <div class="stat-number">{% placeholder "stat_3_number" default "[Number]" %}</div>
+                        <div class="stat-label">{% placeholder "stat_3_label" default "[Label for statistic 3, e.g. 'Seating Capacity']" %}</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-number">150+</div>
-                        <div class="stat-label">Orchestra Members</div>
+                        <div class="stat-number">{% placeholder "stat_4_number" default "[Number]" %}</div>
+                        <div class="stat-label">{% placeholder "stat_4_label" default "[Label for statistic 4, e.g. 'Orchestra Members']" %}</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-number">2,000+</div>
-                        <div class="stat-label">Employees</div>
+                        <div class="stat-number">{% placeholder "stat_5_number" default "[Number]" %}</div>
+                        <div class="stat-label">{% placeholder "stat_5_label" default "[Label for statistic 5, e.g. 'Employees']" %}</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-number">5</div>
-                        <div class="stat-label">World Premieres per Year</div>
+                        <div class="stat-number">{% placeholder "stat_6_number" default "[Number]" %}</div>
+                        <div class="stat-label">{% placeholder "stat_6_label" default "[Label for statistic 6, e.g. 'World Premieres per Year']" %}</div>
                     </div>
                 </div>
-            </div>
-            <div class="scroll-indicator">
-                <i class="fas fa-chevron-down"></i>
             </div>
         </div>
 
@@ -219,34 +212,31 @@
         <div class="content-section">
             <div class="content-box">
                 <i class="fas fa-history section-icon"></i>
-                <h2 class="section-title">Our Rich History</h2>
+                <h2 class="section-title">{% placeholder "history_title" default "[Enter your history section title, e.g. 'Our Rich History']" %}</h2>
                 <div class="timeline-item">
-                    <div class="year">1869</div>
+                    <div class="year">{% placeholder "history_year_1" default "[Year]" %}</div>
                     <div class="timeline-content">
-                        Opening of the Vienna Court Opera with Mozart's Don Juan in the presence of Emperor Franz Joseph and Empress Elisabeth
+                        {% placeholder "history_event_1" default "[Enter description of first historical event]" %}
                     </div>
                 </div>
                 <div class="timeline-item">
-                    <div class="year">1897</div>
+                    <div class="year">{% placeholder "history_year_2" default "[Year]" %}</div>
                     <div class="timeline-content">
-                        Gustav Mahler becomes director of the Vienna Court Opera, ushering in a new golden age
+                        {% placeholder "history_event_2" default "[Enter description of second historical event]" %}
                     </div>
                 </div>
                 <div class="timeline-item">
-                    <div class="year">1945</div>
+                    <div class="year">{% placeholder "history_year_3" default "[Year]" %}</div>
                     <div class="timeline-content">
-                        Reopening after World War II with Mozart's Figaro under Josef Krips
+                        {% placeholder "history_event_3" default "[Enter description of third historical event]" %}
                     </div>
                 </div>
                 <div class="timeline-item">
-                    <div class="year">1969</div>
+                    <div class="year">{% placeholder "history_year_4" default "[Year]" %}</div>
                     <div class="timeline-content">
-                        Centennial celebration with a new production of Richard Strauss's Der Rosenkavalier
+                        {% placeholder "history_event_4" default "[Enter description of fourth historical event]" %}
                     </div>
                 </div>
-            </div>
-            <div class="scroll-indicator">
-                <i class="fas fa-chevron-down"></i>
             </div>
         </div>
 
@@ -254,22 +244,22 @@
         <div class="content-section">
             <div class="content-box">
                 <i class="fas fa-award section-icon"></i>
-                <h2 class="section-title">Awards & Recognition</h2>
+                <h2 class="section-title">{% placeholder "awards_title" default "[Enter your awards section title, e.g. 'Awards & Recognition']" %}</h2>
                 <p class="section-content">
-                    Throughout our history, Wiener Staatsoper has received numerous accolades and recognition for our contribution to the arts and culture.
+                    {% placeholder "awards_intro" default "[Enter introductory text about your theater's awards and recognition]" %}
                 </p>
                 <div class="stats-grid">
                     <div class="stat-item">
                         <i class="fas fa-star section-icon" style="font-size: 24px; margin-bottom: 15px;"></i>
-                        <div class="stat-label">Best Opera House of the Year 2022</div>
+                        <div class="stat-label">{% placeholder "award_1" default "[Enter first award or recognition]" %}</div>
                     </div>
                     <div class="stat-item">
                         <i class="fas fa-medal section-icon" style="font-size: 24px; margin-bottom: 15px;"></i>
-                        <div class="stat-label">Cultural Heritage Award</div>
+                        <div class="stat-label">{% placeholder "award_2" default "[Enter second award or recognition]" %}</div>
                     </div>
                     <div class="stat-item">
                         <i class="fas fa-trophy section-icon" style="font-size: 24px; margin-bottom: 15px;"></i>
-                        <div class="stat-label">Excellence in Classical Music</div>
+                        <div class="stat-label">{% placeholder "award_3" default "[Enter third award or recognition]" %}</div>
                     </div>
                 </div>
             </div>

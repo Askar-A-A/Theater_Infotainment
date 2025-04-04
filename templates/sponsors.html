@@ -12,84 +12,85 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
-        padding: 40px;
+        padding: 80px 40px 40px;
         box-sizing: border-box;
     }
 
-    .theater-logo {
-        width: 80px;
-        height: auto;
-        margin-bottom: 20px;
-    }
-
-    .theater-name {
-        font-size: 36px;
-        color: #fff;
-        text-align: center;
-        margin-bottom: 40px;
+    .page-title {
+        font-size: 40px;
+        color: #d4af37;
         font-family: 'Playfair Display', serif;
-    }
-
-    .divider {
-        width: 60%;
-        height: 1px;
-        background: rgba(255, 255, 255, 0.3);
-        margin: 30px 0;
-    }
-
-    .sponsor-category {
-        font-size: 24px;
-        color: #fff;
+        margin-bottom: 60px;
         text-align: center;
-        margin: 30px 0;
-        letter-spacing: 2px;
-        text-transform: uppercase;
     }
 
-    .sponsor-logos {
+    .content-box {
+        background: rgba(0,0,0,0.7);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 10px;
+        padding: 60px;
+        width: 100%;
+        max-width: 1080px;
         display: flex;
-        justify-content: center;
+        flex-direction: column;
         align-items: center;
-        gap: 60px;
-        margin: 30px 0;
+    }
+
+    .sponsors-intro {
+        color: #fff;
+        font-size: 18px;
+        text-align: center;
+        margin-bottom: 50px;
+        line-height: 1.6;
+        max-width: 800px;
+    }
+
+    .sponsors-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 80px;
+        width: 100%;
+        align-items: center;
+        justify-items: center;
     }
 
     .sponsor-logo {
-        height: 40px;
+        max-height: 150px;
         width: auto;
         filter: brightness(1.2);
+        transition: all 0.3s ease;
+    }
+
+    .sponsor-logo:hover {
+        transform: translateY(-5px);
     }
 
     .copyright {
-        position: absolute;
-        bottom: 40px;
-        color: rgba(255, 255, 255, 0.6);
+        color: rgba(255,255,255,0.6);
         font-size: 14px;
+        margin-top: 40px;
+        text-align: center;
     }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="sponsors-container">
-    <!-- Theater Logo -->
-    <img src="{% static 'images/theater-logo.png' %}" alt="Wiener Staatsoper" class="theater-logo">
-    <h1 class="theater-name">WIENER STAATSOPER</h1>
-
-    <div class="divider"></div>
-
-    <!-- General Sponsors -->
-    <h2 class="sponsor-category">GENERALSPONOREN DER WIENER STAATSOPER</h2>
+    <h1 class="page-title">Our Sponsors</h1>
     
-    <div class="sponsor-logos">
-        <img src="{% static 'images/sponsors/lexus.png' %}" alt="Lexus" class="sponsor-logo">
-        <img src="{% static 'images/sponsors/artomv.png' %}" alt="ART/ÖMV" class="sponsor-logo">
-        <img src="{% static 'images/sponsors/omv.png' %}" alt="ÖMV" class="sponsor-logo">
+    <div class="content-box">
+        <p class="sponsors-intro">
+            We extend our heartfelt gratitude to our esteemed sponsors whose generous support 
+            enables us to continue our dedication to artistic excellence and cultural enrichment.
+        </p>
+
+        <div class="sponsors-grid">
+            <img src="{% static 'images/sponsors/lexus.png' %}" alt="Lexus" class="sponsor-logo">
+            <img src="{% static 'images/sponsors/samsung-1.png' %}" alt="Samsung" class="sponsor-logo">
+            <img src="{% static 'images/sponsors/omv.png' %}" alt="ÖMV" class="sponsor-logo">
+        </div>
+
+        <div class="copyright">© 2024 Our Theater GmbH</div>
     </div>
-
-    <div class="divider"></div>
-
-    <!-- Copyright -->
-    <div class="copyright">© 2024 Wiener Staatsoper GmbH</div>
 </div>
 {% endblock %}

@@ -2,7 +2,7 @@
 {% load cms_tags %}
 {% load static %}
 
-{% block title %}Events & Season - TOSCA{% endblock %}
+{% block title %}Events & Season - {% placeholder "theater_name_short" default "[Your Theater Name]" %}{% endblock %}
 
 {% block wrapper_style %}
 <style>
@@ -92,11 +92,20 @@
 
     .event-image {
         width: 100%;
-        height: 200px;
-        background-size: cover;
-        background-position: center;
+        height: 300px;
         border-radius: 5px;
         margin-bottom: 15px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .event-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 5px;
     }
 
     .event-title {
@@ -180,7 +189,7 @@
 {% block content %}
 <div class="theater-container">
     <div class="page-header">
-        <h1 class="page-title">Events & Season</h1>
+        <h1 class="page-title">{% placeholder "events_page_title" default "Events & Season" %}</h1>
     </div>
 
     <!-- Navigation Arrows -->
@@ -196,30 +205,40 @@
         <div class="content-section">
             <div class="events-grid">
                 <div class="event-card">
-                    <div class="event-image" style="background-image: url('path/to/salome-image.jpg');">
-                        <i class="fas fa-theater-masks" style="font-size: 48px; color: #d4af37; display: flex; height: 100%; align-items: center; justify-content: center;"></i>
+                    <div class="event-image">
+                        {% placeholder "event_1_image" %}
+                        <!-- Fallback image if no CMS image is provided -->
+                        {% if not placeholder_content.event_1_image %}
+                            <img src="{% static 'images/events/placeholder.jpg' %}" alt="[Event 1]">
+                        {% endif %}
                     </div>
-                    <h2 class="event-title">Salome</h2>
-                    <div class="event-composer">Richard Strauss</div>
-                    <div class="event-date">16.8. - 25.11.2024</div>
+                    <h2 class="event-title">{% placeholder "event_1_title" default "[Enter event 1 title]" %}</h2>
+                    <div class="event-composer">{% placeholder "event_1_composer" default "[Enter event 1 composer]" %}</div>
+                    <div class="event-date">{% placeholder "event_1_date" default "[Enter event 1 date range]" %}</div>
                 </div>
 
                 <div class="event-card">
-                    <div class="event-image" style="background-image: url('path/to/carmen-image.jpg');">
-                        <i class="fas fa-theater-masks" style="font-size: 48px; color: #d4af37; display: flex; height: 100%; align-items: center; justify-content: center;"></i>
+                    <div class="event-image">
+                        {% placeholder "event_2_image" %}
+                        {% if not placeholder_content.event_2_image %}
+                            <img src="{% static 'images/events/placeholder.jpg' %}" alt="[Event 2]">
+                        {% endif %}
                     </div>
-                    <h2 class="event-title">Carmen</h2>
-                    <div class="event-composer">Georges Bizet</div>
-                    <div class="event-date">20.8. - 30.11.2024</div>
+                    <h2 class="event-title">{% placeholder "event_2_title" default "[Enter event 2 title]" %}</h2>
+                    <div class="event-composer">{% placeholder "event_2_composer" default "[Enter event 2 composer]" %}</div>
+                    <div class="event-date">{% placeholder "event_2_date" default "[Enter event 2 date range]" %}</div>
                 </div>
 
                 <div class="event-card">
-                    <div class="event-image" style="background-image: url('path/to/rigoletto-image.jpg');">
-                        <i class="fas fa-theater-masks" style="font-size: 48px; color: #d4af37; display: flex; height: 100%; align-items: center; justify-content: center;"></i>
+                    <div class="event-image">
+                        {% placeholder "event_3_image" %}
+                        {% if not placeholder_content.event_3_image %}
+                            <img src="{% static 'images/events/placeholder.jpg' %}" alt="[Event 3]">
+                        {% endif %}
                     </div>
-                    <h2 class="event-title">Rigoletto</h2>
-                    <div class="event-composer">Giuseppe Verdi</div>
-                    <div class="event-date">25.8. - 5.12.2024</div>
+                    <h2 class="event-title">{% placeholder "event_3_title" default "[Enter event 3 title]" %}</h2>
+                    <div class="event-composer">{% placeholder "event_3_composer" default "[Enter event 3 composer]" %}</div>
+                    <div class="event-date">{% placeholder "event_3_date" default "[Enter event 3 date range]" %}</div>
                 </div>
             </div>
         </div>
@@ -228,30 +247,39 @@
         <div class="content-section">
             <div class="events-grid">
                 <div class="event-card">
-                    <div class="event-image" style="background-image: url('path/to/magic-flute-image.jpg');">
-                        <i class="fas fa-theater-masks" style="font-size: 48px; color: #d4af37; display: flex; height: 100%; align-items: center; justify-content: center;"></i>
+                    <div class="event-image">
+                        {% placeholder "event_4_image" %}
+                        {% if not placeholder_content.event_4_image %}
+                            <img src="{% static 'images/events/placeholder.jpg' %}" alt="[Event 4]">
+                        {% endif %}
                     </div>
-                    <h2 class="event-title">The Magic Flute</h2>
-                    <div class="event-composer">Wolfgang Amadeus Mozart</div>
-                    <div class="event-date">1.9. - 10.12.2024</div>
+                    <h2 class="event-title">{% placeholder "event_4_title" default "[Enter event 4 title]" %}</h2>
+                    <div class="event-composer">{% placeholder "event_4_composer" default "[Enter event 4 composer]" %}</div>
+                    <div class="event-date">{% placeholder "event_4_date" default "[Enter event 4 date range]" %}</div>
                 </div>
 
                 <div class="event-card">
-                    <div class="event-image" style="background-image: url('path/to/turandot-image.jpg');">
-                        <i class="fas fa-theater-masks" style="font-size: 48px; color: #d4af37; display: flex; height: 100%; align-items: center; justify-content: center;"></i>
+                    <div class="event-image">
+                        {% placeholder "event_5_image" %}
+                        {% if not placeholder_content.event_5_image %}
+                            <img src="{% static 'images/events/placeholder.jpg' %}" alt="[Event 5]">
+                        {% endif %}
                     </div>
-                    <h2 class="event-title">Turandot</h2>
-                    <div class="event-composer">Giacomo Puccini</div>
-                    <div class="event-date">5.9. - 15.12.2024</div>
+                    <h2 class="event-title">{% placeholder "event_5_title" default "[Enter event 5 title]" %}</h2>
+                    <div class="event-composer">{% placeholder "event_5_composer" default "[Enter event 5 composer]" %}</div>
+                    <div class="event-date">{% placeholder "event_5_date" default "[Enter event 5 date range]" %}</div>
                 </div>
 
                 <div class="event-card">
-                    <div class="event-image" style="background-image: url('path/to/aida-image.jpg');">
-                        <i class="fas fa-theater-masks" style="font-size: 48px; color: #d4af37; display: flex; height: 100%; align-items: center; justify-content: center;"></i>
+                    <div class="event-image">
+                        {% placeholder "event_6_image" %}
+                        {% if not placeholder_content.event_6_image %}
+                            <img src="{% static 'images/events/placeholder.jpg' %}" alt="[Event 6]">
+                        {% endif %}
                     </div>
-                    <h2 class="event-title">Aida</h2>
-                    <div class="event-composer">Giuseppe Verdi</div>
-                    <div class="event-date">10.9. - 20.12.2024</div>
+                    <h2 class="event-title">{% placeholder "event_6_title" default "[Enter event 6 title]" %}</h2>
+                    <div class="event-composer">{% placeholder "event_6_composer" default "[Enter event 6 composer]" %}</div>
+                    <div class="event-date">{% placeholder "event_6_date" default "[Enter event 6 date range]" %}</div>
                 </div>
             </div>
         </div>
