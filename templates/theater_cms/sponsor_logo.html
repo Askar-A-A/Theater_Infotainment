@@ -1,0 +1,9 @@
+<div class="sponsor-item">
+    {% if instance.website %}
+        <a href="{{ instance.website }}" target="_blank" rel="noopener noreferrer">
+            <img src="{{ instance.image.url }}" alt="{{ instance.name }}" class="sponsor-logo">
+        </a>
+    {% else %}
+        <img src="{{ instance.image.url }}" alt="{{ instance.name }}" class="sponsor-logo">
+    {% endif %}
+</div>

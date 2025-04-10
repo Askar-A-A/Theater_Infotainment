@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,6 +38,7 @@ INSTALLED_APPS = [
     'filer',
     'mptt',
     'djangocms_picture',
+    'theater_cms',
 ]
 
 MIDDLEWARE = [
@@ -60,7 +62,7 @@ ROOT_URLCONF = 'theater_config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -160,6 +162,17 @@ CMS_TEMPLATES = [
 SITE_ID = 1
 LANGUAGES = [
     ('en', 'English'),
+    ('zh-hans', 'Chinese'),
+    ('hi', 'Hindi'),
+    ('es', 'Spanish'),
+    ('fr', 'French'),
+    ('ar', 'Arabic'),
+    ('pt', 'Portuguese'),
+    ('ru', 'Russian'),
+    ('ja', 'Japanese'),
+    ('tr', 'Turkish'),
+    ('it', 'Italian'),
+    ('bn', 'Bengali'),
 ]
 
 CMS_CONFIRM_VERSION4 = True
@@ -178,3 +191,35 @@ THUMBNAIL_PROCESSORS = (
 )
 
 THUMBNAIL_HIGH_RESOLUTION = True
+
+CMS_PLACEHOLDER_CONF = {
+    'theater_logo': {
+        'name': _('Theater Logo'),
+        'plugins': ['TheaterLogoPlugin'],
+        'default_plugins': [],
+    },
+    'theater_name': {
+        'name': _('Theater Name'),
+        'plugins': ['TextPlugin'],
+        'default_plugins': [],
+    },
+    'sponsors_intro': {
+        'name': _('Sponsors Introduction'),
+        'plugins': ['TextPlugin'],
+        'default_plugins': [],
+    },
+    'sponsors_logos': {
+        'name': _('Sponsor Logos'),
+        'plugins': ['SponsorLogoPlugin'],
+        'default_plugins': [],
+    },
+    'copyright_text': {
+        'name': _('Copyright Text'),
+        'plugins': ['TextPlugin'],
+        'default_plugins': [],
+    },
+}
+
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale'),
+] 

@@ -2,35 +2,68 @@
 {% load cms_tags %}
 {% load static %}
 
-{% block title %}Sponsors - TOSCA{% endblock %}
+{% block title %}
+    Sponsors - {% placeholder "theater_name" or %}TOSCA{% endplaceholder %}
+{% endblock %}
+
+{% block wrapper_style %}
+<style>
+    /* Enable scrolling for sponsors page */
+    .content-wrapper {
+        overflow: auto;
+    }
+</style>
+{% endblock %}
 
 {% block extra_css %}
 <style>
+    /* Variables for consistent measurements (same as home page) */
+    :root {
+        --spacing-xs: 0.5rem;
+        --spacing-sm: 1rem;
+        --spacing-md: 1.5rem;
+        --spacing-lg: 2rem;
+        --spacing-xl: 3rem;
+        
+        --border-radius: 10px;
+        --border-thin: 1px solid rgba(255,255,255,0.1);
+        
+        --color-gold: #d4af37;
+        --color-bg-dark: rgba(0,0,0,0.7);
+        --color-bg-hover: rgba(255,255,255,0.1);
+        
+        --font-size-sm: 1rem;
+        --font-size-md: 1.25rem;
+        --font-size-lg: 2.25rem;
+        --font-size-xl: 3rem;
+    }
+
+    /* Sponsors page container */
     .sponsors-container {
-        width: 1280px;
-        height: 100vh;
+        width: 100%;
+        height: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 80px 40px 40px;
+        padding: var(--spacing-xl) var(--spacing-md) var(--spacing-md);
         box-sizing: border-box;
     }
 
     .page-title {
-        font-size: 40px;
-        color: #d4af37;
+        font-size: var(--font-size-xl);
+        color: var(--color-gold);
         font-family: 'Playfair Display', serif;
-        margin-bottom: 60px;
+        margin-bottom: var(--spacing-xl);
         text-align: center;
     }
 
     .content-box {
-        background: rgba(0,0,0,0.7);
-        border: 1px solid rgba(255,255,255,0.1);
-        border-radius: 10px;
-        padding: 60px;
+        background: var(--color-bg-dark);
+        border: var(--border-thin);
+        border-radius: var(--border-radius);
+        padding: var(--spacing-xl);
         width: 100%;
-        max-width: 1080px;
+        max-width: 68.5rem; /* 1160px - same as home page */
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -38,59 +71,131 @@
 
     .sponsors-intro {
         color: #fff;
-        font-size: 18px;
+        font-size: var(--font-size-md);
         text-align: center;
-        margin-bottom: 50px;
-        line-height: 1.6;
-        max-width: 800px;
+        margin-bottom: var(--spacing-xl);
+        line-height: 1.8;
+        max-width: 50rem; /* 800px */
+    }
+
+    .sponsors-intro p {
+        margin-bottom: 1.5rem;
+    }
+
+    .sponsors-intro p:last-child {
+        margin-bottom: 0;
     }
 
     .sponsors-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 80px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 5rem; /* 80px */
         width: 100%;
-        align-items: center;
-        justify-items: center;
     }
 
     .sponsor-logo {
-        max-height: 150px;
+        max-height: 9.375rem; /* 150px */
         width: auto;
         filter: brightness(1.2);
-        transition: all 0.3s ease;
-    }
-
-    .sponsor-logo:hover {
-        transform: translateY(-5px);
     }
 
     .copyright {
         color: rgba(255,255,255,0.6);
-        font-size: 14px;
-        margin-top: 40px;
+        font-size: var(--font-size-sm);
+        margin-top: var(--spacing-lg);
         text-align: center;
+    }
+
+    .sponsor-item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+        width: 12.5rem; /* 200px */
+        height: 9.375rem; /* 150px */
+        padding: var(--spacing-xs);
+        border-radius: var(--border-radius);
+        flex: 0 0 auto;
+    }
+
+    /* Responsive adjustments */
+    @media screen and (max-width: 1024px) {
+        .content-box {
+            padding: var(--spacing-lg);
+        }
+        
+        .sponsors-grid {
+            gap: 3rem; /* Reduced for medium screens */
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        .sponsors-container {
+            padding: var(--spacing-lg) var(--spacing-sm) var(--spacing-sm);
+        }
+        
+        .content-box {
+            padding: var(--spacing-md);
+        }
+        
+        .sponsor-item {
+            width: 10rem; /* Smaller on mobile */
+            height: 7.5rem;
+        }
+        
+        .sponsors-grid {
+            gap: 1.5rem; /* Further reduced for small screens */
+        }
+        
+        .page-title {
+            font-size: 2rem;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .sponsors-intro {
+            font-size: 1rem;
+        }
     }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="sponsors-container">
-    <h1 class="page-title">Our Sponsors</h1>
+    <h1 class="page-title">{% placeholder "sponsors_page_title" or %}Our Sponsors{% endplaceholder %}</h1>
     
     <div class="content-box">
-        <p class="sponsors-intro">
-            We extend our heartfelt gratitude to our esteemed sponsors whose generous support 
-            enables us to continue our dedication to artistic excellence and cultural enrichment.
-        </p>
-
-        <div class="sponsors-grid">
-            <img src="{% static 'images/sponsors/lexus.png' %}" alt="Lexus" class="sponsor-logo">
-            <img src="{% static 'images/sponsors/samsung-1.png' %}" alt="Samsung" class="sponsor-logo">
-            <img src="{% static 'images/sponsors/omv.png' %}" alt="ÖMV" class="sponsor-logo">
+        <div class="sponsors-intro">
+            {% placeholder "sponsors_intro" or %}
+                <p>
+                    We extend our heartfelt gratitude to our esteemed sponsors whose generous support 
+                    enables us to continue our dedication to artistic excellence and cultural enrichment.
+                </p>
+                <p>
+                    Their partnership is vital to maintaining our historic venue.
+                </p>
+            {% endplaceholder %}
         </div>
 
-        <div class="copyright">© 2024 Our Theater GmbH</div>
+        <div class="sponsors-grid">
+            {% placeholder "sponsors_logos" or %}
+                <div class="sponsor-item">
+                    <img src="{% static 'images/sponsors/lexus.png' %}" alt="Lexus" class="sponsor-logo">
+                </div>
+                <div class="sponsor-item">
+                    <img src="{% static 'images/sponsors/samsung-1.png' %}" alt="Samsung" class="sponsor-logo">
+                </div>
+                <div class="sponsor-item">
+                    <img src="{% static 'images/sponsors/omv.png' %}" alt="ÖMV" class="sponsor-logo">
+                </div>
+            {% endplaceholder %}
+        </div>
+
+        <div class="copyright">
+            {% placeholder "copyright_text" or %}
+                © 2024 {% placeholder "theater_name" or %}Vienna State Opera{% endplaceholder %} • All Rights Reserved
+            {% endplaceholder %}
+        </div>
     </div>
 </div>
 {% endblock %}

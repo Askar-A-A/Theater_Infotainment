@@ -2,19 +2,42 @@
 {% load cms_tags %}
 {% load static %}
 
-{% block title %}Today's Performance - TOSCA{% endblock %}
+{% block title %}
+    {% placeholder "today_page_title" or %}Today's Performance - {% placeholder "theater_name" or %}Vienna State Opera{% endplaceholder %}{% endplaceholder %}
+{% endblock %}
 
 {% block wrapper_style %}
 <style>
     /* Enable scrolling for today page */
     .content-wrapper {
-        overflow: auto;
+        overflow: hidden;
     }
 </style>
 {% endblock %}
 
 {% block extra_css %}
 <style>
+    /* Variables for consistent measurements (same as other pages) */
+    :root {
+        --spacing-xs: 0.5rem;
+        --spacing-sm: 1rem;
+        --spacing-md: 1.5rem;
+        --spacing-lg: 2rem;
+        --spacing-xl: 3rem;
+        
+        --border-radius: 10px;
+        --border-thin: 1px solid rgba(255,255,255,0.1);
+        
+        --color-gold: #d4af37;
+        --color-bg-dark: rgba(0,0,0,0.7);
+        --color-bg-hover: rgba(255,255,255,0.1);
+        
+        --font-size-sm: 1rem;
+        --font-size-md: 1.25rem;
+        --font-size-lg: 2.25rem;
+        --font-size-xl: 3rem;
+    }
+
     .theater-container {
         width: 1280px;
         height: 100%;
@@ -30,6 +53,7 @@
         overflow-y: scroll;
         scroll-snap-type: y mandatory;
         -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
     }
 
     .content-section {
@@ -43,13 +67,39 @@
         padding: 80px 70px 40px 40px;
         box-sizing: border-box;
     }
+    
+    /* Vertical scroll indicators - copied from about.html */
+    .scroll-indicators {
+        position: fixed;
+        left: 30px;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-sm);
+        z-index: 100;
+    }
+
+    .scroll-dot {
+        width: 1rem;
+        height: 1rem;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.3);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .scroll-dot.active {
+        background: var(--color-gold);
+        transform: scale(1.2);
+    }
 
     /* Content styling */
     .content-box {
-        background: rgba(0,0,0,0.7);
-        border: 1px solid rgba(255,255,255,0.1);
-        border-radius: 10px;
-        padding: 40px;
+        background: var(--color-bg-dark);
+        border: var(--border-thin);
+        border-radius: var(--border-radius);
+        padding: var(--spacing-xl);
         width: 90%;
         max-width: 1000px;
         display: flex;
@@ -61,13 +111,13 @@
 
     .section-icon {
         font-size: 48px;
-        color: #d4af37;
-        margin-bottom: 20px;
+        color: var(--color-gold);
+        margin-bottom: var(--spacing-md);
     }
 
     .section-title {
         font-size: 32px;
-        color: #d4af37;
+        color: var(--color-gold);
         margin-bottom: 25px;
         font-family: 'Playfair Display', serif;
         text-align: center;
@@ -76,43 +126,34 @@
     /* Production team styling */
     .production-grid {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr 1fr;
         gap: 30px;
         width: 100%;
     }
 
     .team-section {
-        margin-bottom: 20px;
+        margin-bottom: var(--spacing-md);
+        width: 100%;
     }
 
     .team-title {
         font-size: 22px;
-        color: #d4af37;
+        color: var(--color-gold);
         margin-bottom: 15px;
         text-align: center;
     }
 
-    .team-list {
-        list-style: none;
-        padding: 0;
-    }
-
-    .team-member {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 12px;
-        border-bottom: 1px solid rgba(255,255,255,0.1);
-        padding-bottom: 8px;
-    }
-
-    .role {
-        color: #d4af37;
-        font-weight: bold;
-    }
-
-    .name {
+    .team-content {
+        background: rgba(0,0,0,0.3);
+        border: var(--border-thin);
+        border-radius: var(--border-radius);
+        padding: var(--spacing-md);
         color: #fff;
-        text-align: right;
+        line-height: 1.6;
+        font-size: 16px;
+        height: 100%;
+        min-height: 300px;
+        overflow-y: auto;
     }
 
     /* Cast styling */
@@ -120,12 +161,12 @@
         display: flex;
         justify-content: space-between;
         margin-bottom: 12px;
-        border-bottom: 1px solid rgba(255,255,255,0.1);
+        border-bottom: var(--border-thin);
         padding-bottom: 8px;
     }
 
     .character {
-        color: #d4af37;
+        color: var(--color-gold);
         font-weight: bold;
     }
 
@@ -141,134 +182,170 @@
         line-height: 1.6;
         text-align: left;
         margin-bottom: 15px;
+        width: 100%;
     }
 
-    .act-title {
-        color: #d4af37;
-        font-size: 20px;
-        margin: 20px 0 10px;
-        text-align: left;
-        width: 100%;
+    /* Responsive adjustments */
+    @media screen and (max-width: 768px) {
+        .content-box {
+            width: 95%;
+            padding: var(--spacing-lg);
+        }
+        
+        .scroll-indicators {
+            right: 10px;
+        }
+        
+        .scroll-dot {
+            width: 0.8rem;
+            height: 0.8rem;
+        }
+        
+        .production-grid {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        
+        .team-content {
+            padding: var(--spacing-sm);
+            min-height: auto;
+        }
     }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="theater-container">
-    
+    <!-- Vertical Scroll Indicators -->
+    <div class="scroll-indicators">
+        <div class="scroll-dot active" data-page="0"></div>
+        <div class="scroll-dot" data-page="1"></div>
+    </div>
+
     <div class="main-content">
         <!-- Leading Team & Cast Section -->
-        <div class="content-section">
+        <div class="content-section" id="section-0">
             <div class="content-box">
                 <i class="fas fa-users section-icon"></i>
-                <h2 class="section-title">Leading Team & Cast</h2>
+                <h2 class="section-title">{% placeholder "team_section_title" or %}Leading Team & Cast{% endplaceholder %}</h2>
                 
                 <div class="production-grid">
                     <!-- Production Team -->
                     <div class="team-section">
-                        <h3 class="team-title">Production Team</h3>
-                        <ul class="team-list">
-                            <li class="team-member">
-                                <span class="role">Conductor</span>
-                                <span class="name">Riccardo Muti</span>
-                            </li>
-                            <li class="team-member">
-                                <span class="role">Director</span>
-                                <span class="name">Franco Zeffirelli</span>
-                            </li>
-                            <li class="team-member">
-                                <span class="role">Set Design</span>
-                                <span class="name">Maria Björnson</span>
-                            </li>
-                            <li class="team-member">
-                                <span class="role">Costume Design</span>
-                                <span class="name">Anthony Powell</span>
-                            </li>
-                            <li class="team-member">
-                                <span class="role">Lighting Design</span>
-                                <span class="name">Jennifer Tipton</span>
-                            </li>
-                            <li class="team-member">
-                                <span class="role">Chorus Master</span>
-                                <span class="name">Martin Wright</span>
-                            </li>
-                        </ul>
+                        <h3 class="team-title">{% placeholder "production_team_title" or %}Production Team{% endplaceholder %}</h3>
+                        <div class="team-content">
+                            {% placeholder "production_team_content" or %}
+                            <p><strong>Conductor:</strong> Riccardo Muti</p>
+                            <p><strong>Director:</strong> Franco Zeffirelli</p>
+                            <p><strong>Set Design:</strong> Maria Björnson</p>
+                            <p><strong>Costume Design:</strong> Anthony Powell</p>
+                            <p><strong>Lighting Design:</strong> Jennifer Tipton</p>
+                            <p><strong>Chorus Master:</strong> Martin Wright</p>
+                            {% endplaceholder %}
+                        </div>
                     </div>
                     
                     <!-- Cast -->
                     <div class="team-section">
-                        <h3 class="team-title">Cast</h3>
-                        <ul class="team-list">
-                            <li class="cast-member">
-                                <span class="character">Floria Tosca</span>
-                                <span class="actor">Anna Netrebko</span>
-                            </li>
-                            <li class="cast-member">
-                                <span class="character">Mario Cavaradossi</span>
-                                <span class="actor">Jonas Kaufmann</span>
-                            </li>
-                            <li class="cast-member">
-                                <span class="character">Baron Scarpia</span>
-                                <span class="actor">Bryn Terfel</span>
-                            </li>
-                            <li class="cast-member">
-                                <span class="character">Cesare Angelotti</span>
-                                <span class="actor">Luca Pisaroni</span>
-                            </li>
-                            <li class="cast-member">
-                                <span class="character">Sacristan</span>
-                                <span class="actor">Alessandro Corbelli</span>
-                            </li>
-                            <li class="cast-member">
-                                <span class="character">Spoletta</span>
-                                <span class="actor">Aled Hall</span>
-                            </li>
-                        </ul>
+                        <h3 class="team-title">{% placeholder "cast_title" or %}Cast{% endplaceholder %}</h3>
+                        <div class="team-content">
+                            {% placeholder "cast_content" or %}
+                            <p><strong>Floria Tosca:</strong> Anna Netrebko</p>
+                            <p><strong>Mario Cavaradossi:</strong> Jonas Kaufmann</p>
+                            <p><strong>Baron Scarpia:</strong> Bryn Terfel</p>
+                            <p><strong>Cesare Angelotti:</strong> Luca Pisaroni</p>
+                            <p><strong>Sacristan:</strong> Alessandro Corbelli</p>
+                            <p><strong>Spoletta:</strong> Aled Hall</p>
+                            {% endplaceholder %}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Plot Summary Section - Completely separate from first section -->
-        <div class="content-section">
+        <!-- Plot Summary Section -->
+        <div class="content-section" id="section-1">
             <div class="content-box">
                 <i class="fas fa-book-open section-icon"></i>
-                <h2 class="section-title">Synopsis</h2>
+                <h2 class="section-title">{% placeholder "synopsis_section_title" or %}Synopsis{% endplaceholder %}</h2>
                 
-                <p class="summary-content">
-                    Set in Rome in June 1800, Tosca is a politically charged opera centered around three main characters: 
-                    Floria Tosca, a celebrated singer; Mario Cavaradossi, a painter and revolutionary; and Baron Scarpia, 
-                    the corrupt Chief of Police.
-                </p>
-                
-                <h3 class="act-title">Act I</h3>
-                <p class="summary-content">
-                    Inside the church of Sant'Andrea della Valle, an escaped political prisoner named Angelotti seeks refuge. 
-                    His friend, the painter Cavaradossi, arrives to work on his portrait of Mary Magdalene and promises to help him. 
-                    Tosca, Cavaradossi's lover, arrives and becomes jealous when she suspects the woman in the painting is someone 
-                    he knows. After she leaves, Cavaradossi and Angelotti hear cannon fire announcing an escaped prisoner, and they flee. 
-                    Baron Scarpia arrives searching for Angelotti and finds evidence linking Cavaradossi to him. When Tosca returns, 
-                    Scarpia plays on her jealousy to make her reveal Cavaradossi's whereabouts.
-                </p>
-                
-                <h3 class="act-title">Act II</h3>
-                <p class="summary-content">
-                    In his apartment at the Palazzo Farnese, Scarpia anticipates capturing both Angelotti and Cavaradossi. Cavaradossi is 
-                    brought in and tortured within Tosca's hearing. Unable to bear his suffering, she reveals Angelotti's hiding place. 
-                    Scarpia sentences Cavaradossi to death but offers Tosca a deal: if she gives herself to him, he will spare Cavaradossi. 
-                    Tosca reluctantly agrees. After writing a safe-conduct for the couple, Scarpia attempts to embrace Tosca, but she stabs 
-                    him to death with a knife from his dinner table.
-                </p>
-                
-                <h3 class="act-title">Act III</h3>
-                <p class="summary-content">
-                    At dawn on the battlements of Castel Sant'Angelo, Cavaradossi awaits execution. Tosca arrives to tell him she has 
-                    secured his freedom and that the execution will be a sham, but he must fall as if dead. After the firing squad 
-                    departs, Tosca discovers that Scarpia has betrayed her: the execution was real. As Scarpia's men rush in to arrest 
-                    her for his murder, Tosca jumps from the battlements to her death.
-                </p>
+                <div class="summary-content">
+                    {% placeholder "synopsis_content" or %}
+                    <p>
+                        Set in Rome in June 1800, Tosca is a politically charged opera centered around three main characters: 
+                        Floria Tosca, a celebrated singer; Mario Cavaradossi, a painter and revolutionary; and Baron Scarpia, 
+                        the corrupt Chief of Police.
+                    </p>
+                    <p>
+                        Inside the church of Sant'Andrea della Valle, an escaped political prisoner named Angelotti seeks refuge. 
+                        His friend, the painter Cavaradossi, arrives to work on his portrait of Mary Magdalene and promises to help him. 
+                        Tosca, Cavaradossi's lover, arrives and becomes jealous when she suspects the woman in the painting is someone 
+                        he knows. After she leaves, Cavaradossi and Angelotti hear cannon fire announcing an escaped prisoner, and they flee. 
+                        Baron Scarpia arrives searching for Angelotti and finds evidence linking Cavaradossi to him. When Tosca returns, 
+                        Scarpia plays on her jealousy to make her reveal Cavaradossi's whereabouts.
+                    </p>
+                    <p>
+                        In his apartment at the Palazzo Farnese, Scarpia anticipates capturing both Angelotti and Cavaradossi. Cavaradossi is 
+                        brought in and tortured within Tosca's hearing. Unable to bear his suffering, she reveals Angelotti's hiding place. 
+                        Scarpia sentences Cavaradossi to death but offers Tosca a deal: if she gives herself to him, he will spare Cavaradossi. 
+                        Tosca reluctantly agrees. After writing a safe-conduct for the couple, Scarpia attempts to embrace Tosca, but she stabs 
+                        him to death with a knife from his dinner table.
+                    </p>
+                    <p>
+                        At dawn on the battlements of Castel Sant'Angelo, Cavaradossi awaits execution. Tosca arrives to tell him she has 
+                        secured his freedom and that the execution will be a sham, but he must fall as if dead. After the firing squad 
+                        departs, Tosca discovers that Scarpia has betrayed her: the execution was real. As Scarpia's men rush in to arrest 
+                        her for his murder, Tosca jumps from the battlements to her death.
+                    </p>
+                    {% endplaceholder %}
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const mainContent = document.querySelector('.main-content');
+        const dots = document.querySelectorAll('.scroll-dot');
+        const sections = document.querySelectorAll('.content-section');
+        
+        // Function to check which section is in view
+        function checkCurrentSection() {
+            let currentSection = 0;
+            const scrollPosition = mainContent.scrollTop;
+            
+            sections.forEach((section, index) => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                
+                if (scrollPosition >= sectionTop - sectionHeight / 3) {
+                    currentSection = index;
+                }
+            });
+            
+            updateActiveDot(currentSection);
+        }
+        
+        // Update the active dot
+        function updateActiveDot(index) {
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+        }
+        
+        // Scroll to section when dot is clicked
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                sections[index].scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+        
+        // Listen for scroll events
+        mainContent.addEventListener('scroll', checkCurrentSection);
+        
+        // Initialize
+        checkCurrentSection();
+    });
+</script>
 {% endblock %}

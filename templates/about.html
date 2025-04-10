@@ -2,36 +2,60 @@
 {% load cms_tags %}
 {% load static %}
 
-{% block title %}About Us - {% placeholder "theater_name_short" default "[Enter your theater name]" %}{% endblock %}
+{% block title %}
+    {% placeholder "about_page_title" or %}About Us - {% placeholder "theater_name" or %}Vienna State Opera{% endplaceholder %}{% endplaceholder %}
+{% endblock %}
 
 {% block wrapper_style %}
 <style>
-    /* Enable scrolling for about page */
+    /* Enable smooth scrolling for about page */
     .content-wrapper {
-        overflow: auto;
+        overflow: hidden;
     }
 </style>
 {% endblock %}
 
 {% block extra_css %}
 <style>
+    :root {
+        --spacing-xs: 0.5rem;
+        --spacing-sm: 1rem;
+        --spacing-md: 1.5rem;
+        --spacing-lg: 2rem;
+        --spacing-xl: 3rem;
+        
+        --border-radius: 10px;
+        --border-thin: 1px solid rgba(255,255,255,0.1);
+        
+        --color-gold: #d4af37;
+        --color-bg-dark: rgba(0,0,0,0.7);
+        --color-bg-hover: rgba(255,255,255,0.1);
+        
+        --font-size-sm: 1rem;
+        --font-size-md: 1.25rem;
+        --font-size-lg: 2.25rem;
+        --font-size-xl: 3rem;
+    }
+
     .theater-container {
-        width: 1280px;
+        width: 100%;
         height: 100%;
         position: relative;
         box-sizing: border-box;
-        overflow: hidden; /* Hide any potential overflow */
+        overflow: hidden;
     }
 
-    /* This is the main change - setting up scroll snapping */
+    /* Main content area with scrolling */
     .main-content {
-        height: 100%;
+        height: 100vh;
         width: 100%;
         overflow-y: scroll;
         scroll-snap-type: y mandatory; /* Force snap to sections */
         -webkit-overflow-scrolling: touch; /* Smooth scrolling on touch devices */
+        scroll-behavior: smooth;
     }
 
+    /* Section styling with snap points */
     .content-section {
         height: 100vh; /* Full viewport height */
         width: 100%;
@@ -40,230 +64,333 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        padding: 80px 70px 40px 40px; /* Added top padding for the header */
-        box-sizing: border-box;
-        /* Removed section background colors to allow base gradient to show through */
+        position: relative;
     }
 
-    /* Content styling */
+    /* Background overlay for sections */
+    .section-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        filter: brightness(0.3);
+        z-index: -1;
+    }
+
+    /* Section backgrounds */
+    .intro-bg {
+        background-image: url('{% static "images/theater-interior.jpg" %}');
+        animation: slowZoom 60s infinite alternate;
+    }
+
+    .history-bg {
+        background-image: url('{% static "images/theater-exterior.jpg" %}');
+        animation: slowPan 60s infinite alternate;
+    }
+    
+    .awards-bg {
+        background-image: url('{% static "images/theater-stage.jpg" %}');
+        animation: slowFade 60s infinite alternate;
+    }
+
+    @keyframes slowZoom {
+        0% { transform: scale(1); }
+        100% { transform: scale(1.1); }
+    }
+
+    @keyframes slowPan {
+        0% { background-position: center left; }
+        100% { background-position: center right; }
+    }
+    
+    @keyframes slowFade {
+        0% { filter: brightness(0.3) sepia(0); }
+        100% { filter: brightness(0.3) sepia(0.4); }
+    }
+
+    /* Vertical scroll indicators - similar to events.html but vertical */
+    .scroll-indicators {
+        position: fixed;
+        left: 30px;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-sm);
+        z-index: 100;
+    }
+
+    .scroll-dot {
+        width: 1rem;
+        height: 1rem;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.3);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .scroll-dot.active {
+        background: var(--color-gold);
+        transform: scale(1.2);
+    }
+
+    /* Content box styling */
     .content-box {
-        background: rgba(0,0,0,0.7);
-        border: 1px solid rgba(255,255,255,0.1);
-        border-radius: 10px;
-        padding: 40px;
-        width: 90%;
-        max-width: 1000px;
+        background: var(--color-bg-dark);
+        border: var(--border-thin);
+        border-radius: var(--border-radius);
+        padding: var(--spacing-xl) var(--spacing-xl) var(--spacing-xl) var(--spacing-xl);
+        width: 95%;
+        max-width: 900px; /* Increased from 800px */
         display: flex;
         flex-direction: column;
         align-items: center;
+        backdrop-filter: blur(5px);
     }
 
+    /* Icon styling */
     .section-icon {
-        font-size: 48px;
-        color: #d4af37;
-        margin-bottom: 30px;
+        font-size: 52px; /* Slightly larger */
+        color: var(--color-gold);
+        margin-bottom: 15px; /* Reduced to place closer to title */
     }
 
+    /* Title styling */
     .section-title {
-        font-size: 32px;
-        color: #d4af37;
-        margin-bottom: 30px;
+        font-size: 42px;
+        color: var(--color-gold);
+        margin-bottom: 40px; /* Increased for more space between title and content */
         font-family: 'Playfair Display', serif;
         text-align: center;
+        text-shadow: 0 0 10px rgba(0,0,0,0.5);
     }
 
+    /* Content styling */
     .section-content {
         color: #fff;
         font-size: 18px;
         line-height: 1.8;
         text-align: center;
+        width: 100%;
     }
 
-    /* Stats grid styling */
-    .stats-grid {
+    .section-content p {
+        margin-bottom: 1.5rem;
+    }
+
+    .section-content p:last-child {
+        margin-bottom: 0;
+    }
+    
+    /* Awards grid styling */
+    .awards-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 30px;
+        gap: var(--spacing-md);
         width: 100%;
-        margin-top: 20px;
+        margin-top: var(--spacing-md);
     }
-
-    .stat-item {
-        text-align: center;
-        padding: 20px;
-        background: rgba(255,255,255,0.1);
-        border-radius: 8px;
-    }
-
-    .stat-number {
-        font-size: 36px;
-        color: #d4af37;
-        margin-bottom: 10px;
-    }
-
-    .stat-label {
-        color: #fff;
-        font-size: 16px;
-    }
-
-    /* Timeline styling */
-    .timeline-item {
+    
+    .award-item {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: var(--border-radius);
+        padding: var(--spacing-md);
         display: flex;
+        flex-direction: column;
         align-items: center;
-        margin-bottom: 30px;
-        width: 100%;
+        text-align: center;
+    }
+    
+    .award-icon {
+        font-size: 36px;
+        color: var(--color-gold);
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .award-title {
+        color: var(--color-gold);
+        font-size: 18px;
+        margin-bottom: var(--spacing-xs);
+    }
+    
+    .award-year {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 14px;
     }
 
-    .year {
-        color: #d4af37;
-        font-size: 24px;
-        width: 100px;
-        flex-shrink: 0;
-    }
-
-    .timeline-content {
-        color: #fff;
-        margin-left: 20px;
-        text-align: left;
-    }
-
-    /* Scroll indicators */
-    .scroll-indicator {
-        position: absolute;
-        bottom: 10%;
-        left: 50%;
-        transform: translateX(-50%);
-        color: #d4af37;
-        font-size: 24px;
-        animation: bounce 2s infinite;
-    }
-
-    @keyframes bounce {
-        0%, 20%, 50%, 80%, 100% {
-            transform: translateY(0) translateX(-50%);
+    /* Responsive adjustments */
+    @media screen and (max-width: 768px) {
+        .content-box {
+            width: 95%;
+            padding: var(--spacing-lg);
         }
-        40% {
-            transform: translateY(-15px) translateX(-50%);
+        
+        .section-title {
+            font-size: 32px;
+            margin-bottom: 30px; /* Slightly less spacing on mobile */
         }
-        60% {
-            transform: translateY(-7px) translateX(-50%);
+        
+        .section-content {
+            font-size: 16px;
+        }
+        
+        .awards-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        .scroll-indicators {
+            right: 10px;
+        }
+        
+        .scroll-dot {
+            width: 0.8rem;
+            height: 0.8rem;
         }
     }
-
-    /* Removed the section background variation classes completely */
+    
+    @media screen and (max-width: 480px) {
+        .awards-grid {
+            grid-template-columns: 1fr;
+        }
+    }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="theater-container">
-    <div class="main-content">
-        <!-- Overview Section -->
-        <div class="content-section">
-            <div class="content-box">
-                <i class="fas fa-landmark section-icon"></i>
-                <h2 class="section-title">{% placeholder "welcome_title" default "[Enter your welcome section title, e.g. 'Welcome to Your Theater']" %}</h2>
-                <p class="section-content">
-                    {% placeholder "welcome_paragraph_1" default "[Enter your first introductory paragraph about your theater's profile and offerings]" %}
-                </p>
-                <p class="section-content">
-                    {% placeholder "welcome_paragraph_2" default "[Enter your second paragraph about your theater's mission or cultural importance]" %}
-                </p>
-            </div>
-        </div>
+    <!-- Vertical Scroll Indicators -->
+    <div class="scroll-indicators">
+        <div class="scroll-dot active" data-page="0"></div>
+        <div class="scroll-dot" data-page="1"></div>
+        <div class="scroll-dot" data-page="2"></div>
+    </div>
 
-        <!-- Statistics Section -->
-        <div class="content-section">
+    <div class="main-content">
+        <!-- Introduction Section -->
+        <div class="content-section" id="section-0">
+            <div class="section-bg intro-bg"></div>
             <div class="content-box">
                 <i class="fas fa-landmark section-icon"></i>
-                <h2 class="section-title">{% placeholder "stats_title" default "[Enter your statistics section title, e.g. 'By the Numbers']" %}</h2>
-                <p class="section-content">
-                    {% placeholder "stats_intro" default "[Enter a brief introduction to your theater's statistics]" %}
-                </p>
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="stat-number">{% placeholder "stat_1_number" default "[Number]" %}</div>
-                        <div class="stat-label">{% placeholder "stat_1_label" default "[Label for statistic 1, e.g. 'Performances per Season']" %}</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">{% placeholder "stat_2_number" default "[Number]" %}</div>
-                        <div class="stat-label">{% placeholder "stat_2_label" default "[Label for statistic 2, e.g. 'Different Productions']" %}</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">{% placeholder "stat_3_number" default "[Number]" %}</div>
-                        <div class="stat-label">{% placeholder "stat_3_label" default "[Label for statistic 3, e.g. 'Seating Capacity']" %}</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">{% placeholder "stat_4_number" default "[Number]" %}</div>
-                        <div class="stat-label">{% placeholder "stat_4_label" default "[Label for statistic 4, e.g. 'Orchestra Members']" %}</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">{% placeholder "stat_5_number" default "[Number]" %}</div>
-                        <div class="stat-label">{% placeholder "stat_5_label" default "[Label for statistic 5, e.g. 'Employees']" %}</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">{% placeholder "stat_6_number" default "[Number]" %}</div>
-                        <div class="stat-label">{% placeholder "stat_6_label" default "[Label for statistic 6, e.g. 'World Premieres per Year']" %}</div>
-                    </div>
+                <h2 class="section-title">{% placeholder "overview_title" or %}Welcome to Our Theater{% endplaceholder %}</h2>
+                <div class="section-content">
+                    {% placeholder "overview_content" or %}
+                    <p>
+                        Welcome to our theater, one of the world's leading opera houses and a bastion of cultural excellence. 
+                        For generations, we have dedicated ourselves to presenting world-class opera and ballet performances 
+                        that inspire, challenge, and move our audiences.
+                    </p>
+                    <p>
+                        Our commitment to artistic innovation, while preserving classical traditions, has made us a cultural 
+                        beacon in the international performing arts community. Each season, we bring together the finest singers, 
+                        musicians, and creative artists from around the globe to create unforgettable experiences.
+                    </p>
+                    <p>
+                        We invite you to explore our rich history, award-winning productions, and the exceptional 
+                        talent that makes our theater a treasured cultural institution.
+                    </p>
+                    {% endplaceholder %}
                 </div>
             </div>
         </div>
 
         <!-- History Section -->
-        <div class="content-section">
+        <div class="content-section" id="section-1">
+            <div class="section-bg history-bg"></div>
             <div class="content-box">
                 <i class="fas fa-history section-icon"></i>
-                <h2 class="section-title">{% placeholder "history_title" default "[Enter your history section title, e.g. 'Our Rich History']" %}</h2>
-                <div class="timeline-item">
-                    <div class="year">{% placeholder "history_year_1" default "[Year]" %}</div>
-                    <div class="timeline-content">
-                        {% placeholder "history_event_1" default "[Enter description of first historical event]" %}
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="year">{% placeholder "history_year_2" default "[Year]" %}</div>
-                    <div class="timeline-content">
-                        {% placeholder "history_event_2" default "[Enter description of second historical event]" %}
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="year">{% placeholder "history_year_3" default "[Year]" %}</div>
-                    <div class="timeline-content">
-                        {% placeholder "history_event_3" default "[Enter description of third historical event]" %}
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="year">{% placeholder "history_year_4" default "[Year]" %}</div>
-                    <div class="timeline-content">
-                        {% placeholder "history_event_4" default "[Enter description of fourth historical event]" %}
-                    </div>
+                <h2 class="section-title">{% placeholder "history_title" or %}Our Rich History{% endplaceholder %}</h2>
+                <div class="section-content">
+                    {% placeholder "history_content" or %}
+                    <p>
+                        Our theater has a storied past, beginning with its grand opening in 1869 as one of Europe's most 
+                        architecturally significant opera houses. Designed by renowned architects, the neo-Renaissance 
+                        building quickly became a symbol of cultural excellence and artistic achievement.
+                    </p>
+                    <p>
+                        Through the Belle Époque and early 20th century, legendary conductors and composers including Gustav Mahler 
+                        and Richard Strauss helped establish our reputation for musical excellence and innovation. Many important 
+                        works received their world premieres on our stage, cementing our place in musical history.
+                    </p>
+                    <p>
+                        Despite challenges, including reconstruction after World War II, our theater has continued to thrive. 
+                        In 2019, we celebrated 150 years of artistic achievement, with a renewed commitment to preserving our 
+                        rich heritage while embracing innovation for the future.
+                    </p>
+                    {% endplaceholder %}
                 </div>
             </div>
         </div>
-
-        <!-- Awards & Recognition -->
-        <div class="content-section">
+        
+        <!-- Awards Section -->
+        <div class="content-section" id="section-2">
+            <div class="section-bg awards-bg"></div>
             <div class="content-box">
                 <i class="fas fa-award section-icon"></i>
-                <h2 class="section-title">{% placeholder "awards_title" default "[Enter your awards section title, e.g. 'Awards & Recognition']" %}</h2>
-                <p class="section-content">
-                    {% placeholder "awards_intro" default "[Enter introductory text about your theater's awards and recognition]" %}
-                </p>
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <i class="fas fa-star section-icon" style="font-size: 24px; margin-bottom: 15px;"></i>
-                        <div class="stat-label">{% placeholder "award_1" default "[Enter first award or recognition]" %}</div>
-                    </div>
-                    <div class="stat-item">
-                        <i class="fas fa-medal section-icon" style="font-size: 24px; margin-bottom: 15px;"></i>
-                        <div class="stat-label">{% placeholder "award_2" default "[Enter second award or recognition]" %}</div>
-                    </div>
-                    <div class="stat-item">
-                        <i class="fas fa-trophy section-icon" style="font-size: 24px; margin-bottom: 15px;"></i>
-                        <div class="stat-label">{% placeholder "award_3" default "[Enter third award or recognition]" %}</div>
-                    </div>
+                <h2 class="section-title">{% placeholder "awards_title" or %}Awards & Recognition{% endplaceholder %}</h2>
+                <div class="section-content">
+                    {% placeholder "awards_intro" or %}
+                    <p>
+                        Our commitment to artistic excellence has been recognized through numerous international awards 
+                        and distinctions. These accolades highlight our theater's significant contribution to the 
+                        performing arts and our dedication to the highest standards of musical and theatrical presentation.
+                    </p>
+                    <p>
+                        Our productions have received critical acclaim worldwide, with particular recognition for our 
+                        innovative staging of classical works, exceptional orchestral performances, and our ability to 
+                        attract and nurture the finest vocal talent from across the globe.
+                    </p>
+                    {% endplaceholder %}
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const mainContent = document.querySelector('.main-content');
+        const dots = document.querySelectorAll('.scroll-dot');
+        const sections = document.querySelectorAll('.content-section');
+        
+        // Function to check which section is in view
+        function checkCurrentSection() {
+            let currentSection = 0;
+            const scrollPosition = mainContent.scrollTop;
+            
+            sections.forEach((section, index) => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                
+                if (scrollPosition >= sectionTop - sectionHeight / 3) {
+                    currentSection = index;
+                }
+            });
+            
+            updateActiveDot(currentSection);
+        }
+        
+        // Update the active dot
+        function updateActiveDot(index) {
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+        }
+        
+        // Scroll to section when dot is clicked
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                sections[index].scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+        
+        // Listen for scroll events
+        mainContent.addEventListener('scroll', checkCurrentSection);
+        
+        // Initialize
+        checkCurrentSection();
+    });
+</script>
 {% endblock %}

@@ -2,24 +2,58 @@
 {% load cms_tags %}
 {% load static %}
 
-{% block title %}{{ event.title }} - TOSCA{% endblock %}
+{% block title %}
+    {% placeholder "event_detail_title" or %}Salome - {% placeholder "theater_name" or %}Vienna State Opera{% endplaceholder %}{% endplaceholder %}
+{% endblock %}
+
+{% block wrapper_style %}
+<style>
+    /* Enable scrolling for event detail page */
+    .content-wrapper {
+        overflow: auto;
+    }
+</style>
+{% endblock %}
 
 {% block extra_css %}
 <style>
+    /* Variables for consistent measurements (same as other pages) */
+    :root {
+        --spacing-xs: 0.5rem;
+        --spacing-sm: 1rem;
+        --spacing-md: 1.5rem;
+        --spacing-lg: 2rem;
+        --spacing-xl: 3rem;
+        
+        --border-radius: 10px;
+        --border-thin: 1px solid rgba(255,255,255,0.1);
+        
+        --color-gold: #d4af37;
+        --color-bg-dark: rgba(0,0,0,0.7);
+        --color-bg-hover: rgba(255,255,255,0.1);
+        
+        --font-size-sm: 1rem;
+        --font-size-md: 1.25rem;
+        --font-size-lg: 2.25rem;
+        --font-size-xl: 3rem;
+    }
+
+    /* Event detail container */
     .event-detail-container {
-        width: 1280px;
-        height: 100vh;
+        width: 100%;
+        height: 100%;
         position: relative;
         overflow-y: auto;
     }
 
+    /* Event header with image and title */
     .event-header {
         height: 40vh;
         position: relative;
         display: flex;
         justify-content: space-between;
-        padding: 40px;
-        background: rgba(0,0,0,0.7);
+        padding: var(--spacing-lg);
+        background: var(--color-bg-dark);
         overflow: hidden;
     }
 
@@ -28,29 +62,30 @@
     }
 
     .event-title {
-        font-size: 64px;
+        font-size: 4rem;
         color: #fff;
-        margin-bottom: 20px;
+        margin-bottom: var(--spacing-md);
         font-family: 'Playfair Display', serif;
     }
 
     .event-composer {
-        font-size: 32px;
-        color: #d4af37;
+        font-size: 2rem;
+        color: var(--color-gold);
         font-style: italic;
-        margin-bottom: 20px;
+        margin-bottom: var(--spacing-md);
     }
 
     .event-dates {
-        font-size: 20px;
+        font-size: var(--font-size-md);
         color: #fff;
     }
 
+    /* Main content area with description and sidebar */
     .event-content {
-        padding: 40px;
+        padding: var(--spacing-lg);
         display: grid;
         grid-template-columns: 2fr 1fr;
-        gap: 40px;
+        gap: var(--spacing-lg);
     }
 
     .event-description {
@@ -59,30 +94,31 @@
     }
 
     .event-description h2 {
-        color: #d4af37;
-        font-size: 28px;
-        margin-bottom: 20px;
+        color: var(--color-gold);
+        font-size: 1.75rem;
+        margin-bottom: var(--spacing-md);
         font-family: 'Playfair Display', serif;
     }
 
     .event-description p {
-        margin-bottom: 20px;
+        margin-bottom: var(--spacing-md);
     }
 
+    /* Sidebar with event information */
     .event-sidebar {
         background: rgba(0, 0, 0, 0.3);
-        border-radius: 10px;
-        padding: 30px;
+        border-radius: var(--border-radius);
+        padding: var(--spacing-lg);
     }
 
     .event-info-item {
-        margin-bottom: 25px;
+        margin-bottom: var(--spacing-lg);
     }
 
     .info-label {
-        color: #d4af37;
-        font-size: 18px;
-        margin-bottom: 5px;
+        color: var(--color-gold);
+        font-size: var(--font-size-md);
+        margin-bottom: var(--spacing-xs);
         font-weight: bold;
     }
 
@@ -90,26 +126,30 @@
         color: #fff;
     }
 
-    .cast-member {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 8px;
+    /* New flexible cast content styling */
+    .cast-content {
         color: #fff;
+        line-height: 1.6;
+        font-size: 16px;
     }
 
-    .cast-role {
-        color: #d4af37;
+    .cast-content p {
+        margin-bottom: 0.5rem;
+    }
+
+    .cast-content strong {
+        color: var(--color-gold);
         font-style: italic;
     }
 
     .back-button {
         display: inline-block;
-        margin-top: 30px;
-        padding: 12px 25px;
+        margin-top: var(--spacing-lg);
+        padding: var(--spacing-sm) var(--spacing-md);
         background: rgba(212, 175, 55, 0.2);
-        color: #d4af37;
+        color: var(--color-gold);
         text-decoration: none;
-        border: 1px solid #d4af37;
+        border: 1px solid var(--color-gold);
         border-radius: 5px;
         transition: all 0.3s ease;
     }
@@ -122,7 +162,7 @@
         width: 30%;
         height: 300px;
         overflow: hidden;
-        border-radius: 5px;
+        border-radius: var(--border-radius);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -132,11 +172,50 @@
         max-width: 100%;
         max-height: 100%;
         object-fit: contain;
-        border-radius: 5px;
+        border-radius: var(--border-radius);
     }
 
-    .header-overlay {
-        display: none;
+    /* Responsive adjustments */
+    @media screen and (max-width: 1024px) {
+        .event-content {
+            padding: var(--spacing-md);
+            gap: var(--spacing-md);
+        }
+        
+        .event-header {
+            padding: var(--spacing-md);
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        .event-header {
+            flex-direction: column;
+            height: auto;
+            padding: var(--spacing-md) var(--spacing-sm);
+        }
+        
+        .event-title-container {
+            width: 100%;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .event-image-container {
+            width: 100%;
+            height: 200px;
+        }
+        
+        .event-content {
+            grid-template-columns: 1fr;
+            padding: var(--spacing-md) var(--spacing-sm);
+        }
+        
+        .event-title {
+            font-size: 2.5rem;
+        }
+        
+        .event-composer {
+            font-size: 1.5rem;
+        }
     }
 </style>
 {% endblock %}
@@ -146,12 +225,20 @@
     <!-- Event Header -->
     <div class="event-header">
         <div class="event-title-container">
-            <h1 class="event-title">Salome</h1>
-            <div class="event-composer">Richard Strauss</div>
-            <div class="event-dates">16.8. - 25.11.2024</div>
+            <h1 class="event-title">
+                {% placeholder "event_title" or %}Salome{% endplaceholder %}
+            </h1>
+            <div class="event-composer">
+                {% placeholder "event_composer" or %}Richard Strauss{% endplaceholder %}
+            </div>
+            <div class="event-dates">
+                {% placeholder "event_dates" or %}16.8. - 25.11.2024{% endplaceholder %}
+            </div>
         </div>
         <div class="event-image-container">
-            <img src="{% static 'images/events/salome-1.jpg' %}" alt="Salome">
+            {% placeholder "event_image" or %}
+                <img src="{% static 'images/events/salome-1.jpg' %}" alt="Salome">
+            {% endplaceholder %}
         </div>
     </div>
     
@@ -159,58 +246,53 @@
     <div class="event-content">
         <div class="event-description">
             <h2>About the Performance</h2>
-            <p>Based on Oscar Wilde's play of the same name, Richard Strauss's opera Salome is a powerful one-act drama that shocked audiences when it premiered in 1905. The opera tells the biblical story of Salome, stepdaughter of Herod, who develops an unhealthy obsession with the prophet Jochanaan (John the Baptist).</p>
+            {% placeholder "event_about_content" or %}
+                <p>Based on Oscar Wilde's play of the same name, Richard Strauss's opera Salome is a powerful one-act drama that shocked audiences when it premiered in 1905. The opera tells the biblical story of Salome, stepdaughter of Herod, who develops an unhealthy obsession with the prophet Jochanaan (John the Baptist).</p>
+                
+                <p>When Jochanaan rejects her advances, Salome performs the infamous "Dance of the Seven Veils" for her stepfather in exchange for Jochanaan's head on a silver platter. The opera culminates in Salome's disturbing final monologue as she addresses the severed head.</p>
+                
+                <p>Strauss's revolutionary score features dissonant harmonies and modern tonality that perfectly captures the opera's themes of obsession, desire, and moral corruption. This production, directed by the acclaimed Emma Richardson, presents a contemporary vision of this classic work while honoring its musical complexity.</p>
+            {% endplaceholder %}
             
-            <p>When Jochanaan rejects her advances, Salome performs the infamous "Dance of the Seven Veils" for her stepfather in exchange for Jochanaan's head on a silver platter. The opera culminates in Salome's disturbing final monologue as she addresses the severed head.</p>
-            
-            <p>Strauss's revolutionary score features dissonant harmonies and modern tonality that perfectly captures the opera's themes of obsession, desire, and moral corruption. This production, directed by the acclaimed Emma Richardson, presents a contemporary vision of this classic work while honoring its musical complexity.</p>
-            
-            <h2>Director's Note</h2>
-            <p>Our production of Salome explores the psychological dimensions of desire and rejection, power and helplessness. The minimalist staging allows the powerful music and performances to take center stage, while subtle lighting creates the oppressive atmosphere of Herod's palace.</p>
+            {% placeholder "event_additional_description" or %}{% endplaceholder %}
         </div>
         
         <div class="event-sidebar">
             <div class="event-info-item">
                 <div class="info-label">Duration</div>
-                <div class="info-value">Approximately 1 hour 40 minutes, no intermission</div>
+                <div class="info-value">{% placeholder "event_duration_value" or %}Approximately 1 hour 40 minutes, no intermission{% endplaceholder %}</div>
             </div>
             
             <div class="event-info-item">
                 <div class="info-label">Language</div>
-                <div class="info-value">Performed in German with English subtitles</div>
+                <div class="info-value">{% placeholder "event_language_value" or %}Performed in German with English subtitles{% endplaceholder %}</div>
             </div>
             
             <div class="event-info-item">
                 <div class="info-label">Conductor</div>
-                <div class="info-value">Martina Bergmann</div>
+                <div class="info-value">{% placeholder "event_conductor_value" or %}Martina Bergmann{% endplaceholder %}</div>
             </div>
             
             <div class="event-info-item">
                 <div class="info-label">Director</div>
-                <div class="info-value">Emma Richardson</div>
+                <div class="info-value">{% placeholder "event_director_value" or %}Emma Richardson{% endplaceholder %}</div>
             </div>
             
             <div class="event-info-item">
-                <div class="info-label">Principal Cast</div>
-                <div class="cast-list">
-                    <div class="cast-member">
-                        <span>Maria Klausner</span>
-                        <span class="cast-role">Salome</span>
-                    </div>
-                    <div class="cast-member">
-                        <span>Thomas Reichmann</span>
-                        <span class="cast-role">Jochanaan</span>
-                    </div>
-                    <div class="cast-member">
-                        <span>Karl Weber</span>
-                        <span class="cast-role">Herod</span>
-                    </div>
-                    <div class="cast-member">
-                        <span>Elisabeth Schön</span>
-                        <span class="cast-role">Herodias</span>
-                    </div>
+                <div class="info-label">Cast</div>
+                <div class="cast-content">
+                    {% placeholder "event_cast_content" or %}
+                    <p><strong>Salome:</strong> Maria Klausner</p>
+                    <p><strong>Jochanaan:</strong> Thomas Reichmann</p>
+                    <p><strong>Herod:</strong> Karl Weber</p>
+                    <p><strong>Herodias:</strong> Elisabeth Schön</p>
+                    <p><strong>Narraboth:</strong> Andreas Müller</p>
+                    <p><strong>Page of Herodias:</strong> Sophia Klein</p>
+                    {% endplaceholder %}
                 </div>
             </div>
+            
+            {% placeholder "event_additional_details" or %}{% endplaceholder %}
         </div>
     </div>
 </div>

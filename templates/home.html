@@ -2,7 +2,7 @@
 {% load cms_tags %}
 {% load static %}
 
-{% block title %}TOSCA{% endblock %}
+{% block title %}{% placeholder "theater_name" default "Vienna State Opera" %}{% endblock %}
 
 {% block wrapper_style %}
 <style>
@@ -15,78 +15,89 @@
 
 {% block extra_css %}
 <style>
-    /* Theater container styles */
+    /* Variables for consistent measurements */
+    :root {
+        --spacing-xs: 0.5rem;
+        --spacing-sm: 1rem;
+        --spacing-md: 1.5rem;
+        --spacing-lg: 2rem;
+        --spacing-xl: 3rem;
+        
+        --border-radius: 10px;
+        --border-thin: 1px solid rgba(255,255,255,0.1);
+        
+        --color-gold: #d4af37;
+        --color-bg-dark: rgba(0,0,0,0.7);
+        --color-bg-hover: rgba(255,255,255,0.1);
+        
+        --font-size-sm: 1rem;
+        --font-size-md: 1.25rem;
+        --font-size-lg: 2.25rem;
+        --font-size-xl: 3rem;
+    }
+
+    /* Create a dedicated logo section with proper spacing - MODIFIED for lower position */
+    .logo-section {
+        position: absolute;
+        top: 30px; /* Increased from 0 to 30px to move logo lower */
+        left: 0;
+        width: 100%;
+        height: 120px; /* Fixed height to reserve space */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 20;
+    }
+
+    .logo-container {
+        /* No fixed width or height - allow natural sizing */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        max-width: 80%; /* Ensure it doesn't stretch too wide */
+        max-height: 100px; /* Keep within the reserved space */
+    }
+    
+    .theater-logo {
+        /* Scale with aspect ratio preserved */
+        max-width: 100%;
+        max-height: 100px;
+        width: auto;
+        height: auto;
+        object-fit: scale-down; /* Better than contain for this case */
+    }
+
+    /* Theater container styles - pushed down to make room for logo */
     .theater-container {
         width: 100%;
+        height: calc(100% - 150px); /* Adjusted to account for lower logo */
+        margin-top: 150px; /* Increased from 120px to 150px */
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        padding: 20px;
+        padding: var(--spacing-md);
         position: relative;
-        height: 100%;
         box-sizing: border-box;
         overflow: hidden;
     }
 
-    /* Navbar brand styles specifically for home page */
-    .navbar {
-        position: absolute;
-        top: 10px;
-        left: 0;
-        width: 100%;
-        text-align: center;
-        z-index: 10;
-        pointer-events: none; 
-    }
-    
-    .navbar-brand {
-        font-family: 'Playfair Display', serif;
-        font-size: 60px;
-        font-weight: 700;
-        color: #d4af37;
-        text-decoration: none;
-        position: relative;
-        display: inline-block;
-        padding-bottom: 3px;
-        pointer-events: auto; 
-    }
-    
-    .navbar-brand::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 2px;
-        background-color: #d4af37; 
-    }
-
-    /* Opera header styles */
-    .opera-header {
-        text-align: center;
-        margin-bottom: 25px;
-        width: 100%;
-        max-width: 1160px;
-    }
-
-    /* Main content layout */
+    /* Main content layout - no need for extra margin now */
     .main-content {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 25px;
+        gap: var(--spacing-md);
         width: 100%;
-        max-width: 1160px;
-        padding-right: 60px;
+        max-width: 72.5rem; /* 1160px */
+        padding-right: var(--spacing-lg);
     }
 
-    /* Today's Performance section - Icon centered, text below */
+    /* Today's Performance section */
     .today-section {
-        background: rgba(0,0,0,0.7);
-        border: 1px solid rgba(255,255,255,0.1);
-        border-radius: 10px;
-        padding: 30px 20px;
-        height: auto;
+        background: var(--color-bg-dark);
+        border: var(--border-thin);
+        border-radius: var(--border-radius);
+        padding: var(--spacing-lg) var(--spacing-md);
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -96,18 +107,18 @@
     }
 
     .today-section:hover {
-        background: rgba(255,255,255,0.1);
+        background: var(--color-bg-hover);
         transform: translateY(-5px);
     }
 
     .today-icon {
-        font-size: 6.0em;
-        color: #d4af37;
-        margin-bottom: 15px;
+        font-size: 6em;
+        color: var(--color-gold);
+        margin-bottom: var(--spacing-sm);
     }
 
     .today-title {
-        font-size: 36px;
+        font-size: var(--font-size-lg);
         color: #fff;
         margin: 0;
         text-align: center;
@@ -118,14 +129,14 @@
     .menu-grid {
         display: grid;
         grid-template-rows: repeat(5, 1fr);
-        gap: 15px;
+        gap: var(--spacing-sm);
     }
 
     .menu-item {
-        background: rgba(0,0,0,0.7);
-        border: 1px solid rgba(255,255,255,0.1);
-        border-radius: 10px;
-        padding: 20px;
+        background: var(--color-bg-dark);
+        border: var(--border-thin);
+        border-radius: var(--border-radius);
+        padding: var(--spacing-md);
         text-align: center;
         cursor: pointer;
         transition: all 0.3s ease;
@@ -134,63 +145,93 @@
     }
 
     .menu-item:hover {
-        background: rgba(255,255,255,0.1);
+        background: var(--color-bg-hover);
         transform: translateY(-5px);
     }
 
     .menu-icon {
         font-size: 2em;
-        color: #d4af37;
-        margin-right: 15px;
-        min-width: 30px;
+        color: var(--color-gold);
+        margin-right: var(--spacing-sm);
+        min-width: 1.875rem; /* 30px */
     }
 
     .menu-title {
         color: #fff;
-        font-size: 20px;
+        font-size: var(--font-size-md);
         margin: 0;
         text-align: left;
+    }
+
+    /* Responsive adjustments */
+    @media screen and (max-width: 1024px) {
+        .main-content {
+            padding-right: var(--spacing-md);
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        .main-content {
+            grid-template-columns: 1fr;
+            gap: var(--spacing-lg);
+            padding-right: 0;
+        }
+
+        .today-section {
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .logo-container {
+            max-width: 90%;
+        }
+        
+        .theater-logo {
+            max-height: 80px;
+        }
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<!-- Navbar here, just for the home page -->
-<div class="navbar">
-    <a href="/" class="navbar-brand">{% placeholder "theater name" default "Your Theater Name" %}</a>
+<!-- Separate logo section without background -->
+<div class="logo-section">
+    <div class="logo-container">
+        {% placeholder "theater_logo" or %}
+            <img src="{% static 'images/vienna-state-opera-logo.png' %}" alt="Theater Logo" class="theater-logo">
+        {% endplaceholder %}
+    </div>
 </div>
 
 <div class="theater-container">
-
     <div class="main-content">
         <!-- Today's Performance (icon centered, text below) -->
-        <div class="today-section">
+        <a href="{% url 'theater_cms:today' %}" class="today-section" style="text-decoration: none;">
             <i class="fas fa-ticket-alt today-icon"></i>
             <h2 class="today-title">Today's Performance</h2>
-        </div>
+        </a>
         
         <!-- Menu Items (Right column) -->
         <div class="menu-grid">
-            <div class="menu-item">
+            <a href="{% url 'theater_cms:events' %}" class="menu-item" style="text-decoration: none;">
                 <i class="fas fa-calendar-alt menu-icon"></i>
                 <h2 class="menu-title">Events</h2>
-            </div>
-            <div class="menu-item">
+            </a>
+            <a href="{% url 'theater_cms:about' %}" class="menu-item" style="text-decoration: none;">
                 <i class="fas fa-theater-masks menu-icon"></i>
                 <h2 class="menu-title">About us</h2>
-            </div>
-            <div class="menu-item">
+            </a>
+            <a href="{% url 'theater_cms:qa' %}" class="menu-item" style="text-decoration: none;">
                 <i class="fas fa-question-circle menu-icon"></i>
                 <h2 class="menu-title">Questions & Answers</h2>
-            </div>
-            <div class="menu-item">
+            </a>
+            <a href="#" class="menu-item" style="text-decoration: none;">
                 <i class="fas fa-comments menu-icon"></i>
                 <h2 class="menu-title">Audience Feedback</h2>
-            </div>
-            <div class="menu-item">
+            </a>
+            <a href="{% url 'theater_cms:sponsors' %}" class="menu-item" style="text-decoration: none;">
                 <i class="fas fa-handshake menu-icon"></i>
                 <h2 class="menu-title">Sponsors & Advertising</h2>
-            </div>
+            </a>
         </div>
     </div>
 </div>

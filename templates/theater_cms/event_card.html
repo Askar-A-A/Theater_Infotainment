@@ -1,0 +1,10 @@
+<div class="event-card">
+    <div class="event-image">
+        {% if instance.image %}
+            <img src="{{ instance.image.url }}" alt="{{ instance.title }}">
+        {% endif %}
+    </div>
+    <h2 class="event-title">{{ instance.title }}</h2>
+    <div class="event-composer">{{ instance.composer }}</div>
+    <div class="event-date">{{ instance.date_range }}</div>
+</div>

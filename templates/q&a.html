@@ -2,10 +2,33 @@
 {% load cms_tags %}
 {% load static %}
 
-{% block title %}FAQ - TOSCA{% endblock %}
+{% block title %}
+    {% placeholder "qa_page_title" or %}FAQ - {% placeholder "theater_name" or %}Vienna State Opera{% endplaceholder %}{% endplaceholder %}
+{% endblock %}
 
 {% block extra_css %}
 <style>
+    /* Variables for consistent measurements (same as other pages) */
+    :root {
+        --spacing-xs: 0.5rem;
+        --spacing-sm: 1rem;
+        --spacing-md: 1.5rem;
+        --spacing-lg: 2rem;
+        --spacing-xl: 3rem;
+        
+        --border-radius: 10px;
+        --border-thin: 1px solid rgba(255,255,255,0.1);
+        
+        --color-gold: #d4af37;
+        --color-bg-dark: rgba(0,0,0,0.7);
+        --color-bg-hover: rgba(255,255,255,0.1);
+        
+        --font-size-sm: 1rem;
+        --font-size-md: 1.25rem;
+        --font-size-lg: 2.25rem;
+        --font-size-xl: 3rem;
+    }
+
     .qa-container {
         width: 1280px;
         height: 100vh;
@@ -14,7 +37,7 @@
 
     .page-title {
         font-size: 45px;
-        color: #d4af37;
+        color: var(--color-gold);
         font-family: 'Playfair Display', serif;
         text-align: center;
         margin-bottom: 40px;
@@ -31,9 +54,9 @@
 
     .qa-item {
         margin-bottom: 20px;
-        background: rgba(0, 0, 0, 0.7);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 10px;
+        background: var(--color-bg-dark);
+        border: var(--border-thin);
+        border-radius: var(--border-radius);
         overflow: hidden;
     }
 
@@ -43,17 +66,20 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        color: #d4af37;
+        color: var(--color-gold);
         font-size: 20px;
         transition: all 0.3s ease;
+        text-align: left;
     }
 
-    .question:hover {
-        background: rgba(255, 255, 255, 0.1);
+    .question span {
+        flex-grow: 1;
+        padding-right: 20px;
     }
 
     .question i {
         transition: transform 0.3s ease;
+        flex-shrink: 0;
     }
 
     .question.active i {
@@ -63,153 +89,276 @@
     .answer {
         max-height: 0;
         overflow: hidden;
-        transition: max-height 0.3s ease;
+        transition: max-height 0.6s ease;
         padding: 0 20px;
         color: #fff;
         line-height: 1.6;
+        box-sizing: border-box;
+        text-align: left;
     }
 
     .answer.active {
-        max-height: 500px;
+        max-height: 1000px; /* Increased from 500px to accommodate longer answers */
         padding: 20px;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        border-top: var(--border-thin);
     }
 
     .answer a {
-        color: #d4af37;
+        color: var(--color-gold);
         text-decoration: none;
     }
 
     .answer a:hover {
         text-decoration: underline;
     }
+    
+    /* Responsive adjustments */
+    @media screen and (max-width: 1280px) {
+        .qa-container {
+            width: 100%;
+        }
+    }
+    
+    @media screen and (max-width: 768px) {
+        .page-title {
+            font-size: 32px;
+            padding: 30px 0 0 0;
+        }
+        
+        .qa-list {
+            padding: 10px 20px;
+        }
+    }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="qa-container">
-    <h1 class="page-title">Frequently Asked Questions</h1>
+    <h1 class="page-title">{% placeholder "faq_heading" or %}Frequently Asked Questions{% endplaceholder %}</h1>
     <div class="qa-list">
+        <!-- QA Item 1 -->
         <div class="qa-item">
             <div class="question">
-                Where can I rent an opera glass?
+                <span>{% placeholder "question_1" or %}Where can I rent an opera glass?{% endplaceholder %}</span>
                 <i class="fas fa-chevron-down"></i>
             </div>
             <div class="answer">
-                Opera glasses can be rented at the cloakroom for a small fee. A deposit may be required.
+                {% placeholder "answer_1" or %}Opera glasses can be rented at the cloakroom for a small fee. A deposit may be required.{% endplaceholder %}
             </div>
         </div>
 
+        <!-- QA Item 2 -->
         <div class="qa-item">
             <div class="question">
-                I lost something while attending a performance. Who can I turn to?
+                <span>{% placeholder "question_2" or %}I lost something while attending a performance. Who can I turn to?{% endplaceholder %}</span>
                 <i class="fas fa-chevron-down"></i>
             </div>
             <div class="answer">
-                Please get in touch with our supervisory staff during the interval or after the performance at their offices in the foyer on the right-hand side of the grand staircase.<br><br>
-                Should you fail to notice your loss until later, please contact Besucherservice der Wiener Staatsoper (in-house fire service) tel. +43-1-51444-2415 or kundenservice@wiener-staatsoper.at.
+                {% placeholder "answer_2" or %}Please get in touch with our supervisory staff during the interval or after the performance at their offices in the foyer on the right-hand side of the grand staircase.<br><br>
+                Should you fail to notice your loss until later, please contact Besucherservice der Wiener Staatsoper (in-house fire service) tel. +43-1-51444-2415 or kundenservice@wiener-staatsoper.at.{% endplaceholder %}
             </div>
         </div>
 
+        <!-- QA Item 3 -->
         <div class="qa-item">
             <div class="question">
-                Can I also watch performances of Wiener Staatsoper live at home?
+                <span>{% placeholder "question_3" or %}Can I also watch performances of Wiener Staatsoper live at home?{% endplaceholder %}</span>
                 <i class="fas fa-chevron-down"></i>
             </div>
             <div class="answer">
-                Yes, selected performances are available for streaming through our digital platform. Visit our streaming service website for more information.
+                {% placeholder "answer_3" or %}Yes, selected performances are available for streaming through our digital platform. Visit our streaming service website for more information.{% endplaceholder %}
             </div>
         </div>
 
+        <!-- QA Item 4 -->
         <div class="qa-item">
             <div class="question">
-                Which benefits do I enjoy as a partner of Wiener Staatsoper?
+                <span>{% placeholder "question_4" or %}Which benefits do I enjoy as a partner of Wiener Staatsoper?{% endplaceholder %}</span>
                 <i class="fas fa-chevron-down"></i>
             </div>
             <div class="answer">
-                Partners enjoy various benefits including priority booking, exclusive events, backstage tours, and special discounts. Contact our partnership office for detailed information.
+                {% placeholder "answer_4" or %}Partners enjoy various benefits including priority booking, exclusive events, backstage tours, and special discounts. Contact our partnership office for detailed information.{% endplaceholder %}
             </div>
         </div>
 
+        <!-- QA Item 5 -->
         <div class="qa-item">
             <div class="question">
-                What is the dress code for performances?
+                <span>{% placeholder "question_5" or %}What is the dress code for performances?{% endplaceholder %}</span>
                 <i class="fas fa-chevron-down"></i>
             </div>
             <div class="answer">
-                While there is no strict dress code, evening wear is customary and appreciated. Many guests choose formal attire: suits or tuxedos for gentlemen and evening dresses or elegant pantsuits for ladies. We recommend avoiding overly casual clothing out of respect for the performers and other guests.
+                {% placeholder "answer_5" or %}While there is no strict dress code, evening wear is customary and appreciated. Many guests choose formal attire: suits or tuxedos for gentlemen and evening dresses or elegant pantsuits for ladies. We recommend avoiding overly casual clothing out of respect for the performers and other guests.{% endplaceholder %}
             </div>
         </div>
 
+        <!-- QA Item 6 -->
         <div class="qa-item">
             <div class="question">
-                Are there subtitles available during performances?
+                <span>{% placeholder "question_6" or %}Are there subtitles available during performances?{% endplaceholder %}</span>
                 <i class="fas fa-chevron-down"></i>
             </div>
             <div class="answer">
-                Yes, all performances feature digital subtitles in multiple languages. These are displayed on small screens on the back of each seat or above the stage. Languages typically include German and English, with additional languages available for selected performances.
+                {% placeholder "answer_6" or %}Yes, all performances feature digital subtitles in multiple languages. These are displayed on small screens on the back of each seat or above the stage. Languages typically include German and English, with additional languages available for selected performances.{% endplaceholder %}
             </div>
         </div>
 
+        <!-- QA Item 7 -->
         <div class="qa-item">
             <div class="question">
-                How early should I arrive before the performance?
+                <span>{% placeholder "question_7" or %}How early should I arrive before the performance?{% endplaceholder %}</span>
                 <i class="fas fa-chevron-down"></i>
             </div>
             <div class="answer">
-                We recommend arriving at least 30 minutes before the performance begins. This allows time for parking, coat check, finding your seat, and settling in. The doors typically open 60 minutes before curtain time. Please note that latecomers may not be admitted until a suitable break in the performance.
+                {% placeholder "answer_7" or %}We recommend arriving at least 30 minutes before the performance begins. This allows time for parking, coat check, finding your seat, and settling in. The doors typically open 60 minutes before curtain time. Please note that latecomers may not be admitted until a suitable break in the performance.{% endplaceholder %}
             </div>
         </div>
 
+        <!-- QA Item 8 -->
         <div class="qa-item">
             <div class="question">
-                Is photography allowed during performances?
+                <span>{% placeholder "question_8" or %}Is photography allowed during performances?{% endplaceholder %}</span>
                 <i class="fas fa-chevron-down"></i>
             </div>
             <div class="answer">
-                Photography, video recording, and audio recording are strictly prohibited during all performances. This includes the use of mobile phones and other electronic devices. Photos may be taken in the foyer and other public areas before the performance and during intermissions.
+                {% placeholder "answer_8" or %}Photography, video recording, and audio recording are strictly prohibited during all performances. This includes the use of mobile phones and other electronic devices. Photos may be taken in the foyer and other public areas before the performance and during intermissions.{% endplaceholder %}
             </div>
         </div>
 
+        <!-- QA Item 9 -->
         <div class="qa-item">
             <div class="question">
-                Are there facilities for disabled visitors?
+                <span>{% placeholder "question_9" or %}Are there facilities for disabled visitors?{% endplaceholder %}</span>
                 <i class="fas fa-chevron-down"></i>
             </div>
             <div class="answer">
-                Yes, our theater is fully accessible to disabled visitors. We offer wheelchair spaces in the auditorium, accessible restrooms, and elevator access to all levels. Please inform our box office of any special requirements when booking your tickets so we can ensure appropriate arrangements are made.
+                {% placeholder "answer_9" or %}Yes, our theater is fully accessible to disabled visitors. We offer wheelchair spaces in the auditorium, accessible restrooms, and elevator access to all levels. Please inform our box office of any special requirements when booking your tickets so we can ensure appropriate arrangements are made.{% endplaceholder %}
             </div>
         </div>
 
+        <!-- QA Item 10 -->
         <div class="qa-item">
             <div class="question">
-                Is there parking available at the theater?
+                <span>{% placeholder "question_10" or %}Is there parking available at the theater?{% endplaceholder %}</span>
                 <i class="fas fa-chevron-down"></i>
             </div>
             <div class="answer">
-                While the theater does not have its own parking facility, there are several public parking garages within walking distance. We recommend the Opera Garage or City Parking. Special evening rates may apply during performance times. Valet parking service is also available for an additional fee.
+                {% placeholder "answer_10" or %}While the theater does not have its own parking facility, there are several public parking garages within walking distance. We recommend the Opera Garage or City Parking. Special evening rates may apply during performance times. Valet parking service is also available for an additional fee.{% endplaceholder %}
             </div>
         </div>
 
+        <!-- QA Item 11 -->
         <div class="qa-item">
             <div class="question">
-                Are refreshments available?
+                <span>{% placeholder "question_11" or %}Are refreshments available?{% endplaceholder %}</span>
                 <i class="fas fa-chevron-down"></i>
             </div>
             <div class="answer">
-                Yes, our theater features several bars and refreshment areas where you can purchase drinks and light snacks before the performance and during intermissions. We recommend pre-ordering your intermission refreshments to avoid queuing. Please note that food and drinks are not permitted in the auditorium.
+                {% placeholder "answer_11" or %}Yes, our theater features several bars and refreshment areas where you can purchase drinks and light snacks before the performance and during intermissions. We recommend pre-ordering your intermission refreshments to avoid queuing. Please note that food and drinks are not permitted in the auditorium.{% endplaceholder %}
             </div>
         </div>
 
+        <!-- QA Item 12 -->
         <div class="qa-item">
             <div class="question">
-                What happens if I can't attend a performance I've booked?
+                <span>{% placeholder "question_12" or %}What happens if I can't attend a performance I've booked?{% endplaceholder %}</span>
                 <i class="fas fa-chevron-down"></i>
             </div>
             <div class="answer">
-                Tickets cannot be refunded but may be exchanged for another performance (subject to availability) or returned for resale. Exchange fees may apply. Please contact our box office as soon as possible if you cannot attend. Season ticket holders have additional flexibility regarding exchanges.
+                {% placeholder "answer_12" or %}Tickets cannot be refunded but may be exchanged for another performance (subject to availability) or returned for resale. Exchange fees may apply. Please contact our box office as soon as possible if you cannot attend. Season ticket holders have additional flexibility regarding exchanges.{% endplaceholder %}
             </div>
         </div>
+
+        <!-- QA Item 13 -->
+        <div class="qa-item">
+            <div class="question">
+                <span>{% placeholder "question_13" or %}Do you offer guided tours of the theater?{% endplaceholder %}</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="answer">
+                {% placeholder "answer_13" or %}Yes, we offer guided tours of our historic theater on select days. Tours typically include the auditorium, foyer, and sometimes backstage areas when available. Please check our website or contact the box office for the current tour schedule and booking information.{% endplaceholder %}
+            </div>
+        </div>
+
+        <!-- QA Item 14 -->
+        <div class="qa-item">
+            <div class="question">
+                <span>{% placeholder "question_14" or %}Is there a dress rehearsal I can attend?{% endplaceholder %}</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="answer">
+                {% placeholder "answer_14" or %}Select dress rehearsals are occasionally open to the public, typically for educational purposes or for special membership programs. Information about open rehearsals will be posted on our website and social media channels when available.{% endplaceholder %}
+            </div>
+        </div>
+
+        <!-- QA Item 15 -->
+        <div class="qa-item">
+            <div class="question">
+                <span>{% placeholder "question_15" or %}Are there discounts available for students or seniors?{% endplaceholder %}</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="answer">
+                {% placeholder "answer_15" or %}Yes, we offer discounted tickets for students, seniors, and young people under 26. Valid ID must be presented when purchasing discounted tickets and upon entry to the performance. There are also special last-minute ticket options for students.{% endplaceholder %}
+            </div>
+        </div>
+
+        <!-- QA Item 16 -->
+        <div class="qa-item">
+            <div class="question">
+                <span>{% placeholder "question_16" or %}How can I purchase tickets?{% endplaceholder %}</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="answer">
+                {% placeholder "answer_16" or %}Tickets can be purchased online through our official website, by phone, or in person at our box office. We recommend booking in advance for popular performances as they often sell out quickly. The box office is open Monday through Saturday from 10am to 6pm, and until curtain time on performance days.{% endplaceholder %}
+            </div>
+        </div>
+
+        <!-- QA Item 17 -->
+        <div class="qa-item">
+            <div class="question">
+                <span>{% placeholder "question_17" or %}Is there a cloakroom service?{% endplaceholder %}</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="answer">
+                {% placeholder "answer_17" or %}Yes, we provide a complimentary cloakroom service for coats, large bags, and umbrellas. The cloakroom is located in the main foyer and opens one hour before performances. For security reasons, large bags and backpacks must be checked at the cloakroom.{% endplaceholder %}
+            </div>
+        </div>
+
+        <!-- QA Item 18 -->
+        <div class="qa-item">
+            <div class="question">
+                <span>{% placeholder "question_18" or %}Can I bring children to performances?{% endplaceholder %}</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="answer">
+                {% placeholder "answer_18" or %}Children are welcome at our theater, but please note that most standard opera performances are recommended for children ages 8 and older. We offer special family performances and children's programs throughout the season that are designed specifically for younger audiences. Children must have their own ticket regardless of age.{% endplaceholder %}
+            </div>
+        </div>
+
+        <!-- QA Item 19 -->
+        <div class="qa-item">
+            <div class="question">
+                <span>{% placeholder "question_19" or %}How long are performances typically?{% endplaceholder %}</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="answer">
+                {% placeholder "answer_19" or %}Performance lengths vary considerably depending on the opera. Most performances range from 2 to 3.5 hours, including intermissions. The specific running time for each performance is listed on our website and in the program. Intermissions typically last 20-25 minutes.{% endplaceholder %}
+            </div>
+        </div>
+
+        <!-- QA Item 20 -->
+        <div class="qa-item">
+            <div class="question">
+                <span>{% placeholder "question_20" or %}Are there restaurants nearby for dining before or after performances?{% endplaceholder %}</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="answer">
+                {% placeholder "answer_20" or %}There are several restaurants within walking distance of the theater ranging from casual cafés to fine dining establishments. Many offer pre-theater menus designed to ensure you'll arrive at the performance on time. Our staff can provide recommendations based on your preferences.{% endplaceholder %}
+            </div>
+        </div>
+
+        <!-- Additional Q&A Items (if needed) -->
+        {% placeholder "additional_qa_items" or %}{% endplaceholder %}
     </div>
 </div>
 

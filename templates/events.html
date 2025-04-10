@@ -2,7 +2,9 @@
 {% load cms_tags %}
 {% load static %}
 
-{% block title %}Events & Season - {% placeholder "theater_name_short" default "[Your Theater Name]" %}{% endblock %}
+{% block title %}
+    Events & Season - {% placeholder "theater_name" or %}TOSCA{% endplaceholder %}
+{% endblock %}
 
 {% block wrapper_style %}
 <style>
@@ -15,8 +17,30 @@
 
 {% block extra_css %}
 <style>
+    /* Variables for consistent measurements (same as other pages) */
+    :root {
+        --spacing-xs: 0.5rem;
+        --spacing-sm: 1rem;
+        --spacing-md: 1.5rem;
+        --spacing-lg: 2rem;
+        --spacing-xl: 3rem;
+        
+        --border-radius: 10px;
+        --border-thin: 1px solid rgba(255,255,255,0.1);
+        
+        --color-gold: #d4af37;
+        --color-bg-dark: rgba(0,0,0,0.7);
+        --color-bg-hover: rgba(255,255,255,0.1);
+        
+        --font-size-sm: 1rem;
+        --font-size-md: 1.25rem;
+        --font-size-lg: 2.25rem;
+        --font-size-xl: 3rem;
+    }
+
+    /* Container styles */
     .theater-container {
-        width: 1280px;
+        width: 100%;
         height: 100%;
         position: relative;
         box-sizing: border-box;
@@ -43,14 +67,14 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        padding: 80px 40px 40px;
+        padding: var(--spacing-xl) var(--spacing-md) var(--spacing-md);
         box-sizing: border-box;
     }
 
     /* Page title */
     .page-header {
         position: absolute;
-        top: 80px;
+        top: var(--spacing-xl);
         left: 0;
         width: 100%;
         text-align: center;
@@ -58,8 +82,8 @@
     }
 
     .page-title {
-        font-size: 40px;
-        color: #d4af37;
+        font-size: var(--font-size-xl);
+        color: var(--color-gold);
         font-family: 'Playfair Display', serif;
     }
 
@@ -67,16 +91,16 @@
     .events-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 30px;
-        width: 100%;
-        max-width: 1080px;
+        gap: var(--spacing-md);
+        width: 90%;
+        max-width: 72.5rem; /* 1160px - same as other pages */
     }
 
     .event-card {
-        background: rgba(0,0,0,0.7);
-        border: 1px solid rgba(255,255,255,0.1);
-        border-radius: 10px;
-        padding: 20px;
+        background: var(--color-bg-dark);
+        border: var(--border-thin);
+        border-radius: var(--border-radius);
+        padding: var(--spacing-md);
         cursor: pointer;
         transition: all 0.3s ease;
         display: flex;
@@ -86,15 +110,15 @@
     }
 
     .event-card:hover {
-        background: rgba(255,255,255,0.1);
+        background: var(--color-bg-hover);
         transform: translateY(-5px);
     }
 
     .event-image {
         width: 100%;
-        height: 300px;
-        border-radius: 5px;
-        margin-bottom: 15px;
+        height: 18.75rem; /* 300px */
+        border-radius: var(--border-radius);
+        margin-bottom: var(--spacing-sm);
         overflow: hidden;
         display: flex;
         align-items: center;
@@ -105,13 +129,13 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
-        border-radius: 5px;
+        border-radius: var(--border-radius);
     }
 
     .event-title {
-        font-size: 24px;
-        color: #d4af37;
-        margin-bottom: 10px;
+        font-size: 1.5rem;
+        color: var(--color-gold);
+        margin-bottom: var(--spacing-xs);
         text-align: center;
         font-family: 'Playfair Display', serif;
     }
@@ -119,13 +143,13 @@
     .event-composer {
         color: #fff;
         font-style: italic;
-        margin-bottom: 15px;
+        margin-bottom: var(--spacing-sm);
         text-align: center;
     }
 
     .event-date {
         color: #fff;
-        font-size: 14px;
+        font-size: var(--font-size-sm);
         text-align: center;
     }
 
@@ -137,12 +161,12 @@
         width: 100%;
         display: flex;
         justify-content: center;
-        gap: 10px;
+        gap: var(--spacing-xs);
     }
 
     .scroll-dot {
-        width: 18px;
-        height: 18px;
+        width: 1.125rem; /* 18px */
+        height: 1.125rem;
         border-radius: 50%;
         background: rgba(255,255,255,0.3);
         cursor: pointer;
@@ -150,38 +174,35 @@
     }
 
     .scroll-dot.active {
-        background: #d4af37;
+        background: var(--color-gold);
     }
 
-    /* Navigation arrows */
-    .nav-arrow {
-        position: absolute;
-        top: 18%;
-        transform: translateY(-50%);
-        color: #d4af37;
-        font-size: 36px;
-        cursor: pointer;
-        z-index: 10;
-        transition: all 0.3s ease;
-        background: rgba(0,0,0,0.5);
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    /* Responsive adjustments */
+    @media screen and (max-width: 1024px) {
+        .events-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-md);
+        }
     }
 
-    .nav-arrow:hover {
-        background: rgba(0,0,0,0.8);
-    }
-
-    .nav-arrow.prev {
-        left: 20px;
-    }
-
-    .nav-arrow.next {
-        right: 20px;
+    @media screen and (max-width: 768px) {
+        .events-grid {
+            grid-template-columns: 1fr;
+            gap: var(--spacing-md);
+        }
+        
+        .event-image {
+            height: 15rem;
+        }
+        
+        
+        .page-title {
+            font-size: 2rem;
+        }
+        
+        .content-section {
+            padding: var(--spacing-xl) var(--spacing-sm) var(--spacing-sm);
+        }
     }
 </style>
 {% endblock %}
@@ -189,56 +210,67 @@
 {% block content %}
 <div class="theater-container">
     <div class="page-header">
-        <h1 class="page-title">{% placeholder "events_page_title" default "Events & Season" %}</h1>
-    </div>
-
-    <!-- Navigation Arrows -->
-    <div class="nav-arrow prev">
-        <i class="fas fa-chevron-left"></i>
-    </div>
-    <div class="nav-arrow next">
-        <i class="fas fa-chevron-right"></i>
+        <h1 class="page-title">
+            {% placeholder "events_page_title" or %}Events & Season{% endplaceholder %}
+        </h1>
     </div>
 
     <div class="main-content">
         <!-- Page 1 -->
         <div class="content-section">
             <div class="events-grid">
+                <!-- Event Card 1 -->
                 <div class="event-card">
                     <div class="event-image">
-                        {% placeholder "event_1_image" %}
-                        <!-- Fallback image if no CMS image is provided -->
-                        {% if not placeholder_content.event_1_image %}
-                            <img src="{% static 'images/events/placeholder.jpg' %}" alt="[Event 1]">
-                        {% endif %}
+                        {% placeholder "event_1_image" or %}
+                            <img src="{% static 'images/events/aida.jpg' %}" alt="Aida">
+                        {% endplaceholder %}
                     </div>
-                    <h2 class="event-title">{% placeholder "event_1_title" default "[Enter event 1 title]" %}</h2>
-                    <div class="event-composer">{% placeholder "event_1_composer" default "[Enter event 1 composer]" %}</div>
-                    <div class="event-date">{% placeholder "event_1_date" default "[Enter event 1 date range]" %}</div>
+                    <h2 class="event-title">
+                        {% placeholder "event_1_title" or %}Aida{% endplaceholder %}
+                    </h2>
+                    <div class="event-composer">
+                        {% placeholder "event_1_composer" or %}Giuseppe Verdi{% endplaceholder %}
+                    </div>
+                    <div class="event-date">
+                        {% placeholder "event_1_date" or %}January 15 - March 20, 2024{% endplaceholder %}
+                    </div>
                 </div>
 
+                <!-- Event Card 2 -->
                 <div class="event-card">
                     <div class="event-image">
-                        {% placeholder "event_2_image" %}
-                        {% if not placeholder_content.event_2_image %}
-                            <img src="{% static 'images/events/placeholder.jpg' %}" alt="[Event 2]">
-                        {% endif %}
+                        {% placeholder "event_2_image" or %}
+                            <img src="{% static 'images/events/carmen.jpg' %}" alt="Carmen">
+                        {% endplaceholder %}
                     </div>
-                    <h2 class="event-title">{% placeholder "event_2_title" default "[Enter event 2 title]" %}</h2>
-                    <div class="event-composer">{% placeholder "event_2_composer" default "[Enter event 2 composer]" %}</div>
-                    <div class="event-date">{% placeholder "event_2_date" default "[Enter event 2 date range]" %}</div>
+                    <h2 class="event-title">
+                        {% placeholder "event_2_title" or %}Carmen{% endplaceholder %}
+                    </h2>
+                    <div class="event-composer">
+                        {% placeholder "event_2_composer" or %}Georges Bizet{% endplaceholder %}
+                    </div>
+                    <div class="event-date">
+                        {% placeholder "event_2_date" or %}February 1 - April 15, 2024{% endplaceholder %}
+                    </div>
                 </div>
 
+                <!-- Event Card 3 -->
                 <div class="event-card">
                     <div class="event-image">
-                        {% placeholder "event_3_image" %}
-                        {% if not placeholder_content.event_3_image %}
-                            <img src="{% static 'images/events/placeholder.jpg' %}" alt="[Event 3]">
-                        {% endif %}
+                        {% placeholder "event_3_image" or %}
+                            <img src="{% static 'images/events/magic-flute.jpg' %}" alt="The Magic Flute">
+                        {% endplaceholder %}
                     </div>
-                    <h2 class="event-title">{% placeholder "event_3_title" default "[Enter event 3 title]" %}</h2>
-                    <div class="event-composer">{% placeholder "event_3_composer" default "[Enter event 3 composer]" %}</div>
-                    <div class="event-date">{% placeholder "event_3_date" default "[Enter event 3 date range]" %}</div>
+                    <h2 class="event-title">
+                        {% placeholder "event_3_title" or %}The Magic Flute{% endplaceholder %}
+                    </h2>
+                    <div class="event-composer">
+                        {% placeholder "event_3_composer" or %}Wolfgang Amadeus Mozart{% endplaceholder %}
+                    </div>
+                    <div class="event-date">
+                        {% placeholder "event_3_date" or %}March 10 - May 20, 2024{% endplaceholder %}
+                    </div>
                 </div>
             </div>
         </div>
@@ -246,40 +278,58 @@
         <!-- Page 2 -->
         <div class="content-section">
             <div class="events-grid">
+                <!-- Event Card 4 -->
                 <div class="event-card">
                     <div class="event-image">
-                        {% placeholder "event_4_image" %}
-                        {% if not placeholder_content.event_4_image %}
-                            <img src="{% static 'images/events/placeholder.jpg' %}" alt="[Event 4]">
-                        {% endif %}
+                        {% placeholder "event_4_image" or %}
+                            <img src="{% static 'images/events/rigoletto.jpg' %}" alt="Rigoletto">
+                        {% endplaceholder %}
                     </div>
-                    <h2 class="event-title">{% placeholder "event_4_title" default "[Enter event 4 title]" %}</h2>
-                    <div class="event-composer">{% placeholder "event_4_composer" default "[Enter event 4 composer]" %}</div>
-                    <div class="event-date">{% placeholder "event_4_date" default "[Enter event 4 date range]" %}</div>
+                    <h2 class="event-title">
+                        {% placeholder "event_4_title" or %}Rigoletto{% endplaceholder %}
+                    </h2>
+                    <div class="event-composer">
+                        {% placeholder "event_4_composer" or %}Giuseppe Verdi{% endplaceholder %}
+                    </div>
+                    <div class="event-date">
+                        {% placeholder "event_4_date" or %}April 5 - June 25, 2024{% endplaceholder %}
+                    </div>
                 </div>
 
+                <!-- Event Card 5 -->
                 <div class="event-card">
                     <div class="event-image">
-                        {% placeholder "event_5_image" %}
-                        {% if not placeholder_content.event_5_image %}
-                            <img src="{% static 'images/events/placeholder.jpg' %}" alt="[Event 5]">
-                        {% endif %}
+                        {% placeholder "event_5_image" or %}
+                            <img src="{% static 'images/events/salome.jpg' %}" alt="Salome">
+                        {% endplaceholder %}
                     </div>
-                    <h2 class="event-title">{% placeholder "event_5_title" default "[Enter event 5 title]" %}</h2>
-                    <div class="event-composer">{% placeholder "event_5_composer" default "[Enter event 5 composer]" %}</div>
-                    <div class="event-date">{% placeholder "event_5_date" default "[Enter event 5 date range]" %}</div>
+                    <h2 class="event-title">
+                        {% placeholder "event_5_title" or %}Salome{% endplaceholder %}
+                    </h2>
+                    <div class="event-composer">
+                        {% placeholder "event_5_composer" or %}Richard Strauss{% endplaceholder %}
+                    </div>
+                    <div class="event-date">
+                        {% placeholder "event_5_date" or %}May 15 - July 30, 2024{% endplaceholder %}
+                    </div>
                 </div>
 
+                <!-- Event Card 6 -->
                 <div class="event-card">
                     <div class="event-image">
-                        {% placeholder "event_6_image" %}
-                        {% if not placeholder_content.event_6_image %}
-                            <img src="{% static 'images/events/placeholder.jpg' %}" alt="[Event 6]">
-                        {% endif %}
+                        {% placeholder "event_6_image" or %}
+                            <img src="{% static 'images/events/turandot.jpg' %}" alt="Turandot">
+                        {% endplaceholder %}
                     </div>
-                    <h2 class="event-title">{% placeholder "event_6_title" default "[Enter event 6 title]" %}</h2>
-                    <div class="event-composer">{% placeholder "event_6_composer" default "[Enter event 6 composer]" %}</div>
-                    <div class="event-date">{% placeholder "event_6_date" default "[Enter event 6 date range]" %}</div>
+                    <h2 class="event-title">
+                        {% placeholder "event_6_title" or %}Turandot{% endplaceholder %}
+                    </h2>
+                    <div class="event-composer">
+                        {% placeholder "event_6_composer" or %}Giacomo Puccini{% endplaceholder %}
+                    </div>
+                    <div class="event-date">
+                        {% placeholder "event_6_date" or %}June 1 - August 15, 2024{% endplaceholder %}
+                    </div>
                 </div>
             </div>
         </div>
@@ -296,25 +346,21 @@
     document.addEventListener('DOMContentLoaded', function() {
         const mainContent = document.querySelector('.main-content');
         const dots = document.querySelectorAll('.scroll-dot');
-        const prevArrow = document.querySelector('.nav-arrow.prev');
-        const nextArrow = document.querySelector('.nav-arrow.next');
+        const sections = document.querySelectorAll('.content-section');
         let currentPage = 0;
 
         // Update active dot based on scroll position
-        function updateDots() {
+        function updateDots(pageIndex) {
             dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === currentPage);
+                dot.classList.toggle('active', index === pageIndex);
             });
         }
 
         // Scroll to specific page
         function scrollToPage(pageIndex) {
             currentPage = pageIndex;
-            mainContent.scrollTo({
-                left: pageIndex * mainContent.offsetWidth,
-                behavior: 'smooth'
-            });
-            updateDots();
+            sections[pageIndex].scrollIntoView({ behavior: 'smooth', inline: 'start' });
+            updateDots(pageIndex);
         }
 
         // Click handlers for dots
@@ -322,21 +368,18 @@
             dot.addEventListener('click', () => scrollToPage(index));
         });
 
-        // Click handlers for arrows
-        prevArrow.addEventListener('click', () => {
-            if (currentPage > 0) scrollToPage(currentPage - 1);
-        });
-
-        nextArrow.addEventListener('click', () => {
-            if (currentPage < dots.length - 1) scrollToPage(currentPage + 1);
-        });
-
         // Update dots on scroll
         mainContent.addEventListener('scroll', () => {
-            const newPage = Math.round(mainContent.scrollLeft / mainContent.offsetWidth);
+            // Calculate which page is most visible
+            const scrollPosition = mainContent.scrollLeft;
+            const pageWidth = mainContent.offsetWidth;
+            
+            // Determine which page we're on based on scroll position
+            const newPage = Math.round(scrollPosition / pageWidth);
+            
             if (newPage !== currentPage) {
                 currentPage = newPage;
-                updateDots();
+                updateDots(currentPage);
             }
         });
     });
