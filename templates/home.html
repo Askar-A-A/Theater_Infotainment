@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load cms_tags %}
 {% load static %}
+{% load menu_tags %}
 
 {% block title %}{% placeholder "theater_name" default "Vienna State Opera" %}{% endblock %}
 
@@ -204,31 +205,27 @@
 
 <div class="theater-container">
     <div class="main-content">
-        <!-- Today's Performance (icon centered, text below) -->
-        <a href="{% url 'theater_cms:today' %}" class="today-section" style="text-decoration: none;">
+        <!-- Today's Performance -->
+        <a href="/today/" class="today-section" style="text-decoration: none;">
             <i class="fas fa-ticket-alt today-icon"></i>
             <h2 class="today-title">Today's Performance</h2>
         </a>
         
-        <!-- Menu Items (Right column) -->
+        <!-- Menu Items -->
         <div class="menu-grid">
-            <a href="{% url 'theater_cms:events' %}" class="menu-item" style="text-decoration: none;">
+            <a href="/events/" class="menu-item" style="text-decoration: none;">
                 <i class="fas fa-calendar-alt menu-icon"></i>
                 <h2 class="menu-title">Events</h2>
             </a>
-            <a href="{% url 'theater_cms:about' %}" class="menu-item" style="text-decoration: none;">
+            <a href="/about/" class="menu-item" style="text-decoration: none;">
                 <i class="fas fa-theater-masks menu-icon"></i>
                 <h2 class="menu-title">About us</h2>
             </a>
-            <a href="{% url 'theater_cms:qa' %}" class="menu-item" style="text-decoration: none;">
+            <a href="/qa/" class="menu-item" style="text-decoration: none;">
                 <i class="fas fa-question-circle menu-icon"></i>
                 <h2 class="menu-title">Questions & Answers</h2>
             </a>
-            <a href="#" class="menu-item" style="text-decoration: none;">
-                <i class="fas fa-comments menu-icon"></i>
-                <h2 class="menu-title">Audience Feedback</h2>
-            </a>
-            <a href="{% url 'theater_cms:sponsors' %}" class="menu-item" style="text-decoration: none;">
+            <a href="/sponsors/" class="menu-item" style="text-decoration: none;">
                 <i class="fas fa-handshake menu-icon"></i>
                 <h2 class="menu-title">Sponsors & Advertising</h2>
             </a>
