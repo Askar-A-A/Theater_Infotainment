@@ -39,14 +39,14 @@
     }
 
     .theater-container {
-        width: 1280px;
+        width: 100%;
         height: 100%;
         position: relative;
         box-sizing: border-box;
         overflow: hidden;
     }
 
-    /* Setup scroll snapping */
+    /* Setup scroll snapping with enhanced scrollbar */
     .main-content {
         height: 100%;
         width: 100%;
@@ -55,23 +55,50 @@
         -webkit-overflow-scrolling: touch;
         scroll-behavior: smooth;
     }
+    
+    /* Add beautiful gold scrollbar styling */
+    .main-content::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    .main-content::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.2);
+    }
+
+    .main-content::-webkit-scrollbar-thumb {
+        background: var(--color-gold);
+        border-radius: 5px;
+    }
+
+    .main-content::-webkit-scrollbar-thumb:hover {
+        background: #b28e29;
+    }
 
     .content-section {
-        height: 100vh;
         width: 100%;
         scroll-snap-align: start;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        padding: 80px 70px 40px 40px;
         box-sizing: border-box;
     }
     
-    /* Vertical scroll indicators - copied from about.html */
+    /* Height-specific adjustments for content sections */
+    body.height-800 .content-section {
+        height: 800px;
+        padding: 80px 70px 40px 40px;
+    }
+    
+    body.height-400 .content-section {
+        height: 400px;
+        padding: 40px 70px 20px 40px;
+    }
+    
+    /* Updated vertical scroll indicators to match other pages */
     .scroll-indicators {
         position: fixed;
-        left: 30px;
+        right: 30px;
         top: 50%;
         transform: translateY(-50%);
         display: flex;
@@ -79,14 +106,28 @@
         gap: var(--spacing-sm);
         z-index: 100;
     }
+    
+    /* Height-specific adjustments for scroll indicators */
+    body.height-400 .scroll-indicators {
+        gap: var(--spacing-xs);
+    }
 
     .scroll-dot {
-        width: 1rem;
-        height: 1rem;
         border-radius: 50%;
         background: rgba(255,255,255,0.3);
         cursor: pointer;
         transition: all 0.3s ease;
+    }
+    
+    /* Height-specific adjustments for scroll dots */
+    body.height-800 .scroll-dot {
+        width: 1rem;
+        height: 1rem;
+    }
+    
+    body.height-400 .scroll-dot {
+        width: 0.75rem;
+        height: 0.75rem;
     }
 
     .scroll-dot.active {
@@ -99,61 +140,163 @@
         background: var(--color-bg-dark);
         border: var(--border-thin);
         border-radius: var(--border-radius);
-        padding: var(--spacing-xl);
         width: 90%;
         max-width: 1000px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        max-height: 80vh; /* Ensure the box doesn't exceed the viewport */
         overflow-y: auto; /* Allow scrolling within the box if needed */
+    }
+    
+    /* Height-specific adjustments for content box */
+    body.height-800 .content-box {
+        padding: var(--spacing-xl);
+        max-height: 80vh;
+    }
+    
+    body.height-400 .content-box {
+        padding: var(--spacing-md);
+        max-height: 85vh;
+    }
+    
+    /* Style the content-box scrollbar too */
+    .content-box::-webkit-scrollbar {
+        width: 8px; /* Slightly smaller than main scrollbar */
+    }
+
+    .content-box::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.2);
+    }
+
+    .content-box::-webkit-scrollbar-thumb {
+        background: var(--color-gold);
+        border-radius: 4px;
+    }
+
+    .content-box::-webkit-scrollbar-thumb:hover {
+        background: #b28e29;
     }
 
     .section-icon {
-        font-size: 48px;
         color: var(--color-gold);
         margin-bottom: var(--spacing-md);
     }
+    
+    /* Height-specific adjustments for section icon */
+    body.height-800 .section-icon {
+        font-size: 48px;
+    }
+    
+    body.height-400 .section-icon {
+        font-size: 36px;
+        margin-bottom: var(--spacing-sm);
+    }
 
     .section-title {
-        font-size: 32px;
         color: var(--color-gold);
         margin-bottom: 25px;
         font-family: 'Playfair Display', serif;
         text-align: center;
     }
+    
+    /* Height-specific adjustments for section title */
+    body.height-800 .section-title {
+        font-size: 32px;
+    }
+    
+    body.height-400 .section-title {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
 
     /* Production team styling */
     .production-grid {
         display: grid;
+        width: 100%;
+    }
+    
+    /* Height-specific adjustments for production grid */
+    body.height-800 .production-grid {
         grid-template-columns: 1fr 1fr;
         gap: 30px;
-        width: 100%;
+    }
+    
+    body.height-400 .production-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
     }
 
     .team-section {
         margin-bottom: var(--spacing-md);
         width: 100%;
     }
+    
+    /* Height-specific adjustments for team section */
+    body.height-400 .team-section {
+        margin-bottom: var(--spacing-sm);
+    }
 
     .team-title {
-        font-size: 22px;
         color: var(--color-gold);
         margin-bottom: 15px;
         text-align: center;
+    }
+    
+    /* Height-specific adjustments for team title */
+    body.height-800 .team-title {
+        font-size: 22px;
+    }
+    
+    body.height-400 .team-title {
+        font-size: 18px;
+        margin-bottom: 10px;
     }
 
     .team-content {
         background: rgba(0,0,0,0.3);
         border: var(--border-thin);
         border-radius: var(--border-radius);
-        padding: var(--spacing-md);
         color: #fff;
         line-height: 1.6;
-        font-size: 16px;
         height: 100%;
-        min-height: 300px;
         overflow-y: auto;
+    }
+    
+    /* Height-specific adjustments for team content */
+    body.height-800 .team-content {
+        padding: var(--spacing-md);
+        font-size: 16px;
+        min-height: 300px;
+    }
+    
+    body.height-400 .team-content {
+        padding: var(--spacing-sm);
+        font-size: 14px;
+        min-height: 150px;
+        line-height: 1.4;
+    }
+    
+    /* Specific adjustment for team content paragraphs on 400px height */
+    body.height-400 .team-content p {
+        margin-bottom: 5px;
+    }
+    
+    /* Style the team-content scrollbar too for consistency */
+    .team-content::-webkit-scrollbar {
+        width: 6px; /* Even smaller for this element */
+    }
+
+    .team-content::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.2);
+    }
+
+    .team-content::-webkit-scrollbar-thumb {
+        background: var(--color-gold);
+        border-radius: 3px;
+    }
+
+    .team-content::-webkit-scrollbar-thumb:hover {
+        background: #b28e29;
     }
 
     /* Cast styling */
@@ -163,6 +306,12 @@
         margin-bottom: 12px;
         border-bottom: var(--border-thin);
         padding-bottom: 8px;
+    }
+    
+    /* Height-specific adjustments for cast members */
+    body.height-400 .cast-member {
+        margin-bottom: 6px;
+        padding-bottom: 4px;
     }
 
     .character {
@@ -178,36 +327,85 @@
     /* Summary styling */
     .summary-content {
         color: #fff;
-        font-size: 16px;
         line-height: 1.6;
         text-align: left;
         margin-bottom: 15px;
         width: 100%;
     }
+    
+    /* Height-specific adjustments for summary content */
+    body.height-800 .summary-content {
+        font-size: 16px;
+    }
+    
+    body.height-400 .summary-content {
+        font-size: 14px;
+        line-height: 1.4;
+        margin-bottom: 10px;
+    }
+    
+    /* Improve paragraph spacing in synopsis */
+    body.height-800 .summary-content p {
+        margin-bottom: 1rem;
+    }
+    
+    body.height-400 .summary-content p {
+        margin-bottom: 0.5rem;
+    }
+    
+    .summary-content p:last-child {
+        margin-bottom: 0;
+    }
 
     /* Responsive adjustments */
     @media screen and (max-width: 768px) {
-        .content-box {
+        body.height-800 .content-box,
+        body.height-400 .content-box {
             width: 95%;
+        }
+        
+        body.height-800 .content-box {
             padding: var(--spacing-lg);
+        }
+        
+        body.height-400 .content-box {
+            padding: var(--spacing-sm);
         }
         
         .scroll-indicators {
             right: 10px;
         }
         
-        .scroll-dot {
+        body.height-800 .scroll-dot {
             width: 0.8rem;
             height: 0.8rem;
         }
         
-        .production-grid {
+        body.height-400 .scroll-dot {
+            width: 0.6rem;
+            height: 0.6rem;
+        }
+        
+        body.height-800 .production-grid,
+        body.height-400 .production-grid {
             grid-template-columns: 1fr;
+        }
+        
+        body.height-800 .production-grid {
             gap: 20px;
         }
         
-        .team-content {
+        body.height-400 .production-grid {
+            gap: 10px;
+        }
+        
+        body.height-800 .team-content {
             padding: var(--spacing-sm);
+            min-height: auto;
+        }
+        
+        body.height-400 .team-content {
+            padding: calc(var(--spacing-sm) / 2);
             min-height: auto;
         }
     }
@@ -216,7 +414,7 @@
 
 {% block content %}
 <div class="theater-container">
-    <!-- Vertical Scroll Indicators -->
+    <!-- Vertical Scroll Indicators - Now on right side -->
     <div class="scroll-indicators">
         <div class="scroll-dot active" data-page="0"></div>
         <div class="scroll-dot" data-page="1"></div>

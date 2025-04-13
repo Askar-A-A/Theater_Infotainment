@@ -149,6 +149,7 @@ STATICFILES_DIRS = [
 
 # CMS settings
 CMS_TEMPLATES = [
+    ('greeting.html', 'Greeting Template'),
     ('base.html', 'Base Template'),
     ('home.html', 'Home Template'),
     ('about.html', 'About Us Template'),
@@ -162,10 +163,11 @@ CMS_TEMPLATES = [
 SITE_ID = 1
 LANGUAGES = [
     ('en', 'English'),
+    ('de', 'German'),
+    ('fr', 'French'),
     ('zh-hans', 'Chinese'),
     ('hi', 'Hindi'),
     ('es', 'Spanish'),
-    ('fr', 'French'),
     ('ar', 'Arabic'),
     ('pt', 'Portuguese'),
     ('ru', 'Russian'),

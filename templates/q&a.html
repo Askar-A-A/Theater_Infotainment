@@ -29,47 +29,115 @@
         --font-size-xl: 3rem;
     }
 
+    /* Container with height-specific styles */
     .qa-container {
-        width: 1280px;
-        height: 100vh;
+        width: 100%;
         position: relative;
+        overflow-y: auto;
+    }
+    
+    /* Height-specific adjustments for qa-container */
+    body.height-800 .qa-container {
+        height: 800px;
+        padding-bottom: 50px;
+    }
+    
+    body.height-400 .qa-container {
+        height: 400px;
+        padding-bottom: 30px;
     }
 
+    /* Page title with height-specific adjustments */
     .page-title {
-        font-size: 45px;
         color: var(--color-gold);
         font-family: 'Playfair Display', serif;
         text-align: center;
+    }
+    
+    /* Height-specific adjustments for page-title */
+    body.height-800 .page-title {
+        font-size: 45px;
         margin-bottom: 40px;
         padding: 50px 0 0 0;
     }
+    
+    body.height-400 .page-title {
+        font-size: 32px;
+        margin-bottom: 20px;
+        padding: 25px 0 0 0;
+    }
 
+    /* Modified to be centered with max-width but no scrolling */
     .qa-list {
         max-width: 1000px;
         margin: 0 auto;
-        height: calc(100vh - 120px);  /* Subtract header height */
-        overflow-y: auto;
-        padding: 20px 0;
+        overflow-y: visible; /* Remove scrolling from list */
+    }
+    
+    /* Height-specific adjustments for qa-list */
+    body.height-800 .qa-list {
+        padding: 20px 20px;
+    }
+    
+    body.height-400 .qa-list {
+        padding: 10px 20px;
     }
 
+    /* Style the scrollbar for better visibility */
+    .qa-container::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    .qa-container::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.2);
+    }
+
+    .qa-container::-webkit-scrollbar-thumb {
+        background: var(--color-gold);
+        border-radius: 5px;
+    }
+
+    .qa-container::-webkit-scrollbar-thumb:hover {
+        background: #b28e29;
+    }
+
+    /* Q&A item styling with height-specific adjustments */
     .qa-item {
-        margin-bottom: 20px;
         background: var(--color-bg-dark);
         border: var(--border-thin);
         border-radius: var(--border-radius);
         overflow: hidden;
     }
+    
+    /* Height-specific adjustments for qa-item */
+    body.height-800 .qa-item {
+        margin-bottom: 20px;
+    }
+    
+    body.height-400 .qa-item {
+        margin-bottom: 12px;
+    }
 
+    /* Question styling */
     .question {
-        padding: 20px;
         cursor: pointer;
         display: flex;
         justify-content: space-between;
         align-items: center;
         color: var(--color-gold);
-        font-size: 20px;
         transition: all 0.3s ease;
         text-align: left;
+    }
+    
+    /* Height-specific adjustments for question */
+    body.height-800 .question {
+        padding: 20px;
+        font-size: 20px;
+    }
+    
+    body.height-400 .question {
+        padding: 12px 15px;
+        font-size: 16px;
     }
 
     .question span {
@@ -86,6 +154,7 @@
         transform: rotate(180deg);
     }
 
+    /* Answer styling */
     .answer {
         max-height: 0;
         overflow: hidden;
@@ -96,11 +165,20 @@
         box-sizing: border-box;
         text-align: left;
     }
-
-    .answer.active {
-        max-height: 1000px; /* Increased from 500px to accommodate longer answers */
+    
+    /* Height-specific adjustments for answer */
+    body.height-800 .answer.active {
+        max-height: 1000px;
         padding: 20px;
         border-top: var(--border-thin);
+    }
+    
+    body.height-400 .answer.active {
+        max-height: 500px;
+        padding: 12px 15px;
+        border-top: var(--border-thin);
+        font-size: 14px;
+        line-height: 1.4;
     }
 
     .answer a {
@@ -120,14 +198,51 @@
     }
     
     @media screen and (max-width: 768px) {
-        .page-title {
+        body.height-800 .page-title {
             font-size: 32px;
             padding: 30px 0 0 0;
         }
         
-        .qa-list {
+        body.height-400 .page-title {
+            font-size: 24px;
+            padding: 20px 0 0 0;
+        }
+        
+        body.height-800 .qa-list {
             padding: 10px 20px;
         }
+        
+        body.height-400 .qa-list {
+            padding: 8px 15px;
+        }
+        
+        body.height-800 .question {
+            padding: 15px;
+            font-size: 18px;
+        }
+        
+        body.height-400 .question {
+            padding: 10px;
+            font-size: 14px;
+        }
+        
+        body.height-800 .answer.active {
+            padding: 15px;
+        }
+        
+        body.height-400 .answer.active {
+            padding: 10px;
+            font-size: 13px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block wrapper_style %}
+<style>
+    /* Override base template styles to ensure full-page scrolling */
+    .content-wrapper {
+        overflow: hidden; /* Keep this hidden to prevent double scrollbars */
     }
 </style>
 {% endblock %}

@@ -45,41 +45,81 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: var(--spacing-xl) var(--spacing-md) var(--spacing-md);
         box-sizing: border-box;
+    }
+    
+    /* Height-specific container padding */
+    body.height-800 .sponsors-container {
+        padding: var(--spacing-xl) var(--spacing-md) var(--spacing-md);
+    }
+    
+    body.height-400 .sponsors-container {
+        padding: var(--spacing-md) var(--spacing-md) var(--spacing-sm);
     }
 
     .page-title {
-        font-size: var(--font-size-xl);
         color: var(--color-gold);
         font-family: 'Playfair Display', serif;
-        margin-bottom: var(--spacing-xl);
         text-align: center;
+    }
+    
+    /* Height-specific title sizing */
+    body.height-800 .page-title {
+        font-size: var(--font-size-xl);
+        margin-bottom: var(--spacing-xl);
+    }
+    
+    body.height-400 .page-title {
+        font-size: calc(var(--font-size-lg) + 0.25rem);
+        margin-bottom: var(--spacing-md);
     }
 
     .content-box {
         background: var(--color-bg-dark);
         border: var(--border-thin);
         border-radius: var(--border-radius);
-        padding: var(--spacing-xl);
         width: 100%;
         max-width: 68.5rem; /* 1160px - same as home page */
         display: flex;
         flex-direction: column;
         align-items: center;
     }
+    
+    /* Height-specific content box padding */
+    body.height-800 .content-box {
+        padding: var(--spacing-xl);
+    }
+    
+    body.height-400 .content-box {
+        padding: var(--spacing-md);
+    }
 
     .sponsors-intro {
         color: #fff;
-        font-size: var(--font-size-md);
         text-align: center;
-        margin-bottom: var(--spacing-xl);
         line-height: 1.8;
         max-width: 50rem; /* 800px */
     }
+    
+    /* Height-specific intro text sizing */
+    body.height-800 .sponsors-intro {
+        font-size: var(--font-size-md);
+        margin-bottom: var(--spacing-xl);
+    }
+    
+    body.height-400 .sponsors-intro {
+        font-size: var(--font-size-sm);
+        margin-bottom: var(--spacing-md);
+        line-height: 1.5;
+    }
 
-    .sponsors-intro p {
+    /* Height-specific paragraph spacing */
+    body.height-800 .sponsors-intro p {
         margin-bottom: 1.5rem;
+    }
+    
+    body.height-400 .sponsors-intro p {
+        margin-bottom: 0.75rem;
     }
 
     .sponsors-intro p:last-child {
@@ -90,21 +130,46 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 5rem; /* 80px */
         width: 100%;
+    }
+    
+    /* Height-specific sponsor grid spacing */
+    body.height-800 .sponsors-grid {
+        gap: 5rem; /* 80px */
+    }
+    
+    body.height-400 .sponsors-grid {
+        gap: 2rem; /* 32px - reduced for smaller height */
     }
 
     .sponsor-logo {
-        max-height: 9.375rem; /* 150px */
         width: auto;
         filter: brightness(1.2);
+    }
+    
+    /* Height-specific logo sizing */
+    body.height-800 .sponsor-logo {
+        max-height: 9.375rem; /* 150px */
+    }
+    
+    body.height-400 .sponsor-logo {
+        max-height: 4.6875rem; /* 75px - 50% smaller */
     }
 
     .copyright {
         color: rgba(255,255,255,0.6);
+        text-align: center;
+    }
+    
+    /* Height-specific copyright sizing */
+    body.height-800 .copyright {
         font-size: var(--font-size-sm);
         margin-top: var(--spacing-lg);
-        text-align: center;
+    }
+    
+    body.height-400 .copyright {
+        font-size: 0.75rem;
+        margin-top: var(--spacing-sm);
     }
 
     .sponsor-item {
@@ -112,49 +177,93 @@
         justify-content: center;
         align-items: center;
         background-color: white;
-        width: 12.5rem; /* 200px */
-        height: 9.375rem; /* 150px */
         padding: var(--spacing-xs);
         border-radius: var(--border-radius);
         flex: 0 0 auto;
     }
+    
+    /* Height-specific sponsor item sizing */
+    body.height-800 .sponsor-item {
+        width: 12.5rem; /* 200px */
+        height: 9.375rem; /* 150px */
+    }
+    
+    body.height-400 .sponsor-item {
+        width: 6.25rem; /* 100px - 50% smaller */
+        height: 4.6875rem; /* 75px - 50% smaller */
+        padding: calc(var(--spacing-xs) / 2);
+    }
 
     /* Responsive adjustments */
     @media screen and (max-width: 1024px) {
-        .content-box {
+        body.height-800 .content-box {
             padding: var(--spacing-lg);
         }
         
-        .sponsors-grid {
+        body.height-400 .content-box {
+            padding: var(--spacing-sm);
+        }
+        
+        body.height-800 .sponsors-grid {
             gap: 3rem; /* Reduced for medium screens */
+        }
+        
+        body.height-400 .sponsors-grid {
+            gap: 1.5rem; /* Reduced for medium screens, 400px height */
         }
     }
 
     @media screen and (max-width: 768px) {
-        .sponsors-container {
+        body.height-800 .sponsors-container {
             padding: var(--spacing-lg) var(--spacing-sm) var(--spacing-sm);
         }
         
-        .content-box {
+        body.height-400 .sponsors-container {
+            padding: var(--spacing-sm) var(--spacing-sm) var(--spacing-xs);
+        }
+        
+        body.height-800 .content-box {
             padding: var(--spacing-md);
         }
         
-        .sponsor-item {
+        body.height-400 .content-box {
+            padding: var(--spacing-sm);
+        }
+        
+        body.height-800 .sponsor-item {
             width: 10rem; /* Smaller on mobile */
             height: 7.5rem;
         }
         
-        .sponsors-grid {
+        body.height-400 .sponsor-item {
+            width: 5rem; /* Smaller on mobile, 400px height */
+            height: 3.75rem;
+        }
+        
+        body.height-800 .sponsors-grid {
             gap: 1.5rem; /* Further reduced for small screens */
         }
         
-        .page-title {
+        body.height-400 .sponsors-grid {
+            gap: 1rem; /* Further reduced for small screens, 400px height */
+        }
+        
+        body.height-800 .page-title {
             font-size: 2rem;
             margin-bottom: var(--spacing-lg);
         }
         
-        .sponsors-intro {
+        body.height-400 .page-title {
+            font-size: 1.5rem;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        body.height-800 .sponsors-intro {
             font-size: 1rem;
+        }
+        
+        body.height-400 .sponsors-intro {
+            font-size: 0.875rem;
         }
     }
 </style>

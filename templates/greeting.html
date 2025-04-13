@@ -1,0 +1,479 @@
+{% load cms_tags menu_tags sekizai_tags %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1280, height=800, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>{% placeholder "greeting_page_title" or %}Welcome - Vienna State Opera{% endplaceholder %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Add fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap">
+    {% render_block "css" %}
+    <style>
+        /* Reset and base styles - matching base.html */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 1280px;
+            height: 800px; 
+            max-height: 100%;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            overflow: hidden;
+        }
+
+        /* Define standard content wrapper - matching base.html */
+        .content-wrapper {
+            width: 1280px;
+            height: 800px;
+            position: relative;
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9));
+            overflow: hidden;
+        }
+
+        /* Home Navigation Icon - matching base.html */
+        .home-nav {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            z-index: 100;
+        }
+
+        .home-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(0,0,0,0.7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .home-icon i {
+            color: #fff;
+            font-size: 1.2em;
+        }
+
+        .home-icon:hover {
+            background: rgba(2, 124, 39, 0.73);
+        }
+        
+        /* Variables for greeting page */
+        :root {
+            --color-gold: #d4af37;
+            --color-gold-muted: #b8a062;
+            --color-dark: #000;
+            --color-dark-accent: #111;
+            --spacing-sm: 0.75rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2.5rem;
+            --spacing-xl: 4rem;
+            --border-radius: 8px;
+        }
+        
+        /* Background elements */
+        .bg-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMwLTkuOTQtOC4wNi0xOC0xOC0xOHY2YzYuNjI3IDAgMTIgNS4zNzMgMTIgMTJoNnptLTYgNmMwLTYuNjI3LTUuMzczLTEyLTEyLTEydjZjMy4zMTQgMCA2IDIuNjg2IDYgNmg2em0tNiA2YzAtMy4zMTQtMi42ODYtNi02LTZ2Nmg2eiIgZmlsbD0iIzJkMmQyZCIvPjwvZz48L3N2Zz4=');
+            opacity: 0.03;
+            z-index: 0;
+        }
+        
+        /* Gold accent lines */
+        .gold-line-top, .gold-line-bottom {
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(to right, transparent 0%, var(--color-gold) 50%, transparent 100%);
+        }
+        
+        .gold-line-top {
+            top: 50px;
+        }
+        
+        .gold-line-bottom {
+            bottom: 50px;
+        }
+        
+        /* Greeting container for centering content */
+        .greeting-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        /* Logo section */
+        .greeting-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: var(--spacing-md);
+            z-index: 10;
+        }
+        
+        .greeting-logo {
+            height: 80px;
+            margin-top: var(--spacing-md);
+            opacity: 0;
+            animation: fadeIn 1.5s ease-out 0.2s forwards;
+        }
+        
+        /* Main content box */
+        .content-box {
+            max-width: 900px;
+            width: 90%;
+            background-color: rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--color-gold-muted);
+            border-radius: var(--border-radius);
+            padding: var(--spacing-xl);
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            animation: fadeIn 1.5s ease-out 0.5s forwards;
+        }
+        
+        /* Corner accents for content box */
+        .content-box::before,
+        .content-box::after,
+        .corner-top-right,
+        .corner-bottom-left {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-color: var(--color-gold);
+        }
+        
+        .content-box::before {
+            top: -1px;
+            left: -1px;
+            border-top: 2px solid var(--color-gold);
+            border-left: 2px solid var(--color-gold);
+            border-top-left-radius: var(--border-radius);
+        }
+        
+        .content-box::after {
+            bottom: -1px;
+            right: -1px;
+            border-bottom: 2px solid var(--color-gold);
+            border-right: 2px solid var(--color-gold);
+            border-bottom-right-radius: var(--border-radius);
+        }
+        
+        .corner-top-right {
+            top: -1px;
+            right: -1px;
+            border-top: 2px solid var(--color-gold);
+            border-right: 2px solid var(--color-gold);
+            border-top-right-radius: var(--border-radius);
+        }
+        
+        .corner-bottom-left {
+            bottom: -1px;
+            left: -1px;
+            border-bottom: 2px solid var(--color-gold);
+            border-left: 2px solid var(--color-gold);
+            border-bottom-left-radius: var(--border-radius);
+        }
+        
+        /* Content styling */
+        .welcome-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.5rem;
+            margin-bottom: var(--spacing-md);
+            color: #fff;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+            position: relative;
+        }
+        
+        .welcome-subtitle {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--color-gold);
+            font-style: italic;
+            margin-bottom: var(--spacing-lg);
+            position: relative;
+        }
+        
+        .divider {
+            width: 180px;
+            height: 1px;
+            background: linear-gradient(to right, transparent 0%, var(--color-gold) 50%, transparent 100%);
+            margin: 0 auto var(--spacing-lg);
+        }
+        
+        .welcome-text {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: var(--spacing-lg);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Enter button */
+        .enter-button {
+            display: inline-block;
+            padding: 12px 45px;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            color: var(--color-gold);
+            background-color: transparent;
+            border: 1px solid var(--color-gold);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .enter-button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: all 0.5s ease;
+        }
+        
+        .enter-button:hover {
+            color: #fff;
+            border-color: #fff;
+            transform: translateY(-2px);
+        }
+        
+        .enter-button:hover::before {
+            left: 100%;
+        }
+        
+        /* Language selector */
+        .language-selector {
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            display: flex;
+            gap: 15px;
+            z-index: 10;
+        }
+        
+        .language-option {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .language-option:hover, .language-option.active {
+            color: var(--color-gold);
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Responsive styles */
+        @media screen and (height: 400px) {
+            body, .content-wrapper { 
+                height: 400px;
+            }
+            
+            .content-box {
+                padding: var(--spacing-md);
+                max-width: 80%;
+            }
+            
+            .welcome-title {
+                font-size: 2.5rem;
+            }
+            
+            .welcome-subtitle {
+                font-size: 1.2rem;
+            }
+        }
+        
+        /* Height toggle control - updated for better visibility on greeting page */
+        .height-toggle {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            z-index: 9999;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 6px 12px;
+            border: 1px solid var(--color-gold);
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .height-toggle:hover {
+            background: rgba(30,30,30,0.9);
+            border-color: white;
+        }
+    </style>
+    {% render_block "js" %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Function to get height from cookie or URL parameter
+            function getHeightPreference() {
+                // First check URL parameter
+                const urlParams = new URLSearchParams(window.location.search);
+                const heightParam = urlParams.get('height');
+                
+                if (heightParam === '400' || heightParam === '800') {
+                    // Save preference to cookie if it comes from URL
+                    setHeightCookie(heightParam);
+                    return heightParam;
+                }
+                
+                // Otherwise check cookie
+                const heightCookie = getCookie('displayHeight');
+                return heightCookie || '800'; // Default to 800px if no cookie exists
+            }
+            
+            // Function to set height cookie (expires in 30 days)
+            function setHeightCookie(height) {
+                const expiryDate = new Date();
+                expiryDate.setDate(expiryDate.getDate() + 30);
+                document.cookie = `displayHeight=${height};expires=${expiryDate.toUTCString()};path=/`;
+            }
+            
+            // Function to get cookie value by name
+            function getCookie(name) {
+                const cookieValue = document.cookie
+                    .split('; ')
+                    .find(row => row.startsWith(name + '='));
+                    
+                return cookieValue ? cookieValue.split('=')[1] : null;
+            }
+            
+            // Apply height class based on preference
+            const heightPreference = getHeightPreference();
+            if (heightPreference === '400') {
+                document.body.classList.add('height-400');
+                document.body.classList.remove('height-800');
+            } else {
+                document.body.classList.add('height-800');
+                document.body.classList.remove('height-400');
+            }
+            
+            // Add height toggle button
+            const toggleButton = document.createElement('button');
+            toggleButton.className = 'height-toggle';
+            toggleButton.textContent = document.body.classList.contains('height-400') 
+                ? 'Switch to 800px height' 
+                : 'Switch to 400px height';
+            
+            toggleButton.addEventListener('click', function() {
+                const currentHeight = document.body.classList.contains('height-400') ? '400' : '800';
+                const newHeight = currentHeight === '400' ? '800' : '400';
+                
+                // Save new preference to cookie
+                setHeightCookie(newHeight);
+                
+                // Redirect to same page without height parameter (will use cookie value)
+                const url = new URL(window.location);
+                url.searchParams.delete('height'); // Remove any existing height parameter
+                window.location.href = url.toString();
+            });
+            
+            document.body.appendChild(toggleButton);
+        });
+    </script>
+</head>
+
+<body>
+    {% cms_toolbar %}
+    <div class="content-wrapper">
+        <div class="greeting-container">
+            <!-- Background pattern -->
+            <div class="bg-pattern"></div>
+            
+            <!-- Gold decorative lines -->
+            <div class="gold-line-top"></div>
+            <div class="gold-line-bottom"></div>
+            
+            <!-- Language selector -->
+            <div class="language-selector">
+                <a href="#" class="language-option active">English</a>
+                <a href="#" class="language-option">Deutsch</a>
+            </div>
+            
+            <!-- Logo at the top - Using placeholder for logo -->
+            <div class="greeting-header">
+                {% placeholder "greeting_logo" or %}
+                    <img src="{% static 'images/vienna-state-opera-logo.png' %}" alt="Vienna State Opera Logo" class="greeting-logo">
+                {% endplaceholder %}
+            </div>
+            
+            <!-- Main content box -->
+            <div class="content-box">
+                <div class="corner-top-right"></div>
+                <div class="corner-bottom-left"></div>
+                
+                <h1 class="welcome-title">
+                    {% placeholder "greeting_title" or %}Welcome{% endplaceholder %}
+                </h1>
+                
+                <h2 class="welcome-subtitle">
+                    {% placeholder "greeting_subtitle" or %}to the Vienna State Opera{% endplaceholder %}
+                </h2>
+                
+                <div class="divider"></div>
+                
+                <div class="welcome-text">
+                    {% placeholder "greeting_text" or %}
+                    <p>
+                        Experience extraordinary performances in one of the world's most beautiful opera houses. 
+                        Our digital infotainment system offers information about today's performance, upcoming events, 
+                        and the rich history of our celebrated institution.
+                    </p>
+                    {% endplaceholder %}
+                </div>
+                
+                <a href="/home/" class="enter-button">
+                    {% placeholder "enter_button_text" or %}ENTER{% endplaceholder %}
+                </a>
+            </div>
+        </div>
+        
+        <!-- Home Navigation Icon - from base.html -->
+        <a href="/" class="home-nav">
+            <div class="home-icon">
+                <i class="fas fa-home"></i>
+            </div>
+        </a>
+    </div>
+</body>
+</html>

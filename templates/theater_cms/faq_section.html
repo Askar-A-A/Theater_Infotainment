@@ -1,0 +1,15 @@
+<div class="faq-section">
+    {% for plugin in instance.child_plugin_instances %}
+        {% render_plugin plugin %}
+    {% endfor %}
+</div>
+
+<div class="qa-item">
+    <div class="question">
+        <span>{{ instance.question }}</span>
+        <i class="fas fa-chevron-down"></i>
+    </div>
+    <div class="answer">
+        {{ instance.answer|safe }}
+    </div>
+</div>

@@ -42,29 +42,65 @@
         height: 100%;
         position: relative;
         box-sizing: border-box;
-        overflow: hidden;
+        overflow: hidden; /* Ensure no horizontal scrolling at container level */
     }
 
     /* Main content area with scrolling */
     .main-content {
-        height: 100vh;
         width: 100%;
+        overflow-x: hidden; /* Prevent horizontal scrolling */
         overflow-y: scroll;
-        scroll-snap-type: y mandatory; /* Force snap to sections */
-        -webkit-overflow-scrolling: touch; /* Smooth scrolling on touch devices */
+        scroll-snap-type: y mandatory;
+        -webkit-overflow-scrolling: touch;
         scroll-behavior: smooth;
+    }
+    
+    /* Height-specific adjustments for main-content */
+    body.height-800 .main-content {
+        height: 800px;
+    }
+    
+    body.height-400 .main-content {
+        height: 400px;
+    }
+    
+    /* Style the scrollbar for better visibility */
+    .main-content::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    .main-content::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.2);
+    }
+
+    .main-content::-webkit-scrollbar-thumb {
+        background: var(--color-gold);
+        border-radius: 5px;
+    }
+
+    .main-content::-webkit-scrollbar-thumb:hover {
+        background: #b28e29;
     }
 
     /* Section styling with snap points */
     .content-section {
-        height: 100vh; /* Full viewport height */
         width: 100%;
-        scroll-snap-align: start; /* Snap to start of section */
+        scroll-snap-align: start;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         position: relative;
+        overflow: hidden; /* Prevent horizontal scrolling within sections */
+    }
+    
+    /* Height-specific adjustments for content-section */
+    body.height-800 .content-section {
+        height: 800px;
+    }
+    
+    body.height-400 .content-section {
+        height: 400px;
     }
 
     /* Background overlay for sections */
@@ -111,25 +147,44 @@
         100% { filter: brightness(0.3) sepia(0.4); }
     }
 
-    /* Vertical scroll indicators - similar to events.html but vertical */
+    /* Vertical scroll indicators - Updated for proper centering */
     .scroll-indicators {
         position: fixed;
-        left: 30px;
-        top: 50%;
-        transform: translateY(-50%);
+        right: 30px;
         display: flex;
         flex-direction: column;
-        gap: var(--spacing-sm);
         z-index: 100;
+    }
+    
+    /* Height-specific positioning and spacing for indicators */
+    body.height-800 .scroll-indicators {
+        top: 50%;
+        transform: translateY(-50%);
+        gap: var(--spacing-sm);
+    }
+    
+    body.height-400 .scroll-indicators {
+        top: 50%;
+        transform: translateY(-50%);
+        gap: var(--spacing-xs);
     }
 
     .scroll-dot {
-        width: 1rem;
-        height: 1rem;
         border-radius: 50%;
         background: rgba(255,255,255,0.3);
         cursor: pointer;
         transition: all 0.3s ease;
+    }
+    
+    /* Height-specific adjustments for scroll dots */
+    body.height-800 .scroll-dot {
+        width: 1rem;
+        height: 1rem;
+    }
+    
+    body.height-400 .scroll-dot {
+        width: 0.75rem;
+        height: 0.75rem;
     }
 
     .scroll-dot.active {
@@ -142,43 +197,106 @@
         background: var(--color-bg-dark);
         border: var(--border-thin);
         border-radius: var(--border-radius);
-        padding: var(--spacing-xl) var(--spacing-xl) var(--spacing-xl) var(--spacing-xl);
         width: 95%;
-        max-width: 900px; /* Increased from 800px */
+        max-width: 900px;
         display: flex;
         flex-direction: column;
         align-items: center;
         backdrop-filter: blur(5px);
+        overflow-y: auto;
+        overflow-x: hidden; /* Prevent horizontal scrolling in content box */
+    }
+    
+    /* Height-specific adjustments for content box */
+    body.height-800 .content-box {
+        padding: var(--spacing-xl);
+        max-height: 80vh;
+    }
+    
+    body.height-400 .content-box {
+        padding: var(--spacing-md);
+        max-height: 85vh;
+    }
+    
+    /* Add scrollbar for content-box when needed */
+    .content-box::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .content-box::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.2);
+    }
+
+    .content-box::-webkit-scrollbar-thumb {
+        background: var(--color-gold);
+        border-radius: 4px;
+    }
+
+    .content-box::-webkit-scrollbar-thumb:hover {
+        background: #b28e29;
     }
 
     /* Icon styling */
     .section-icon {
-        font-size: 52px; /* Slightly larger */
         color: var(--color-gold);
-        margin-bottom: 15px; /* Reduced to place closer to title */
+    }
+    
+    /* Height-specific adjustments for section icon */
+    body.height-800 .section-icon {
+        font-size: 52px;
+        margin-bottom: 15px;
+    }
+    
+    body.height-400 .section-icon {
+        font-size: 36px;
+        margin-bottom: 8px;
     }
 
     /* Title styling */
     .section-title {
-        font-size: 42px;
         color: var(--color-gold);
-        margin-bottom: 40px; /* Increased for more space between title and content */
         font-family: 'Playfair Display', serif;
         text-align: center;
         text-shadow: 0 0 10px rgba(0,0,0,0.5);
+        max-width: 100%; /* Prevent text overflow causing horizontal scroll */
+    }
+    
+    /* Height-specific adjustments for section title */
+    body.height-800 .section-title {
+        font-size: 42px;
+        margin-bottom: 40px;
+    }
+    
+    body.height-400 .section-title {
+        font-size: 28px;
+        margin-bottom: 20px;
     }
 
     /* Content styling */
     .section-content {
         color: #fff;
-        font-size: 18px;
         line-height: 1.8;
         text-align: center;
         width: 100%;
     }
+    
+    /* Height-specific adjustments for section content */
+    body.height-800 .section-content {
+        font-size: 18px;
+    }
+    
+    body.height-400 .section-content {
+        font-size: 14px;
+        line-height: 1.5;
+    }
 
-    .section-content p {
+    /* Paragraph spacing adjustments */
+    body.height-800 .section-content p {
         margin-bottom: 1.5rem;
+    }
+    
+    body.height-400 .section-content p {
+        margin-bottom: 0.75rem;
     }
 
     .section-content p:last-child {
@@ -188,71 +306,140 @@
     /* Awards grid styling */
     .awards-grid {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: var(--spacing-md);
         width: 100%;
         margin-top: var(--spacing-md);
+    }
+    
+    /* Height-specific adjustments for awards grid */
+    body.height-800 .awards-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--spacing-md);
+    }
+    
+    body.height-400 .awards-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--spacing-xs);
+        margin-top: var(--spacing-sm);
     }
     
     .award-item {
         background: rgba(255, 255, 255, 0.1);
         border-radius: var(--border-radius);
-        padding: var(--spacing-md);
         display: flex;
         flex-direction: column;
         align-items: center;
         text-align: center;
     }
     
+    /* Height-specific adjustments for award items */
+    body.height-800 .award-item {
+        padding: var(--spacing-md);
+    }
+    
+    body.height-400 .award-item {
+        padding: var(--spacing-sm);
+    }
+    
     .award-icon {
-        font-size: 36px;
         color: var(--color-gold);
+    }
+    
+    /* Height-specific adjustments for award icons */
+    body.height-800 .award-icon {
+        font-size: 36px;
         margin-bottom: var(--spacing-sm);
+    }
+    
+    body.height-400 .award-icon {
+        font-size: 24px;
+        margin-bottom: var(--spacing-xs);
     }
     
     .award-title {
         color: var(--color-gold);
+    }
+    
+    /* Height-specific adjustments for award titles */
+    body.height-800 .award-title {
         font-size: 18px;
         margin-bottom: var(--spacing-xs);
     }
     
+    body.height-400 .award-title {
+        font-size: 14px;
+        margin-bottom: calc(var(--spacing-xs) / 2);
+    }
+    
     .award-year {
         color: rgba(255, 255, 255, 0.8);
+    }
+    
+    /* Height-specific adjustments for award years */
+    body.height-800 .award-year {
         font-size: 14px;
+    }
+    
+    body.height-400 .award-year {
+        font-size: 12px;
     }
 
     /* Responsive adjustments */
     @media screen and (max-width: 768px) {
-        .content-box {
+        body.height-800 .content-box,
+        body.height-400 .content-box {
             width: 95%;
+        }
+        
+        body.height-800 .content-box {
             padding: var(--spacing-lg);
         }
         
-        .section-title {
-            font-size: 32px;
-            margin-bottom: 30px; /* Slightly less spacing on mobile */
+        body.height-400 .content-box {
+            padding: var(--spacing-sm);
         }
         
-        .section-content {
+        body.height-800 .section-title {
+            font-size: 32px;
+            margin-bottom: 30px;
+        }
+        
+        body.height-400 .section-title {
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+        
+        body.height-800 .section-content {
             font-size: 16px;
         }
         
-        .awards-grid {
+        body.height-400 .section-content {
+            font-size: 13px;
+        }
+        
+        body.height-800 .awards-grid,
+        body.height-400 .awards-grid {
             grid-template-columns: repeat(2, 1fr);
         }
         
+        /* Update scroll indicator positioning for mobile */
         .scroll-indicators {
             right: 10px;
         }
         
-        .scroll-dot {
+        body.height-800 .scroll-dot {
             width: 0.8rem;
             height: 0.8rem;
+        }
+        
+        body.height-400 .scroll-dot {
+            width: 0.6rem;
+            height: 0.6rem;
         }
     }
     
     @media screen and (max-width: 480px) {
-        .awards-grid {
+        body.height-800 .awards-grid,
+        body.height-400 .awards-grid {
             grid-template-columns: 1fr;
         }
     }

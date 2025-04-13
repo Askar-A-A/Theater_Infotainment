@@ -16,42 +16,45 @@
             box-sizing: border-box;
         }
 
+        /* Base size configuration - will be overridden by height-specific classes */
         html, body {
             margin: 0;
             padding: 0;
             width: 1280px;
             height: 800px; 
-            max-height: 100%;
             color: #fff;
             font-family: 'Arial', sans-serif;
             line-height: 1.6;
-            overflow: hidden; /* Change to hidden to prevent scrolling */
+            overflow: hidden;
         }
 
         /* Define standard content wrapper */
         .content-wrapper {
             width: 1280px;
-            height: 800px; /* Explicitly set height */
+            height: 800px;
             position: relative;
             background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9));
-            overflow: hidden; /* Change to hidden for home page */
+            overflow: hidden;
         }
         
-        /* Removed the navbar section entirely */
+        /* Height-specific configurations */
+        body.height-800, body.height-800 .content-wrapper {
+            height: 800px;
+        }
+        
+        body.height-400, body.height-400 .content-wrapper {
+            height: 400px;
+        }
 
-        /* Navigation Icons */
-        .nav-icons {
-            position: absolute; /* Keep as absolute for home page */
+        /* Home Navigation Icon - Updated for consistent positioning across heights */
+        .home-nav {
+            position: absolute;
             right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
+            top: 20px;
             z-index: 100;
         }
 
-        .nav-icon {
+        .home-icon {
             width: 60px;
             height: 60px;
             background: rgba(0,0,0,0.7);
@@ -63,55 +66,94 @@
             transition: background 0.3s ease;
         }
 
-        .nav-icon i {
+        .home-icon i {
             color: #fff;
             font-size: 1.2em;
         }
 
-        .nav-icon:hover {
+        .home-icon:hover {
             background: rgba(2, 124, 39, 0.73);
         }
-
-        /* Responsive adjustments */
-        @media screen and (height: 400px) {
-            body, .content-wrapper { 
-                height: 400px;
-            }
-        }
-
-        @media screen and (height: 800px) {
-            body, .content-wrapper { 
-                height: 800px;
-            }
+        
+        /* Height toggle control - for development only */
+        .height-toggle {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            z-index: 9999;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 5px 10px;
+            border: 1px solid #555;
+            border-radius: 4px;
+            cursor: pointer;
         }
         
         /* Add this block-level CSS to control page-specific overflow */
         {% block wrapper_style %}{% endblock %}
     </style>
     {% block extra_css %}{% endblock %}
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Function to get height from cookie or URL parameter
+            function getHeightPreference() {
+                // First check URL parameter (takes precedence)
+                const urlParams = new URLSearchParams(window.location.search);
+                const heightParam = urlParams.get('height');
+                
+                if (heightParam === '400' || heightParam === '800') {
+                    // Save preference to cookie if it comes from URL
+                    setHeightCookie(heightParam);
+                    return heightParam;
+                }
+                
+                // Otherwise check cookie
+                const heightCookie = getCookie('displayHeight');
+                return heightCookie || '800'; // Default to 800px
+            }
+            
+            // Function to set height cookie (expires in 30 days)
+            function setHeightCookie(height) {
+                const expiryDate = new Date();
+                expiryDate.setDate(expiryDate.getDate() + 30);
+                document.cookie = `displayHeight=${height};expires=${expiryDate.toUTCString()};path=/`;
+            }
+            
+            // Function to get cookie value by name
+            function getCookie(name) {
+                const cookieValue = document.cookie
+                    .split('; ')
+                    .find(row => row.startsWith(name + '='));
+                    
+                return cookieValue ? cookieValue.split('=')[1] : null;
+            }
+            
+            // Apply height class based on preference
+            const heightPreference = getHeightPreference();
+            if (heightPreference === '400') {
+                document.body.classList.add('height-400');
+                document.body.classList.remove('height-800');
+            } else {
+                document.body.classList.add('height-800');
+                document.body.classList.remove('height-400');
+            }
+            
+            // Don't add the toggle button here, we'll only show it on greeting page
+        });
+    </script>
 </head>
-<body>
+<body class="height-800">
     {% cms_toolbar %}
     <div class="content-wrapper">
-        <!-- Removed the navbar from here -->
-        
         {% block content %}{% endblock content %}
         
-        <!-- Navigation Icons -->
-        <div class="nav-icons">
-            <div class="nav-icon">
+        <!-- Home Navigation Icon - Single icon replacing the previous nav-icons section -->
+        <a href="/" class="home-nav">
+            <div class="home-icon">
                 <i class="fas fa-home"></i>
             </div>
-            <div class="nav-icon">
-                <i class="fas fa-cog"></i>
-            </div>
-            <div class="nav-icon">
-                <i class="fas fa-question"></i>
-            </div>
-            <div class="nav-icon">
-                <i class="fas fa-power-off"></i>
-            </div>
-        </div>
+        </a>
     </div>
     {% render_block "js" %}
 </body>
