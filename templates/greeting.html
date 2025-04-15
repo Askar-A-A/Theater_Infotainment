@@ -121,8 +121,8 @@
             position: relative;
         }
         
-        /* Logo section */
-        .greeting-header {
+        /* Language selector - repositioned to center top */
+        .language-selector {
             position: absolute;
             top: 0;
             left: 0;
@@ -131,13 +131,24 @@
             justify-content: center;
             padding: var(--spacing-md);
             z-index: 10;
+            margin-top: var(--spacing-md);
+            animation: fadeIn 1.5s ease-out 0.2s forwards;
+            opacity: 0;
         }
         
-        .greeting-logo {
-            height: 80px;
-            margin-top: var(--spacing-md);
-            opacity: 0;
-            animation: fadeIn 1.5s ease-out 0.2s forwards;
+        .language-option {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            margin: 0 15px;
+            padding: 5px 15px;
+            border: 1px solid transparent;
+        }
+        
+        .language-option:hover, .language-option.active {
+            color: var(--color-gold);
+            border-bottom: 1px solid var(--color-gold);
         }
         
         /* Main content box */
@@ -274,27 +285,6 @@
             left: 100%;
         }
         
-        /* Language selector */
-        .language-selector {
-            position: absolute;
-            top: 20px;
-            left: 30px;
-            display: flex;
-            gap: 15px;
-            z-index: 10;
-        }
-        
-        .language-option {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-        
-        .language-option:hover, .language-option.active {
-            color: var(--color-gold);
-        }
-        
         /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
@@ -318,6 +308,11 @@
             
             .welcome-subtitle {
                 font-size: 1.2rem;
+            }
+            
+            .language-option {
+                font-size: 14px;
+                padding: 3px 10px;
             }
         }
         
@@ -424,17 +419,10 @@
             <div class="gold-line-top"></div>
             <div class="gold-line-bottom"></div>
             
-            <!-- Language selector -->
+            <!-- Language selector - repositioned to center top -->
             <div class="language-selector">
-                <a href="#" class="language-option active">English</a>
-                <a href="#" class="language-option">Deutsch</a>
-            </div>
-            
-            <!-- Logo at the top - Using placeholder for logo -->
-            <div class="greeting-header">
-                {% placeholder "greeting_logo" or %}
-                    <img src="{% static 'images/vienna-state-opera-logo.png' %}" alt="Vienna State Opera Logo" class="greeting-logo">
-                {% endplaceholder %}
+                <a href="javascript:setLanguage('en')" class="language-option active">English</a>
+                <a href="javascript:setLanguage('de')" class="language-option">Deutsch</a>
             </div>
             
             <!-- Main content box -->
@@ -475,5 +463,12 @@
             </div>
         </a>
     </div>
+
+    <script>
+        function setLanguage(lang) {
+            document.cookie = "django_language=" + lang + "; path=/; max-age=31536000";
+            window.location.reload();
+        }
+    </script>
 </body>
 </html>

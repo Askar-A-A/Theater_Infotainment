@@ -157,7 +157,8 @@ CMS_TEMPLATES = [
     ('events.html', 'Events Template'),
     ('event_detail.html', 'Event Detail Template'),
     ('q&a.html', 'Questions and Answers Template'),
-    ('sponsors.html', 'Sponsors Template')
+    ('sponsors.html', 'Sponsors Template'),
+    ('feedback.html', 'Feedback Template'),
 ]
 
 SITE_ID = 1
