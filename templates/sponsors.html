@@ -1,310 +1,392 @@
-{% extends "base.html" %}
-{% load cms_tags %}
+{% load cms_tags menu_tags sekizai_tags %}
 {% load static %}
 
-{% block title %}
-    Sponsors - {% placeholder "theater_name" or %}TOSCA{% endplaceholder %}
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1280, height=800, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>{% placeholder "sponsors_page_title" or %}Our Sponsors - Vienna State Opera{% endplaceholder %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Add fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap">
+    {% render_block "css" %}
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-{% block wrapper_style %}
-<style>
-    /* Enable scrolling for sponsors page */
-    .content-wrapper {
-        overflow: auto;
-    }
-</style>
-{% endblock %}
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 1280px;
+            height: 800px; 
+            max-height: 100%;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            overflow: hidden;
+        }
 
-{% block extra_css %}
-<style>
-    /* Variables for consistent measurements (same as home page) */
-    :root {
-        --spacing-xs: 0.5rem;
-        --spacing-sm: 1rem;
-        --spacing-md: 1.5rem;
-        --spacing-lg: 2rem;
-        --spacing-xl: 3rem;
-        
-        --border-radius: 10px;
-        --border-thin: 1px solid rgba(255,255,255,0.1);
-        
-        --color-gold: #d4af37;
-        --color-bg-dark: rgba(0,0,0,0.7);
-        --color-bg-hover: rgba(255,255,255,0.1);
-        
-        --font-size-sm: 1rem;
-        --font-size-md: 1.25rem;
-        --font-size-lg: 2.25rem;
-        --font-size-xl: 3rem;
-    }
-
-    /* Sponsors page container */
-    .sponsors-container {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        box-sizing: border-box;
-    }
-    
-    /* Height-specific container padding */
-    body.height-800 .sponsors-container {
-        padding: var(--spacing-xl) var(--spacing-md) var(--spacing-md);
-    }
-    
-    body.height-400 .sponsors-container {
-        padding: var(--spacing-md) var(--spacing-md) var(--spacing-sm);
-    }
-
-    .page-title {
-        color: var(--color-gold);
-        font-family: 'Playfair Display', serif;
-        text-align: center;
-    }
-    
-    /* Height-specific title sizing */
-    body.height-800 .page-title {
-        font-size: var(--font-size-xl);
-        margin-bottom: var(--spacing-xl);
-    }
-    
-    body.height-400 .page-title {
-        font-size: calc(var(--font-size-lg) + 0.25rem);
-        margin-bottom: var(--spacing-md);
-    }
-
-    .content-box {
-        background: var(--color-bg-dark);
-        border: var(--border-thin);
-        border-radius: var(--border-radius);
-        width: 100%;
-        max-width: 68.5rem; /* 1160px - same as home page */
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    /* Height-specific content box padding */
-    body.height-800 .content-box {
-        padding: var(--spacing-xl);
-    }
-    
-    body.height-400 .content-box {
-        padding: var(--spacing-md);
-    }
-
-    .sponsors-intro {
-        color: #fff;
-        text-align: center;
-        line-height: 1.8;
-        max-width: 50rem; /* 800px */
-    }
-    
-    /* Height-specific intro text sizing */
-    body.height-800 .sponsors-intro {
-        font-size: var(--font-size-md);
-        margin-bottom: var(--spacing-xl);
-    }
-    
-    body.height-400 .sponsors-intro {
-        font-size: var(--font-size-sm);
-        margin-bottom: var(--spacing-md);
-        line-height: 1.5;
-    }
-
-    /* Height-specific paragraph spacing */
-    body.height-800 .sponsors-intro p {
-        margin-bottom: 1.5rem;
-    }
-    
-    body.height-400 .sponsors-intro p {
-        margin-bottom: 0.75rem;
-    }
-
-    .sponsors-intro p:last-child {
-        margin-bottom: 0;
-    }
-
-    .sponsors-grid {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        width: 100%;
-    }
-    
-    /* Height-specific sponsor grid spacing */
-    body.height-800 .sponsors-grid {
-        gap: 5rem; /* 80px */
-    }
-    
-    body.height-400 .sponsors-grid {
-        gap: 2rem; /* 32px - reduced for smaller height */
-    }
-
-    .sponsor-logo {
-        width: auto;
-        filter: brightness(1.2);
-    }
-    
-    /* Height-specific logo sizing */
-    body.height-800 .sponsor-logo {
-        max-height: 9.375rem; /* 150px */
-    }
-    
-    body.height-400 .sponsor-logo {
-        max-height: 4.6875rem; /* 75px - 50% smaller */
-    }
-
-    .copyright {
-        color: rgba(255,255,255,0.6);
-        text-align: center;
-    }
-    
-    /* Height-specific copyright sizing */
-    body.height-800 .copyright {
-        font-size: var(--font-size-sm);
-        margin-top: var(--spacing-lg);
-    }
-    
-    body.height-400 .copyright {
-        font-size: 0.75rem;
-        margin-top: var(--spacing-sm);
-    }
-
-    .sponsor-item {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: white;
-        padding: var(--spacing-xs);
-        border-radius: var(--border-radius);
-        flex: 0 0 auto;
-    }
-    
-    /* Height-specific sponsor item sizing */
-    body.height-800 .sponsor-item {
-        width: 12.5rem; /* 200px */
-        height: 9.375rem; /* 150px */
-    }
-    
-    body.height-400 .sponsor-item {
-        width: 6.25rem; /* 100px - 50% smaller */
-        height: 4.6875rem; /* 75px - 50% smaller */
-        padding: calc(var(--spacing-xs) / 2);
-    }
-
-    /* Responsive adjustments */
-    @media screen and (max-width: 1024px) {
-        body.height-800 .content-box {
-            padding: var(--spacing-lg);
+        /* Define content wrapper with gradient background (matching greeting page) */
+        .content-wrapper {
+            width: 1280px;
+            height: 800px;
+            position: relative;
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9));
+            overflow: hidden;
         }
         
-        body.height-400 .content-box {
-            padding: var(--spacing-sm);
+        /* Variables for consistent styling */
+        :root {
+            --color-gold: #d4af37;
+            --color-gold-muted: #b8a062;
+            --spacing-sm: 0.75rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2.5rem;
+            --spacing-xl: 4rem;
+            --border-radius: 8px;
         }
         
-        body.height-800 .sponsors-grid {
-            gap: 3rem; /* Reduced for medium screens */
+        /* Background pattern - matching greeting page */
+        .bg-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMwLTkuOTQtOC4wNi0xOC0xOC0xOHY2YzYuNjI3IDAgMTIgNS4zNzMgMTIgMTJoNnptLTYgNmMwLTYuNjI3LTUuMzczLTEyLTEyLTEydjZjMy4zMTQgMCA2IDIuNjg2IDYgNmg2em0tNiA2YzAtMy4zMTQtMi42ODYtNi02LTZ2Nmg2eiIgZmlsbD0iIzJkMmQyZCIvPjwvZz48L3N2Zz4=');
+            opacity: 0.03;
+            z-index: 0;
         }
         
-        body.height-400 .sponsors-grid {
-            gap: 1.5rem; /* Reduced for medium screens, 400px height */
-        }
-    }
-
-    @media screen and (max-width: 768px) {
-        body.height-800 .sponsors-container {
-            padding: var(--spacing-lg) var(--spacing-sm) var(--spacing-sm);
+        /* Gold accent lines - matching greeting page */
+        .gold-line-top, .gold-line-bottom {
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(to right, transparent 0%, var(--color-gold) 50%, transparent 100%);
         }
         
-        body.height-400 .sponsors-container {
-            padding: var(--spacing-sm) var(--spacing-sm) var(--spacing-xs);
+        .gold-line-top {
+            top: 50px;
         }
         
-        body.height-800 .content-box {
-            padding: var(--spacing-md);
+        .gold-line-bottom {
+            bottom: 50px;
         }
         
-        body.height-400 .content-box {
-            padding: var(--spacing-sm);
+        /* Main container */
+        .sponsors-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
         }
         
-        body.height-800 .sponsor-item {
-            width: 10rem; /* Smaller on mobile */
-            height: 7.5rem;
+        /* Sponsor content box - styled like greeting page content box */
+        .sponsor-content-box {
+            max-width: 900px;
+            width: 90%;
+            background-color: rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--color-gold-muted);
+            border-radius: var(--border-radius);
+            padding: var(--spacing-xl);
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            animation: fadeIn 1.5s ease-out 0.5s forwards;
         }
         
-        body.height-400 .sponsor-item {
-            width: 5rem; /* Smaller on mobile, 400px height */
-            height: 3.75rem;
+        /* Corner accents - matching greeting page style */
+        .sponsor-content-box::before,
+        .sponsor-content-box::after,
+        .corner-top-right,
+        .corner-bottom-left {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-color: var(--color-gold);
         }
         
-        body.height-800 .sponsors-grid {
-            gap: 1.5rem; /* Further reduced for small screens */
+        .sponsor-content-box::before {
+            top: -1px;
+            left: -1px;
+            border-top: 2px solid var(--color-gold);
+            border-left: 2px solid var(--color-gold);
+            border-top-left-radius: var(--border-radius);
         }
         
-        body.height-400 .sponsors-grid {
-            gap: 1rem; /* Further reduced for small screens, 400px height */
+        .sponsor-content-box::after {
+            bottom: -1px;
+            right: -1px;
+            border-bottom: 2px solid var(--color-gold);
+            border-right: 2px solid var(--color-gold);
+            border-bottom-right-radius: var(--border-radius);
         }
         
-        body.height-800 .page-title {
-            font-size: 2rem;
+        .corner-top-right {
+            top: -1px;
+            right: -1px;
+            border-top: 2px solid var(--color-gold);
+            border-right: 2px solid var(--color-gold);
+            border-top-right-radius: var(--border-radius);
+        }
+        
+        .corner-bottom-left {
+            bottom: -1px;
+            left: -1px;
+            border-bottom: 2px solid var(--color-gold);
+            border-left: 2px solid var(--color-gold);
+            border-bottom-left-radius: var(--border-radius);
+        }
+        
+        /* Title area */
+        .sponsors-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--color-gold);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        /* Divider - matching greeting page */
+        .divider {
+            width: 180px;
+            height: 1px;
+            background: linear-gradient(to right, transparent 0%, var(--color-gold) 50%, transparent 100%);
+            margin: 0 auto var(--spacing-lg);
+        }
+        
+        /* Sponsors info */
+        .sponsors-intro {
+            text-align: center;
+            max-width: 800px;
             margin-bottom: var(--spacing-lg);
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.15rem;
+            line-height: 1.8;
         }
         
-        body.height-400 .page-title {
-            font-size: 1.5rem;
-            margin-bottom: var(--spacing-sm);
+        /* Sponsors grid */
+        .sponsors-grid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2.5rem;
+            margin: var(--spacing-lg) 0;
         }
         
-        body.height-800 .sponsors-intro {
-            font-size: 1rem;
+        .sponsor-item {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: white;
+            padding: var(--spacing-sm);
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            width: 180px;
+            height: 120px;
+            transition: all 0.3s ease;
         }
         
-        body.height-400 .sponsors-intro {
-            font-size: 0.875rem;
+        .sponsor-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
         }
-    }
-</style>
-{% endblock %}
+        
+        .sponsor-logo {
+            max-width: 100%;
+            max-height: 100%;
+            transition: all 0.3s ease;
+        }
+        
+        /* Enter button - matching greeting page */
+        .enter-button {
+            display: inline-block;
+            padding: 15px 50px;
+            font-size: 1.2rem;
+            letter-spacing: 1.5px;
+            color: var(--color-gold);
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--color-gold);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            font-weight: 500;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            margin-top: var(--spacing-md);
+        }
+        
+        .enter-button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: all 0.5s ease;
+        }
+        
+        .enter-button:hover {
+            color: #fff;
+            border-color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+            background-color: rgba(212, 175, 55, 0.1);
+        }
+        
+        .enter-button:hover::before {
+            left: 100%;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Responsive styles */
+        @media screen and (height: 400px) {
+            body, .content-wrapper { 
+                height: 400px;
+            }
+            
+            .sponsor-content-box {
+                padding: var(--spacing-md);
+                max-width: 80%;
+            }
+            
+            .sponsors-title {
+                font-size: 2rem;
+                margin-bottom: 0.3rem;
+            }
+            
+            .sponsors-intro {
+                font-size: 0.9rem;
+                line-height: 1.5;
+                margin-bottom: var(--spacing-sm);
+            }
+            
+            .gold-line-top {
+                top: 30px;
+            }
+            
+            .gold-line-bottom {
+                bottom: 30px;
+            }
+            
+            .sponsors-grid {
+                gap: 1.5rem;
+                margin: var(--spacing-sm) 0;
+            }
+            
+            .sponsor-item {
+                width: 100px;
+                height: 70px;
+                padding: 0.5rem;
+            }
+            
+            .enter-button {
+                padding: 8px 30px;
+                font-size: 0.9rem;
+                margin-top: var(--spacing-sm);
+            }
+        }
+    </style>
+    {% render_block "js" %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Function to get height from cookie
+            function getHeightPreference() {
+                const heightCookie = getCookie('displayHeight');
+                return heightCookie || '800'; // Default to 800px if no cookie exists
+            }
+            
+            // Function to get cookie value by name
+            function getCookie(name) {
+                const cookieValue = document.cookie
+                    .split('; ')
+                    .find(row => row.startsWith(name + '='));
+                    
+                return cookieValue ? cookieValue.split('=')[1] : null;
+            }
+            
+            // Apply height class based on preference
+            const heightPreference = getHeightPreference();
+            if (heightPreference === '400') {
+                document.body.classList.add('height-400');
+                document.body.classList.remove('height-800');
+            } else {
+                document.body.classList.add('height-800');
+                document.body.classList.remove('height-400');
+            }
+        });
+    </script>
+</head>
 
-{% block content %}
-<div class="sponsors-container">
-    <h1 class="page-title">{% placeholder "sponsors_page_title" or %}Our Sponsors{% endplaceholder %}</h1>
-    
-    <div class="content-box">
-        <div class="sponsors-intro">
-            {% placeholder "sponsors_intro" or %}
-                <p>
-                    We extend our heartfelt gratitude to our esteemed sponsors whose generous support 
-                    enables us to continue our dedication to artistic excellence and cultural enrichment.
-                </p>
-                <p>
-                    Their partnership is vital to maintaining our historic venue.
-                </p>
-            {% endplaceholder %}
-        </div>
-
-        <div class="sponsors-grid">
-            {% placeholder "sponsors_logos" or %}
-                <div class="sponsor-item">
-                    <img src="{% static 'images/sponsors/lexus.png' %}" alt="Lexus" class="sponsor-logo">
+<body>
+    {% cms_toolbar %}
+    <div class="content-wrapper">
+        <div class="sponsors-container">
+            <!-- Background pattern -->
+            <div class="bg-pattern"></div>
+            
+            <!-- Gold decorative lines -->
+            <div class="gold-line-top"></div>
+            <div class="gold-line-bottom"></div>
+            
+            <!-- Main content box -->
+            <div class="sponsor-content-box">
+                <div class="corner-top-right"></div>
+                <div class="corner-bottom-left"></div>
+                
+                <h1 class="sponsors-title">{% placeholder "sponsors_title" or %}Our Esteemed Sponsors{% endplaceholder %}</h1>
+                
+                <div class="divider"></div>
+                
+                <div class="sponsors-intro">
+                    {% placeholder "sponsors_intro" or %}
+                        <p>
+                            The Vienna State Opera proudly acknowledges the generous support of our sponsors.
+                            Their commitment to the arts enables us to continue our tradition of excellence
+                            and to share the magic of opera with audiences from around the world.
+                        </p>
+                    {% endplaceholder %}
                 </div>
-                <div class="sponsor-item">
-                    <img src="{% static 'images/sponsors/samsung-1.png' %}" alt="Samsung" class="sponsor-logo">
+                
+                <div class="sponsors-grid">
+                    {% placeholder "sponsors_logos" or %}
+                        <div class="sponsor-item">
+                            <img src="{% static 'images/sponsors/lexus.png' %}" alt="Lexus" class="sponsor-logo">
+                        </div>
+                        <div class="sponsor-item">
+                            <img src="{% static 'images/sponsors/samsung-1.png' %}" alt="Samsung" class="sponsor-logo">
+                        </div>
+                        <div class="sponsor-item">
+                            <img src="{% static 'images/sponsors/omv.png' %}" alt="ÖMV" class="sponsor-logo">
+                        </div>
+                    {% endplaceholder %}
                 </div>
-                <div class="sponsor-item">
-                    <img src="{% static 'images/sponsors/omv.png' %}" alt="ÖMV" class="sponsor-logo">
-                </div>
-            {% endplaceholder %}
-        </div>
-
-        <div class="copyright">
-            {% placeholder "copyright_text" or %}
-                © 2024 {% placeholder "theater_name" or %}Vienna State Opera{% endplaceholder %} • All Rights Reserved
-            {% endplaceholder %}
+                
+                <a href="/" class="enter-button">
+                    {% placeholder "enter_button_text" or %}ENTER SITE{% endplaceholder %}
+                </a>
+            </div>
         </div>
     </div>
-</div>
-{% endblock %}
+</body>
+</html>

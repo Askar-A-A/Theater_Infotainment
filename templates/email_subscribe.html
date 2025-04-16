@@ -1,0 +1,399 @@
+{% extends "base.html" %}
+{% load cms_tags %}
+{% load static %}
+
+{% block title %}
+    {% placeholder "subscribe_page_title" or %}Subscribe - Vienna State Opera{% endplaceholder %}
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Variables for consistent styling */
+    :root {
+        --color-gold: #d4af37;
+        --color-gold-muted: #b8a062;
+        --spacing-sm: 0.75rem;
+        --spacing-md: 1.5rem;
+        --spacing-lg: 2.5rem;
+        --spacing-xl: 4rem;
+        --border-radius: 8px;
+    }
+    
+    /* Background pattern */
+    .bg-pattern {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMwLTkuOTQtOC4wNi0xOC0xOC0xOHY2YzYuNjI3IDAgMTIgNS4zNzMgMTIgMTJoNnptLTYgNmMwLTYuNjI3LTUuMzczLTEyLTEyLTEydjZjMy4zMTQgMCA2IDIuNjg2IDYgNmg2em0tNiA2YzAtMy4zMTQtMi42ODYtNi02LTZ2Nmg2eiIgZmlsbD0iIzJkMmQyZCIvPjwvZz48L3N2Zz4=');
+        opacity: 0.03;
+        z-index: 0;
+    }
+    
+    /* Gold accent lines */
+    .gold-line-top, .gold-line-bottom {
+        position: absolute;
+        width: 100%;
+        height: 1px;
+        background: linear-gradient(to right, transparent 0%, var(--color-gold) 50%, transparent 100%);
+    }
+    
+    .gold-line-top {
+        top: 50px;
+    }
+    
+    .gold-line-bottom {
+        bottom: 50px;
+    }
+    
+    /* Main container */
+    .subscribe-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+    
+    /* Subscribe content box - REDUCED HEIGHT */
+    .subscribe-content-box {
+        max-width: 700px;
+        width: 90%;
+        background-color: rgba(0, 0, 0, 0.7);
+        border: 1px solid var(--color-gold-muted);
+        border-radius: var(--border-radius);
+        padding: 2rem 2.5rem; /* Reduced padding */
+        text-align: center;
+        position: relative;
+        z-index: 2;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    }
+    
+    /* Corner accents */
+    .subscribe-content-box::before,
+    .subscribe-content-box::after,
+    .corner-top-right,
+    .corner-bottom-left {
+        content: "";
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border-color: var(--color-gold);
+    }
+    
+    .subscribe-content-box::before {
+        top: -1px;
+        left: -1px;
+        border-top: 2px solid var(--color-gold);
+        border-left: 2px solid var(--color-gold);
+        border-top-left-radius: var(--border-radius);
+    }
+    
+    .subscribe-content-box::after {
+        bottom: -1px;
+        right: -1px;
+        border-bottom: 2px solid var(--color-gold);
+        border-right: 2px solid var(--color-gold);
+        border-bottom-right-radius: var(--border-radius);
+    }
+    
+    .corner-top-right {
+        top: -1px;
+        right: -1px;
+        border-top: 2px solid var(--color-gold);
+        border-right: 2px solid var(--color-gold);
+        border-top-right-radius: var(--border-radius);
+    }
+    
+    .corner-bottom-left {
+        bottom: -1px;
+        left: -1px;
+        border-bottom: 2px solid var(--color-gold);
+        border-left: 2px solid var(--color-gold);
+        border-bottom-left-radius: var(--border-radius);
+    }
+    
+    /* Title area - REDUCED SIZE */
+    .subscribe-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.5rem; /* Reduced font size */
+        color: var(--color-gold);
+        margin-bottom: 0.8rem; /* Reduced margin */
+    }
+    
+    /* Divider */
+    .divider {
+        width: 180px;
+        height: 1px;
+        background: linear-gradient(to right, transparent 0%, var(--color-gold) 50%, transparent 100%);
+        margin: 0 auto 1.5rem; /* Reduced margin */
+    }
+    
+    /* Subscribe info - CONDENSED */
+    .subscribe-intro {
+        text-align: center;
+        max-width: 600px;
+        margin-bottom: 1.2rem; /* Reduced margin */
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 1.05rem; /* Slightly smaller font */
+        line-height: 1.5; /* Tighter line height */
+    }
+    
+    /* Form container - REDUCED SPACING */
+    .subscribe-form {
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 0.5rem 0; /* Reduced padding */
+    }
+    
+    /* Form elements - REDUCED SPACING */
+    .form-group {
+        margin-bottom: 1rem; /* Reduced margin */
+        position: relative;
+    }
+    
+    .form-group label {
+        display: block;
+        text-align: left;
+        margin-bottom: 0.4rem; /* Reduced margin */
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.95rem; /* Slightly smaller */
+    }
+    
+    .form-control {
+        width: 100%;
+        padding: 10px 15px; /* Reduced padding */
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+        color: white;
+        font-size: 1rem; /* Slightly smaller */
+        transition: all 0.3s ease;
+    }
+    
+    .form-control:focus {
+        outline: none;
+        background: rgba(255, 255, 255, 0.1);
+        border-color: var(--color-gold-muted);
+        box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+    }
+    
+    .form-control::placeholder {
+        color: rgba(255, 255, 255, 0.4);
+    }
+    
+    /* Checkbox styling - CONDENSED */
+    .checkbox-container {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 1rem; /* Reduced margin */
+        text-align: left;
+    }
+    
+    .checkbox-container input[type="checkbox"] {
+        margin-right: 10px;
+        margin-top: 3px; /* Adjusted alignment */
+        accent-color: var(--color-gold);
+    }
+    
+    .checkbox-container label {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.9rem; /* Smaller font */
+        line-height: 1.4; /* Tighter line height */
+    }
+    
+    /* Button styling - SLIGHTLY SMALLER */
+    .btn-subscribe {
+        display: inline-block;
+        padding: 10px 35px; /* Reduced padding */
+        font-size: 1rem; /* Slightly smaller */
+        letter-spacing: 1px;
+        color: var(--color-gold);
+        background-color: rgba(0, 0, 0, 0.3);
+        border: 1px solid var(--color-gold);
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
+        margin-top: 0.5rem; /* Added small top margin */
+    }
+    
+    .btn-subscribe::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: all 0.5s ease;
+    }
+    
+    .btn-subscribe:hover {
+        color: #fff;
+        border-color: #fff;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        background-color: rgba(212, 175, 55, 0.1);
+    }
+    
+    .btn-subscribe:hover::before {
+        left: 100%;
+    }
+    
+    /* Success/confirmation message (hidden by default) */
+    .success-message {
+        display: none;
+        padding: 1rem;
+        background: rgba(0, 100, 0, 0.1);
+        border: 1px solid rgba(0, 150, 0, 0.3);
+        border-radius: 4px;
+        color: #fff;
+        margin-top: 1rem;
+        font-size: 0.95rem;
+    }
+    
+    /* Responsive styles - FURTHER REDUCED FOR 400px */
+    @media screen and (height: 400px) {
+        .subscribe-content-box {
+            padding: 1rem 1.5rem; /* Even smaller padding */
+            max-width: 80%;
+        }
+        
+        .subscribe-title {
+            font-size: 1.6rem; /* Even smaller */
+            margin-bottom: 0.3rem;
+        }
+        
+        .subscribe-intro {
+            font-size: 0.85rem; /* Even smaller */
+            line-height: 1.3;
+            margin-bottom: 0.5rem;
+        }
+        
+        .gold-line-top {
+            top: 30px;
+        }
+        
+        .gold-line-bottom {
+            bottom: 30px;
+        }
+        
+        .subscribe-form {
+            padding: 0.3rem 0;
+        }
+        
+        .form-group {
+            margin-bottom: 0.5rem;
+        }
+        
+        .checkbox-container {
+            margin-bottom: 0.5rem;
+        }
+        
+        .btn-subscribe {
+            padding: 6px 20px;
+            font-size: 0.85rem;
+        }
+        
+        .form-control {
+            padding: 6px 10px;
+            font-size: 0.85rem;
+        }
+        
+        .form-group label {
+            font-size: 0.8rem;
+            margin-bottom: 0.2rem;
+        }
+        
+        .checkbox-container label {
+            font-size: 0.8rem;
+            line-height: 1.2;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="subscribe-container">
+    <!-- Background pattern -->
+    <div class="bg-pattern"></div>
+    
+    <!-- Gold decorative lines -->
+    <div class="gold-line-top"></div>
+    <div class="gold-line-bottom"></div>
+    
+    <!-- Main content box -->
+    <div class="subscribe-content-box">
+        <div class="corner-top-right"></div>
+        <div class="corner-bottom-left"></div>
+        
+        <h1 class="subscribe-title">{% placeholder "subscribe_title" or %}Stay Informed{% endplaceholder %}</h1>
+        
+        <div class="divider"></div>
+        
+        <div class="subscribe-intro">
+            {% placeholder "subscribe_intro" or %}
+                <p>
+                    Subscribe to our newsletter and be the first to know about upcoming performances, 
+                    special events, and exclusive offers from the Vienna State Opera.
+                </p>
+            {% endplaceholder %}
+        </div>
+        
+        <form id="subscribe-form" class="subscribe-form">
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" class="form-control" placeholder="Your email address" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="name">Name (Optional)</label>
+                <input type="text" id="name" name="name" class="form-control" placeholder="Your name">
+            </div>
+            
+            <div class="checkbox-container">
+                <input type="checkbox" id="preferences" name="preferences">
+                <label for="preferences">
+                    I would like to receive information about special events, premieres, and exclusive offers.
+                </label>
+            </div>
+            
+            <button type="submit" class="btn-subscribe">
+                {% placeholder "subscribe_button_text" or %}Subscribe{% endplaceholder %}
+            </button>
+        </form>
+        
+        <div id="success-message" class="success-message">
+            {% placeholder "subscribe_success" or %}
+                <p>Thank you for subscribing to our newsletter. You will receive updates about our upcoming events and performances.</p>
+            {% endplaceholder %}
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Handle form submission
+        const subscribeForm = document.getElementById('subscribe-form');
+        const successMessage = document.getElementById('success-message');
+        
+        if (subscribeForm) {
+            subscribeForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Here you would normally add AJAX code to submit the form
+                // For now we'll just show the success message
+                subscribeForm.style.display = 'none';
+                successMessage.style.display = 'block';
+            });
+        }
+    });
+</script>
+{% endblock %}

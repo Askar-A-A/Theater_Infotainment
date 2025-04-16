@@ -159,6 +159,7 @@ CMS_TEMPLATES = [
     ('q&a.html', 'Questions and Answers Template'),
     ('sponsors.html', 'Sponsors Template'),
     ('feedback.html', 'Feedback Template'),
+    ('email_subscribe.html', 'Email Subscribe Template'),
 ]
 
 SITE_ID = 1

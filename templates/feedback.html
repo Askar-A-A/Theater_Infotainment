@@ -47,11 +47,11 @@
 
     /* Height-specific container adjustments */
     body.height-800 .feedback-container {
-        height: 800px;
+        height: 780px;
     }
     
     body.height-400 .feedback-container {
-        height: 400px;
+        height: 390px;
     }
 
     /* Add scrollbar styling to match other pages */
@@ -75,17 +75,17 @@
     /* Page header */
     .page-header {
         text-align: center;
-        margin-bottom: var(--spacing-lg);
+        margin-bottom: var(--spacing-md);
     }
     
     /* Height-specific adjustments for page header */
     body.height-800 .page-header {
-        padding-top: var(--spacing-xl);
+        padding-top: var(--spacing-lg);
     }
     
     body.height-400 .page-header {
-        padding-top: var(--spacing-md);
-        margin-bottom: var(--spacing-sm);
+        padding-top: var(--spacing-sm);
+        margin-bottom: var(--spacing-xs);
     }
 
     .page-title {
@@ -128,11 +128,13 @@
         justify-content: center;
         align-items: flex-start;
         padding: 0 var(--spacing-lg);
+        padding-bottom: var(--spacing-lg);
     }
     
     /* Height-specific adjustments for main content */
     body.height-400 .main-content {
         padding: 0 var(--spacing-md);
+        padding-bottom: var(--spacing-md);
     }
 
     /* Feedback form */
@@ -147,11 +149,11 @@
     
     /* Height-specific adjustments for form container */
     body.height-800 .feedback-form-container {
-        padding: var(--spacing-xl);
+        padding: var(--spacing-lg) var(--spacing-xl);
     }
     
     body.height-400 .feedback-form-container {
-        padding: var(--spacing-md);
+        padding: var(--spacing-sm) var(--spacing-md);
     }
 
     /* Gold corner accents */
@@ -202,12 +204,12 @@
 
     /* Form element styling */
     .form-group {
-        margin-bottom: var(--spacing-md);
+        margin-bottom: var(--spacing-sm);
     }
     
     /* Height-specific adjustments for form groups */
     body.height-400 .form-group {
-        margin-bottom: var(--spacing-sm);
+        margin-bottom: var(--spacing-xs);
     }
 
     .form-label {
@@ -258,11 +260,11 @@
     
     /* Height-specific adjustments for textareas */
     body.height-800 textarea.form-control {
-        min-height: 150px;
+        min-height: 130px;
     }
     
     body.height-400 textarea.form-control {
-        min-height: 80px;
+        min-height: 65px;
     }
 
     /* Rating stars */
