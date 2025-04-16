@@ -8,7 +8,7 @@
 
 {% block wrapper_style %}
 <style>
-    /* Enable scrolling for feedback page */
+    /* Disable scrolling for feedback page */
     .content-wrapper {
         overflow: hidden;
     }
@@ -29,6 +29,7 @@
         --border-thin: 1px solid rgba(255,255,255,0.1);
         
         --color-gold: #d4af37;
+        --color-gold-muted: #b8a062;
         --color-bg-dark: rgba(0,0,0,0.7);
         --color-bg-hover: rgba(255,255,255,0.1);
         
@@ -38,220 +39,253 @@
         --font-size-xl: 3rem;
     }
 
-    /* Feedback container styles */
+    /* Background pattern (same as subscribe page) */
+    .bg-pattern {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMwLTkuOTQtOC4wNi0xOC0xOC0xOHY2YzYuNjI3IDAgMTIgNS4zNzMgMTIgMTJoNnptLTYgNmMwLTYuNjI3LTUuMzczLTEyLTEyLTEydjZjMy4zMTQgMCA2IDIuNjg2IDYgNmg2em0tNiA2YzAtMy4zMTQtMi42ODYtNi02LTZ2Nmg2eiIgZmlsbD0iIzJkMmQyZCIvPjwvZz48L3N2Zz4=');
+        opacity: 0.03;
+        z-index: 0;
+    }
+    
+    /* Gold accent lines (same as subscribe page) */
+    .gold-line-top, .gold-line-bottom {
+        position: absolute;
+        width: 100%;
+        height: 1px;
+        background: linear-gradient(to right, transparent 0%, var(--color-gold) 50%, transparent 100%);
+    }
+    
+    body.height-800 .gold-line-top {
+        top: 50px;
+    }
+    
+    body.height-800 .gold-line-bottom {
+        bottom: 50px;
+    }
+    
+    body.height-400 .gold-line-top {
+        top: 30px;
+    }
+    
+    body.height-400 .gold-line-bottom {
+        bottom: 30px;
+    }
+
+    /* Feedback container styles - Now with centered design like subscribe page */
     .feedback-container {
         width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
         position: relative;
-        overflow-y: auto;
     }
 
-    /* Height-specific container adjustments */
-    body.height-800 .feedback-container {
-        height: 780px;
-    }
-    
-    body.height-400 .feedback-container {
-        height: 390px;
-    }
-
-    /* Add scrollbar styling to match other pages */
-    .feedback-container::-webkit-scrollbar {
-        width: 10px;
-    }
-
-    .feedback-container::-webkit-scrollbar-track {
-        background: rgba(0, 0, 0, 0.2);
-    }
-
-    .feedback-container::-webkit-scrollbar-thumb {
-        background: var(--color-gold);
-        border-radius: 5px;
-    }
-
-    .feedback-container::-webkit-scrollbar-thumb:hover {
-        background: #b28e29;
-    }
-
-    /* Page header */
-    .page-header {
+    /* Feedback content box - styled similar to subscribe box */
+    .feedback-content-box {
+        max-width: 700px;
+        width: 90%;
+        background-color: rgba(0, 0, 0, 0.7);
+        border: 1px solid var(--color-gold-muted);
+        border-radius: var(--border-radius);
         text-align: center;
-        margin-bottom: var(--spacing-md);
+        position: relative;
+        z-index: 2;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
     }
     
-    /* Height-specific adjustments for page header */
-    body.height-800 .page-header {
-        padding-top: var(--spacing-lg);
+    /* Height-specific adjustments for content box */
+    body.height-800 .feedback-content-box {
+        padding: 2rem 2.5rem;
     }
     
-    body.height-400 .page-header {
-        padding-top: var(--spacing-sm);
-        margin-bottom: var(--spacing-xs);
-    }
-
-    .page-title {
-        color: var(--color-gold);
-        font-family: 'Playfair Display', serif;
-        margin-bottom: var(--spacing-sm);
-    }
-    
-    /* Height-specific adjustments for page title */
-    body.height-800 .page-title {
-        font-size: var(--font-size-xl);
-    }
-    
-    body.height-400 .page-title {
-        font-size: var(--font-size-lg);
-        margin-bottom: var(--spacing-xs);
-    }
-
-    .page-subtitle {
-        color: #fff;
-        font-style: italic;
-        max-width: 60%;
-        margin: 0 auto;
-        line-height: 1.6;
-    }
-    
-    /* Height-specific adjustments for page subtitle */
-    body.height-800 .page-subtitle {
-        font-size: var(--font-size-md);
-    }
-    
-    body.height-400 .page-subtitle {
-        font-size: var(--font-size-sm);
+    body.height-400 .feedback-content-box {
+        padding: 1rem 1.5rem;
         max-width: 80%;
     }
 
-    /* Main content */
-    .main-content {
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        padding: 0 var(--spacing-lg);
-        padding-bottom: var(--spacing-lg);
-    }
-    
-    /* Height-specific adjustments for main content */
-    body.height-400 .main-content {
-        padding: 0 var(--spacing-md);
-        padding-bottom: var(--spacing-md);
-    }
-
-    /* Feedback form */
-    .feedback-form-container {
-        width: 100%;
-        max-width: 800px;
-        background: var(--color-bg-dark);
-        border: var(--border-thin);
-        border-radius: var(--border-radius);
-        position: relative;
-    }
-    
-    /* Height-specific adjustments for form container */
-    body.height-800 .feedback-form-container {
-        padding: var(--spacing-lg) var(--spacing-xl);
-    }
-    
-    body.height-400 .feedback-form-container {
-        padding: var(--spacing-sm) var(--spacing-md);
-    }
-
-    /* Gold corner accents */
-    .corner {
+    /* Corner accents (same style as subscribe page) */
+    .feedback-content-box::before,
+    .feedback-content-box::after,
+    .corner-top-right,
+    .corner-bottom-left {
+        content: "";
         position: absolute;
         width: 20px;
         height: 20px;
         border-color: var(--color-gold);
     }
     
-    /* Height-specific adjustments for corners */
-    body.height-400 .corner {
-        width: 15px;
-        height: 15px;
-    }
-
-    .corner-top-left {
+    .feedback-content-box::before {
         top: -1px;
         left: -1px;
-        border-top: 2px solid;
-        border-left: 2px solid;
+        border-top: 2px solid var(--color-gold);
+        border-left: 2px solid var(--color-gold);
         border-top-left-radius: var(--border-radius);
     }
-
+    
+    .feedback-content-box::after {
+        bottom: -1px;
+        right: -1px;
+        border-bottom: 2px solid var(--color-gold);
+        border-right: 2px solid var(--color-gold);
+        border-bottom-right-radius: var(--border-radius);
+    }
+    
     .corner-top-right {
         top: -1px;
         right: -1px;
-        border-top: 2px solid;
-        border-right: 2px solid;
+        border-top: 2px solid var(--color-gold);
+        border-right: 2px solid var(--color-gold);
         border-top-right-radius: var(--border-radius);
     }
-
+    
     .corner-bottom-left {
         bottom: -1px;
         left: -1px;
-        border-bottom: 2px solid;
-        border-left: 2px solid;
+        border-bottom: 2px solid var(--color-gold);
+        border-left: 2px solid var(--color-gold);
         border-bottom-left-radius: var(--border-radius);
     }
 
-    .corner-bottom-right {
-        bottom: -1px;
-        right: -1px;
-        border-bottom: 2px solid;
-        border-right: 2px solid;
-        border-bottom-right-radius: var(--border-radius);
+    /* Title styling */
+    .feedback-title {
+        font-family: 'Playfair Display', serif;
+        color: var(--color-gold);
+    }
+    
+    /* Height-specific adjustments for title */
+    body.height-800 .feedback-title {
+        font-size: 2.5rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    body.height-400 .feedback-title {
+        font-size: 1.6rem;
+        margin-bottom: 0.3rem;
+    }
+
+    /* Divider (same as subscribe page) */
+    .divider {
+        width: 180px;
+        height: 1px;
+        background: linear-gradient(to right, transparent 0%, var(--color-gold) 50%, transparent 100%);
+        margin: 0 auto;
+    }
+    
+    body.height-800 .divider {
+        margin-bottom: 1.5rem;
+    }
+    
+    body.height-400 .divider {
+        width: 120px;
+        margin-bottom: 0.8rem;
+    }
+
+    /* Feedback intro text */
+    .feedback-intro {
+        text-align: center;
+        margin: 0 auto;
+        color: rgba(255, 255, 255, 0.9);
+    }
+    
+    /* Height-specific adjustments for intro */
+    body.height-800 .feedback-intro {
+        max-width: 600px;
+        font-size: 1.05rem;
+        line-height: 1.5;
+        margin-bottom: 1.2rem;
+    }
+    
+    body.height-400 .feedback-intro {
+        max-width: 90%;
+        font-size: 0.85rem;
+        line-height: 1.3;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Form container */
+    .feedback-form {
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+    
+    /* Height-specific adjustments for form */
+    body.height-800 .feedback-form {
+        padding: 0.5rem 0;
+    }
+    
+    body.height-400 .feedback-form {
+        padding: 0.3rem 0;
     }
 
     /* Form element styling */
     .form-group {
-        margin-bottom: var(--spacing-sm);
+        position: relative;
+        text-align: left;
     }
     
     /* Height-specific adjustments for form groups */
+    body.height-800 .form-group {
+        margin-bottom: 1rem;
+    }
+    
     body.height-400 .form-group {
-        margin-bottom: var(--spacing-xs);
+        margin-bottom: 0.5rem;
     }
 
     .form-label {
         display: block;
-        color: var(--color-gold);
-        margin-bottom: var(--spacing-xs);
+        color: rgba(255, 255, 255, 0.8);
+        text-align: left;
     }
     
     /* Height-specific adjustments for form labels */
     body.height-800 .form-label {
-        font-size: var(--font-size-md);
+        font-size: 0.95rem;
+        margin-bottom: 0.4rem;
     }
     
     body.height-400 .form-label {
-        font-size: var(--font-size-sm);
-        margin-bottom: calc(var(--spacing-xs) / 2);
+        font-size: 0.8rem;
+        margin-bottom: 0.2rem;
     }
 
     .form-control {
         width: 100%;
-        background: rgba(0, 0, 0, 0.3);
+        background: rgba(255, 255, 255, 0.05);
         border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 5px;
-        color: #fff;
+        border-radius: 4px;
+        color: white;
         box-sizing: border-box;
     }
     
     /* Height-specific adjustments for form controls */
     body.height-800 .form-control {
-        padding: var(--spacing-sm);
-        font-size: var(--font-size-sm);
+        padding: 10px 15px;
+        font-size: 1rem;
     }
     
     body.height-400 .form-control {
-        padding: calc(var(--spacing-sm) / 2);
-        font-size: 0.9rem;
+        padding: 6px 10px;
+        font-size: 0.85rem;
     }
 
     .form-control:focus {
         outline: none;
-        border-color: var(--color-gold);
-        box-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+        background: rgba(255, 255, 255, 0.1);
+        border-color: var(--color-gold-muted);
+        box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+    }
+
+    .form-control::placeholder {
+        color: rgba(255, 255, 255, 0.4);
     }
 
     textarea.form-control {
@@ -260,18 +294,17 @@
     
     /* Height-specific adjustments for textareas */
     body.height-800 textarea.form-control {
-        min-height: 130px;
+        min-height: 100px;
     }
     
     body.height-400 textarea.form-control {
-        min-height: 65px;
+        min-height: 50px;
     }
 
     /* Rating stars */
     .rating-container {
         display: flex;
         align-items: center;
-        margin-top: var(--spacing-xs);
     }
 
     .star {
@@ -282,181 +315,145 @@
     
     /* Height-specific adjustments for stars */
     body.height-800 .star {
-        font-size: 2rem;
-        margin-right: var(--spacing-xs);
+        font-size: 1.75rem;
+        margin-right: 10px;
     }
     
     body.height-400 .star {
-        font-size: 1.5rem;
-        margin-right: calc(var(--spacing-xs) / 2);
+        font-size: 1.25rem;
+        margin-right: 8px;
     }
 
     .star:hover, .star.active {
         color: var(--color-gold);
     }
 
-    /* Feedback categories */
-    .categories {
-        display: flex;
-        flex-wrap: wrap;
-        gap: var(--spacing-sm);
-        margin-top: var(--spacing-xs);
-    }
-    
-    /* Height-specific adjustments for categories */
-    body.height-400 .categories {
-        gap: calc(var(--spacing-sm) / 2);
-    }
-
-    .category {
-        background: rgba(0, 0, 0, 0.3);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 20px;
-        color: #fff;
-        cursor: pointer;
-        transition: all 0.2s ease;
-    }
-    
-    /* Height-specific adjustments for category buttons */
-    body.height-800 .category {
-        padding: var(--spacing-xs) var(--spacing-sm);
-        font-size: 0.9rem;
-    }
-    
-    body.height-400 .category {
-        padding: calc(var(--spacing-xs) / 2) var(--spacing-sm);
-        font-size: 0.8rem;
-    }
-
-    .category:hover, .category.active {
-        background: rgba(212, 175, 55, 0.3);
-        border-color: var(--color-gold);
-        color: var(--color-gold);
-    }
-
-    /* Submit button */
+    /* Submit button - styled like subscribe button */
     .submit-button {
-        background: transparent;
-        border: 1px solid var(--color-gold);
+        display: inline-block;
+        letter-spacing: 1px;
         color: var(--color-gold);
-        border-radius: 5px;
+        background-color: rgba(0, 0, 0, 0.3);
+        border: 1px solid var(--color-gold);
+        border-radius: 4px;
         cursor: pointer;
-        font-weight: bold;
         transition: all 0.3s ease;
-        display: block;
-        margin: 0 auto;
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
     }
     
     /* Height-specific adjustments for submit button */
     body.height-800 .submit-button {
-        padding: var(--spacing-sm) var(--spacing-lg);
-        font-size: var(--font-size-md);
-        margin-top: var(--spacing-lg);
+        padding: 10px 35px;
+        font-size: 1rem;
+        margin-top: 1.5rem;
     }
     
     body.height-400 .submit-button {
-        padding: calc(var(--spacing-sm) / 2) var(--spacing-md);
-        font-size: var(--font-size-sm);
-        margin-top: var(--spacing-md);
+        padding: 6px 20px;
+        font-size: 0.85rem;
+        margin-top: 0.8rem;
     }
 
+    .submit-button::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: all 0.5s ease;
+    }
+    
     .submit-button:hover {
-        background: rgba(212, 175, 55, 0.2);
+        color: #fff;
+        border-color: #fff;
         transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        background-color: rgba(212, 175, 55, 0.1);
+    }
+    
+    .submit-button:hover::before {
+        left: 100%;
     }
 
-    /* Responsive adjustments */
-    @media screen and (max-width: 768px) {
-        .page-subtitle {
-            max-width: 90%;
-        }
-        
-        body.height-800 .feedback-form-container,
-        body.height-400 .feedback-form-container {
-            padding: var(--spacing-md);
-        }
-        
-        body.height-800 .star {
-            font-size: 1.75rem;
-        }
-        
-        body.height-400 .star {
-            font-size: 1.25rem;
-        }
+    /* Success message */
+    .success-message {
+        display: none;
+        padding: 1rem;
+        background: rgba(0, 100, 0, 0.1);
+        border: 1px solid rgba(0, 150, 0, 0.3);
+        border-radius: 4px;
+        color: #fff;
+        margin-top: 1rem;
+        font-size: 0.95rem;
     }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="feedback-container">
-    <div class="page-header">
-        <h1 class="page-title">
+    <!-- Background pattern -->
+    <div class="bg-pattern"></div>
+    
+    <!-- Gold decorative lines -->
+    <div class="gold-line-top"></div>
+    <div class="gold-line-bottom"></div>
+    
+    <!-- Main content box -->
+    <div class="feedback-content-box">
+        <div class="corner-top-right"></div>
+        <div class="corner-bottom-left"></div>
+        
+        <h1 class="feedback-title">
             {% placeholder "feedback_page_title" or %}Share Your Feedback{% endplaceholder %}
         </h1>
-        <p class="page-subtitle">
-            {% placeholder "feedback_page_subtitle" or %}We value your opinion and are committed to providing the best opera experience. Please share your thoughts with us.{% endplaceholder %}
-        </p>
-    </div>
-
-    <div class="main-content">
-        <div class="feedback-form-container">
-            <!-- Gold corner accents -->
-            <div class="corner corner-top-left"></div>
-            <div class="corner corner-top-right"></div>
-            <div class="corner corner-bottom-left"></div>
-            <div class="corner corner-bottom-right"></div>
+        
+        <div class="divider"></div>
+        
+        <div class="feedback-intro">
+            {% placeholder "feedback_page_subtitle" or %}
+                We value your opinion and are committed to providing the best opera experience. 
+                Please share your thoughts with us.
+            {% endplaceholder %}
+        </div>
+        
+        <form id="feedbackForm" class="feedback-form" method="post">
+            {% csrf_token %}
             
-            <form id="feedbackForm" method="post">
-                {% csrf_token %}
-                
-                <!-- Name field -->
-                <div class="form-group">
-                    <label for="name" class="form-label">Name</label>
-                    <input type="text" id="name" name="name" class="form-control" placeholder="Optional">
+            <!-- Name field -->
+            <div class="form-group">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" id="name" name="name" class="form-control" placeholder="Optional">
+            </div>
+            
+            <!-- Rating field -->
+            <div class="form-group">
+                <label class="form-label">Your Rating</label>
+                <div class="rating-container">
+                    <span class="star" data-rating="1"><i class="fas fa-star"></i></span>
+                    <span class="star" data-rating="2"><i class="fas fa-star"></i></span>
+                    <span class="star" data-rating="3"><i class="fas fa-star"></i></span>
+                    <span class="star" data-rating="4"><i class="fas fa-star"></i></span>
+                    <span class="star" data-rating="5"><i class="fas fa-star"></i></span>
+                    <input type="hidden" id="rating" name="rating" value="0">
                 </div>
-                
-                <!-- Email field -->
-                <div class="form-group">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" id="email" name="email" class="form-control" placeholder="Optional">
-                </div>
-                
-                <!-- Rating field -->
-                <div class="form-group">
-                    <label class="form-label">Your Rating</label>
-                    <div class="rating-container">
-                        <span class="star" data-rating="1"><i class="fas fa-star"></i></span>
-                        <span class="star" data-rating="2"><i class="fas fa-star"></i></span>
-                        <span class="star" data-rating="3"><i class="fas fa-star"></i></span>
-                        <span class="star" data-rating="4"><i class="fas fa-star"></i></span>
-                        <span class="star" data-rating="5"><i class="fas fa-star"></i></span>
-                        <input type="hidden" id="rating" name="rating" value="0">
-                    </div>
-                </div>
-                
-                <!-- Category field -->
-                <div class="form-group">
-                    <label class="form-label">Feedback Category</label>
-                    <div class="categories">
-                        <button type="button" class="category" data-category="performance">Performance</button>
-                        <button type="button" class="category" data-category="venue">Venue</button>
-                        <button type="button" class="category" data-category="service">Service</button>
-                        <button type="button" class="category" data-category="program">Program</button>
-                        <button type="button" class="category" data-category="website">Website</button>
-                        <button type="button" class="category" data-category="other">Other</button>
-                        <input type="hidden" id="category" name="category" value="">
-                    </div>
-                </div>
-                
-                <!-- Comments field -->
-                <div class="form-group">
-                    <label for="comments" class="form-label">Your Feedback</label>
-                    <textarea id="comments" name="comments" class="form-control" placeholder="Please share your thoughts, suggestions, or experiences..."></textarea>
-                </div>
-                
-                <!-- Submit button -->
-                <button type="button" class="submit-button">Submit Feedback</button>
-            </form>
+            </div>
+            
+            <!-- Comments field -->
+            <div class="form-group">
+                <label for="comments" class="form-label">Your Feedback</label>
+                <textarea id="comments" name="comments" class="form-control" placeholder="Please share your thoughts, suggestions, or experiences..."></textarea>
+            </div>
+            
+            <!-- Submit button -->
+            <button type="button" class="submit-button">Submit Feedback</button>
+        </form>
+        
+        <div id="success-message" class="success-message">
+            Thank you for your feedback! We appreciate your input and will use it to improve our services.
         </div>
     </div>
 </div>
@@ -483,27 +480,15 @@
             });
         });
         
-        // Category selection functionality
-        const categories = document.querySelectorAll('.category');
-        const categoryInput = document.getElementById('category');
-        
-        categories.forEach(category => {
-            category.addEventListener('click', function() {
-                const cat = this.getAttribute('data-category');
-                categoryInput.value = cat;
-                
-                // Update category button visuals
-                categories.forEach(c => {
-                    c.classList.remove('active');
-                });
-                this.classList.add('active');
-            });
-        });
-        
-        // Simple button click handler
+        // Form submission handler
+        const feedbackForm = document.getElementById('feedbackForm');
+        const successMessage = document.getElementById('success-message');
         const submitButton = document.querySelector('.submit-button');
+        
         submitButton.addEventListener('click', function() {
-            alert('Thank you for your feedback! This is a demo version without backend functionality.');
+            // Hide the form and show success message
+            feedbackForm.style.display = 'none';
+            successMessage.style.display = 'block';
         });
     });
 </script>
