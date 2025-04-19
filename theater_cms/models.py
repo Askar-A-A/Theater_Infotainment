@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from cms.models.pluginmodel import CMSPlugin
 from filer.fields.image import FilerImageField
+from django.utils.translation import gettext_lazy as _
 
 # Models for custom plugins
 
@@ -104,3 +105,16 @@ class EmailSubscription(models.Model):
         ordering = ['-subscribed_at']
         verbose_name = "Email Subscription"
         verbose_name_plural = "Email Subscriptions"
+
+class QAItemPlugin(CMSPlugin):
+    question = models.CharField(
+        max_length=255,
+        verbose_name=_("Question")
+    )
+    answer = models.TextField(
+        verbose_name=_("Answer"),
+        help_text=_("You may use HTML for formatting")
+    )
+    
+    def __str__(self):
+        return self.question
