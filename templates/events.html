@@ -32,10 +32,10 @@
         --color-bg-dark: rgba(0,0,0,0.7);
         --color-bg-hover: rgba(255,255,255,0.1);
         
-        --font-size-sm: 1rem;
-        --font-size-md: 1.25rem;
-        --font-size-lg: 2.25rem;
-        --font-size-xl: 3rem;
+        --font-size-sm: 1.25rem;
+        --font-size-md: 1.55rem;
+        --font-size-lg: 2.8rem;
+        --font-size-xl: 3.75rem;
     }
 
     /* Container styles */
@@ -72,12 +72,12 @@
     /* Height-specific adjustments for content sections */
     body.height-800 .content-section {
         height: 800px;
-        padding: var(--spacing-xl) var(--spacing-md) var(--spacing-md);
+        padding: calc(var(--spacing-xl) + 20px) var(--spacing-md) var(--spacing-md);
     }
     
     body.height-400 .content-section {
         height: 400px;
-        padding: var(--spacing-md) var(--spacing-md) var(--spacing-xs);
+        padding: calc(var(--spacing-md) + 15px) var(--spacing-md) var(--spacing-xs);
     }
 
     /* Page title */
@@ -91,11 +91,11 @@
     
     /* Height-specific adjustments for page header */
     body.height-800 .page-header {
-        top: var(--spacing-xl);
+        top: calc(var(--spacing-xl) - 10px);
     }
     
     body.height-400 .page-header {
-        top: var(--spacing-sm);
+        top: calc(var(--spacing-sm) - 5px);
     }
 
     .page-title {
@@ -106,10 +106,12 @@
     /* Height-specific adjustments for page title */
     body.height-800 .page-title {
         font-size: var(--font-size-xl);
+        margin-bottom: 15px;
     }
     
     body.height-400 .page-title {
         font-size: var(--font-size-lg);
+        margin-bottom: 8px;
     }
 
     /* Events grid */
@@ -117,8 +119,8 @@
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: var(--spacing-md);
-        width: 90%;
-        max-width: 72.5rem; /* 1160px - same as other pages */
+        width: 92.7%;
+        max-width: 74.7rem;
     }
     
     /* Height-specific adjustments for grid */
@@ -136,6 +138,8 @@
         flex-direction: column;
         align-items: center;
         text-decoration: none;
+        transform: scale(1.03);
+        margin: 1.5%;
     }
     
     /* Height-specific adjustments for event cards */
@@ -170,11 +174,11 @@
     
     /* Height-specific adjustments for event images */
     body.height-800 .event-image {
-        height: 18.75rem; /* 300px */
+        height: 19.3rem;
     }
     
     body.height-400 .event-image {
-        height: 8.5rem; /* ~136px - proportionally scaled */
+        height: 8.76rem;
         margin-bottom: var(--spacing-xs);
     }
 
@@ -194,11 +198,11 @@
     
     /* Height-specific adjustments for event titles */
     body.height-800 .event-title {
-        font-size: 1.5rem;
+        font-size: 1.88rem;
     }
     
     body.height-400 .event-title {
-        font-size: 1rem;
+        font-size: 1.25rem;
         margin-bottom: 0.25rem;
     }
 
@@ -211,12 +215,12 @@
     /* Height-specific adjustments for composer text */
     body.height-800 .event-composer {
         margin-bottom: var(--spacing-sm);
-        font-size: 1rem;
+        font-size: 1.25rem;
     }
     
     body.height-400 .event-composer {
         margin-bottom: 0.25rem;
-        font-size: 0.8rem;
+        font-size: 1rem;
     }
 
     .event-date {
@@ -226,11 +230,11 @@
     
     /* Height-specific adjustments for date text */
     body.height-800 .event-date {
-        font-size: var(--font-size-sm);
+        font-size: 1.25rem;
     }
     
     body.height-400 .event-date {
-        font-size: 0.75rem;
+        font-size: 0.94rem;
     }
 
     /* Scroll indicators */
@@ -245,11 +249,11 @@
     
     /* Height-specific adjustments for scroll indicators */
     body.height-800 .scroll-indicators {
-        bottom: 10%;
+        bottom: 7%;
     }
     
     body.height-400 .scroll-indicators {
-        bottom: 5%;
+        bottom: 2%;
     }
 
     .scroll-dot {
@@ -308,11 +312,35 @@
         }
         
         body.height-800 .page-title {
-            font-size: 2rem;
+            font-size: 2.5rem;
         }
         
         body.height-400 .page-title {
-            font-size: 1.5rem;
+            font-size: 1.88rem;
+        }
+        
+        body.height-800 .event-title {
+            font-size: 1.63rem;
+        }
+        
+        body.height-400 .event-title {
+            font-size: 1.13rem;
+        }
+        
+        body.height-800 .event-composer {
+            font-size: 1.13rem;
+        }
+        
+        body.height-400 .event-composer {
+            font-size: 0.94rem;
+        }
+        
+        body.height-800 .event-date {
+            font-size: 1.13rem;
+        }
+        
+        body.height-400 .event-date {
+            font-size: 0.88rem;
         }
     }
 

@@ -92,44 +92,91 @@
             position: relative;
         }
         
-        /* Language selector - repositioned to center top */
+        /* Language selector - converted to dropdown at top left */
         .language-selector {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            padding: var(--spacing-md);
+            top: 100px; /* Moved down from 20px */
+            left: 20px;
             z-index: 10;
-            margin-top: var(--spacing-md);
             animation: fadeIn 1.5s ease-out 0.2s forwards;
             opacity: 0;
+        }
+        
+        .language-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .language-selected {
+            color: var(--color-gold);
+            background-color: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--color-gold-muted);
+            border-radius: 4px;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-width: 150px;
+        }
+        
+        .language-selected i {
+            margin-left: 10px;
+            transition: transform 0.3s;
+        }
+        
+        .language-options {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--color-gold-muted);
+            border-radius: 4px;
+            margin-top: 5px;
+            width: 100%;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 10;
+        }
+        
+        .language-dropdown.open .language-options {
+            max-height: 350px; /* Allow space for up to 10 languages */
+        }
+        
+        .language-dropdown.open .language-selected i {
+            transform: rotate(180deg);
         }
         
         .language-option {
             color: rgba(255, 255, 255, 0.7);
             text-decoration: none;
-            font-size: 18px;
+            font-size: 16px;
             transition: all 0.3s ease;
-            margin: 0 15px;
-            padding: 5px 15px;
-            border: 1px solid transparent;
+            padding: 8px 15px;
+            display: block;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .language-option:last-child {
+            border-bottom: none;
         }
         
         .language-option:hover, .language-option.active {
             color: var(--color-gold);
-            border-bottom: 1px solid var(--color-gold);
+            background-color: rgba(212, 175, 55, 0.1);
         }
         
-        /* Main content box */
+        /* Main content box - smaller size */
         .content-box {
-            max-width: 900px;
-            width: 90%;
+            max-width: 800px; /* Reduced from 900px */
+            width: 80%; /* Reduced from 90% */
             background-color: rgba(0, 0, 0, 0.7);
             border: 1px solid var(--color-gold-muted);
             border-radius: var(--border-radius);
-            padding: var(--spacing-xl);
+            padding: 3rem; /* Reduced from var(--spacing-xl) which was 4rem */
             text-align: center;
             position: relative;
             z-index: 2;
@@ -281,15 +328,15 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* Responsive styles */
+        /* Responsive adjustments */
         @media screen and (height: 400px) {
             body, .content-wrapper { 
                 height: 400px;
             }
             
             .content-box {
-                padding: var(--spacing-md);
-                max-width: 80%;
+                padding: 1.5rem;
+                width: 75%;
             }
             
             .welcome-title {
@@ -307,105 +354,150 @@
                 font-size: 1.2rem;
             }
             
-            .language-option {
+            .language-selected {
+                padding: 6px 10px;
                 font-size: 14px;
-                padding: 3px 10px;
+                min-width: 120px;
+            }
+            
+            .language-option {
+                padding: 5px 10px;
+                font-size: 14px;
+            }
+            
+            .height-toggle {
+                padding: 6px 12px;
+                font-size: 14px;
             }
             
             .enter-button {
                 padding: 10px 30px;
                 font-size: 1rem;
             }
+            
+            .language-selector,
+            .height-toggle {
+                top: 50px; /* Adjusted position for smaller height */
+            }
         }
         
-        /* Height toggle control - updated for better visibility on greeting page */
+        /* Height toggle button */
         .height-toggle {
-            position: fixed;
-            bottom: 10px;
-            left: 10px;
+            position: absolute;
+            top: 100px;
+            right: 20px;
             z-index: 9999;
-            background: rgba(0,0,0,0.8);
-            color: white;
-            padding: 6px 12px;
+            background: rgba(0, 0, 0, 0.5);
+            color: var(--color-gold);
+            padding: 10px 20px;
             border: 1px solid var(--color-gold);
             border-radius: 4px;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 16px;
             transition: all 0.3s ease;
+            font-weight: 500;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1.5s ease-out 0.2s forwards;
+            opacity: 0;
         }
         
         .height-toggle:hover {
-            background: rgba(30,30,30,0.9);
-            border-color: white;
+            background-color: rgba(212, 175, 55, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
         }
     </style>
     {% render_block "js" %}
     <script>
+        function setLanguage(lang) {
+            document.cookie = "django_language=" + lang + "; path=/; max-age=31536000";
+            window.location.reload();
+        }
+        
         document.addEventListener('DOMContentLoaded', function() {
-            // Function to get height from cookie or URL parameter
-            function getHeightPreference() {
-                // First check URL parameter
-                const urlParams = new URLSearchParams(window.location.search);
-                const heightParam = urlParams.get('height');
+            // Language dropdown functionality
+            const languageDropdown = document.getElementById('languageDropdown');
+            const selectedLanguageText = document.getElementById('selectedLanguage');
+            
+            // Set active language in dropdown
+            const currentLang = document.cookie
+                .split('; ')
+                .find(row => row.startsWith('django_language='))?.split('=')[1] || 'en';
                 
-                if (heightParam === '400' || heightParam === '800') {
-                    // Save preference to cookie if it comes from URL
-                    setHeightCookie(heightParam);
-                    return heightParam;
+            const languageOptions = document.querySelectorAll('.language-option');
+            let activeLanguageName = "Select Language";
+            
+            languageOptions.forEach(option => {
+                const langCode = option.getAttribute('href').split("'")[1];
+                if (langCode === currentLang) {
+                    option.classList.add('active');
+                    activeLanguageName = option.getAttribute('data-lang');
+                } else {
+                    option.classList.remove('active');
                 }
-                
-                // Otherwise check cookie
-                const heightCookie = getCookie('displayHeight');
-                return heightCookie || '800'; // Default to 800px if no cookie exists
-            }
+            });
             
-            // Function to set height cookie (expires in 30 days)
-            function setHeightCookie(height) {
-                const expiryDate = new Date();
-                expiryDate.setDate(expiryDate.getDate() + 30);
-                document.cookie = `displayHeight=${height};expires=${expiryDate.toUTCString()};path=/`;
-            }
+            // Set the selected language text
+            selectedLanguageText.textContent = activeLanguageName;
             
-            // Function to get cookie value by name
-            function getCookie(name) {
-                const cookieValue = document.cookie
+            // Toggle dropdown on click
+            languageDropdown.querySelector('.language-selected').addEventListener('click', function(e) {
+                e.stopPropagation();
+                languageDropdown.classList.toggle('open');
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function() {
+                languageDropdown.classList.remove('open');
+            });
+            
+            // Close dropdown and set selected language when clicking an option
+            languageOptions.forEach(option => {
+                option.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    selectedLanguageText.textContent = this.getAttribute('data-lang');
+                    languageDropdown.classList.remove('open');
+                    // The actual language change is handled by the setLanguage function
+                });
+            });
+            
+            // Height toggle functionality - FIXED
+            const heightToggle = document.getElementById('heightToggle');
+            const heightLabel = document.getElementById('heightLabel');
+            
+            // Function to get current height setting from cookies
+            function getHeightPreference() {
+                const heightCookie = document.cookie
                     .split('; ')
-                    .find(row => row.startsWith(name + '='));
-                    
-                return cookieValue ? cookieValue.split('=')[1] : null;
+                    .find(row => row.startsWith('displayHeight='));
+                return heightCookie ? heightCookie.split('=')[1] : '800'; 
             }
             
-            // Apply height class based on preference
-            const heightPreference = getHeightPreference();
-            if (heightPreference === '400') {
-                document.body.classList.add('height-400');
-                document.body.classList.remove('height-800');
-            } else {
-                document.body.classList.add('height-800');
-                document.body.classList.remove('height-400');
-            }
+            // Set initial height label based on current cookie value
+            const currentHeight = getHeightPreference();
+            heightLabel.textContent = currentHeight + 'px';
             
-            // Add height toggle button
-            const toggleButton = document.createElement('button');
-            toggleButton.className = 'height-toggle';
-            toggleButton.textContent = document.body.classList.contains('height-400') 
-                ? 'Switch to 800px height' 
-                : 'Switch to 400px height';
-            
-            toggleButton.addEventListener('click', function() {
-                const currentHeight = document.body.classList.contains('height-400') ? '400' : '800';
+            // Handle height toggle click with fixed logic
+            heightToggle.addEventListener('click', function() {
+                // Get current height from cookie, not body class
+                const currentHeight = getHeightPreference();
                 const newHeight = currentHeight === '400' ? '800' : '400';
                 
                 // Save new preference to cookie
-                setHeightCookie(newHeight);
+                const expiryDate = new Date();
+                expiryDate.setDate(expiryDate.getDate() + 30);
+                document.cookie = `displayHeight=${newHeight};expires=${expiryDate.toUTCString()};path=/`;
                 
-                // Redirect to same page without height parameter (will use cookie value)
-                const url = new URL(window.location);
-                url.searchParams.delete('height'); // Remove any existing height parameter
-                window.location.href = url.toString();
+                // Redirect to apply the new height
+                window.location.reload();
             });
             
-            document.body.appendChild(toggleButton);
+            // Remove any old toggle buttons
+            const oldToggleButton = document.querySelector('button.height-toggle:not(#heightToggle)');
+            if (oldToggleButton) {
+                oldToggleButton.remove();
+            }
         });
     </script>
 </head>
@@ -421,11 +513,32 @@
             <div class="gold-line-top"></div>
             <div class="gold-line-bottom"></div>
             
-            <!-- Language selector - repositioned to center top -->
+            <!-- Language selector - converted to dropdown at top left -->
             <div class="language-selector">
-                <a href="javascript:setLanguage('en')" class="language-option active">English</a>
-                <a href="javascript:setLanguage('de')" class="language-option">Deutsch</a>
+                <div class="language-dropdown" id="languageDropdown">
+                    <div class="language-selected">
+                        <span id="selectedLanguage">Select Language</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="language-options">
+                        <a href="javascript:setLanguage('en')" class="language-option" data-lang="English">English</a>
+                        <a href="javascript:setLanguage('de')" class="language-option" data-lang="Deutsch">Deutsch</a>
+                        <a href="javascript:setLanguage('fr')" class="language-option" data-lang="Français">Français</a>
+                        <a href="javascript:setLanguage('it')" class="language-option" data-lang="Italiano">Italiano</a>
+                        <a href="javascript:setLanguage('es')" class="language-option" data-lang="Español">Español</a>
+                        <a href="javascript:setLanguage('ru')" class="language-option" data-lang="Русский">Русский</a>
+                        <a href="javascript:setLanguage('zh')" class="language-option" data-lang="中文">中文</a>
+                        <a href="javascript:setLanguage('ja')" class="language-option" data-lang="日本語">日本語</a>
+                        <a href="javascript:setLanguage('ko')" class="language-option" data-lang="한국어">한국어</a>
+                        <a href="javascript:setLanguage('ar')" class="language-option" data-lang="العربية">العربية</a>
+                    </div>
+                </div>
             </div>
+            
+            <!-- Height toggle button -->
+            <button class="height-toggle" id="heightToggle">
+                Display: <span id="heightLabel">800px</span>
+            </button>
             
             <!-- Main content box -->
             <div class="content-box">

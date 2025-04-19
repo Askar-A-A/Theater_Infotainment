@@ -52,13 +52,13 @@
 
     /* Height-specific logo section adjustments */
     body.height-800 .logo-section {
-        top: 10px;
-        height: 180px;
+        top: 25px;
+        height: 175px;
     }
     
     body.height-400 .logo-section {
-        top: 5px;
-        height: 90px;
+        top: 8px;
+        height: 68px;
     }
 
     .logo-container {
@@ -74,7 +74,7 @@
     }
     
     body.height-400 .theater-logo {
-        max-height: 70px;
+        max-height: 50px;
     }
     
     .theater-logo {
@@ -86,24 +86,26 @@
     
     /* Theater title styles with height-specific adjustments */
     .theater-title {
-        margin-bottom: var(--spacing-xxl);
         font-family: 'Playfair Display', serif;
         color: var(--color-gold);
         text-align: center;
         letter-spacing: 1px;
         text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         animation: titleGlow 3s infinite alternate;
+        margin-top: 0;
     }
     
     /* Height-specific title adjustments */
     body.height-800 .theater-title {
         font-size: 3.2rem;
         font-weight: 700;
+        margin-bottom: var(--spacing-xxl);
     }
     
     body.height-400 .theater-title {
-        font-size: 1.8rem;
+        font-size: 1.5rem;
         font-weight: 600;
+        margin-bottom: 0.5rem;
     }
     
     @keyframes titleGlow {
@@ -135,9 +137,9 @@
     }
     
     body.height-400 .theater-container {
-        height: calc(100% - 95px);
-        margin-top: 95px;
-        padding: var(--spacing-sm);
+        height: calc(100% - 75px);
+        margin-top: 75px;
+        padding: 0.5rem;
     }
 
     /* Main content layout */
@@ -175,7 +177,7 @@
     }
     
     body.height-400 .today-section {
-        padding: var(--spacing-md) var(--spacing-sm);
+        padding: 0.75rem 0.5rem;
     }
 
     .today-section:hover {
@@ -194,7 +196,8 @@
     }
     
     body.height-400 .today-icon {
-        font-size: 3em;
+        font-size: 2.5em;
+        margin-bottom: 0.25rem;
     }
 
     .today-title {
@@ -223,7 +226,7 @@
     
     /* Height-specific grid adjustments */
     body.height-400 .menu-grid {
-        gap: calc(var(--spacing-sm) / 2);
+        gap: 0.25rem;
     }
 
     .menu-item {
@@ -244,8 +247,8 @@
     }
     
     body.height-400 .menu-item {
-        padding: var(--spacing-sm);
-        min-height: 2.5rem;
+        padding: 0.5rem 0.75rem;
+        min-height: 2rem;
     }
 
     .menu-item:hover {
@@ -265,8 +268,9 @@
     }
     
     body.height-400 .menu-icon {
-        font-size: 1.5em;
-        min-width: 1.5rem;
+        font-size: 1.2em;
+        min-width: 1.2rem;
+        margin-right: 0.5rem;
     }
 
     .menu-title {
