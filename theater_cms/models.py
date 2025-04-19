@@ -1,8 +1,9 @@
 from django.db import models
+from django.utils import timezone
 from cms.models.pluginmodel import CMSPlugin
 from filer.fields.image import FilerImageField
 
-# Create your models here.
+# Models for custom plugins
 
 class TheaterLogo(CMSPlugin):
     image = FilerImageField(
@@ -64,3 +65,42 @@ class EventCard(CMSPlugin):
     
     def __str__(self):
         return self.title
+    
+
+
+# Models for user interaction/data
+
+class UserFeedback(models.Model):
+    RATING_CHOICES = (
+        (1, '1 Star'),
+        (2, '2 Star'),
+        (3, '3 Star'),
+        (4, '4 Star'),
+        (5, '5 Star')
+    )
+    name = models.CharField(max_length=50, blank=True, verbose_name="Name (Optional)")
+    rating = models.IntegerField(choices=RATING_CHOICES, null=True, blank=True, verbose_name="Your rating")
+    comments = models.TextField(max_length=500, verbose_name="Your Feedback")
+    created_at = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f"Feedback from {self.name or 'Anonymous'} ({self.created_at.strftime('%Y-%m-%d %H:%M')})"
+    
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = "Feedback"
+        verbose_name_plural = "Feedback Entries"
+
+class EmailSubscription(models.Model):
+    email = models.EmailField(unique=True, verbose_name="Email Address")
+    name = models.CharField(max_length=100, blank=True, verbose_name="Name (Optional)")
+    receive_updates = models.BooleanField(default=True, verbose_name="Receive Updates")
+    subscribed_at = models.DateTimeField(default=timezone.now)
+    
+    def __str__(self):
+        return f"{self.email} ({self.name})" if self.name else self.email
+    
+    class Meta:
+        ordering = ['-subscribed_at']
+        verbose_name = "Email Subscription"
+        verbose_name_plural = "Email Subscriptions"

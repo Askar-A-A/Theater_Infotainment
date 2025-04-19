@@ -11,13 +11,13 @@
     <!-- Add fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap">
     {% render_block "css" %}
-    <style>
+<style>
         /* Reset and base styles */
         * {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
+        box-sizing: border-box;
+    }
 
         html, body {
             margin: 0;
@@ -81,24 +81,24 @@
         
         /* Main container */
         .sponsors-container {
-            width: 100%;
+        width: 100%;
             height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
             justify-content: center;
             position: relative;
         }
         
         /* Sponsor content box - styled like greeting page content box */
         .sponsor-content-box {
-            max-width: 900px;
-            width: 90%;
+            max-width: 1000px;
+            width: 95%;
             background-color: rgba(0, 0, 0, 0.7);
             border: 1px solid var(--color-gold-muted);
             border-radius: var(--border-radius);
-            padding: var(--spacing-xl);
-            text-align: center;
+            padding: 2.5rem 4rem;
+        text-align: center;
             position: relative;
             z-index: 2;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
@@ -168,12 +168,12 @@
         
         /* Sponsors info */
         .sponsors-intro {
-            text-align: center;
+        text-align: center;
             max-width: 800px;
-            margin-bottom: var(--spacing-lg);
+            margin-bottom: 2rem;
             color: rgba(255, 255, 255, 0.9);
-            font-size: 1.15rem;
-            line-height: 1.8;
+            font-size: 1.1rem;
+            line-height: 1.6;
         }
         
         /* Sponsors grid */
@@ -183,7 +183,7 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 2.5rem;
-            margin: var(--spacing-lg) 0;
+            margin: 1.5rem 0;
         }
         
         .sponsor-item {
@@ -194,8 +194,8 @@
             padding: var(--spacing-sm);
             border-radius: var(--border-radius);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-            width: 180px;
-            height: 120px;
+            width: 250px;
+            height: 170px;
             transition: all 0.3s ease;
         }
         
@@ -266,8 +266,8 @@
             }
             
             .sponsor-content-box {
-                padding: var(--spacing-md);
-                max-width: 80%;
+                padding: 1rem 1.5rem;
+                max-width: 90%;
             }
             
             .sponsors-title {
@@ -295,8 +295,8 @@
             }
             
             .sponsor-item {
-                width: 100px;
-                height: 70px;
+                width: 150px;
+                height: 100px;
                 padding: 0.5rem;
             }
             
@@ -333,9 +333,9 @@
             } else {
                 document.body.classList.add('height-800');
                 document.body.classList.remove('height-400');
-            }
-        });
-    </script>
+        }
+    });
+</script>
 </head>
 
 <body>

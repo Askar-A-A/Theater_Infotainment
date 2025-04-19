@@ -347,19 +347,31 @@
             {% endplaceholder %}
         </div>
         
-        <form id="subscribe-form" class="subscribe-form">
+        <form id="subscribe-form" class="subscribe-form" method="post" action="{% url 'user_interactions:process_subscription' %}">
+            {% csrf_token %}
+            
             <div class="form-group">
                 <label for="email">Email Address</label>
-                <input type="email" id="email" name="email" class="form-control" placeholder="Your email address" required>
+                <input type="email" id="email" name="email" class="form-control" 
+                       placeholder="Your email address" required
+                       value="{{ request.session.subscription_data.email|default:'' }}">
+                {% if request.session.subscription_errors.email %}
+                    <div class="error-message" style="color: #ff6b6b; font-size: 0.8rem; margin-top: 5px;">
+                        {{ request.session.subscription_errors.email }}
+                    </div>
+                {% endif %}
             </div>
             
             <div class="form-group">
                 <label for="name">Name (Optional)</label>
-                <input type="text" id="name" name="name" class="form-control" placeholder="Your name">
+                <input type="text" id="name" name="name" class="form-control" 
+                       placeholder="Your name"
+                       value="{{ request.session.subscription_data.name|default:'' }}">
             </div>
             
             <div class="checkbox-container">
-                <input type="checkbox" id="preferences" name="preferences">
+                <input type="checkbox" id="preferences" name="preferences" 
+                       {% if request.session.subscription_data.preferences %}checked{% endif %}>
                 <label for="preferences">
                     I would like to receive information about special events, premieres, and exclusive offers.
                 </label>
@@ -370,30 +382,35 @@
             </button>
         </form>
         
-        <div id="success-message" class="success-message">
-            {% placeholder "subscribe_success" or %}
-                <p>Thank you for subscribing to our newsletter. You will receive updates about our upcoming events and performances.</p>
-            {% endplaceholder %}
+        <div id="success-message" class="success-message" style="{% if request.session.subscription_success or request.session.subscription_message %}display: block;{% endif %}">
+            {% if request.session.subscription_message %}
+                <p>{{ request.session.subscription_message }}</p>
+            {% else %}
+                {% placeholder "subscribe_success" or %}
+                    <p>Thank you for subscribing to our newsletter. You will receive updates about our upcoming events and performances.</p>
+                {% endplaceholder %}
+            {% endif %}
         </div>
     </div>
 </div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Handle form submission
         const subscribeForm = document.getElementById('subscribe-form');
         const successMessage = document.getElementById('success-message');
         
-        if (subscribeForm) {
-            subscribeForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // Here you would normally add AJAX code to submit the form
-                // For now we'll just show the success message
-                subscribeForm.style.display = 'none';
-                successMessage.style.display = 'block';
-            });
+        // If success message is visible, hide the form
+        if (successMessage.style.display === 'block') {
+            subscribeForm.style.display = 'none';
         }
+        
+        // Remove the success flag after page load (for when user navigates back)
+        fetch('{% url "user_interactions:clear_subscription_messages" %}', {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        });
     });
 </script>
 {% endblock %}

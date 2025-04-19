@@ -420,13 +420,20 @@
             {% endplaceholder %}
         </div>
         
-        <form id="feedbackForm" class="feedback-form" method="post">
+        <form id="feedbackForm" class="feedback-form" method="post" action="{% url 'user_interactions:process_feedback' %}">
             {% csrf_token %}
             
             <!-- Name field -->
             <div class="form-group">
                 <label for="name" class="form-label">Name</label>
-                <input type="text" id="name" name="name" class="form-control" placeholder="Optional">
+                <input type="text" id="name" name="name" class="form-control" 
+                       placeholder="Optional" 
+                       value="{{ request.session.feedback_data.name|default:'' }}">
+                {% if request.session.feedback_errors.name %}
+                    <div class="error-message" style="color: #ff6b6b; font-size: 0.8rem; margin-top: 5px;">
+                        {{ request.session.feedback_errors.name }}
+                    </div>
+                {% endif %}
             </div>
             
             <!-- Rating field -->
@@ -438,23 +445,30 @@
                     <span class="star" data-rating="3"><i class="fas fa-star"></i></span>
                     <span class="star" data-rating="4"><i class="fas fa-star"></i></span>
                     <span class="star" data-rating="5"><i class="fas fa-star"></i></span>
-                    <input type="hidden" id="rating" name="rating" value="0">
+                    <input type="hidden" id="rating" name="rating" value="{{ request.session.feedback_data.rating|default:'0' }}">
                 </div>
+                {% if request.session.feedback_errors.rating %}
+                    <div class="error-message" style="color: #ff6b6b; font-size: 0.8rem; margin-top: 5px;">
+                        {{ request.session.feedback_errors.rating }}
+                    </div>
+                {% endif %}
             </div>
             
             <!-- Comments field -->
             <div class="form-group">
                 <label for="comments" class="form-label">Your Feedback</label>
-                <textarea id="comments" name="comments" class="form-control" placeholder="Please share your thoughts, suggestions, or experiences..."></textarea>
+                <textarea id="comments" name="comments" class="form-control" 
+                          placeholder="Please share your thoughts, suggestions, or experiences...">{{ request.session.feedback_data.comments|default:'' }}</textarea>
+                {% if request.session.feedback_errors.comments %}
+                    <div class="error-message" style="color: #ff6b6b; font-size: 0.8rem; margin-top: 5px;">
+                        {{ request.session.feedback_errors.comments }}
+                    </div>
+                {% endif %}
             </div>
             
             <!-- Submit button -->
-            <button type="button" class="submit-button">Submit Feedback</button>
+            <button type="submit" class="submit-button">Submit Feedback</button>
         </form>
-        
-        <div id="success-message" class="success-message">
-            Thank you for your feedback! We appreciate your input and will use it to improve our services.
-        </div>
     </div>
 </div>
 
@@ -463,6 +477,15 @@
         // Star rating functionality
         const stars = document.querySelectorAll('.star');
         const ratingInput = document.getElementById('rating');
+        
+        // Set initial star states based on any previously submitted rating
+        if (ratingInput.value > 0) {
+            stars.forEach(s => {
+                if (s.getAttribute('data-rating') <= ratingInput.value) {
+                    s.classList.add('active');
+                }
+            });
+        }
         
         stars.forEach(star => {
             star.addEventListener('click', function() {
@@ -478,17 +501,6 @@
                     }
                 });
             });
-        });
-        
-        // Form submission handler
-        const feedbackForm = document.getElementById('feedbackForm');
-        const successMessage = document.getElementById('success-message');
-        const submitButton = document.querySelector('.submit-button');
-        
-        submitButton.addEventListener('click', function() {
-            // Hide the form and show success message
-            feedbackForm.style.display = 'none';
-            successMessage.style.display = 'block';
         });
     });
 </script>

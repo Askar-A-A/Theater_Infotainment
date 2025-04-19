@@ -186,10 +186,25 @@
         .welcome-title {
             font-family: 'Playfair Display', serif;
             font-size: 4.5rem;
-            margin-bottom: var(--spacing-md);
+            margin-bottom: var(--spacing-sm);
             color: #fff;
             text-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
             position: relative;
+        }
+        
+        /* Logo container */
+        .opera-logo {
+            display: block;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto var(--spacing-sm);
+            position: relative;
+        }
+        
+        .opera-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
         
         .welcome-subtitle {
@@ -279,6 +294,13 @@
             
             .welcome-title {
                 font-size: 2.5rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .opera-logo {
+                width: 70px;
+                height: 70px;
+                margin-bottom: 0.5rem;
             }
             
             .welcome-subtitle {
@@ -413,6 +435,11 @@
                 <h1 class="welcome-title">
                     {% placeholder "greeting_title" or %}Welcome{% endplaceholder %}
                 </h1>
+                
+                <!-- Opera logo placeholder between title and subtitle -->
+                <div class="opera-logo">
+                    {% placeholder "opera_logo" %}
+                </div>
                 
                 <h2 class="welcome-subtitle">
                     {% placeholder "greeting_subtitle" or %}to the Vienna State Opera{% endplaceholder %}

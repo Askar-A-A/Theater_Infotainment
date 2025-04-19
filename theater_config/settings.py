@@ -75,6 +75,7 @@ TEMPLATES = [
                 'django.template.context_processors.tz',
                 'cms.context_processors.cms_settings',
                 'sekizai.context_processors.sekizai',
+                'theater_cms.context_processors.user_interaction_session_data',
             ],
         },
     },
