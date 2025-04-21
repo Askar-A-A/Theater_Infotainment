@@ -93,7 +93,6 @@
             color: var(--color-gold);
             background-color: rgba(0, 0, 0, 0.5);
             border: 1px solid var(--color-gold-muted);
-            border-radius: 5px;
             padding: 12px 18px;
             font-size: 17px;
             cursor: pointer;
@@ -101,6 +100,10 @@
             align-items: center;
             justify-content: space-between;
             min-width: 160px;
+            /* Round all corners initially */
+            border-radius: 5px;
+            position: relative;
+            z-index: 11;
         }
         
         .language-selected i {
@@ -110,26 +113,29 @@
         
         .language-options {
             position: absolute;
-            top: 100%;
+            /* Position slightly overlapping the button's bottom edge */
+            top: calc(100% - 1px);
             left: 0;
             background-color: rgba(0, 0, 0, 0.8);
             border: 1px solid var(--color-gold-muted);
-            border-radius: 4px;
-            margin-top: 5px;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
             width: 100%;
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.3s ease-out;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            /* Adjust shadow slightly if needed, maybe add a vertical offset */
+            box-shadow: 0 6px 15px -1px rgba(0, 0, 0, 0.3);
             z-index: 10;
         }
         
-        .language-dropdown.open .language-options {
-            max-height: 350px; /* Allow space for up to 10 languages */
+        /* When dropdown is open, adjust the selected button's radius */
+        .language-dropdown.open .language-selected {
+            border-radius: 5px 5px 0 0;
         }
         
-        .language-dropdown.open .language-selected i {
-            transform: rotate(180deg);
+        .language-dropdown.open .language-options {
+            max-height: 350px;
         }
         
         .language-option {
@@ -188,6 +194,7 @@
             margin-bottom: 0;
             color: var(--color-gold);
             text-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+            margin-top: -0.7em;
             position: relative;
             font-style: normal;
             font-weight: 700;
@@ -199,7 +206,7 @@
             color: var(--color-gold);
             font-style: italic;
             margin-bottom: var(--spacing-sm);
-            margin-top: 0;
+            margin-top: -0.3em;
             position: relative;
             font-weight: 400;
         }
@@ -322,7 +329,7 @@
 
             .welcome-subtitle {
                 font-size: 2rem;
-                margin-top: 0.1rem;
+                margin-top: -0.15em;
                 margin-bottom: 0.3rem;
             }
 
