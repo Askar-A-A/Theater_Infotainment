@@ -31,12 +31,12 @@
             overflow: hidden;
         }
 
-        /* Define standard content wrapper - matching base.html */
+        /* Define standard content wrapper - Plain Black Background */
         .content-wrapper {
             width: 1280px;
             height: 800px;
             position: relative;
-            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9));
+            background: #000;
             overflow: hidden;
         }
         
@@ -55,31 +55,11 @@
         
         /* Background elements */
         .bg-pattern {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMwLTkuOTQtOC4wNi0xOC0xOC0xOHY2YzYuNjI3IDAgMTIgNS4zNzMgMTIgMTJoNnptLTYgNmMwLTYuNjI3LTUuMzczLTEyLTEyLTEydjZjMy4zMTQgMCA2IDIuNjg2IDYgNmg2em0tNiA2YzAtMy4zMTQtMi42ODYtNi02LTZ2Nmg2eiIgZmlsbD0iIzJkMmQyZCIvPjwvZz48L3N2Zz4=');
-            opacity: 0.03;
-            z-index: 0;
+            display: none;
         }
         
-        /* Gold accent lines */
-        .gold-line-top, .gold-line-bottom {
-            position: absolute;
-            width: 100%;
-            height: 1px;
-            background: linear-gradient(to right, transparent 0%, var(--color-gold) 50%, transparent 100%);
-        }
-        
-        .gold-line-top {
-            top: 50px;
-        }
-        
-        .gold-line-bottom {
-            bottom: 50px;
-        }
+        /* Gold accent lines already removed */
+        /* .gold-line-top, .gold-line-bottom { display: none; } */
         
         /* Greeting container for centering content */
         .greeting-container {
@@ -90,16 +70,18 @@
             align-items: center;
             justify-content: center;
             position: relative;
+            padding: 0 var(--spacing-xl) var(--spacing-lg) var(--spacing-xl);
+            opacity: 0;
+            animation: fadeIn 1.5s ease-out 0.5s forwards;
+            text-align: center;
         }
         
-        /* Language selector - converted to dropdown at top left */
+        /* Language selector - Positioned closer to content */
         .language-selector {
             position: absolute;
-            top: 100px; /* Moved down from 20px */
-            left: 20px;
+            top: var(--spacing-md);
+            left: var(--spacing-xl);
             z-index: 10;
-            animation: fadeIn 1.5s ease-out 0.2s forwards;
-            opacity: 0;
         }
         
         .language-dropdown {
@@ -111,14 +93,14 @@
             color: var(--color-gold);
             background-color: rgba(0, 0, 0, 0.5);
             border: 1px solid var(--color-gold-muted);
-            border-radius: 4px;
-            padding: 10px 15px;
-            font-size: 16px;
+            border-radius: 5px;
+            padding: 12px 18px;
+            font-size: 17px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            min-width: 150px;
+            min-width: 160px;
         }
         
         .language-selected i {
@@ -169,134 +151,111 @@
             background-color: rgba(212, 175, 55, 0.1);
         }
         
-        /* Main content box - smaller size */
+        /* Main content box - Remove all styles as the div will be removed */
         .content-box {
-            max-width: 800px; /* Reduced from 900px */
-            width: 80%; /* Reduced from 90% */
-            background-color: rgba(0, 0, 0, 0.7);
-            border: 1px solid var(--color-gold-muted);
-            border-radius: var(--border-radius);
-            padding: 3rem; /* Reduced from var(--spacing-xl) which was 4rem */
-            text-align: center;
-            position: relative;
-            z-index: 2;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-            opacity: 0;
-            animation: fadeIn 1.5s ease-out 0.5s forwards;
+            /* All rules removed */
         }
         
-        /* Corner accents for content box */
-        .content-box::before,
-        .content-box::after,
-        .corner-top-right,
-        .corner-bottom-left {
-            content: "";
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            border-color: var(--color-gold);
-        }
+        /* Corner accents already removed */
+        /* .content-box::before, ... { display: none; } */
         
-        .content-box::before {
-            top: -1px;
-            left: -1px;
-            border-top: 2px solid var(--color-gold);
-            border-left: 2px solid var(--color-gold);
-            border-top-left-radius: var(--border-radius);
-        }
-        
-        .content-box::after {
-            bottom: -1px;
-            right: -1px;
-            border-bottom: 2px solid var(--color-gold);
-            border-right: 2px solid var(--color-gold);
-            border-bottom-right-radius: var(--border-radius);
-        }
-        
-        .corner-top-right {
-            top: -1px;
-            right: -1px;
-            border-top: 2px solid var(--color-gold);
-            border-right: 2px solid var(--color-gold);
-            border-top-right-radius: var(--border-radius);
-        }
-        
-        .corner-bottom-left {
-            bottom: -1px;
-            left: -1px;
-            border-bottom: 2px solid var(--color-gold);
-            border-left: 2px solid var(--color-gold);
-            border-bottom-left-radius: var(--border-radius);
-        }
-        
-        /* Content styling */
-        .welcome-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 4.5rem;
-            margin-bottom: var(--spacing-sm);
-            color: #fff;
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
-            position: relative;
-        }
-        
-        /* Logo container */
+        /* Logo container - Make larger and adjust margins */
         .opera-logo {
-            display: block;
-            width: 120px;
-            height: 120px;
-            margin: 0 auto var(--spacing-sm);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 220px;
+            height: 220px;
+            margin: 0 auto var(--spacing-lg);
             position: relative;
+            background-color: #fff;
+            border-radius: 50%;
+            padding: 15px;
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
         }
         
         .opera-logo img {
-            width: 100%;
-            height: 100%;
+            max-width: 100%;
+            max-height: 100%;
             object-fit: contain;
+            display: block;
+        }
+        
+        /* Content styling - Adjust margins */
+        .welcome-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            margin-bottom: 0;
+            color: var(--color-gold);
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+            position: relative;
+            font-style: normal;
+            font-weight: 700;
         }
         
         .welcome-subtitle {
             font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
+            font-size: 3rem;
             color: var(--color-gold);
             font-style: italic;
-            margin-bottom: var(--spacing-lg);
+            margin-bottom: var(--spacing-sm);
+            margin-top: 0;
             position: relative;
+            font-weight: 400;
         }
         
         .divider {
-            width: 180px;
+            width: 220px;
             height: 1px;
             background: linear-gradient(to right, transparent 0%, var(--color-gold) 50%, transparent 100%);
-            margin: 0 auto var(--spacing-lg);
+            margin: 0 auto var(--spacing-sm);
+            opacity: 0.7;
+        }
+        
+        /* Style the new frame for welcome text */
+        .welcome-text-frame {
+            border: 1px solid var(--color-gold-muted);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+            max-width: 750px;
+            width: 85%;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: var(--border-radius);
+            background-color: rgba(255, 255, 255, 0.02);
         }
         
         .welcome-text {
-            font-size: 1.15rem;
-            line-height: 1.8;
+            font-size: 1.25rem;
+            line-height: 1.7;
             color: rgba(255, 255, 255, 0.85);
-            margin-bottom: var(--spacing-lg);
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
+            margin-bottom: 0;
+            max-width: 100%;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 300;
+        }
+        .welcome-text p {
+            margin: 0;
         }
         
-        /* Enhanced enter button */
+        /* Enhanced enter button - Adjust padding for text */
         .enter-button {
             display: inline-block;
-            padding: 15px 50px;  /* Slightly larger button */
-            font-size: 1.2rem;   /* Larger font */
-            letter-spacing: 1.5px;
+            padding: 15px 60px;
+            font-size: 1.3rem;
+            line-height: 1.4;
+            letter-spacing: 1.8px;
             color: var(--color-gold);
-            background-color: rgba(0, 0, 0, 0.3);  /* Subtle background */
+            background-color: rgba(0, 0, 0, 0.3);
             border: 1px solid var(--color-gold);
-            border-radius: 4px;
+            border-radius: 5px;
             cursor: pointer;
             transition: all 0.3s ease;
             text-decoration: none;
             position: relative;
             overflow: hidden;
-            font-weight: 500;   /* Slightly bolder */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);  /* Subtle shadow */
+            font-weight: 500;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         }
         
         .enter-button::before {
@@ -314,8 +273,8 @@
             color: #fff;
             border-color: #fff;
             transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);  /* Enhanced shadow on hover */
-            background-color: rgba(212, 175, 55, 0.1);  /* Gold tint on hover */
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+            background-color: rgba(212, 175, 55, 0.1);
         }
         
         .enter-button:hover::before {
@@ -324,82 +283,94 @@
         
         /* Animations */
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         
         /* Responsive adjustments */
         @media screen and (height: 400px) {
-            body, .content-wrapper { 
+            body, .content-wrapper {
                 height: 400px;
             }
-            
-            .content-box {
-                padding: 1.5rem;
-                width: 75%;
+
+            .greeting-container {
+                padding: 0 var(--spacing-lg) var(--spacing-md);
+                justify-content: flex-start;
+                padding-top: 40px;
             }
-            
-            .welcome-title {
-                font-size: 2.5rem;
-                margin-bottom: 0.5rem;
+
+            .language-selector {
+                top: 15px;
+                left: 20px;
             }
-            
+            .height-toggle {
+                top: 15px;
+                right: 20px;
+            }
+
             .opera-logo {
-                width: 70px;
-                height: 70px;
-                margin-bottom: 0.5rem;
+                width: 120px;
+                height: 120px;
+                margin-bottom: var(--spacing-sm);
+                padding: 8px;
             }
-            
+
+            .welcome-title {
+                font-size: 2.4rem;
+                margin-bottom: 0;
+            }
+
             .welcome-subtitle {
-                font-size: 1.2rem;
+                font-size: 2rem;
+                margin-top: 0.1rem;
+                margin-bottom: 0.3rem;
             }
-            
-            .language-selected {
-                padding: 6px 10px;
-                font-size: 14px;
-                min-width: 120px;
+
+            .divider {
+                width: 150px;
+                margin-bottom: 0.3rem;
             }
-            
-            .language-option {
-                padding: 5px 10px;
-                font-size: 14px;
+
+            .welcome-text-frame {
+                padding: var(--spacing-sm);
+                margin-bottom: var(--spacing-sm);
+                width: 90%;
             }
-            
-            .height-toggle {
-                padding: 6px 12px;
-                font-size: 14px;
-            }
-            
-            .enter-button {
-                padding: 10px 30px;
+
+            .welcome-text {
                 font-size: 1rem;
+                line-height: 1.5;
             }
-            
-            .language-selector,
-            .height-toggle {
-                top: 50px; /* Adjusted position for smaller height */
+
+            .language-selected {
+                padding: 8px 12px;
+                font-size: 15px;
+                min-width: 130px;
+            }
+
+            .enter-button {
+                padding: 10px 40px;
+                font-size: 1.1rem;
             }
         }
         
-        /* Height toggle button */
+        /* Height toggle button - Positioned closer to content */
         .height-toggle {
             position: absolute;
-            top: 100px;
-            right: 20px;
+            top: var(--spacing-md);
+            right: var(--spacing-xl);
             z-index: 9999;
             background: rgba(0, 0, 0, 0.5);
             color: var(--color-gold);
-            padding: 10px 20px;
+            padding: 12px 22px;
             border: 1px solid var(--color-gold);
-            border-radius: 4px;
+            border-radius: 5px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 17px;
             transition: all 0.3s ease;
             font-weight: 500;
             letter-spacing: 1px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            animation: fadeIn 1.5s ease-out 0.2s forwards;
-            opacity: 0;
         }
         
         .height-toggle:hover {
@@ -509,10 +480,6 @@
             <!-- Background pattern -->
             <div class="bg-pattern"></div>
             
-            <!-- Gold decorative lines -->
-            <div class="gold-line-top"></div>
-            <div class="gold-line-bottom"></div>
-            
             <!-- Language selector - converted to dropdown at top left -->
             <div class="language-selector">
                 <div class="language-dropdown" id="languageDropdown">
@@ -540,26 +507,23 @@
                 Display: <span id="heightLabel">800px</span>
             </button>
             
-            <!-- Main content box -->
-            <div class="content-box">
-                <div class="corner-top-right"></div>
-                <div class="corner-bottom-left"></div>
-                
-                <h1 class="welcome-title">
-                    {% placeholder "greeting_title" or %}Welcome{% endplaceholder %}
-                </h1>
-                
-                <!-- Opera logo placeholder between title and subtitle -->
-                <div class="opera-logo">
-                    {% placeholder "opera_logo" %}
-                </div>
-                
-                <h2 class="welcome-subtitle">
-                    {% placeholder "greeting_subtitle" or %}to the Vienna State Opera{% endplaceholder %}
-                </h2>
-                
-                <div class="divider"></div>
-                
+            <!-- Opera logo placeholder -->
+            <div class="opera-logo">
+                {% placeholder "opera_logo" %}
+            </div>
+            
+            <h1 class="welcome-title">
+                {% placeholder "greeting_title" or %}Welcome{% endplaceholder %}
+            </h1>
+            
+            <h2 class="welcome-subtitle">
+                {% placeholder "theater_name" or %}Theater Name{% endplaceholder %}
+            </h2>
+            
+            <div class="divider"></div>
+            
+            <!-- Added wrapper for the text frame -->
+            <div class="welcome-text-frame">
                 <div class="welcome-text">
                     {% placeholder "greeting_text" or %}
                     <p>
@@ -569,11 +533,11 @@
                     </p>
                     {% endplaceholder %}
                 </div>
-                
-                <a href="/sponsors/" class="enter-button">
-                    {% placeholder "enter_button_text" or %}ENTER{% endplaceholder %}
-                </a>
             </div>
+            
+            <a href="/sponsors/" class="enter-button">
+                {% placeholder "enter_button_text" or %}ENTER{% endplaceholder %}
+            </a>
         </div>
     </div>
 
