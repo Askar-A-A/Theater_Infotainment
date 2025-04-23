@@ -429,19 +429,19 @@
     <div class="event-header">
         <div class="event-title-container">
             <h1 class="event-title">
-                {% placeholder "event_title" or %}Salome{% endplaceholder %}
+                {{ event.title }}
             </h1>
             <div class="event-composer">
-                {% placeholder "event_composer" or %}Richard Strauss{% endplaceholder %}
+                {{ event.composer }}
             </div>
             <div class="event-dates">
-                {% placeholder "event_dates" or %}16.8. - 25.11.2024{% endplaceholder %}
+                {{ event.date_range_display }}
             </div>
         </div>
         <div class="event-image-container">
-            {% placeholder "event_image" or %}
-                <img src="{% static 'images/events/salome-1.jpg' %}" alt="Salome">
-            {% endplaceholder %}
+            {% if event.image %}
+                <img src="{{ event.image.url }}" alt="{{ event.title }}">
+            {% endif %}
         </div>
     </div>
     
@@ -449,13 +449,7 @@
     <div class="event-content">
         <div class="event-description">
             <h2>About the Performance</h2>
-            {% placeholder "event_about_content" or %}
-                <p>Based on Oscar Wilde's play of the same name, Richard Strauss's opera Salome is a powerful one-act drama that shocked audiences when it premiered in 1905. The opera tells the biblical story of Salome, stepdaughter of Herod, who develops an unhealthy obsession with the prophet Jochanaan (John the Baptist).</p>
-                
-                <p>When Jochanaan rejects her advances, Salome performs the infamous "Dance of the Seven Veils" for her stepfather in exchange for Jochanaan's head on a silver platter. The opera culminates in Salome's disturbing final monologue as she addresses the severed head.</p>
-                
-                <p>Strauss's revolutionary score features dissonant harmonies and modern tonality that perfectly captures the opera's themes of obsession, desire, and moral corruption. This production, directed by the acclaimed Emma Richardson, presents a contemporary vision of this classic work while honoring its musical complexity.</p>
-            {% endplaceholder %}
+            {{ event.about_content|safe }}
             
             {% placeholder "event_additional_description" or %}{% endplaceholder %}
         </div>
@@ -463,39 +457,32 @@
         <div class="event-sidebar">
             <div class="event-info-item">
                 <div class="info-label">Duration</div>
-                <div class="info-value">{% placeholder "event_duration_value" or %}Approximately 1 hour 40 minutes, no intermission{% endplaceholder %}</div>
+                <div class="info-value">{{ event.duration }}</div>
             </div>
             
             <div class="event-info-item">
                 <div class="info-label">Language</div>
-                <div class="info-value">{% placeholder "event_language_value" or %}Performed in German with English subtitles{% endplaceholder %}</div>
+                <div class="info-value">{{ event.language }}</div>
             </div>
             
             <div class="event-info-item">
                 <div class="info-label">Conductor</div>
-                <div class="info-value">{% placeholder "event_conductor_value" or %}Martina Bergmann{% endplaceholder %}</div>
+                <div class="info-value">{{ event.conductor }}</div>
             </div>
             
             <div class="event-info-item">
                 <div class="info-label">Director</div>
-                <div class="info-value">{% placeholder "event_director_value" or %}Emma Richardson{% endplaceholder %}</div>
+                <div class="info-value">{{ event.director }}</div>
             </div>
             
             <div class="event-info-item">
                 <div class="info-label">Cast</div>
                 <div class="cast-content">
-                    {% placeholder "event_cast_content" or %}
-                    <p><strong>Salome:</strong> Maria Klausner</p>
-                    <p><strong>Jochanaan:</strong> Thomas Reichmann</p>
-                    <p><strong>Herod:</strong> Karl Weber</p>
-                    <p><strong>Herodias:</strong> Elisabeth Schön</p>
-                    <p><strong>Narraboth:</strong> Andreas Müller</p>
-                    <p><strong>Page of Herodias:</strong> Sophia Klein</p>
-                    {% endplaceholder %}
+                    {{ event.cast_content|safe }}
                 </div>
             </div>
             
-            {% placeholder "event_additional_details" or %}{% endplaceholder %}
+            {{ event.additional_details|safe }}
         </div>
     </div>
 </div>

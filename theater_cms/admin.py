@@ -1,5 +1,13 @@
 from django.contrib import admin
-from .models import UserFeedback, EmailSubscription
+from .models import UserFeedback, EmailSubscription, Event
+
+@admin.register(Event)
+class EventAdmin(admin.ModelAdmin):
+    list_display = ('title', 'composer', 'start_datetime', 'end_datetime', 'is_active')
+    prepopulated_fields = {'slug': ('title',)}
+    list_filter = ('is_active',)
+    search_fields = ('title', 'composer')
+    ordering = ('sort_order', 'start_datetime')
 
 @admin.register(UserFeedback)
 class UserFeedbackAdmin(admin.ModelAdmin):

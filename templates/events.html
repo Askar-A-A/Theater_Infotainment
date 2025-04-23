@@ -380,129 +380,227 @@
     </div>
 
     <div class="main-content">
-        <!-- Page 1 -->
-        <div class="content-section">
-            <div class="events-grid">
-                <!-- Event Card 1 -->
-                <a href="/event-aida/" class="event-card">
+        {% if events %}
+            <!-- Dynamically generate pages with 3 events per page -->
+            {% for event in events %}
+                {% if forloop.counter0|divisibleby:3 %}
+                    {% if not forloop.first %}</div></div>{% endif %}
+                    <div class="content-section">
+                    <div class="events-grid">
+                {% endif %}
+                
+                <a href="{{ event.get_absolute_url }}" class="event-card">
                     <div class="event-image">
-                        {% placeholder "event_1_image" or %}
-                            <img src="{% static 'images/events/aida.jpg' %}" alt="Aida">
-                        {% endplaceholder %}
+                        {% if event.image %}
+                            <img src="{{ event.image.url }}" alt="{{ event.title }}">
+                        {% endif %}
                     </div>
-                    <h2 class="event-title">
-                        {% placeholder "event_1_title" or %}Aida{% endplaceholder %}
-                    </h2>
-                    <div class="event-composer">
-                        {% placeholder "event_1_composer" or %}Giuseppe Verdi{% endplaceholder %}
-                    </div>
-                    <div class="event-date">
-                        {% placeholder "event_1_date" or %}January 15 - March 20, 2024{% endplaceholder %}
-                    </div>
+                    <h2 class="event-title">{{ event.title }}</h2>
+                    <div class="event-composer">{{ event.composer }}</div>
+                    <div class="event-date">{{ event.date_range_display }}</div>
                 </a>
+                
+                {% if forloop.last %}</div></div>{% endif %}
+            {% empty %}
+                <!-- Fallback to original static content when no events -->
+                <div class="content-section">
+                    <div class="events-grid">
+                        <!-- Static content for empty state -->
+                        <!-- Event Card 1 -->
+                        <a href="/event-aida/" class="event-card">
+                            <div class="event-image">
+                                {% placeholder "event_1_image" or %}
+                                    <img src="{% static 'images/events/aida.jpg' %}" alt="Aida">
+                                {% endplaceholder %}
+                            </div>
+                            <h2 class="event-title">
+                                {% placeholder "event_1_title" or %}Aida{% endplaceholder %}
+                            </h2>
+                            <div class="event-composer">
+                                {% placeholder "event_1_composer" or %}Giuseppe Verdi{% endplaceholder %}
+                            </div>
+                            <div class="event-date">
+                                {% placeholder "event_1_date" or %}January 15 - March 20, 2024{% endplaceholder %}
+                            </div>
+                        </a>
 
-                <!-- Event Card 2 -->
-                <a href="/event-carmen/" class="event-card">
-                    <div class="event-image">
-                        {% placeholder "event_2_image" or %}
-                            <img src="{% static 'images/events/carmen.jpg' %}" alt="Carmen">
-                        {% endplaceholder %}
-                    </div>
-                    <h2 class="event-title">
-                        {% placeholder "event_2_title" or %}Carmen{% endplaceholder %}
-                    </h2>
-                    <div class="event-composer">
-                        {% placeholder "event_2_composer" or %}Georges Bizet{% endplaceholder %}
-                    </div>
-                    <div class="event-date">
-                        {% placeholder "event_2_date" or %}February 1 - April 15, 2024{% endplaceholder %}
-                    </div>
-                </a>
+                        <!-- Event Card 2 -->
+                        <a href="/event-carmen/" class="event-card">
+                            <div class="event-image">
+                                {% placeholder "event_2_image" or %}
+                                    <img src="{% static 'images/events/carmen.jpg' %}" alt="Carmen">
+                                {% endplaceholder %}
+                            </div>
+                            <h2 class="event-title">
+                                {% placeholder "event_2_title" or %}Carmen{% endplaceholder %}
+                            </h2>
+                            <div class="event-composer">
+                                {% placeholder "event_2_composer" or %}Georges Bizet{% endplaceholder %}
+                            </div>
+                            <div class="event-date">
+                                {% placeholder "event_2_date" or %}February 1 - April 15, 2024{% endplaceholder %}
+                            </div>
+                        </a>
 
-                <!-- Event Card 3 -->
-                <a href="/event-magic-flute/" class="event-card">
-                    <div class="event-image">
-                        {% placeholder "event_3_image" or %}
-                            <img src="{% static 'images/events/magic-flute.jpg' %}" alt="The Magic Flute">
-                        {% endplaceholder %}
+                        <!-- Event Card 3 -->
+                        <a href="/event-magic-flute/" class="event-card">
+                            <div class="event-image">
+                                {% placeholder "event_3_image" or %}
+                                    <img src="{% static 'images/events/magic-flute.jpg' %}" alt="The Magic Flute">
+                                {% endplaceholder %}
+                            </div>
+                            <h2 class="event-title">
+                                {% placeholder "event_3_title" or %}The Magic Flute{% endplaceholder %}
+                            </h2>
+                            <div class="event-composer">
+                                {% placeholder "event_3_composer" or %}Wolfgang Amadeus Mozart{% endplaceholder %}
+                            </div>
+                            <div class="event-date">
+                                {% placeholder "event_3_date" or %}March 10 - May 20, 2024{% endplaceholder %}
+                            </div>
+                        </a>
                     </div>
-                    <h2 class="event-title">
-                        {% placeholder "event_3_title" or %}The Magic Flute{% endplaceholder %}
-                    </h2>
-                    <div class="event-composer">
-                        {% placeholder "event_3_composer" or %}Wolfgang Amadeus Mozart{% endplaceholder %}
+                </div>
+
+                <!-- Page 2 static content -->
+                <div class="content-section">
+                    <div class="events-grid">
+                        <!-- Event Card 4 -->
+                        <a href="/event-rigoletto/" class="event-card">
+                            <div class="event-image">
+                                {% placeholder "event_4_image" or %}
+                                    <img src="{% static 'images/events/rigoletto.jpg' %}" alt="Rigoletto">
+                                {% endplaceholder %}
+                            </div>
+                            <h2 class="event-title">
+                                {% placeholder "event_4_title" or %}Rigoletto{% endplaceholder %}
+                            </h2>
+                            <div class="event-composer">
+                                {% placeholder "event_4_composer" or %}Giuseppe Verdi{% endplaceholder %}
+                            </div>
+                            <div class="event-date">
+                                {% placeholder "event_4_date" or %}April 5 - June 25, 2024{% endplaceholder %}
+                            </div>
+                        </a>
+
+                        <!-- Event Card 5 -->
+                        <a href="/event-salome/" class="event-card">
+                            <div class="event-image">
+                                {% placeholder "event_5_image" or %}
+                                    <img src="{% static 'images/events/salome.jpg' %}" alt="Salome">
+                                {% endplaceholder %}
+                            </div>
+                            <h2 class="event-title">
+                                {% placeholder "event_5_title" or %}Salome{% endplaceholder %}
+                            </h2>
+                            <div class="event-composer">
+                                {% placeholder "event_5_composer" or %}Richard Strauss{% endplaceholder %}
+                            </div>
+                            <div class="event-date">
+                                {% placeholder "event_5_date" or %}May 15 - July 30, 2024{% endplaceholder %}
+                            </div>
+                        </a>
+
+                        <!-- Event Card 6 -->
+                        <a href="/event-turandot/" class="event-card">
+                            <div class="event-image">
+                                {% placeholder "event_6_image" or %}
+                                    <img src="{% static 'images/events/turandot.jpg' %}" alt="Turandot">
+                                {% endplaceholder %}
+                            </div>
+                            <h2 class="event-title">
+                                {% placeholder "event_6_title" or %}Turandot{% endplaceholder %}
+                            </h2>
+                            <div class="event-composer">
+                                {% placeholder "event_6_composer" or %}Giacomo Puccini{% endplaceholder %}
+                            </div>
+                            <div class="event-date">
+                                {% placeholder "event_6_date" or %}June 1 - August 15, 2024{% endplaceholder %}
+                            </div>
+                        </a>
                     </div>
-                    <div class="event-date">
-                        {% placeholder "event_3_date" or %}March 10 - May 20, 2024{% endplaceholder %}
-                    </div>
-                </a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <!-- Fallback if events variable isn't provided -->
+            <div class="content-section">
+                <div class="events-grid">
+                    <!-- Static content as fallback -->
+                    <!-- Event Card 1 -->
+                    <a href="/event-aida/" class="event-card">
+                        <div class="event-image">
+                            {% placeholder "event_1_image" or %}
+                                <img src="{% static 'images/events/aida.jpg' %}" alt="Aida">
+                            {% endplaceholder %}
+                        </div>
+                        <h2 class="event-title">
+                            {% placeholder "event_1_title" or %}Aida{% endplaceholder %}
+                        </h2>
+                        <div class="event-composer">
+                            {% placeholder "event_1_composer" or %}Giuseppe Verdi{% endplaceholder %}
+                        </div>
+                        <div class="event-date">
+                            {% placeholder "event_1_date" or %}January 15 - March 20, 2024{% endplaceholder %}
+                        </div>
+                    </a>
+
+                    <!-- Event Card 2 -->
+                    <a href="/event-carmen/" class="event-card">
+                        <div class="event-image">
+                            {% placeholder "event_2_image" or %}
+                                <img src="{% static 'images/events/carmen.jpg' %}" alt="Carmen">
+                            {% endplaceholder %}
+                        </div>
+                        <h2 class="event-title">
+                            {% placeholder "event_2_title" or %}Carmen{% endplaceholder %}
+                        </h2>
+                        <div class="event-composer">
+                            {% placeholder "event_2_composer" or %}Georges Bizet{% endplaceholder %}
+                        </div>
+                        <div class="event-date">
+                            {% placeholder "event_2_date" or %}February 1 - April 15, 2024{% endplaceholder %}
+                        </div>
+                    </a>
+
+                    <!-- Event Card 3 -->
+                    <a href="/event-magic-flute/" class="event-card">
+                        <div class="event-image">
+                            {% placeholder "event_3_image" or %}
+                                <img src="{% static 'images/events/magic-flute.jpg' %}" alt="The Magic Flute">
+                            {% endplaceholder %}
+                        </div>
+                        <h2 class="event-title">
+                            {% placeholder "event_3_title" or %}The Magic Flute{% endplaceholder %}
+                        </h2>
+                        <div class="event-composer">
+                            {% placeholder "event_3_composer" or %}Wolfgang Amadeus Mozart{% endplaceholder %}
+                        </div>
+                        <div class="event-date">
+                            {% placeholder "event_3_date" or %}March 10 - May 20, 2024{% endplaceholder %}
+                        </div>
+                    </a>
+                </div>
             </div>
-        </div>
-
-        <!-- Page 2 -->
-        <div class="content-section">
-            <div class="events-grid">
-                <!-- Event Card 4 -->
-                <a href="/event-rigoletto/" class="event-card">
-                    <div class="event-image">
-                        {% placeholder "event_4_image" or %}
-                            <img src="{% static 'images/events/rigoletto.jpg' %}" alt="Rigoletto">
-                        {% endplaceholder %}
-                    </div>
-                    <h2 class="event-title">
-                        {% placeholder "event_4_title" or %}Rigoletto{% endplaceholder %}
-                    </h2>
-                    <div class="event-composer">
-                        {% placeholder "event_4_composer" or %}Giuseppe Verdi{% endplaceholder %}
-                    </div>
-                    <div class="event-date">
-                        {% placeholder "event_4_date" or %}April 5 - June 25, 2024{% endplaceholder %}
-                    </div>
-                </a>
-
-                <!-- Event Card 5 -->
-                <a href="/event-salome/" class="event-card">
-                    <div class="event-image">
-                        {% placeholder "event_5_image" or %}
-                            <img src="{% static 'images/events/salome.jpg' %}" alt="Salome">
-                        {% endplaceholder %}
-                    </div>
-                    <h2 class="event-title">
-                        {% placeholder "event_5_title" or %}Salome{% endplaceholder %}
-                    </h2>
-                    <div class="event-composer">
-                        {% placeholder "event_5_composer" or %}Richard Strauss{% endplaceholder %}
-                    </div>
-                    <div class="event-date">
-                        {% placeholder "event_5_date" or %}May 15 - July 30, 2024{% endplaceholder %}
-                    </div>
-                </a>
-
-                <!-- Event Card 6 -->
-                <a href="/event-turandot/" class="event-card">
-                    <div class="event-image">
-                        {% placeholder "event_6_image" or %}
-                            <img src="{% static 'images/events/turandot.jpg' %}" alt="Turandot">
-                        {% endplaceholder %}
-                    </div>
-                    <h2 class="event-title">
-                        {% placeholder "event_6_title" or %}Turandot{% endplaceholder %}
-                    </h2>
-                    <div class="event-composer">
-                        {% placeholder "event_6_composer" or %}Giacomo Puccini{% endplaceholder %}
-                    </div>
-                    <div class="event-date">
-                        {% placeholder "event_6_date" or %}June 1 - August 15, 2024{% endplaceholder %}
-                    </div>
-                </a>
-            </div>
-        </div>
+        {% endif %}
     </div>
 
     <!-- Scroll Indicators -->
     <div class="scroll-indicators">
-        <div class="scroll-dot active"></div>
-        <div class="scroll-dot"></div>
+        {% if events %}
+            <!-- First dot is always active -->
+            <div class="scroll-dot active"></div>
+            
+            <!-- Add more dots based on number of events (one dot per page) -->
+            {% for event in events %}
+                {% if forloop.counter0|divisibleby:3 and forloop.counter0 > 0 %}
+                    <div class="scroll-dot"></div>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <!-- Default two dots for static content -->
+            <div class="scroll-dot active"></div>
+            <div class="scroll-dot"></div>
+        {% endif %}
     </div>
 </div>
 

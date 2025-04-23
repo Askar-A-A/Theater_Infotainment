@@ -186,8 +186,7 @@
     }
 
     .today-icon {
-        color: var(--color-gold);
-        margin-bottom: var(--spacing-sm);
+        display: none;
     }
     
     /* Height-specific icon adjustments */
@@ -316,6 +315,78 @@
             max-width: 95%;
         }
     }
+
+    /* New styles for event display in today-section while preserving original design */
+    .today-event-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .today-event-image {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        margin-bottom: var(--spacing-sm);
+        border-radius: var(--border-radius);
+    }
+
+    /* Height-specific image size adjustments */
+    body.height-800 .today-event-image {
+        width: 24rem;
+        height: 20rem;
+    }
+
+    body.height-400 .today-event-image {
+        width: 12rem;
+        height: 10rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .today-event-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .today-event-title {
+        /* Keep the original title styling */
+        color: #fff;
+        margin: 0;
+        text-align: center;
+        font-weight: bold;
+        font-size: var(--font-size-lg);
+    }
+
+    .today-event-composer {
+        /* Light styling for composer to stay subtle */
+        color: rgba(255,255,255,0.8);
+        font-style: italic;
+        text-align: center;
+        margin-top: 0.5rem;
+        font-size: 1rem;
+    }
+
+    /* Height-specific adjustments */
+    body.height-800 .today-event-title {
+        font-size: var(--font-size-lg);
+    }
+
+    body.height-400 .today-event-title {
+        font-size: var(--font-size-md);
+    }
+
+    body.height-800 .today-event-composer {
+        font-size: 1.1rem;
+    }
+
+    body.height-400 .today-event-composer {
+        font-size: 0.9rem;
+    }
 </style>
 {% endblock %}
 
@@ -335,9 +406,28 @@
 <div class="theater-container">
     <div class="main-content">
         <!-- Today's Performance -->
-        <a href="/today/" class="today-section" style="text-decoration: none;">
-            <i class="fas fa-ticket-alt today-icon"></i>
-            <h2 class="today-title">Today's Performance</h2>
+        <a href="{% url 'user_interactions:current_event' %}" class="today-section" style="text-decoration: none;">
+            <div class="today-event-container">
+                {% if current_event %}
+                    <!-- Show the event image in a controlled container -->
+                    <div class="today-event-image">
+                        {% if current_event.image %}
+                            <img src="{{ current_event.image.url }}" alt="{{ current_event.title }}">
+                        {% else %}
+                            <!-- Fallback to icon if no image available -->
+                            <i class="fas fa-ticket-alt today-icon" style="display: block; font-size: 4em;"></i>
+                        {% endif %}
+                    </div>
+                    <h2 class="today-title">{{ current_event.title }}</h2>
+                    <div class="today-event-composer">
+                        {{ current_event.composer }}
+                    </div>
+                {% else %}
+                    <!-- Original fallback display -->
+                    <i class="fas fa-ticket-alt today-icon" style="display: block;"></i>
+                    <h2 class="today-title">Today's Performance</h2>
+                {% endif %}
+            </div>
         </a>
         
         <!-- Menu Items -->

@@ -10,3 +10,11 @@ class UserInteractionsApphook(CMSApp):
     def get_urls(self, page=None, language=None, **kwargs):
         return ["theater_cms.urls"]
 
+@apphook_pool.register
+class TheaterEventsApphook(CMSApp):
+    name = "Theater Events"
+    app_name = "user_interactions"  # Must match the app_name in your urls.py
+    
+    def get_urls(self, page=None, language=None, **kwargs):
+        return ["theater_cms.urls"]
+

@@ -1,9 +1,10 @@
 from django.db import models
 from django.utils import timezone
+from django.utils.text import slugify
+from django.urls import reverse
 from cms.models.pluginmodel import CMSPlugin
 from filer.fields.image import FilerImageField
 from django.utils.translation import gettext_lazy as _
-
 # Models for custom plugins
 
 class TheaterLogo(CMSPlugin):
@@ -118,3 +119,39 @@ class QAItemPlugin(CMSPlugin):
     
     def __str__(self):
         return self.question
+    
+
+class Event(models.Model):
+    title = models.CharField(max_length=200)
+    slug = models.SlugField(unique=True, blank=True)
+    composer = models.CharField(max_length=200)
+    image = models.ImageField(upload_to='events/', blank=True, null=True)  
+
+    start_datetime = models.DateTimeField()
+    end_datetime = models.DateTimeField()
+    date_range_display = models.CharField(max_length=200, blank=True, help_text="Display text for date range (e.g., 'January 15 - March 20, 2024')") 
+
+    about_content = models.TextField(blank=True)
+    duration = models.CharField(max_length=200, blank=True)
+    language = models.CharField(max_length=200, blank=True)
+    conductor = models.CharField(max_length=200, blank=True)
+    director = models.CharField(max_length=200, blank=True)
+    cast_content = models.TextField(blank=True)
+    additional_details = models.TextField(blank=True)
+
+    is_active = models.BooleanField(default=True)
+    sort_order = models.IntegerField(default=0)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+    
+    def get_absolute_url(self):
+        return reverse('user_interactions:event_detail', kwargs={'slug': self.slug})
+    
+    def __str__(self):
+        return self.title
+    
+    class Meta:
+        ordering = ['sort_order', 'start_datetime']

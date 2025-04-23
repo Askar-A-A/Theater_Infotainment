@@ -5,5 +5,6 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('cms.urls')),  # This must be the ONLY URL pattern for frontend pages
+    path('', include('theater_cms.urls')),  # Include your app's URLs at root level
+    path('', include('cms.urls')),  # Keep the CMS URLs last
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
