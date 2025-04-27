@@ -10,7 +10,7 @@ from django.db import models
 
 class PerformanceInline(admin.TabularInline):
     model = Performance
-    extra = 1  # Show only one empty form by default
+    extra = 0  # Show no empty forms by default, use bulk scheduler instead
     fields = ('performance_date', 'performance_time', 'end_time', 'is_special', 'notes')
     readonly_fields = ('end_time',)  # Make end_time read-only since it's auto-calculated
     
@@ -32,11 +32,6 @@ class PerformanceInline(admin.TabularInline):
         return None
     performance_time.short_description = _("Time")
     
-    # Add save_model to combine date and time
-    def save_model(self, request, obj, form, change):
-        # This won't be called for inline forms, but we'll add a custom formset
-        pass
-    
     # We need to provide a custom formset to handle the date/time split
     def get_formset(self, request, obj=None, **kwargs):
         from django import forms
@@ -47,12 +42,14 @@ class PerformanceInline(admin.TabularInline):
             # Add separate date and time fields
             performance_date = forms.DateField(
                 label=_("Date"),
-                widget=forms.DateInput(attrs={'type': 'date'})
+                widget=forms.DateInput(attrs={'type': 'date'}),
+                required=False,  # Make it not required for existing performances
             )
             performance_time = forms.TimeField(
                 label=_("Time"),
                 widget=forms.TimeInput(attrs={'type': 'time'}),
-                initial='19:30'
+                initial='19:30',
+                required=False,  # Make it not required for existing performances
             )
             
             class Meta:
@@ -65,18 +62,46 @@ class PerformanceInline(admin.TabularInline):
                 if self.instance and self.instance.pk and self.instance.start_time:
                     self.fields['performance_date'].initial = self.instance.start_time.date()
                     self.fields['performance_time'].initial = self.instance.start_time.time()
+                    
+                    # Add a hidden field to store the original start_time
+                    self.fields['original_start_time'] = forms.CharField(
+                        widget=forms.HiddenInput(),
+                        required=False,
+                        initial=self.instance.start_time.isoformat()
+                    )
+                    
+                # Better field labels and help text
+                self.fields['is_special'].label = _("Special Performance")
+                self.fields['is_special'].help_text = _("Mark this as a special performance (e.g., premiere, guest artist)")
+                self.fields['notes'].help_text = _("Any special notes about this performance")
+            
+            def clean(self):
+                cleaned_data = super().clean()
+                # If the form is for an existing performance and the date/time fields are empty,
+                # keep the original start_time
+                if self.instance and self.instance.pk and not cleaned_data.get('performance_date'):
+                    # Re-use the original start_time
+                    return cleaned_data
+                
+                # Ensure both date and time are provided for new entries
+                if not self.instance.pk and (not cleaned_data.get('performance_date') or not cleaned_data.get('performance_time')):
+                    raise forms.ValidationError(_("Both date and time are required for new performances"))
+                
+                return cleaned_data
             
             def save(self, commit=True):
                 # Don't call save yet
                 instance = super().save(commit=False)
                 
-                # Combine date and time into datetime
-                date = self.cleaned_data['performance_date']
-                time = self.cleaned_data['performance_time']
-                instance.start_time = datetime.combine(date, time)
+                # Only update the datetime if both date and time are provided
+                date = self.cleaned_data.get('performance_date')
+                time = self.cleaned_data.get('performance_time')
                 
-                # Set end time based on duration (default 3 hours)
-                if not instance.end_time:
+                if date and time:
+                    # Combine date and time into datetime
+                    instance.start_time = datetime.combine(date, time)
+                    
+                    # Set end time based on duration
                     duration = instance.event.standard_duration or timedelta(hours=3)
                     instance.end_time = instance.start_time + duration
                 
@@ -91,6 +116,10 @@ class PerformanceInline(admin.TabularInline):
             
             def save_new(self, form, commit=True):
                 # Handle saving new forms
+                return form.save(commit=commit)
+            
+            def save_existing(self, form, instance, commit=True):
+                # Handle saving existing forms 
                 return form.save(commit=commit)
         
         # Return the formset with our customizations
@@ -125,10 +154,123 @@ class EventAdmin(admin.ModelAdmin):
     # Add a field for the help text above the inline
     def change_view(self, request, object_id, form_url='', extra_context=None):
         extra_context = extra_context or {}
+        
+        # Add more descriptive help text with formatting
         extra_context['performance_help_text'] = _(
             "Use 'Schedule Performances' for adding multiple performances more easily. "
             "The section below is for manual adjustments to individual performances."
         )
+        
+        # Add custom CSS for the performances section
+        extra_context['extra_style'] = """
+        <style>
+            /* Improved performance section */
+            #performance-section {
+                margin-top: 20px;
+                padding: 15px 20px;
+                background-color: #f9f9f9;
+                border-radius: 4px;
+                border-left: 4px solid #79aec8;
+            }
+            
+            #performance-section h2 {
+                margin-top: 0;
+                color: #417690;
+                font-size: 16px;
+                margin-bottom: 10px;
+            }
+            
+            #performance-section p {
+                margin-bottom: 15px;
+                color: #666;
+            }
+            
+            /* Better styling for the bulk scheduling button */
+            .schedule-btn {
+                display: inline-block;
+                background-color: #417690;
+                color: white !important;
+                padding: 8px 15px;
+                border-radius: 4px;
+                font-weight: bold;
+                text-decoration: none !important;
+                transition: background-color 0.2s;
+                margin-bottom: 15px;
+            }
+            
+            .schedule-btn:hover {
+                background-color: #295a70;
+            }
+            
+            /* Improve the inline formset appearance */
+            .tabular.inline-related {
+                margin-top: 0;
+                border: 1px solid #e0e0e0;
+                border-radius: 4px;
+                overflow: hidden;
+                background-color: #fff;
+            }
+            
+            /* Remove the rectangular border around "Performances" */
+            .tabular.inline-related h2 {
+                display: none; /* Hide the default header */
+            }
+            
+            .tabular.inline-related .tabular {
+                border: none !important;
+            }
+            
+            /* Make the inline headers more pleasant */
+            .tabular.inline-related .module h3 {
+                background-color: #f1f1f1;
+                padding: 10px 15px;
+                margin: 0;
+                border-bottom: 1px solid #e0e0e0;
+                font-size: 14px;
+            }
+            
+            /* Better styling for the form rows */
+            .tabular.inline-related .form-row {
+                padding: 12px 10px;
+                border-bottom: 1px solid #f0f0f0;
+            }
+            
+            .tabular.inline-related .form-row:last-child {
+                border-bottom: none;
+            }
+            
+            /* Improve field styling */
+            .performance-field {
+                display: inline-block;
+                margin-right: 15px;
+            }
+            
+            /* Make the notes field bigger */
+            .field-notes input {
+                width: 300px !important;
+            }
+            
+            /* Fix spacing for the add another row */
+            .add-row {
+                padding: 10px 15px !important;
+                background-color: #f8f8f8 !important;
+            }
+            
+            /* Table headers for the performances */
+            .tabular.inline-related .module thead th {
+                background-color: #eaeaea;
+                padding: 8px 15px;
+            }
+        </style>
+        """
+        
+        # Use a better URL for bulk scheduling
+        if object_id:
+            event = self.get_object(request, object_id)
+            if event:
+                schedule_url = reverse('admin:theater_cms_event_schedule', args=[event.pk])
+                extra_context['schedule_url'] = schedule_url
+                
         return super().change_view(request, object_id, form_url, extra_context)
     
     def get_urls(self):

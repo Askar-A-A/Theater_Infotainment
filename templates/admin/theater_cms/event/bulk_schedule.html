@@ -4,23 +4,40 @@
 {% block extrahead %}
 {{ block.super }}
 <style>
+    /* Centered content layout */
+    #content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+    
+    h1 {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+    
     .schedule-form {
         max-width: 800px;
-        margin-top: 20px;
+        margin: 20px auto;
+        width: 100%;
     }
     
     .form-section {
         border: 1px solid #ddd;
-        padding: 20px;
+        padding: 25px;
         margin-bottom: 20px;
         border-radius: 4px;
         background: #fff;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
     
     .form-section h2 {
         margin-top: 0;
         padding-bottom: 10px;
         border-bottom: 1px solid #eee;
+        color: #447e9b;
     }
     
     .field-group {
@@ -50,15 +67,30 @@
     
     .submit-row {
         margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
     }
     
+    /* Improved radio button layout */
     .repeat-options {
         display: flex;
+        justify-content: center;
         margin-bottom: 20px;
+        flex-wrap: wrap;
     }
     
     .option {
-        margin-right: 20px;
+        margin: 0 10px;
+        min-width: 180px;
+        padding: 10px;
+        background-color: #f8f8f8;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+    }
+    
+    .option:hover {
+        background-color: #eaf2f5;
     }
     
     /* Style for radio buttons */
@@ -68,6 +100,43 @@
     
     .hidden-section {
         display: none;
+    }
+    
+    /* Better error styling */
+    .errors {
+        color: #ba2121;
+        font-weight: bold;
+        margin-top: 5px;
+    }
+    
+    /* Better buttons */
+    input[type="submit"].default, 
+    .button {
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    
+    /* Enhancing form inputs */
+    input[type="date"],
+    input[type="time"] {
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 767px) {
+        .form-section {
+            padding: 15px;
+        }
+        
+        .repeat-options {
+            flex-direction: column;
+        }
+        
+        .option {
+            margin: 5px 0;
+        }
     }
 </style>
 
@@ -116,7 +185,6 @@
 {% endblock %}
 
 {% block content %}
-<h1>{% trans 'Schedule Performances' %}: {{ event.title }}</h1>
 
 <div class="schedule-form">
     <form method="post">
