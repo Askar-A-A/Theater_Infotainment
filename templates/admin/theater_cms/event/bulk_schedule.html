@@ -1,0 +1,237 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls static %}
+
+{% block extrahead %}
+{{ block.super }}
+<style>
+    .schedule-form {
+        max-width: 800px;
+        margin-top: 20px;
+    }
+    
+    .form-section {
+        border: 1px solid #ddd;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 4px;
+        background: #fff;
+    }
+    
+    .form-section h2 {
+        margin-top: 0;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .field-group {
+        margin-bottom: 20px;
+    }
+    
+    .field-group label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+    
+    .field-group input,
+    .field-group select,
+    .field-group textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+    
+    .help-text {
+        color: #666;
+        font-size: 0.9em;
+        margin-top: 5px;
+    }
+    
+    .submit-row {
+        margin-top: 20px;
+    }
+    
+    .repeat-options {
+        display: flex;
+        margin-bottom: 20px;
+    }
+    
+    .option {
+        margin-right: 20px;
+    }
+    
+    /* Style for radio buttons */
+    input[type="radio"] {
+        margin-right: 5px;
+    }
+    
+    .hidden-section {
+        display: none;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const repeatOptions = document.querySelectorAll('input[name="repeat_type"]');
+        const singleSection = document.getElementById('single-performance-section');
+        const weeklySection = document.getElementById('weekly-performance-section');
+        const customSection = document.getElementById('custom-performance-section');
+        
+        function updateSections() {
+            const selectedValue = document.querySelector('input[name="repeat_type"]:checked').value;
+            
+            singleSection.classList.add('hidden-section');
+            weeklySection.classList.add('hidden-section');
+            customSection.classList.add('hidden-section');
+            
+            if (selectedValue === 'single') {
+                singleSection.classList.remove('hidden-section');
+            } else if (selectedValue === 'weekly') {
+                weeklySection.classList.remove('hidden-section');
+            } else if (selectedValue === 'custom') {
+                customSection.classList.remove('hidden-section');
+            }
+        }
+        
+        // Set initial state
+        updateSections();
+        
+        // Add change listeners
+        repeatOptions.forEach(option => {
+            option.addEventListener('change', updateSections);
+        });
+    });
+</script>
+{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+    &rsaquo; <a href="{% url 'admin:app_list' app_label=opts.app_label %}">{{ opts.app_config.verbose_name }}</a>
+    &rsaquo; <a href="{% url 'admin:theater_cms_event_changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a>
+    &rsaquo; <a href="{% url 'admin:theater_cms_event_change' event.id %}">{{ event.title }}</a>
+    &rsaquo; {% trans 'Schedule Performances' %}
+</div>
+{% endblock %}
+
+{% block content %}
+<h1>{% trans 'Schedule Performances' %}: {{ event.title }}</h1>
+
+<div class="schedule-form">
+    <form method="post">
+        {% csrf_token %}
+        
+        <!-- Scheduling Type Selection -->
+        <div class="form-section">
+            <h2>{% trans "Choose Scheduling Type" %}</h2>
+            <div class="repeat-options">
+                {% for radio in form.repeat_type %}
+                <div class="option">
+                    {{ radio.tag }}
+                    <label for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <!-- Single Performance Section -->
+        <div id="single-performance-section" class="form-section hidden-section">
+            <h2>{% trans "Single Performance Details" %}</h2>
+            
+            <div class="field-group">
+                <label for="{{ form.single_date.id_for_label }}">{{ form.single_date.label }}</label>
+                {{ form.single_date }}
+                <div class="help-text">{{ form.single_date.help_text }}</div>
+                {% if form.single_date.errors %}
+                <div class="errors">{{ form.single_date.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="field-group">
+                <label for="{{ form.single_time.id_for_label }}">{{ form.single_time.label }}</label>
+                {{ form.single_time }}
+                <div class="help-text">{{ form.single_time.help_text }}</div>
+                {% if form.single_time.errors %}
+                <div class="errors">{{ form.single_time.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Weekly Performance Section -->
+        <div id="weekly-performance-section" class="form-section hidden-section">
+            <h2>{% trans "Weekly Performance Series" %}</h2>
+            <p>{% trans "This will create performances on the same day of the week from the first date to the last date" %}</p>
+            
+            <div class="field-group">
+                <label for="{{ form.weekly_first_date.id_for_label }}">{{ form.weekly_first_date.label }}</label>
+                {{ form.weekly_first_date }}
+                <div class="help-text">{{ form.weekly_first_date.help_text }}</div>
+                {% if form.weekly_first_date.errors %}
+                <div class="errors">{{ form.weekly_first_date.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="field-group">
+                <label for="{{ form.weekly_time.id_for_label }}">{{ form.weekly_time.label }}</label>
+                {{ form.weekly_time }}
+                <div class="help-text">{{ form.weekly_time.help_text }}</div>
+                {% if form.weekly_time.errors %}
+                <div class="errors">{{ form.weekly_time.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="field-group">
+                <label for="{{ form.weekly_end_date.id_for_label }}">{{ form.weekly_end_date.label }}</label>
+                {{ form.weekly_end_date }}
+                <div class="help-text">{{ form.weekly_end_date.help_text }}</div>
+                {% if form.weekly_end_date.errors %}
+                <div class="errors">{{ form.weekly_end_date.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Custom Dates Section -->
+        <div id="custom-performance-section" class="form-section hidden-section">
+            <h2>{% trans "Multiple Specific Dates" %}</h2>
+            
+            <div class="field-group">
+                <label for="{{ form.custom_dates.id_for_label }}">{{ form.custom_dates.label }}</label>
+                {{ form.custom_dates }}
+                <div class="help-text">{{ form.custom_dates.help_text }}</div>
+                {% if form.custom_dates.errors %}
+                <div class="errors">{{ form.custom_dates.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Common Settings Section -->
+        <div class="form-section">
+            <h2>{% trans "Performance Details" %}</h2>
+            
+            <div class="field-group">
+                <label for="{{ form.duration.id_for_label }}">{{ form.duration.label }}</label>
+                {{ form.duration }}
+                <div class="help-text">{{ form.duration.help_text }}</div>
+                {% if form.duration.errors %}
+                <div class="errors">{{ form.duration.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="field-group">
+                <label for="{{ form.notes.id_for_label }}">{{ form.notes.label }}</label>
+                {{ form.notes }}
+                <div class="help-text">{{ form.notes.help_text }}</div>
+                {% if form.notes.errors %}
+                <div class="errors">{{ form.notes.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="submit-row">
+            <input type="submit" value="{% trans 'Schedule Performances' %}" class="default" />
+            <a href="{% url 'admin:theater_cms_event_change' event.id %}" class="button">{% trans 'Cancel' %}</a>
+        </div>
+    </form>
+</div>
+{% endblock %} 

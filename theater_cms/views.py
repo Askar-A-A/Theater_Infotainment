@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import UserFeedback, EmailSubscription, Event
+from .models import UserFeedback, EmailSubscription, Event, Performance
 from cms.utils import get_current_site
 from django.views.decorators.http import require_POST
 from django.utils import timezone
@@ -124,50 +124,37 @@ def clear_subscription_messages(request):
         del request.session['subscription_message']
     return JsonResponse({'status': 'ok'})
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 def determine_current_event():
     """Utility function to find the current or next event"""
     now = timezone.now()
     
-    # First check for events happening right now
-    current_events = Event.objects.filter(
-        start_datetime__lte=now,
-        end_datetime__gte=now,
-        is_active=True
-    ).order_by('start_datetime')
+    # First check for events with performances happening right now
+    current_performances = Performance.objects.filter(
+        start_time__lte=now,
+        end_time__gte=now,
+        event__is_active=True
+    ).select_related('event').order_by('start_time')
     
-    if current_events.exists():
-        return current_events.first()
+    if current_performances.exists():
+        return current_performances.first().event
     
-    # If no current events, find the next upcoming event
-    upcoming_events = Event.objects.filter(
-        start_datetime__gt=now,
-        is_active=True
-    ).order_by('start_datetime')
+    # If no current performances, find the next upcoming performance
+    upcoming_performances = Performance.objects.filter(
+        start_time__gt=now,
+        event__is_active=True
+    ).select_related('event').order_by('start_time')
     
-    if upcoming_events.exists():
-        return upcoming_events.first()
+    if upcoming_performances.exists():
+        return upcoming_performances.first().event
     
-    # If no upcoming events, return the most recent past event
-    past_events = Event.objects.filter(
-        end_datetime__lt=now,
-        is_active=True
-    ).order_by('-end_datetime')
+    # If no upcoming performances, return the most recent past performance
+    past_performances = Performance.objects.filter(
+        end_time__lt=now,
+        event__is_active=True
+    ).select_related('event').order_by('-end_time')
     
-    if past_events.exists():
-        return past_events.first()
+    if past_performances.exists():
+        return past_performances.first().event
     
     return None
 
@@ -179,7 +166,19 @@ def event_list(request):
 def event_detail(request, slug):
     """View for a specific event's details"""
     event = get_object_or_404(Event, slug=slug, is_active=True)
-    return render(request, 'event_detail.html', {'event': event})
+    
+    # Get upcoming performances for this event
+    now = timezone.now()
+    upcoming_performances = event.performances.filter(start_time__gt=now).order_by('start_time')
+    
+    # Get all distinct dates that have performances
+    performance_dates = event.performances.dates('start_time', 'day')
+    
+    return render(request, 'event_detail.html', {
+        'event': event,
+        'upcoming_performances': upcoming_performances,
+        'performance_dates': performance_dates,
+    })
 
 def current_event(request):
     """Redirect to the current event's detail page"""

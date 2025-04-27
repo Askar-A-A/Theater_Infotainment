@@ -486,4 +486,28 @@
         </div>
     </div>
 </div>
+
+<div class="event-schedule">
+    <h3>Upcoming Performances</h3>
+    
+    {% if upcoming_performances %}
+        <div class="performance-list">
+            {% for performance in upcoming_performances %}
+                <div class="performance-item">
+                    <div class="performance-date">
+                        {{ performance.start_time|date:"l, F d, Y" }}
+                    </div>
+                    <div class="performance-time">
+                        {{ performance.start_time|date:"g:i A" }}
+                    </div>
+                    {% if performance.notes %}
+                        <div class="performance-notes">{{ performance.notes }}</div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No upcoming performances scheduled at this time.</p>
+    {% endif %}
+</div>
 {% endblock %}

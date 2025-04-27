@@ -1,0 +1,18 @@
+{% extends "admin/change_form.html" %}
+{% load i18n %}
+
+{% block after_field_sets %}
+    {{ block.super }}
+    
+    {% if performance_help_text %}
+        <div class="help" style="margin-top: 20px; padding: 10px; background-color: #f8f8f8; border-left: 4px solid #79aec8;">
+            <h2 style="margin-top:0;">{% trans "Individual Performances" %}</h2>
+            <p>{{ performance_help_text }}</p>
+            <a href="{% url 'admin:theater_cms_event_schedule' original.pk %}" 
+               class="button" 
+               style="margin-top: 10px; background: #79aec8; color: white; padding: 10px 15px; text-decoration: none; border-radius: 4px;">
+                {% trans "Go to Bulk Scheduling Tool" %}
+            </a>
+        </div>
+    {% endif %}
+{% endblock %} 
