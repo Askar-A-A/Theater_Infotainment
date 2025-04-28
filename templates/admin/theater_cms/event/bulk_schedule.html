@@ -229,14 +229,14 @@
         <!-- Weekly Performance Section -->
         <div id="weekly-performance-section" class="form-section hidden-section">
             <h2>{% trans "Weekly Performance Series" %}</h2>
-            <p>{% trans "This will create performances on the same day of the week from the first date to the last date" %}</p>
+            <p>{% trans "Select the start date, days of the week, and how many weeks to repeat. Performances will be scheduled on each selected weekday, starting from the given date." %}</p>
             
             <div class="field-group">
-                <label for="{{ form.weekly_first_date.id_for_label }}">{{ form.weekly_first_date.label }}</label>
-                {{ form.weekly_first_date }}
-                <div class="help-text">{{ form.weekly_first_date.help_text }}</div>
-                {% if form.weekly_first_date.errors %}
-                <div class="errors">{{ form.weekly_first_date.errors }}</div>
+                <label for="{{ form.weekly_start_date.id_for_label }}">{{ form.weekly_start_date.label }}</label>
+                {{ form.weekly_start_date }}
+                <div class="help-text">{{ form.weekly_start_date.help_text }}</div>
+                {% if form.weekly_start_date.errors %}
+                <div class="errors">{{ form.weekly_start_date.errors }}</div>
                 {% endif %}
             </div>
             
@@ -250,11 +250,20 @@
             </div>
             
             <div class="field-group">
-                <label for="{{ form.weekly_end_date.id_for_label }}">{{ form.weekly_end_date.label }}</label>
-                {{ form.weekly_end_date }}
-                <div class="help-text">{{ form.weekly_end_date.help_text }}</div>
-                {% if form.weekly_end_date.errors %}
-                <div class="errors">{{ form.weekly_end_date.errors }}</div>
+                <label>{{ form.weekly_weekdays.label }}</label>
+                {{ form.weekly_weekdays }}
+                <div class="help-text">{{ form.weekly_weekdays.help_text }}</div>
+                {% if form.weekly_weekdays.errors %}
+                <div class="errors">{{ form.weekly_weekdays.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="field-group">
+                <label for="{{ form.weekly_num_weeks.id_for_label }}">{{ form.weekly_num_weeks.label }}</label>
+                {{ form.weekly_num_weeks }}
+                <div class="help-text">{{ form.weekly_num_weeks.help_text }}</div>
+                {% if form.weekly_num_weeks.errors %}
+                <div class="errors">{{ form.weekly_num_weeks.errors }}</div>
                 {% endif %}
             </div>
         </div>
@@ -283,15 +292,6 @@
                 <div class="help-text">{{ form.duration.help_text }}</div>
                 {% if form.duration.errors %}
                 <div class="errors">{{ form.duration.errors }}</div>
-                {% endif %}
-            </div>
-            
-            <div class="field-group">
-                <label for="{{ form.notes.id_for_label }}">{{ form.notes.label }}</label>
-                {{ form.notes }}
-                <div class="help-text">{{ form.notes.help_text }}</div>
-                {% if form.notes.errors %}
-                <div class="errors">{{ form.notes.errors }}</div>
                 {% endif %}
             </div>
         </div>

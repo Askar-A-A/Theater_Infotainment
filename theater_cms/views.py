@@ -124,6 +124,12 @@ def clear_subscription_messages(request):
         del request.session['subscription_message']
     return JsonResponse({'status': 'ok'})
 
+
+
+
+
+
+
 def determine_current_event():
     """Utility function to find the current or next event"""
     now = timezone.now()

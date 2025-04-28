@@ -207,11 +207,7 @@ class Performance(models.Model):
     )
     start_time = models.DateTimeField(_("Start Time"))
     end_time = models.DateTimeField(_("End Time"), blank=True, null=True)
-    is_special = models.BooleanField(_("Special Performance"), default=False,
-                                    help_text=_("Mark for premieres, galas, or special events"))
-    notes = models.CharField(_("Notes"), max_length=255, blank=True,
-                           help_text=_("Special notes for this performance (e.g., 'Premiere', 'With English subtitles')"))
-    
+
     class Meta:
         ordering = ['start_time']
         verbose_name = _("Performance")
