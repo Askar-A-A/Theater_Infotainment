@@ -225,3 +225,27 @@ class Performance(models.Model):
         
         # Update the parent event's date range
         self.event.update_date_range()
+
+class SeasonalSponsor(models.Model):
+    name = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='seasonal_sponsors/', blank=True, null=True)
+    website = models.URLField(blank=True)
+
+    def __str__(self):
+        return self.name
+
+class EventSponsorImage(models.Model):
+    event = models.ForeignKey(
+        Event,
+        on_delete=models.CASCADE,
+        related_name='sponsor_images',
+        verbose_name="Event",
+        null=True,
+        blank=True
+    )
+    name = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='event_sponsors/', blank=True, null=True)
+    website = models.URLField(blank=True)
+
+    def __str__(self):
+        return self.name

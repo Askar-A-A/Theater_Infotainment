@@ -315,17 +315,43 @@
                 </div>
                 
                 <div class="sponsors-grid">
-                    {% placeholder "sponsors_logos" or %}
-                        <div class="sponsor-item">
-                            <img src="{% static 'images/sponsors/lexus.png' %}" alt="Lexus" class="sponsor-logo">
+                    <!-- Seasonal Sponsors Section -->
+                    {% if seasonal_sponsors %}
+                        <div style="width: 100%; text-align: left; margin-bottom: 1.5rem;">
+                            <span style="color: var(--color-gold); font-size: 1.2rem; font-weight: bold;">Seasonal Sponsors</span>
                         </div>
-                        <div class="sponsor-item">
-                            <img src="{% static 'images/sponsors/samsung-1.png' %}" alt="Samsung" class="sponsor-logo">
+                        {% for sponsor in seasonal_sponsors %}
+                            <div class="sponsor-item">
+                                {% if sponsor.website %}
+                                    <a href="{{ sponsor.website }}" target="_blank">
+                                        <img src="{{ sponsor.image.url }}" alt="{{ sponsor.name }}" class="sponsor-logo">
+                                    </a>
+                                {% else %}
+                                    <img src="{{ sponsor.image.url }}" alt="{{ sponsor.name }}" class="sponsor-logo">
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <!-- Event-Specific Sponsors Section -->
+                    {% if event_sponsors %}
+                        <div style="width: 100%; text-align: left; margin: 2rem 0 1.5rem 0;">
+                            <span style="color: var(--color-gold); font-size: 1.2rem; font-weight: bold;">
+                                Sponsors for "{{ event.title }}"
+                            </span>
                         </div>
-                        <div class="sponsor-item">
-                            <img src="{% static 'images/sponsors/omv.png' %}" alt="ÖMV" class="sponsor-logo">
-                        </div>
-                    {% endplaceholder %}
+                        {% for sponsor in event_sponsors %}
+                            <div class="sponsor-item">
+                                {% if sponsor.website %}
+                                    <a href="{{ sponsor.website }}" target="_blank">
+                                        <img src="{{ sponsor.image.url }}" alt="{{ sponsor.name }}" class="sponsor-logo">
+                                    </a>
+                                {% else %}
+                                    <img src="{{ sponsor.image.url }}" alt="{{ sponsor.name }}" class="sponsor-logo">
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
                 </div>
                 
                 <a href="/" class="enter-button">

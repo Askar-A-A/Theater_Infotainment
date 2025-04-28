@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import UserFeedback, EmailSubscription, Event, Performance
+from .models import UserFeedback, EmailSubscription, Event, Performance, SeasonalSponsor, EventSponsorImage
 from cms.utils import get_current_site
 from django.views.decorators.http import require_POST
 from django.utils import timezone
@@ -199,3 +199,17 @@ def home_with_current_event(request):
     """Context processor to add current event to home page"""
     event = determine_current_event()
     return {'current_event': event}
+
+def sponsors_page(request):
+    from .models import SeasonalSponsor
+    seasonal_sponsors = SeasonalSponsor.objects.all()
+    event = determine_current_event()
+    event_sponsors = []
+    if event:
+        event_sponsors = event.sponsor_images.all()  # Use the related_name from the ForeignKey
+
+    return render(request, 'sponsors.html', {
+        'seasonal_sponsors': seasonal_sponsors,
+        'event_sponsors': event_sponsors,
+        'event': event,
+    })

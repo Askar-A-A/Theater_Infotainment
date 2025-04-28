@@ -4,7 +4,7 @@ from django.urls import path, reverse
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.utils.html import format_html
-from .models import Event, Performance, UserFeedback, EmailSubscription
+from .models import Event, Performance, UserFeedback, EmailSubscription, SeasonalSponsor, EventSponsorImage
 from django.utils.translation import gettext_lazy as _
 from django.db import models
 
@@ -125,6 +125,11 @@ class PerformanceInline(admin.TabularInline):
         defaults.update(kwargs)
         return super().get_formset(request, obj, **defaults)
 
+class EventSponsorImageInline(admin.TabularInline):
+    model = EventSponsorImage
+    extra = 1  # Show one empty form by default
+    fields = ('name', 'image', 'website')
+
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
     list_display = ('title', 'composer', 'date_range_display', 'performance_count', 'is_active', 'schedule_button')
@@ -144,7 +149,7 @@ class EventAdmin(admin.ModelAdmin):
             'classes': ('collapse',),
         }),
     )
-    inlines = [PerformanceInline]
+    inlines = [PerformanceInline, EventSponsorImageInline]
     
     # Add a field for the help text above the inline
     def change_view(self, request, object_id, form_url='', extra_context=None):
@@ -501,6 +506,10 @@ class PerformanceAdmin(admin.ModelAdmin):
     list_filter = ('event', 'start_time')
     search_fields = ('event__title',)
     date_hierarchy = 'start_time'
+
+@admin.register(SeasonalSponsor)
+class SeasonalSponsorAdmin(admin.ModelAdmin):
+    list_display = ('name', 'website')
 
 # Register other models
 admin.site.register(UserFeedback)
