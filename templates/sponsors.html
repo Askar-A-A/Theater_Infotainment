@@ -12,273 +12,316 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap">
     {% render_block "css" %}
 <style>
-        /* Reset and base styles */
-        * {
-            margin: 0;
-            padding: 0;
+    /* Reset and base styles */
+    * {
+        margin: 0;
+        padding: 0;
         box-sizing: border-box;
     }
 
-        html, body {
-            margin: 0;
-            padding: 0;
-            width: 1280px;
-            height: 800px; 
-            max-height: 100%;
-            color: #fff;
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            overflow: hidden;
-        }
+    html, body {
+        margin: 0;
+        padding: 0;
+        width: 1280px;
+        height: 800px; 
+        max-height: 100%;
+        color: #fff;
+        font-family: 'Arial', sans-serif;
+        line-height: 1.6;
+        overflow: hidden;
+    }
 
-        /* Define content wrapper - Plain Black Background */
-        .content-wrapper {
-            width: 1280px;
-            height: 800px;
-            position: relative;
-            background: #000; /* Changed to solid black */
-            overflow: hidden;
+    /* Define content wrapper - Plain Black Background */
+    .content-wrapper {
+        width: 1280px;
+        height: 800px;
+        position: relative;
+        background: #000; /* Changed to solid black */
+        overflow: hidden;
+    }
+    
+    /* Variables for consistent styling */
+    :root {
+        --color-gold: #d4af37;
+        --color-gold-muted: #b8a062;
+        --spacing-sm: 0.75rem;
+        --spacing-md: 1.5rem;
+        --spacing-lg: 2.5rem;
+        --spacing-xl: 4rem;
+        --border-radius: 8px;
+    }
+    
+    /* Main container */
+    .sponsors-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        padding: var(--spacing-lg) var(--spacing-md);
+        opacity: 0;
+        animation: fadeIn 1.5s ease-out 0.5s forwards;
+        text-align: center;
+    }
+    
+    /* Title area */
+    .sponsors-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 3.5rem;
+        color: var(--color-gold);
+        margin-bottom: var(--spacing-sm);
+        text-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+    }
+    
+    /* Divider */
+    .divider {
+        width: 300px;
+        height: 2px;
+        background: linear-gradient(to right, transparent 0%, var(--color-gold) 50%, transparent 100%);
+        margin: 0 auto var(--spacing-md);
+        opacity: 0.7;
+    }
+    
+    /* Sponsors info */
+    .sponsors-intro {
+        text-align: center;
+        max-width: 80%;
+        margin: 0 auto var(--spacing-lg);
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 1.4rem;
+        line-height: 1.6;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 300;
+    }
+    
+    /* New side-by-side sponsor sections */
+    .sponsors-row {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        gap: var(--spacing-lg);
+        margin-bottom: var(--spacing-lg);
+        flex-grow: 1;
+    }
+    
+    /* Sponsor category boxes */
+    .sponsor-box {
+        flex: 1;
+        max-width: 530px; /* Very slight increase */
+        background-color: rgba(0, 0, 0, 0.4);
+        border: 2px solid rgba(212, 175, 55, 0.3);
+        border-radius: 10px;
+        padding: var(--spacing-md) var(--spacing-md) var(--spacing-lg);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    /* Category headers with elegant styling */
+    .sponsor-box-title {
+        position: relative;
+        text-align: center;
+        margin-bottom: var(--spacing-md);
+        padding-bottom: var(--spacing-sm);
+        border-bottom: 1px solid rgba(212, 175, 55, 0.4);
+    }
+    
+    .sponsor-box-title i {
+        color: var(--color-gold);
+        font-size: 1.8rem;
+        margin-right: 0.6rem;
+        vertical-align: middle;
+    }
+    
+    .sponsor-box-title span {
+        color: var(--color-gold);
+        font-size: 1.8rem;
+        font-weight: bold;
+        vertical-align: middle;
+    }
+    
+    /* Sponsor grid within each box */
+    .sponsors-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: var(--spacing-md);
+        flex-grow: 1;
+        align-content: center;
+    }
+    
+    /* Sponsor items - only slight increase to width */
+    .sponsor-item {
+        background-color: rgba(255, 255, 255, 0.95);
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        width: 210px; /* Slight increase */
+        height: 140px; /* More increase in height */
+        transition: all 0.3s ease;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+    
+    .sponsor-item:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    .sponsor-logo {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        padding: 12px;
+    }
+    
+    /* Enter button */
+    .enter-button {
+        display: inline-block;
+        padding: 15px 60px;
+        font-size: 1.4rem;
+        letter-spacing: 1.8px;
+        color: var(--color-gold);
+        background-color: rgba(0, 0, 0, 0.3);
+        border: 2px solid var(--color-gold);
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
+        font-weight: 400;
+        box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
+        margin-top: var(--spacing-md);
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .enter-button::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: all 0.5s ease;
+    }
+    
+    .enter-button:hover {
+        color: #fff;
+        border-color: #fff;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        background-color: rgba(212, 175, 55, 0.1);
+    }
+    
+    .enter-button:hover::before {
+        left: 100%;
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    
+    /* Responsive styles for 400px height */
+    @media screen and (height: 400px) {
+        body, .content-wrapper {
+            height: 400px;
         }
         
-        /* Variables for consistent styling */
-        :root {
-            --color-gold: #d4af37;
-            --color-gold-muted: #b8a062;
-            --spacing-sm: 0.75rem;
-            --spacing-md: 1.5rem;
-            --spacing-lg: 2.5rem;
-            --spacing-xl: 4rem;
-            --border-radius: 8px;
-        }
-        
-        /* Background elements */
-        .bg-pattern {
-            display: none; /* Hide pattern for plain black */
-        }
-        
-        /* Gold accent lines - REMOVED */
-        .gold-line-top, .gold-line-bottom {
-            display: none;
-        }
-        
-        /* Main container - Adjustments */
         .sponsors-container {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            padding: var(--spacing-lg) var(--spacing-xl); /* Add padding */
-            opacity: 0;
-            animation: fadeIn 1.5s ease-out 0.5s forwards;
-            text-align: center; /* Center content */
+            padding: var(--spacing-sm);
         }
         
-        /* Sponsor content box - Remove all styles */
-        .sponsor-content-box {
-            /* All rules removed */
-        }
-        
-        /* Corner accents - REMOVED */
-        .sponsor-content-box::before,
-        .sponsor-content-box::after,
-        .corner-top-right,
-        .corner-bottom-left {
-            display: none;
-        }
-        
-        /* Title area - Adjust Margins */
         .sponsors-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 3.5rem; /* Kept size from previous step */
-            color: var(--color-gold);
-            margin-bottom: var(--spacing-md); /* Adjust spacing */
-            text-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+            font-size: 2rem;
+            margin-bottom: 0.3rem;
         }
         
-        /* Divider - Adjust Margins */
         .divider {
-            width: 250px; /* Kept wider size */
+            width: 150px;
             height: 1px;
-            background: linear-gradient(to right, transparent 0%, var(--color-gold) 50%, transparent 100%);
-            margin: 0 auto var(--spacing-lg); /* Adjust spacing */
-            opacity: 0.7;
+            margin-bottom: 0.5rem;
         }
         
-        /* Sponsors info - Adjust Margins */
         .sponsors-intro {
-            text-align: center;
-            max-width: 900px;
-            margin: 0 auto var(--spacing-lg); /* Adjust spacing */
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 1.5rem;
-            line-height: 1.8;
-            font-family: 'Roboto', sans-serif;
-            font-weight: 300;
+            font-size: 0.9rem;
+            line-height: 1.3;
+            margin-bottom: 0.5rem;
         }
         
-        /* Sponsors grid - Adjust Margins */
+        .sponsors-row {
+            gap: var(--spacing-sm);
+            margin-bottom: 0.5rem;
+        }
+        
+        .sponsor-box {
+            padding: 0.5rem;
+            border-width: 1px;
+        }
+        
+        .sponsor-box-title {
+            margin-bottom: 0.3rem;
+            padding-bottom: 0.3rem;
+        }
+        
+        .sponsor-box-title i {
+            font-size: 1rem;
+        }
+        
+        .sponsor-box-title span {
+            font-size: 1rem;
+        }
+        
         .sponsors-grid {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 3rem; /* Keep slightly larger gap */
-            margin: var(--spacing-lg) 0; /* Adjust spacing */
-            max-width: 1000px; /* Keep limit */
-            margin-left: auto;
-            margin-right: auto;
+            gap: 0.5rem;
         }
         
         .sponsor-item {
-            background-color: rgba(255, 255, 255, 0.95);
-            border-radius: 6px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
-            width: 300px; /* Keep larger size */
-            height: 200px; /* Keep larger size */
-            transition: all 0.3s ease;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
+            width: 140px;
+            height: 80px;
         }
         
-        .sponsor-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-        }
-        
-        .sponsor-logo {
-            display: block;
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-        
-        /* Enter button - Adjust Margins */
         .enter-button {
-            display: inline-block;
-            padding: 20px 70px;
-            font-size: 1.4rem;
-            letter-spacing: 1.8px;
-            color: var(--color-gold);
-            background-color: rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--color-gold);
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            position: relative;
-            overflow: hidden;
-            font-weight: 400;
-            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3);
-            margin-top: var(--spacing-lg); /* Adjust spacing */
+            padding: 6px 30px;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            border-width: 1px;
+        }
+    }
+</style>
+{% render_block "js" %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Function to get height from cookie
+        function getHeightPreference() {
+            const heightCookie = getCookie('displayHeight');
+            return heightCookie || '800'; // Default to 800px if no cookie exists
         }
         
-        .enter-button::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: all 0.5s ease;
+        // Function to get cookie value by name
+        function getCookie(name) {
+            const cookieValue = document.cookie
+                .split('; ')
+                .find(row => row.startsWith(name + '='));
+                
+            return cookieValue ? cookieValue.split('=')[1] : null;
         }
         
-        .enter-button:hover {
-            color: #fff;
-            border-color: #fff;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
-            background-color: rgba(212, 175, 55, 0.1);
-        }
-        
-        .enter-button:hover::before {
-            left: 100%;
-        }
-        
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        /* Update responsive styles for 400px height */
-        @media screen and (height: 400px) {
-            body, .content-wrapper {
-                height: 400px;
-            }
-            
-            .sponsors-container {
-                padding: 0 var(--spacing-lg) var(--spacing-md); /* Adjust top padding to 0 */
-                justify-content: flex-start;
-                padding-top: 30px; /* Add specific top padding if needed */
-            }
-            
-            .sponsors-title {
-                font-size: 2.5rem; /* Adjusted */
-                margin-bottom: var(--spacing-sm);
-            }
-            
-            .divider {
-                width: 180px;
-                margin-bottom: var(--spacing-md);
-            }
-            
-            .sponsors-intro {
-                font-size: 1.1rem;
-                line-height: 1.5;
-                margin-bottom: var(--spacing-md); /* Adjusted */
-                max-width: 95%;
-            }
-            
-            .sponsors-grid {
-                gap: 1.5rem;
-                margin: var(--spacing-md) 0; /* Adjusted */
-                max-width: 95%;
-            }
-            
-            .sponsor-item {
-                width: 180px;
-                height: 120px;
-            }
-            
-            .enter-button {
-                padding: 10px 40px; /* Adjusted */
-                font-size: 1.1rem; /* Adjusted */
-                margin-top: var(--spacing-md); /* Adjusted */
-            }
-        }
-    </style>
-    {% render_block "js" %}
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Function to get height from cookie
-            function getHeightPreference() {
-                const heightCookie = getCookie('displayHeight');
-                return heightCookie || '800'; // Default to 800px if no cookie exists
-            }
-            
-            // Function to get cookie value by name
-            function getCookie(name) {
-                const cookieValue = document.cookie
-                    .split('; ')
-                    .find(row => row.startsWith(name + '='));
-                    
-                return cookieValue ? cookieValue.split('=')[1] : null;
-            }
-            
-            // Apply height class based on preference
-            const heightPreference = getHeightPreference();
-            if (heightPreference === '400') {
-                document.body.classList.add('height-400');
-                document.body.classList.remove('height-800');
-            } else {
-                document.body.classList.add('height-800');
-                document.body.classList.remove('height-400');
+        // Apply height class based on preference
+        const heightPreference = getHeightPreference();
+        if (heightPreference === '400') {
+            document.body.classList.add('height-400');
+            document.body.classList.remove('height-800');
+        } else {
+            document.body.classList.add('height-800');
+            document.body.classList.remove('height-400');
         }
     });
 </script>
@@ -288,38 +331,28 @@
     {% cms_toolbar %}
     <div class="content-wrapper">
         <div class="sponsors-container">
-            <!-- Background pattern -->
-            <div class="bg-pattern"></div>
+            <h1 class="sponsors-title">{% placeholder "sponsors_title" or %}Our Esteemed Sponsors{% endplaceholder %}</h1>
             
-            <!-- Gold decorative lines -->
-            <div class="gold-line-top"></div>
-            <div class="gold-line-bottom"></div>
+            <div class="divider"></div>
             
-            <!-- Main content box -->
-            <div class="sponsor-content-box">
-                <div class="corner-top-right"></div>
-                <div class="corner-bottom-left"></div>
-                
-                <h1 class="sponsors-title">{% placeholder "sponsors_title" or %}Our Esteemed Sponsors{% endplaceholder %}</h1>
-                
-                <div class="divider"></div>
-                
-                <div class="sponsors-intro">
-                    {% placeholder "sponsors_intro" or %}
-                        <p>
-                            The Vienna State Opera proudly acknowledges the generous support of our sponsors.
-                            Their commitment to the arts enables us to continue our tradition of excellence
-                            and to share the magic of opera with audiences from around the world.
-                        </p>
-                    {% endplaceholder %}
-                </div>
-                
-                <div class="sponsors-grid">
-                    <!-- Seasonal Sponsors Section -->
-                    {% if seasonal_sponsors %}
-                        <div style="width: 100%; text-align: left; margin-bottom: 1.5rem;">
-                            <span style="color: var(--color-gold); font-size: 1.2rem; font-weight: bold;">Seasonal Sponsors</span>
-                        </div>
+            <div class="sponsors-intro">
+                {% placeholder "sponsors_intro" or %}
+                    The Vienna State Opera proudly acknowledges the generous support of our sponsors.
+                    Their commitment to the arts enables us to continue our tradition of excellence
+                    and to share the magic of opera with audiences from around the world.
+                {% endplaceholder %}
+            </div>
+            
+            <!-- Side-by-side sponsor sections -->
+            <div class="sponsors-row">
+                <!-- Seasonal Sponsors Box -->
+                {% if seasonal_sponsors %}
+                <div class="sponsor-box">
+                    <div class="sponsor-box-title">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Seasonal Sponsors</span>
+                    </div>
+                    <div class="sponsors-grid">
                         {% for sponsor in seasonal_sponsors %}
                             <div class="sponsor-item">
                                 {% if sponsor.website %}
@@ -331,15 +364,18 @@
                                 {% endif %}
                             </div>
                         {% endfor %}
-                    {% endif %}
+                    </div>
+                </div>
+                {% endif %}
 
-                    <!-- Event-Specific Sponsors Section -->
-                    {% if event_sponsors %}
-                        <div style="width: 100%; text-align: left; margin: 2rem 0 1.5rem 0;">
-                            <span style="color: var(--color-gold); font-size: 1.2rem; font-weight: bold;">
-                                Sponsors for "{{ event.title }}"
-                            </span>
-                        </div>
+                <!-- Event-Specific Sponsors Box -->
+                {% if event_sponsors %}
+                <div class="sponsor-box">
+                    <div class="sponsor-box-title">
+                        <i class="fas fa-theater-masks"></i>
+                        <span>Sponsors for "{{ event.title }}"</span>
+                    </div>
+                    <div class="sponsors-grid">
                         {% for sponsor in event_sponsors %}
                             <div class="sponsor-item">
                                 {% if sponsor.website %}
@@ -351,13 +387,14 @@
                                 {% endif %}
                             </div>
                         {% endfor %}
-                    {% endif %}
+                    </div>
                 </div>
-                
-                <a href="/" class="enter-button">
-                    {% placeholder "enter_button_text" or %}ENTER SITE{% endplaceholder %}
-                </a>
+                {% endif %}
             </div>
+            
+            <a href="/" class="enter-button">
+                {% placeholder "enter_button_text" or %}ENTER SITE{% endplaceholder %}
+            </a>
         </div>
     </div>
 </body>
