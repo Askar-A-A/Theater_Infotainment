@@ -83,10 +83,10 @@
         position: relative;
     }
 
-    /* Feedback content box - WIDER BOX */
+    /* Feedback content box - EVEN NARROWER BOX */
     .feedback-content-box {
-        max-width: 900px; /* Increased from 800px */
-        width: 98%; /* Increased from 95% to nearly full width */
+        max-width: 600px; /* Reduced from 700px */
+        width: 85%; /* Reduced from 90% */
         background-color: rgba(0, 0, 0, 0.7);
         border: 1px solid var(--color-gold-muted);
         border-radius: var(--border-radius);
@@ -98,12 +98,13 @@
     
     /* Height-specific adjustments for content box */
     body.height-800 .feedback-content-box {
-        padding: 2.2rem 3.5rem; /* Wider horizontal padding, slightly less vertical */
+        padding: 2rem 2.5rem; /* Reduced horizontal padding */
     }
     
     body.height-400 .feedback-content-box {
-        padding: 1rem 2.5rem; /* Wider horizontal padding, slightly less vertical */
-        max-width: 95%; 
+        padding: 0.7rem 1rem;
+        max-width: 80%; /* Reduced from 85% */
+        border-width: 1px;
     }
 
     /* Corner accents (same style as subscribe page) */
@@ -113,8 +114,8 @@
     .corner-bottom-left {
         content: "";
         position: absolute;
-        width: 20px;
-        height: 20px;
+        width: 15px; /* Reduced from 20px */
+        height: 15px; /* Reduced from 20px */
         border-color: var(--color-gold);
     }
     
@@ -158,30 +159,30 @@
     
     /* Height-specific adjustments for title */
     body.height-800 .feedback-title {
-        font-size: 3rem; /* Increased from 2.8rem */
-        margin-bottom: 0.8rem; /* Reduced from 1rem to save vertical space */
+        font-size: 2.8rem;
+        margin-bottom: 0.8rem;
     }
     
     body.height-400 .feedback-title {
-        font-size: 2rem; /* Increased from 1.8rem */
-        margin-bottom: 0.3rem; /* Reduced to save vertical space */
+        font-size: 1.5rem;
+        margin-bottom: 0.2rem;
     }
 
     /* Divider - WIDER */
     .divider {
-        width: 220px; /* Increased from 180px */
+        width: 180px; /* Reduced from 220px */
         height: 1px;
         background: linear-gradient(to right, transparent 0%, var(--color-gold) 50%, transparent 100%);
         margin: 0 auto;
     }
     
     body.height-800 .divider {
-        margin-bottom: 1.8rem; /* Increased from 1.5rem */
+        margin-bottom: 1.5rem;
     }
     
     body.height-400 .divider {
-        width: 140px; /* Increased from 120px */
-        margin-bottom: 1rem; /* Increased from 0.8rem */
+        width: 80px; /* Reduced from 100px */
+        margin-bottom: 0.3rem;
     }
 
     /* Feedback intro text - LARGER but condensed */
@@ -193,24 +194,25 @@
     
     /* Height-specific adjustments for intro */
     body.height-800 .feedback-intro {
-        max-width: 800px; /* Increased from 650px */
-        font-size: 1.4rem; /* Increased from 1.25rem */
-        line-height: 1.5; /* Slightly tighter to save vertical space */
-        margin-bottom: 1.3rem; /* Slightly reduced */
+        font-size: 1.25rem;
+        line-height: 1.5;
+        margin-bottom: 1.2rem;
+        max-width: 75%; /* Reduced from 80% */
     }
     
     body.height-400 .feedback-intro {
-        max-width: 98%; /* Increased */
-        font-size: 1.05rem; /* Increased from 0.9rem */
-        line-height: 1.3; /* Tighter to save space */
-        margin-bottom: 0.5rem; /* Reduced */
+        font-size: 0.8rem;
+        line-height: 1.2;
+        margin-bottom: 0.4rem;
+        max-width: 85%; /* Reduced from 90% */
     }
 
-    /* Form container - WIDER */
+    /* Form container - EVEN NARROWER */
     .feedback-form {
         width: 100%;
-        max-width: 700px; /* Increased from 550px */
+        max-width: 480px; /* Reduced from 560px */
         margin: 0 auto;
+        text-align: center;
     }
     
     /* Height-specific adjustments for form */
@@ -219,7 +221,10 @@
     }
     
     body.height-400 .feedback-form {
-        padding: 0.3rem 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        max-width: 100%;
     }
 
     /* Form element styling */
@@ -234,7 +239,7 @@
     }
     
     body.height-400 .form-group {
-        margin-bottom: 0.4rem; /* Reduced from 0.5rem */
+        margin-bottom: 0.3rem;
     }
 
     /* Form label styling - LARGER */
@@ -252,8 +257,8 @@
     }
     
     body.height-400 .form-label {
-        font-size: 1rem; /* Increased from 0.8rem */
-        margin-bottom: 0.15rem; /* Reduced */
+        font-size: 0.8rem;
+        margin-bottom: 0.1rem;
     }
 
     /* Form controls - BIGGER */
@@ -268,13 +273,14 @@
     
     /* Height-specific adjustments for form controls */
     body.height-800 .form-control {
-        padding: 12px 18px; /* Increased from 10px 15px */
-        font-size: 1.2rem; /* Increased from 1rem */
+        padding: 10px 15px; /* Reduced from 12px 18px */
+        font-size: 1.1rem; /* Reduced from 1.2rem */
     }
     
     body.height-400 .form-control {
-        padding: 8px 12px; /* Increased from 6px 10px */
-        font-size: 1rem; /* Increased from 0.85rem */
+        padding: 0.3rem 0.5rem;
+        font-size: 0.8rem;
+        min-height: 2rem;
     }
 
     .form-control:focus {
@@ -291,7 +297,7 @@
     }
 
     body.height-400 .form-control::placeholder {
-        font-size: 0.9rem;
+        font-size: 0.75rem;
     }
 
     textarea.form-control {
@@ -300,17 +306,21 @@
     
     /* Height-specific adjustments for textareas */
     body.height-800 textarea.form-control {
-        min-height: 110px; /* Slightly increased from 100px */
+        width: 100%;
+        min-height: 100px; /* Reduced from 110px */
+        max-width: 100%;
     }
     
     body.height-400 textarea.form-control {
-        min-height: 45px; /* Slightly reduced from 50px to save space */
+        min-height: 2.5rem; /* Reduced from 3rem */
+        max-height: 3.5rem; /* Reduced from 4rem */
     }
 
     /* Rating stars - LARGER */
     .rating-container {
         display: flex;
         align-items: center;
+        justify-content: flex-start; /* Ensure left alignment */
     }
 
     .star {
@@ -321,13 +331,13 @@
     
     /* Height-specific adjustments for stars */
     body.height-800 .star {
-        font-size: 2.2rem; /* Increased from 1.85rem */
-        margin-right: 12px; /* Increased spacing */
+        font-size: 1.8rem; /* Reduced from 2.2rem */
+        margin-right: 10px; /* Reduced from 12px */
     }
     
     body.height-400 .star {
-        font-size: 1.5rem; /* Increased from 1.25rem */
-        margin-right: 10px; /* Increased spacing */
+        font-size: 1.2rem;
+        margin-right: 0.4rem;
     }
 
     .star:hover, .star.active {
@@ -337,7 +347,7 @@
     /* Submit button - LARGER */
     .submit-button {
         display: inline-block;
-        letter-spacing: 1.5px; /* Increased from 1px */
+        letter-spacing: 1.5px;
         color: var(--color-gold);
         background-color: rgba(0, 0, 0, 0.3);
         border: 1px solid var(--color-gold);
@@ -347,20 +357,26 @@
         text-decoration: none;
         position: relative;
         overflow: hidden;
-        font-weight: 500; /* Added weight */
+        font-weight: 500;
+        margin-left: auto;
+        margin-right: auto;
     }
     
     /* Height-specific adjustments for submit button */
     body.height-800 .submit-button {
-        padding: 12px 40px; /* Increased from 10px 35px */
-        font-size: 1.4rem; /* Increased from 1.2rem */
-        margin-top: 1.3rem; /* Reduced from 1.5rem to save space */
+        padding: 10px 35px; /* Slightly increased from 30px */
+        font-size: 1.2rem;
+        width: auto;
+        min-width: 180px; /* Set minimum width */
+        margin-top: 1.3rem;
     }
     
     body.height-400 .submit-button {
-        padding: 8px 25px; /* Increased from 6px 20px */
-        font-size: 1rem; /* Increased from 0.85rem */
-        margin-top: 0.6rem; /* Reduced from 0.8rem */
+        padding: 0.3rem 1rem; /* Increased from 0.8rem */
+        min-width: 120px; /* Set minimum width */
+        font-size: 0.8rem;
+        margin-top: 0.3rem;
+        letter-spacing: 0.5px;
     }
 
     .submit-button::before {
@@ -396,6 +412,16 @@
         color: #fff;
         margin-top: 1rem;
         font-size: 0.95rem;
+    }
+
+    /* Make the name field half-height in 400px mode */
+    body.height-400 #name {
+        height: 1.8rem; /* Reduced from 2rem */
+    }
+
+    /* Make the name field more visually balanced */
+    body.height-800 #name {
+        max-width: 100%;
     }
 </style>
 {% endblock %}

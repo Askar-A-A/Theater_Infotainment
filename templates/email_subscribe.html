@@ -262,59 +262,98 @@
         font-size: 1.1rem; /* Increased from 0.95rem */
     }
     
-    /* 400px height adjustments - PROPORTIONALLY INCREASED */
+    /* 400px height adjustments - COMPLETELY REVISED */
     @media screen and (height: 400px) {
         .subscribe-content-box {
-            padding: 0.7rem 1.5rem; /* Slightly increased */
-            max-width: 98%; /* Kept same */
-            width: 98%;
+            padding: 0.7rem 1rem;
+            max-width: 95%;
+            width: 95%;
+            border-width: 1px;
         }
         
         .subscribe-title {
-            font-size: 1.5rem; /* Increased from 1.3rem */
+            font-size: 1.5rem;
+            margin-bottom: 0.2rem;
         }
         
         .divider {
-            width: 120px; /* Increased from 100px */
+            width: 100px;
+            margin-bottom: 0.3rem;
         }
         
         .subscribe-intro {
-            text-align: center;
-            justify-content: center;
-            align-items: center;
-            margin: 0 auto 0.8rem; /* Slightly reduced bottom margin */
+            font-size: 0.8rem;
+            line-height: 1.2;
+            margin-bottom: 0.4rem;
+            max-width: 95%;
         }
         
-        .subscribe-intro p {
-            padding: 0 8px; /* Smaller padding for 400px version */
+        .subscribe-form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+        
+        .form-group {
+            margin-bottom: 0.3rem;
         }
         
         .form-group label {
-            font-size: 0.9rem; /* Increased */
+            font-size: 0.8rem;
+            margin-bottom: 0.1rem;
         }
         
         .form-control {
-            padding: 5px 8px; /* Increased from 4px 6px */
-            font-size: 0.85rem; /* Increased from 0.7rem */
-            height: 30px; /* Specified height for better control */
+            padding: 0.3rem 0.5rem;
+            font-size: 0.8rem;
+            height: auto;
+            min-height: 2rem;
+        }
+        
+        .form-control::placeholder {
+            font-size: 0.75rem;
+        }
+        
+        /* Hide the optional name field in 400px mode to save space */
+        .form-group:nth-child(2) {
+            display: none;
         }
         
         .checkbox-container {
-            margin-bottom: 0.6rem;
+            margin-bottom: 0.3rem;
         }
         
         .checkbox-container input[type="checkbox"] {
-            transform: scale(1.1); /* Slightly larger but not too much */
+            transform: scale(1);
+            margin-right: 0.4rem;
+            margin-top: 0.15rem;
         }
         
         .checkbox-container label {
-            font-size: 0.8rem; /* Increased from 0.65rem */
-            line-height: 1.2;
+            font-size: 0.7rem;
+            line-height: 1.1;
         }
         
         .btn-subscribe {
-            padding: 5px 15px; /* Increased from 3px 10px */
-            font-size: 0.85rem; /* Increased from 0.7rem */
+            padding: 0.3rem 1rem;
+            font-size: 0.8rem;
+            margin-top: 0.3rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .success-message {
+            padding: 0.5rem;
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+        }
+        
+        /* Remove corner accents in 400px mode to simplify visuals */
+        .subscribe-content-box::before,
+        .subscribe-content-box::after,
+        .corner-top-right,
+        .corner-bottom-left {
+            width: 10px;
+            height: 10px;
         }
     }
 </style>
