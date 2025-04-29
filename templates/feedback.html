@@ -435,8 +435,8 @@
     <div class="gold-line-top"></div>
     <div class="gold-line-bottom"></div>
     
-    <!-- Main content box -->
-    <div class="feedback-content-box">
+    <!-- Main content box - SLIGHTLY WIDER -->
+    <div class="feedback-content-box" style="max-width: 720px; width: 90%;">
         <div class="corner-top-right"></div>
         <div class="corner-bottom-left"></div>
         
@@ -453,14 +453,16 @@
             {% endplaceholder %}
         </div>
         
-        <form id="feedbackForm" class="feedback-form" method="post" action="{% url 'user_interactions:process_feedback' %}">
+        <!-- Form container - SLIGHTLY WIDER -->
+        <form id="feedbackForm" class="feedback-form" method="post" action="{% url 'user_interactions:process_feedback' %}" style="max-width: 430px;">
             {% csrf_token %}
             
-            <!-- Name field -->
+            <!-- Name field - SHORTER HEIGHT -->
             <div class="form-group">
                 <label for="name" class="form-label">Name</label>
                 <input type="text" id="name" name="name" class="form-control" 
                        placeholder="Optional" 
+                       style="height: 36px;"
                        value="{{ request.session.feedback_data.name|default:'' }}">
                 {% if request.session.feedback_errors.name %}
                     <div class="error-message" style="color: #ff6b6b; font-size: 0.8rem; margin-top: 5px;">
@@ -487,10 +489,11 @@
                 {% endif %}
             </div>
             
-            <!-- Comments field -->
+            <!-- Comments field - MAINTAIN TALLER HEIGHT -->
             <div class="form-group">
                 <label for="comments" class="form-label">Your Feedback</label>
                 <textarea id="comments" name="comments" class="form-control" 
+                          style="min-height: 80px;"
                           placeholder="Please share your thoughts, suggestions, or experiences...">{{ request.session.feedback_data.comments|default:'' }}</textarea>
                 {% if request.session.feedback_errors.comments %}
                     <div class="error-message" style="color: #ff6b6b; font-size: 0.8rem; margin-top: 5px;">

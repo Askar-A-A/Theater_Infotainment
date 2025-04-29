@@ -6,6 +6,28 @@
     {% placeholder "subscribe_page_title" or %}Subscribe - Vienna State Opera{% endplaceholder %}
 {% endblock %}
 
+{% block wrapper_style %}
+<style>
+    /* Force specific height on the wrapper */
+    .content-wrapper {
+        height: 800px;
+        overflow: hidden;
+    }
+    
+    /* Check for cookie to override height directly in HTML, not waiting for JS */
+    {% if request.COOKIES.displayHeight == '400' %}
+    @media screen and (min-height: 400px) {
+        .content-wrapper {
+            height: 400px !important;
+        }
+        body {
+            height: 400px !important;
+        }
+    }
+    {% endif %}
+</style>
+{% endblock %}
+
 {% block extra_css %}
 <style>
     /* Variables for consistent styling */
@@ -17,6 +39,30 @@
         --spacing-lg: 2.5rem;
         --spacing-xl: 4rem;
         --border-radius: 8px;
+    }
+    
+    /* Main container */
+    .subscribe-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+    
+    /* General styles for all heights */
+    .subscribe-content-box {
+        max-width: 550px;
+        width: 80%;
+        background-color: rgba(0, 0, 0, 0.7);
+        border: 1px solid var(--color-gold-muted);
+        border-radius: var(--border-radius);
+        text-align: center;
+        position: relative;
+        z-index: 2;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
     }
     
     /* Background pattern */
@@ -36,31 +82,6 @@
         display: none; /* Hide the gold lines */
     }
     
-    /* Main container */
-    .subscribe-container {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-    }
-    
-    /* Subscribe content box - PROPORTIONALLY LARGER */
-    .subscribe-content-box {
-        max-width: 900px; /* Increased from 800px */
-        width: 96%; /* Slightly increased from 95% */
-        background-color: rgba(0, 0, 0, 0.7);
-        border: 1px solid var(--color-gold-muted);
-        border-radius: var(--border-radius);
-        padding: 2.2rem 3rem; /* Increased padding */
-        text-align: center;
-        position: relative;
-        z-index: 2;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-    }
-    
     /* Corner accents */
     .subscribe-content-box::before,
     .subscribe-content-box::after,
@@ -68,8 +89,8 @@
     .corner-bottom-left {
         content: "";
         position: absolute;
-        width: 20px;
-        height: 20px;
+        width: 15px;
+        height: 15px;
         border-color: var(--color-gold);
     }
     
@@ -105,115 +126,92 @@
         border-bottom-left-radius: var(--border-radius);
     }
     
-    /* Title area - LARGER */
-    .subscribe-title {
-        font-family: 'Playfair Display', serif;
-        font-size: 2.8rem; /* Increased from 2.5rem */
-        color: var(--color-gold);
-        margin-bottom: 0.9rem; /* Slightly increased from 0.8rem */
-    }
-    
-    /* Divider - SLIGHTLY WIDER */
-    .divider {
-        width: 200px; /* Increased from 180px */
-        height: 1px;
-        background: linear-gradient(to right, transparent 0%, var(--color-gold) 50%, transparent 100%);
-        margin: 0 auto 1.6rem; /* Slightly increased from 1.5rem */
-    }
-    
-    /* Subscribe info - CENTERED AND SYMMETRICAL */
-    .subscribe-intro {
-        text-align: center;
-        max-width: 700px; /* Kept existing width */
-        margin: 0 auto 1.3rem; /* Added auto horizontal margin for centering */
-        color: rgba(255, 255, 255, 0.9);
-        font-size: 1.25rem;
-        line-height: 1.5;
-        display: flex; /* Added flex display */
-        justify-content: center; /* Center horizontally */
-        align-items: center; /* Center vertically */
-    }
-    
-    .subscribe-intro p {
-        margin: 0; /* Remove default paragraph margins for better symmetry */
-        padding: 0 15px; /* Add some horizontal padding for better text spacing */
-        width: 100%; /* Ensure the paragraph takes full width */
-        text-align: center; /* Ensure text alignment is centered */
-    }
-    
-    /* Form container - SLIGHTLY LARGER */
+    /* Subscribe form */
     .subscribe-form {
         width: 100%;
-        max-width: 600px; /* Increased from 550px */
+        max-width: 450px;
         margin: 0 auto;
-        padding: 0.7rem 0;
+        text-align: center;
     }
     
-    /* Form elements - LARGER TEXT */
+    /* 800px height styles */
+    {% if request.COOKIES.displayHeight == '800' or not request.COOKIES.displayHeight %}
+    .subscribe-content-box {
+        padding: 2.2rem 2.2rem;
+    }
+    
+    .subscribe-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.8rem;
+        color: var(--color-gold);
+        margin-bottom: 0.9rem;
+    }
+    
+    .divider {
+        width: 180px;
+        height: 1px;
+        background: linear-gradient(to right, transparent 0%, var(--color-gold) 50%, transparent 100%);
+        margin: 0 auto 1.5rem;
+    }
+    
+    .subscribe-intro {
+        text-align: center;
+        max-width: 90%;
+        margin: 0 auto 1.4rem;
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 1.3rem;
+        line-height: 1.6;
+    }
+    
     .form-group {
-        margin-bottom: 1.1rem; /* Slightly increased */
+        margin-bottom: 1rem;
         position: relative;
+        text-align: left;
     }
     
     .form-group label {
         display: block;
         text-align: left;
-        margin-bottom: 0.5rem; /* Slightly increased */
-        color: rgba(255, 255, 255, 0.9); /* Brighter for better readability */
-        font-size: 1.2rem; /* Significantly increased from 0.95rem */
-        font-weight: 500; /* Added for better visibility */
+        margin-bottom: 0.3rem;
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 1.2rem;
+        font-weight: 500;
     }
     
     .form-control {
         width: 100%;
-        padding: 12px 18px; /* Increased from 10px 15px */
-        background: rgba(255, 255, 255, 0.08); /* Slightly more visible */
+        padding: 10px 15px;
+        background: rgba(255, 255, 255, 0.08);
         border: 1px solid rgba(255, 255, 255, 0.15);
         border-radius: 4px;
         color: white;
-        font-size: 1.15rem; /* Increased from 1rem */
-        transition: all 0.3s ease;
+        font-size: 1.1rem;
     }
     
-    .form-control:focus {
-        outline: none;
-        background: rgba(255, 255, 255, 0.1);
-        border-color: var(--color-gold-muted);
-        box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
-    }
-    
-    .form-control::placeholder {
-        color: rgba(255, 255, 255, 0.5); /* More visible */
-        font-size: 1.1rem; /* Specific size for better readability */
-    }
-    
-    /* Checkbox styling - LARGER TEXT */
     .checkbox-container {
         display: flex;
         align-items: flex-start;
-        margin-bottom: 1.1rem; /* Slightly increased */
+        margin-bottom: 1rem;
         text-align: left;
     }
     
     .checkbox-container input[type="checkbox"] {
-        margin-right: 12px; /* Increased from 10px */
-        margin-top: 4px; /* Slightly adjusted for alignment with larger text */
-        transform: scale(1.2); /* Make checkbox larger */
-        accent-color: var(--color-gold);
+        margin-right: 10px;
+        margin-top: 4px;
+        transform: scale(1.2);
     }
     
     .checkbox-container label {
-        color: rgba(255, 255, 255, 0.9); /* Brighter */
-        font-size: 1.1rem; /* Increased from 0.9rem */
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 1.1rem;
         line-height: 1.4;
     }
     
-    /* Button styling - LARGER */
     .btn-subscribe {
         display: inline-block;
-        padding: 12px 40px; /* Increased from 10px 35px */
-        font-size: 1.2rem; /* Increased from 1rem */
-        letter-spacing: 1.2px; /* Slightly increased */
+        padding: 12px 40px;
+        font-size: 1.25rem;
+        letter-spacing: 1.2px;
         color: var(--color-gold);
         background-color: rgba(0, 0, 0, 0.3);
         border: 1px solid var(--color-gold);
@@ -223,8 +221,132 @@
         text-decoration: none;
         position: relative;
         overflow: hidden;
-        margin-top: 0.6rem; /* Slightly increased */
-        font-weight: 500; /* Added for better visibility */
+        margin-top: 1.5rem;
+        min-width: 180px;
+    }
+    {% endif %}
+    
+    {% if request.COOKIES.displayHeight == '400' %}
+    /* 400px height styles - AGGRESSIVELY COMPACT */
+    .subscribe-content-box {
+        padding: 0.5rem 1rem;
+        max-width: 80%;
+    }
+    
+    .subscribe-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.3rem;
+        color: var(--color-gold);
+        margin-bottom: 0.1rem;
+    }
+    
+    .divider {
+        width: 80px;
+        height: 1px;
+        background: linear-gradient(to right, transparent 0%, var(--color-gold) 50%, transparent 100%);
+        margin: 0 auto 0.2rem;
+    }
+    
+    .subscribe-intro {
+        text-align: center;
+        max-width: 90%;
+        margin: 0 auto 0.3rem;
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 0.75rem;
+        line-height: 1.2;
+    }
+    
+    .subscribe-form {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+    }
+    
+    .form-group {
+        margin-bottom: 0.2rem;
+        position: relative;
+        text-align: left;
+    }
+    
+    .form-group label {
+        display: block;
+        text-align: left;
+        margin-bottom: 0.1rem;
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 0.7rem;
+        font-weight: 500;
+    }
+    
+    .form-control {
+        width: 100%;
+        padding: 0.25rem 0.5rem;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 4px;
+        color: white;
+        font-size: 0.75rem;
+        min-height: 1.8rem;
+    }
+    
+    /* Hide the optional name field in 400px mode to save space */
+    .form-group:nth-child(2) {
+        display: none;
+    }
+    
+    .checkbox-container {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 0.2rem;
+        text-align: left;
+    }
+    
+    .checkbox-container input[type="checkbox"] {
+        margin-right: 0.3rem;
+        margin-top: 0.15rem;
+        transform: scale(0.9);
+    }
+    
+    .checkbox-container label {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 0.65rem;
+        line-height: 1.1;
+    }
+    
+    .btn-subscribe {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        font-size: 0.75rem;
+        letter-spacing: 0.5px;
+        color: var(--color-gold);
+        background-color: rgba(0, 0, 0, 0.3);
+        border: 1px solid var(--color-gold);
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
+        margin-top: 0.3rem;
+        min-width: 100px;
+    }
+    
+    /* Simplify corner accents in 400px mode */
+    .subscribe-content-box::before,
+    .subscribe-content-box::after,
+    .corner-top-right,
+    .corner-bottom-left {
+        width: 8px;
+        height: 8px;
+        border-width: 1px;
+    }
+    {% endif %}
+    
+    /* Hover effects and animations */
+    .form-control:focus {
+        outline: none;
+        background: rgba(255, 255, 255, 0.1);
+        border-color: var(--color-gold-muted);
+        box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
     }
     
     .btn-subscribe::before {
@@ -250,130 +372,45 @@
         left: 100%;
     }
     
-    /* Success message - LARGER TEXT */
+    /* Success message */
     .success-message {
         display: none;
-        padding: 1.2rem; /* Increased from 1rem */
         background: rgba(0, 100, 0, 0.1);
         border: 1px solid rgba(0, 150, 0, 0.3);
         border-radius: 4px;
         color: #fff;
-        margin-top: 1.2rem; /* Increased from 1rem */
-        font-size: 1.1rem; /* Increased from 0.95rem */
-    }
-    
-    /* 400px height adjustments - COMPLETELY REVISED */
-    @media screen and (height: 400px) {
-        .subscribe-content-box {
-            padding: 0.7rem 1rem;
-            max-width: 95%;
-            width: 95%;
-            border-width: 1px;
-        }
-        
-        .subscribe-title {
-            font-size: 1.5rem;
-            margin-bottom: 0.2rem;
-        }
-        
-        .divider {
-            width: 100px;
-            margin-bottom: 0.3rem;
-        }
-        
-        .subscribe-intro {
-            font-size: 0.8rem;
-            line-height: 1.2;
-            margin-bottom: 0.4rem;
-            max-width: 95%;
-        }
-        
-        .subscribe-form {
-            display: flex;
-            flex-direction: column;
-            gap: 0.3rem;
-        }
-        
-        .form-group {
-            margin-bottom: 0.3rem;
-        }
-        
-        .form-group label {
-            font-size: 0.8rem;
-            margin-bottom: 0.1rem;
-        }
-        
-        .form-control {
-            padding: 0.3rem 0.5rem;
-            font-size: 0.8rem;
-            height: auto;
-            min-height: 2rem;
-        }
-        
-        .form-control::placeholder {
-            font-size: 0.75rem;
-        }
-        
-        /* Hide the optional name field in 400px mode to save space */
-        .form-group:nth-child(2) {
-            display: none;
-        }
-        
-        .checkbox-container {
-            margin-bottom: 0.3rem;
-        }
-        
-        .checkbox-container input[type="checkbox"] {
-            transform: scale(1);
-            margin-right: 0.4rem;
-            margin-top: 0.15rem;
-        }
-        
-        .checkbox-container label {
-            font-size: 0.7rem;
-            line-height: 1.1;
-        }
-        
-        .btn-subscribe {
-            padding: 0.3rem 1rem;
-            font-size: 0.8rem;
-            margin-top: 0.3rem;
-            letter-spacing: 0.5px;
-        }
-        
-        .success-message {
-            padding: 0.5rem;
-            margin-top: 0.5rem;
-            font-size: 0.75rem;
-        }
-        
-        /* Remove corner accents in 400px mode to simplify visuals */
-        .subscribe-content-box::before,
-        .subscribe-content-box::after,
-        .corner-top-right,
-        .corner-bottom-left {
-            width: 10px;
-            height: 10px;
-        }
+        {% if request.COOKIES.displayHeight == '400' %}
+        padding: 0.4rem;
+        margin-top: 0.4rem;
+        font-size: 0.7rem;
+        {% else %}
+        padding: 1rem;
+        margin-top: 1rem;
+        font-size: 0.95rem;
+        {% endif %}
     }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="subscribe-container">
-    <!-- Background pattern -->
     <div class="bg-pattern"></div>
     
-    <!-- Main content box -->
-    <div class="subscribe-content-box">
+    <!-- LARGER BOX FOR 800px ONLY -->
+    <div class="subscribe-content-box" style="{% if request.COOKIES.displayHeight == '400' %}max-width: 550px; width: 92%; padding: 1rem 2rem;{% else %}max-width: 680px; width: 95%; padding: 2.5rem 3rem;{% endif %}">
         <div class="corner-top-right"></div>
         <div class="corner-bottom-left"></div>
         
-        <h1 class="subscribe-title">{% placeholder "subscribe_title" or %}Stay Informed{% endplaceholder %}</h1>
+        <!-- LARGER TITLE FOR 800px -->
+        <h1 class="subscribe-title" style="{% if request.COOKIES.displayHeight == '400' %}font-size: 2rem; margin-bottom: 0.25rem;{% else %}font-size: 3.2rem; margin-bottom: 0.7rem;{% endif %}">
+            {% placeholder "subscribe_title" or %}Stay Informed{% endplaceholder %}
+        </h1>
         
-        <div class="divider"></div>
+        <!-- WIDER DIVIDER FOR 800px -->
+        <div class="divider" style="{% if request.COOKIES.displayHeight == '400' %}width: 170px; margin-bottom: 0.4rem;{% else %}width: 220px; margin-bottom: 1.2rem;{% endif %}"></div>
         
-        <div class="subscribe-intro">
+        <!-- LARGER INTRO TEXT FOR 800px -->
+        <div class="subscribe-intro" style="{% if request.COOKIES.displayHeight == '400' %}max-width: 94%; font-size: 0.95rem; line-height: 1.2; margin-bottom: 0.6rem;{% else %}max-width: 90%; font-size: 1.4rem; line-height: 1.5; margin-bottom: 1.8rem;{% endif %}">
             {% placeholder "subscribe_intro" or %}
                 <p>
                     Subscribe to our newsletter and be the first to know about upcoming performances, 
@@ -382,13 +419,16 @@
             {% endplaceholder %}
         </div>
         
-        <form id="subscribe-form" class="subscribe-form" method="post" action="{% url 'user_interactions:process_subscription' %}">
+        <!-- WIDER FORM FOR 800px -->
+        <form id="subscribe-form" class="subscribe-form" method="post" action="{% url 'user_interactions:process_subscription' %}" style="{% if request.COOKIES.displayHeight == '400' %}max-width: 460px;{% else %}max-width: 580px;{% endif %}">
             {% csrf_token %}
             
-            <div class="form-group">
-                <label for="email">Email Address</label>
+            <!-- Email field - LARGER FOR 800px -->
+            <div class="form-group" style="{% if request.COOKIES.displayHeight == '400' %}margin-bottom: 0.35rem;{% else %}margin-bottom: 1.2rem;{% endif %}">
+                <label for="email" style="{% if request.COOKIES.displayHeight == '400' %}font-size: 0.9rem; margin-bottom: 0.1rem;{% else %}font-size: 1.4rem; margin-bottom: 0.4rem;{% endif %}">Email Address</label>
                 <input type="email" id="email" name="email" class="form-control" 
                        placeholder="Your email address" required
+                       style="{% if request.COOKIES.displayHeight == '400' %}font-size: 0.9rem; padding: 6px 12px; height: 32px;{% else %}font-size: 1.3rem; padding: 12px 18px; height: 56px;{% endif %}"
                        value="{{ request.session.subscription_data.email|default:'' }}">
                 {% if request.session.subscription_errors.email %}
                     <div class="error-message" style="color: #ff6b6b; font-size: 0.8rem; margin-top: 5px;">
@@ -397,27 +437,33 @@
                 {% endif %}
             </div>
             
-            <div class="form-group">
-                <label for="name">Name (Optional)</label>
+            <!-- Name field - LARGER FOR 800px -->
+            <div class="form-group" style="{% if request.COOKIES.displayHeight == '400' %}margin-bottom: 0.35rem;{% else %}margin-bottom: 1.2rem;{% endif %}">
+                <label for="name" style="{% if request.COOKIES.displayHeight == '400' %}font-size: 0.9rem; margin-bottom: 0.1rem;{% else %}font-size: 1.4rem; margin-bottom: 0.4rem;{% endif %}">Name (Optional)</label>
                 <input type="text" id="name" name="name" class="form-control" 
                        placeholder="Your name"
+                       style="{% if request.COOKIES.displayHeight == '400' %}font-size: 0.9rem; padding: 6px 12px; height: 32px;{% else %}font-size: 1.3rem; padding: 12px 18px; height: 56px;{% endif %}"
                        value="{{ request.session.subscription_data.name|default:'' }}">
             </div>
             
-            <div class="checkbox-container">
+            <!-- Checkbox - LARGER FOR 800px -->
+            <div class="checkbox-container" style="{% if request.COOKIES.displayHeight == '400' %}margin-bottom: 0.4rem; margin-top: 0.3rem;{% else %}margin-bottom: 1.5rem; margin-top: 0.8rem;{% endif %}">
                 <input type="checkbox" id="preferences" name="preferences" 
-                       {% if request.session.subscription_data.preferences %}checked{% endif %}>
-                <label for="preferences">
+                       {% if request.session.subscription_data.preferences %}checked{% endif %}
+                       style="{% if request.COOKIES.displayHeight != '400' %}transform: scale(1.4); margin-top: 6px; margin-right: 15px;{% endif %}">
+                <label for="preferences" style="{% if request.COOKIES.displayHeight == '400' %}font-size: 0.85rem; line-height: 1.2;{% else %}font-size: 1.3rem; line-height: 1.5;{% endif %}">
                     I would like to receive information about special events, premieres, and exclusive offers.
                 </label>
             </div>
             
-            <button type="submit" class="btn-subscribe">
+            <!-- Button - LARGER FOR 800px -->
+            <button type="submit" class="btn-subscribe" style="{% if request.COOKIES.displayHeight == '400' %}min-width: 160px; padding: 6px 30px; font-size: 0.95rem; margin-top: 0.4rem;{% else %}min-width: 220px; padding: 14px 40px; font-size: 1.4rem; margin-top: 1.5rem; letter-spacing: 1.5px;{% endif %}">
                 {% placeholder "subscribe_button_text" or %}Subscribe{% endplaceholder %}
             </button>
         </form>
         
-        <div id="success-message" class="success-message" style="{% if request.session.subscription_success or request.session.subscription_message %}display: block;{% endif %}">
+        <!-- Success message - conditionally styled -->
+        <div id="success-message" class="success-message" style="{% if request.session.subscription_success or request.session.subscription_message %}display: block;{% endif %} {% if request.COOKIES.displayHeight != '400' %}font-size: 1.2rem; padding: 1.2rem;{% endif %}">
             {% if request.session.subscription_message %}
                 <p>{{ request.session.subscription_message }}</p>
             {% else %}
@@ -430,6 +476,7 @@
 </div>
 
 <script>
+    console.log("Height from cookie: {{ request.COOKIES.displayHeight }}");
     document.addEventListener('DOMContentLoaded', function() {
         const subscribeForm = document.getElementById('subscribe-form');
         const successMessage = document.getElementById('success-message');
@@ -446,6 +493,9 @@
                 'X-CSRFToken': '{{ csrf_token }}'
             }
         });
+        
+        // Force debug logging to console about current height
+        console.log("Current display height: {{ request.COOKIES.displayHeight|default:'800' }}px");
     });
 </script>
 {% endblock %}
