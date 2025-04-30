@@ -289,7 +289,11 @@
     }
     
     /* Hide the optional name field in 400px mode to save space */
-    .form-group:nth-child(2) {
+    /* Target specifically the name field by using a better selector */
+    .form-group label[for="name"] {
+        display: none;
+    }
+    .form-group input#name {
         display: none;
     }
     
@@ -480,11 +484,19 @@
     document.addEventListener('DOMContentLoaded', function() {
         const subscribeForm = document.getElementById('subscribe-form');
         const successMessage = document.getElementById('success-message');
+        const emailField = document.getElementById('email');
         
         // If success message is visible, hide the form
         if (successMessage.style.display === 'block') {
             subscribeForm.style.display = 'none';
         }
+        
+        // Force debug logging to console about current height and form elements
+        console.log("Current display height: {{ request.COOKIES.displayHeight|default:'800' }}px");
+        console.log("Email field visible:", emailField.offsetParent !== null);
+        
+        // Make sure email field is always visible regardless of height
+        emailField.style.display = 'block';
         
         // Remove the success flag after page load (for when user navigates back)
         fetch('{% url "user_interactions:clear_subscription_messages" %}', {
@@ -493,9 +505,6 @@
                 'X-CSRFToken': '{{ csrf_token }}'
             }
         });
-        
-        // Force debug logging to console about current height
-        console.log("Current display height: {{ request.COOKIES.displayHeight|default:'800' }}px");
     });
 </script>
 {% endblock %}
