@@ -8,9 +8,9 @@
 
 {% block wrapper_style %}
 <style>
-    /* Enable scrolling for event detail page */
+    /* Override base template styles to ensure full-page scrolling */
     .content-wrapper {
-        overflow: auto;
+        overflow: hidden; /* Keep this hidden to prevent double scrollbars */
     }
 </style>
 {% endblock %}
@@ -331,7 +331,7 @@
     }
 
     body.height-400 .event-image-container {
-        height: 100px;
+        height: 200px;
     }
 
     .event-image-container img {

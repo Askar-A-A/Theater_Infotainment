@@ -249,3 +249,30 @@ class EventSponsorImage(models.Model):
 
     def __str__(self):
         return self.name
+
+class SiteSettings(models.Model):
+    """Single-instance model to store site-wide settings."""
+    display_height = models.IntegerField(
+        choices=[(800, '800px (Full Size)'), (400, '400px (Compact)')],
+        default=800,
+        help_text="Select the display height for all theater screens."
+    )
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        verbose_name = 'Site Settings'
+        verbose_name_plural = 'Site Settings'
+    
+    def __str__(self):
+        return f"Site Settings (Updated: {self.updated_at.strftime('%Y-%m-%d %H:%M')})"
+    
+    def save(self, *args, **kwargs):
+        # Ensure only one instance exists
+        self.pk = 1
+        super().save(*args, **kwargs)
+    
+    @classmethod
+    def get_solo(cls):
+        """Get or create the singleton instance."""
+        obj, created = cls.objects.get_or_create(pk=1)
+        return obj

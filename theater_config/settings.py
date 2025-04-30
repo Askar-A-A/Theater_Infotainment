@@ -55,6 +55,7 @@ MIDDLEWARE = [
     'cms.middleware.page.CurrentPageMiddleware',
     'cms.middleware.toolbar.ToolbarMiddleware',
     'cms.middleware.language.LanguageCookieMiddleware',
+    'theater_cms.middleware.DisplayHeightMiddleware',
 ]
 
 ROOT_URLCONF = 'theater_config.urls'
@@ -77,6 +78,7 @@ TEMPLATES = [
                 'sekizai.context_processors.sekizai',
                 'theater_cms.context_processors.user_interaction_session_data',
                 'theater_cms.views.home_with_current_event',
+                'theater_cms.context_processors.display_settings',
             ],
         },
     },

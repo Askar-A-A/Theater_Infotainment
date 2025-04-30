@@ -4,7 +4,7 @@ from django.urls import path, reverse
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.utils.html import format_html
-from .models import Event, Performance, UserFeedback, EmailSubscription, SeasonalSponsor, EventSponsorImage
+from .models import Event, Performance, UserFeedback, EmailSubscription, SeasonalSponsor, EventSponsorImage, SiteSettings
 from django.utils.translation import gettext_lazy as _
 from django.db import models
 
@@ -514,3 +514,26 @@ class SeasonalSponsorAdmin(admin.ModelAdmin):
 # Register other models
 admin.site.register(UserFeedback)
 admin.site.register(EmailSubscription)
+
+@admin.register(SiteSettings)
+class SiteSettingsAdmin(admin.ModelAdmin):
+    """Admin interface for site settings."""
+    list_display = ('display_height_display', 'updated_at')
+    fieldsets = (
+        ('Display Settings', {
+            'fields': ('display_height',),
+            'description': 'These settings control the display across all theater screens.'
+        }),
+    )
+    
+    def display_height_display(self, obj):
+        return f"{obj.display_height}px"
+    display_height_display.short_description = 'Display Height'
+    
+    def has_add_permission(self, request):
+        # Prevent creation of multiple instances
+        return not SiteSettings.objects.exists()
+    
+    def has_delete_permission(self, request, obj=None):
+        # Prevent deletion
+        return False
