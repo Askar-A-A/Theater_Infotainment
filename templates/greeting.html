@@ -294,71 +294,73 @@
             to { opacity: 1; }
         }
         
-        /* Responsive adjustments */
-        @media screen and (height: 400px) {
-            body, .content-wrapper {
-                height: 400px;
-            }
+        /* Responsive styles using body.height-400 class instead of media query */
+        body.height-400, body.height-400 .content-wrapper {
+            height: 400px;
+        }
 
-            .greeting-container {
-                padding: 0 var(--spacing-lg) var(--spacing-md);
-                justify-content: flex-start;
-                padding-top: 40px;
-            }
+        body.height-400 .greeting-container {
+            padding: 0 var(--spacing-sm) 5px;
+            justify-content: flex-start;
+            padding-top: 25px;
+        }
 
-            .language-selector {
-                top: 15px;
-                left: 20px;
-            }
-            .height-toggle {
-                top: 15px;
-                right: 20px;
-            }
+        body.height-400 .language-selector {
+            top: 5px;
+            left: 5px;
+        }
+        
+        body.height-400 .language-selected {
+            padding: 3px 8px;
+            font-size: 11px;
+            min-width: 100px;
+        }
 
-            .opera-logo {
-                width: 120px;
-                height: 120px;
-                margin-bottom: var(--spacing-sm);
-                padding: 8px;
-            }
+        body.height-400 .opera-logo {
+            width: 70px;
+            height: 70px;
+            margin-bottom: 3px;
+            padding: 4px;
+        }
 
-            .welcome-title {
-                font-size: 2.4rem;
-                margin-bottom: 0;
-            }
+        body.height-400 .welcome-title {
+            font-size: 1.7rem;
+            margin-top: -0.2em;
+        }
 
-            .welcome-subtitle {
-                font-size: 2rem;
-                margin-top: -0.15em;
-                margin-bottom: 0.3rem;
-            }
+        body.height-400 .welcome-subtitle {
+            font-size: 1.4rem;
+            margin-top: -0.1em;
+            margin-bottom: 0.1rem;
+        }
 
-            .divider {
-                width: 150px;
-                margin-bottom: 0.3rem;
-            }
+        body.height-400 .divider {
+            width: 100px;
+            margin-bottom: 0.1rem;
+        }
 
-            .welcome-text-frame {
-                padding: var(--spacing-sm);
-                margin-bottom: var(--spacing-sm);
-                width: 90%;
-            }
+        body.height-400 .welcome-text-frame {
+            padding: 5px;
+            margin-bottom: 3px;
+            width: 92%;
+        }
 
-            .welcome-text {
-                font-size: 1rem;
-                line-height: 1.5;
-            }
+        body.height-400 .welcome-text {
+            font-size: 0.75rem;
+            line-height: 1.2;
+        }
 
-            .language-selected {
-                padding: 8px 12px;
-                font-size: 15px;
-                min-width: 130px;
-            }
-
-            .enter-button {
-                padding: 10px 40px;
-                font-size: 1.1rem;
-            }
+        body.height-400 .enter-button {
+            padding: 5px 20px;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+        
+        body.height-400 .height-toggle {
+            top: 5px;
+            right: 5px;
+            padding: 3px 10px;
+            font-size: 11px;
         }
         
         /* Height toggle button - Positioned closer to content */
@@ -440,41 +442,59 @@
                 });
             });
             
-            // Height toggle functionality - FIXED
-            const heightToggle = document.getElementById('heightToggle');
-            const heightLabel = document.getElementById('heightLabel');
-            
-            // Function to get current height setting from cookies
+            // Get height preference from cookie
             function getHeightPreference() {
-                const heightCookie = document.cookie
-                    .split('; ')
-                    .find(row => row.startsWith('displayHeight='));
-                return heightCookie ? heightCookie.split('=')[1] : '800'; 
+                // First check URL parameter (takes precedence)
+                const urlParams = new URLSearchParams(window.location.search);
+                const heightParam = urlParams.get('height');
+                
+                if (heightParam === '400' || heightParam === '800') {
+                    // Save preference to cookie if it comes from URL
+                    setHeightCookie(heightParam);
+                    return heightParam;
+                }
+                
+                // Otherwise check cookie
+                const heightCookie = getCookie('displayHeight');
+                return heightCookie || '800'; // Default to 800px
             }
             
-            // Set initial height label based on current cookie value
-            const currentHeight = getHeightPreference();
-            heightLabel.textContent = currentHeight + 'px';
+            // Get cookie value by name
+            function getCookie(name) {
+                const cookieValue = document.cookie
+                    .split('; ')
+                    .find(row => row.startsWith(name + '='));
+                    
+                return cookieValue ? cookieValue.split('=')[1] : null;
+            }
             
-            // Handle height toggle click with fixed logic
-            heightToggle.addEventListener('click', function() {
-                // Get current height from cookie, not body class
-                const currentHeight = getHeightPreference();
-                const newHeight = currentHeight === '400' ? '800' : '400';
-                
-                // Save new preference to cookie
+            // Set height cookie function
+            function setHeightCookie(height) {
                 const expiryDate = new Date();
                 expiryDate.setDate(expiryDate.getDate() + 30);
-                document.cookie = `displayHeight=${newHeight};expires=${expiryDate.toUTCString()};path=/`;
-                
-                // Redirect to apply the new height
-                window.location.reload();
-            });
+                document.cookie = `displayHeight=${height};expires=${expiryDate.toUTCString()};path=/`;
+            }
             
-            // Remove any old toggle buttons
-            const oldToggleButton = document.querySelector('button.height-toggle:not(#heightToggle)');
-            if (oldToggleButton) {
-                oldToggleButton.remove();
+            // Apply height class
+            const heightPreference = getHeightPreference();
+            console.log("Height preference detected:", heightPreference); // Debug log
+            if (heightPreference === '400') {
+                document.body.classList.add('height-400');
+                document.body.classList.remove('height-800');
+                // Explicitly set dimensions via inline style as well
+                document.body.style.height = '400px';
+                document.querySelector('.content-wrapper').style.height = '400px';
+            } else {
+                document.body.classList.add('height-800');
+                document.body.classList.remove('height-400');
+                document.body.style.height = '800px';
+                document.querySelector('.content-wrapper').style.height = '800px';
+            }
+            
+            // Update height label in toggle button if it exists
+            const heightLabel = document.getElementById('heightLabel');
+            if (heightLabel) {
+                heightLabel.textContent = heightPreference + 'px';
             }
         });
     </script>

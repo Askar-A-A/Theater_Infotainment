@@ -229,80 +229,104 @@
         to { opacity: 1; }
     }
     
-    /* Responsive styles for 400px height */
-    @media screen and (height: 400px) {
-        body, .content-wrapper {
-            height: 400px;
-        }
-        
-        .sponsors-container {
-            padding: var(--spacing-sm);
-        }
-        
-        .sponsors-title {
-            font-size: 2rem;
-            margin-bottom: 0.3rem;
-        }
-        
-        .divider {
-            width: 150px;
-            height: 1px;
-            margin-bottom: 0.5rem;
-        }
-        
-        .sponsors-intro {
-            font-size: 0.9rem;
-            line-height: 1.3;
-            margin-bottom: 0.5rem;
-        }
-        
-        .sponsors-row {
-            gap: var(--spacing-sm);
-            margin-bottom: 0.5rem;
-        }
-        
-        .sponsor-box {
-            padding: 0.5rem;
-            border-width: 1px;
-        }
-        
-        .sponsor-box-title {
-            margin-bottom: 0.3rem;
-            padding-bottom: 0.3rem;
-        }
-        
-        .sponsor-box-title i {
-            font-size: 1rem;
-        }
-        
-        .sponsor-box-title span {
-            font-size: 1rem;
-        }
-        
-        .sponsors-grid {
-            gap: 0.5rem;
-        }
-        
-        .sponsor-item {
-            width: 140px;
-            height: 80px;
-        }
-        
-        .enter-button {
-            padding: 6px 30px;
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-            border-width: 1px;
-        }
+    /* Responsive styles for 400px height - using body.height-400 instead of media query */
+    body.height-400, body.height-400 .content-wrapper {
+        height: 400px;
+    }
+    
+    body.height-400 .sponsors-container {
+        padding: 5px;
+        justify-content: flex-start;
+    }
+    
+    body.height-400 .sponsors-title {
+        font-size: 1.5rem;
+        margin-bottom: 0.2rem;
+        margin-top: 0;
+    }
+    
+    body.height-400 .divider {
+        width: 120px;
+        height: 1px;
+        margin-bottom: 0.3rem;
+    }
+    
+    body.height-400 .sponsors-intro {
+        font-size: 0.75rem;
+        line-height: 1.2;
+        margin-bottom: 0.3rem;
+        max-width: 95%;
+    }
+    
+    body.height-400 .sponsors-row {
+        gap: 8px;
+        margin-bottom: 5px;
+    }
+    
+    body.height-400 .sponsor-box {
+        padding: 5px;
+        border-width: 1px;
+    }
+    
+    body.height-400 .sponsor-box-title {
+        margin-bottom: 5px;
+        padding-bottom: 2px;
+    }
+    
+    body.height-400 .sponsor-box-title i {
+        font-size: 0.8rem;
+    }
+    
+    body.height-400 .sponsor-box-title span {
+        font-size: 0.8rem;
+    }
+    
+    body.height-400 .sponsors-grid {
+        gap: 5px;
+    }
+    
+    body.height-400 .sponsor-item {
+        width: 100px;
+        height: 60px;
+    }
+    
+    body.height-400 .sponsor-logo {
+        padding: 5px;
+    }
+    
+    body.height-400 .enter-button {
+        padding: 5px 25px;
+        font-size: 0.8rem;
+        margin-top: 3px;
+        margin-bottom: 3px;
+        border-width: 1px;
     }
 </style>
 {% render_block "js" %}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Function to get height from cookie
+        // Function to get height from cookie or URL parameter
         function getHeightPreference() {
+            // First check URL parameter (takes precedence)
+            const urlParams = new URLSearchParams(window.location.search);
+            const heightParam = urlParams.get('height');
+            
+            if (heightParam === '400' || heightParam === '800') {
+                // Save preference to cookie if it comes from URL
+                setHeightCookie(heightParam);
+                return heightParam;
+            }
+            
+            // Otherwise check cookie
             const heightCookie = getCookie('displayHeight');
-            return heightCookie || '800'; // Default to 800px if no cookie exists
+            return heightCookie || '800'; // Default to 800px
+        }
+        
+        // Function to set height cookie (expires in 30 days)
+        function setHeightCookie(height) {
+            const expiryDate = new Date();
+            expiryDate.setDate(expiryDate.getDate() + 30);
+            document.cookie = `displayHeight=${height};expires=${expiryDate.toUTCString()};path=/`;
         }
         
         // Function to get cookie value by name
@@ -319,9 +343,13 @@
         if (heightPreference === '400') {
             document.body.classList.add('height-400');
             document.body.classList.remove('height-800');
+            document.body.style.height = '400px';
+            document.querySelector('.content-wrapper').style.height = '400px';
         } else {
             document.body.classList.add('height-800');
             document.body.classList.remove('height-400');
+            document.body.style.height = '800px';
+            document.querySelector('.content-wrapper').style.height = '800px';
         }
     });
 </script>
