@@ -294,7 +294,7 @@
             to { opacity: 1; }
         }
         
-        /* Responsive styles using body.height-400 class instead of media query */
+        /* Responsive styles for 400px height - with improved spacing */
         body.height-400, body.height-400 .content-wrapper {
             height: 400px;
         }
@@ -302,58 +302,74 @@
         body.height-400 .greeting-container {
             padding: 0 var(--spacing-sm) 5px;
             justify-content: flex-start;
-            padding-top: 25px;
+            padding-top: 20px; /* Reduced but still gives some space at top */
         }
 
         body.height-400 .language-selector {
-            top: 5px;
-            left: 5px;
+            top: 12px; /* Adjusted for balance */
+            left: 18px;
         }
         
         body.height-400 .language-selected {
-            padding: 3px 8px;
-            font-size: 11px;
-            min-width: 100px;
+            padding: 9px 16px; /* Increased */
+            font-size: 17px; /* Increased */
+            min-width: 170px; /* Increased */
         }
 
         body.height-400 .opera-logo {
-            width: 70px;
-            height: 70px;
-            margin-bottom: 3px;
-            padding: 4px;
+            width: 120px; /* Slightly smaller to create more space */
+            height: 120px;
+            margin-bottom: 5px; /* Added some spacing */
+            padding: 10px;
+        }
+
+        body.height-400 .welcome-titles-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 5px; /* Increased from 0.1rem */
+            flex-wrap: wrap;
         }
 
         body.height-400 .welcome-title {
-            font-size: 1.7rem;
-            margin-top: -0.2em;
+            font-size: 2.2rem;
+            margin-top: 0;
+            margin-right: 12px;
+            margin-bottom: 0;
+            line-height: 1.2; /* Slightly increased */
         }
 
         body.height-400 .welcome-subtitle {
-            font-size: 1.4rem;
-            margin-top: -0.1em;
-            margin-bottom: 0.1rem;
+            font-size: 2.2rem;
+            margin-top: 0;
+            margin-bottom: 0;
+            line-height: 1.2; /* Slightly increased */
+            font-style: normal;
+            font-weight: 700;
         }
 
         body.height-400 .divider {
-            width: 100px;
-            margin-bottom: 0.1rem;
+            width: 170px;
+            margin-bottom: 6px; /* Increased for more separation */
+            margin-top: 3px; /* Added top margin */
         }
 
         body.height-400 .welcome-text-frame {
-            padding: 5px;
-            margin-bottom: 3px;
-            width: 92%;
+            padding: 10px;
+            margin-bottom: 8px; /* Increased from 5px */
+            width: 95%;
         }
 
         body.height-400 .welcome-text {
-            font-size: 0.75rem;
-            line-height: 1.2;
+            font-size: 1.2rem; /* Slightly reduced to fit better */
+            line-height: 1.35;
         }
 
         body.height-400 .enter-button {
-            padding: 5px 20px;
-            font-size: 0.85rem;
+            padding: 8px 45px;
+            font-size: 1.35rem; /* Slightly reduced */
             letter-spacing: 1px;
+            margin-top: 4px; /* Added some space before button */
         }
         
         body.height-400 .height-toggle {
@@ -534,13 +550,15 @@
                 {% placeholder "opera_logo" %}
             </div>
             
-            <h1 class="welcome-title">
-                {% placeholder "greeting_title" or %}Welcome{% endplaceholder %}
-            </h1>
-            
-            <h2 class="welcome-subtitle">
-                {% placeholder "theater_name" or %}Theater Name{% endplaceholder %}
-            </h2>
+            <div class="welcome-titles-container">
+                <h1 class="welcome-title">
+                    {% placeholder "greeting_title" or %}Welcome{% endplaceholder %}
+                </h1>
+                
+                <h2 class="welcome-subtitle">
+                    {% placeholder "theater_name" or %}Theater Name{% endplaceholder %}
+                </h2>
+            </div>
             
             <div class="divider"></div>
             
