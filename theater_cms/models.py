@@ -253,7 +253,11 @@ class EventSponsorImage(models.Model):
 class SiteSettings(models.Model):
     """Single-instance model to store site-wide settings."""
     display_height = models.IntegerField(
-        choices=[(800, '800px (Full Size)'), (400, '400px (Compact)')],
+        choices=[
+            (800, '1280 × 800px (Full Size)'),
+            (400, '1280 × 400px (Compact)'),
+            (600, '1024 × 600px (Medium)')
+        ],
         default=800,
         help_text="Select the display height for all theater screens."
     )
@@ -264,7 +268,10 @@ class SiteSettings(models.Model):
         verbose_name_plural = 'Site Settings'
     
     def __str__(self):
-        return f"Site Settings (Updated: {self.updated_at.strftime('%Y-%m-%d %H:%M')})"
+        width = "1280"
+        if self.display_height == 600:
+            width = "1024"
+        return f"Site Settings - {width}×{self.display_height}px (Updated: {self.updated_at.strftime('%Y-%m-%d %H:%M')})"
     
     def save(self, *args, **kwargs):
         # Ensure only one instance exists

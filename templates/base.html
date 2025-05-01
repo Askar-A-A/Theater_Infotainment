@@ -3,7 +3,7 @@
 <html>
 <head>
     <title>{% block title %}Theater Display{% endblock title %}</title>
-    <meta name="viewport" content="width=1280, height=800, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Add Playfair Display font for the navbar -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap">
@@ -40,10 +40,18 @@
         /* Height-specific configurations */
         body.height-800, body.height-800 .content-wrapper {
             height: 800px;
+            width: 1280px;
         }
         
         body.height-400, body.height-400 .content-wrapper {
             height: 400px;
+            width: 1280px;
+        }
+        
+        /* New 1024x600 configuration */
+        body.height-600, body.height-600 .content-wrapper {
+            height: 600px;
+            width: 1024px; 
         }
 
         /* Home Navigation Icon - Updated for consistent positioning across heights */
@@ -52,6 +60,12 @@
             right: 20px;
             top: 20px;
             z-index: 100;
+        }
+        
+        /* Adjust home nav for 600px height */
+        body.height-600 .home-nav {
+            right: 15px;
+            top: 15px;
         }
 
         .home-icon {
@@ -65,10 +79,29 @@
             cursor: pointer;
             transition: background 0.3s ease;
         }
+        
+        /* Adjust home icon for different resolutions */
+        body.height-400 .home-icon {
+            width: 40px;
+            height: 40px;
+        }
+        
+        body.height-600 .home-icon {
+            width: 50px;
+            height: 50px;
+        }
 
         .home-icon i {
             color: #fff;
             font-size: 1.2em;
+        }
+        
+        body.height-400 .home-icon i {
+            font-size: 1em;
+        }
+        
+        body.height-600 .home-icon i {
+            font-size: 1.1em;
         }
 
         .home-icon:hover {
@@ -102,9 +135,10 @@
                 const urlParams = new URLSearchParams(window.location.search);
                 const heightParam = urlParams.get('height');
                 
-                if (heightParam === '400' || heightParam === '800') {
+                if (heightParam === '400' || heightParam === '800' || heightParam === '600') {
                     // Save preference to cookie if it comes from URL
                     setHeightCookie(heightParam);
+                    setWidthCookie(heightParam === '600' ? '1024' : '1280');
                     return heightParam;
                 }
                 
@@ -113,11 +147,27 @@
                 return heightCookie || '800'; // Default to 800px
             }
             
+            // Function to get width from cookie
+            function getWidthPreference() {
+                const heightPref = getHeightPreference();
+                if (heightPref === '600') {
+                    return '1024';
+                }
+                return '1280';
+            }
+            
             // Function to set height cookie (expires in 30 days)
             function setHeightCookie(height) {
                 const expiryDate = new Date();
                 expiryDate.setDate(expiryDate.getDate() + 30);
                 document.cookie = `displayHeight=${height};expires=${expiryDate.toUTCString()};path=/`;
+            }
+            
+            // Function to set width cookie (expires in 30 days)
+            function setWidthCookie(width) {
+                const expiryDate = new Date();
+                expiryDate.setDate(expiryDate.getDate() + 30);
+                document.cookie = `displayWidth=${width};expires=${expiryDate.toUTCString()};path=/`;
             }
             
             // Function to get cookie value by name
@@ -134,9 +184,27 @@
             if (heightPreference === '400') {
                 document.body.classList.add('height-400');
                 document.body.classList.remove('height-800');
+                document.body.classList.remove('height-600');
+                document.body.style.width = '1280px';
+                document.body.style.height = '400px';
+                document.querySelector('.content-wrapper').style.width = '1280px';
+                document.querySelector('.content-wrapper').style.height = '400px';
+            } else if (heightPreference === '600') {
+                document.body.classList.add('height-600');
+                document.body.classList.remove('height-800');
+                document.body.classList.remove('height-400');
+                document.body.style.width = '1024px';
+                document.body.style.height = '600px';
+                document.querySelector('.content-wrapper').style.width = '1024px';
+                document.querySelector('.content-wrapper').style.height = '600px';
             } else {
                 document.body.classList.add('height-800');
                 document.body.classList.remove('height-400');
+                document.body.classList.remove('height-600');
+                document.body.style.width = '1280px';
+                document.body.style.height = '800px';
+                document.querySelector('.content-wrapper').style.width = '1280px';
+                document.querySelector('.content-wrapper').style.height = '800px';
             }
             
             // Don't add the toggle button here, we'll only show it on greeting page

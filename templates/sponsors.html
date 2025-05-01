@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1280, height=800, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>{% placeholder "sponsors_page_title" or %}Our Sponsors - Vienna State Opera{% endplaceholder %}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Add fonts -->
@@ -49,6 +49,25 @@
         --spacing-lg: 2.5rem;
         --spacing-xl: 4rem;
         --border-radius: 8px;
+    }
+    
+    /* Resolution-specific adjustments */
+    body.height-800, 
+    body.height-800 .content-wrapper {
+        width: 1280px;
+        height: 800px;
+    }
+    
+    body.height-400, 
+    body.height-400 .content-wrapper {
+        width: 1280px;
+        height: 400px;
+    }
+    
+    body.height-600, 
+    body.height-600 .content-wrapper {
+        width: 1024px;
+        height: 600px;
     }
     
     /* Main container */
@@ -179,48 +198,43 @@
         padding: 12px;
     }
     
-    /* Enter button */
+    /* Enter button - hide it since we're using the arrow button instead */
     .enter-button {
-        display: inline-block;
-        padding: 15px 60px;
-        font-size: 1.4rem;
-        letter-spacing: 1.8px;
-        color: var(--color-gold);
-        background-color: rgba(0, 0, 0, 0.3);
+        display: none;
+    }
+    
+    /* Arrow button styles */
+    .arrow-button {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 60px;
+        height: 60px;
+        background-color: rgba(0, 0, 0, 0.5);
         border: 2px solid var(--color-gold);
-        border-radius: 6px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         cursor: pointer;
         transition: all 0.3s ease;
+        z-index: 10;
         text-decoration: none;
-        position: relative;
-        overflow: hidden;
-        font-weight: 400;
-        box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
-        margin-top: var(--spacing-md);
-        margin-bottom: var(--spacing-md);
     }
-    
-    .enter-button::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-        transition: all 0.5s ease;
+
+    .arrow-button i {
+        color: var(--color-gold);
+        font-size: 1.8rem;
+        transition: all 0.3s ease;
     }
-    
-    .enter-button:hover {
+
+    .arrow-button:hover {
+        background-color: rgba(212, 175, 55, 0.2);
+        transform: scale(1.05);
+    }
+
+    .arrow-button:hover i {
         color: #fff;
-        border-color: #fff;
-        transform: translateY(-2px);
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
-        background-color: rgba(212, 175, 55, 0.1);
-    }
-    
-    .enter-button:hover::before {
-        left: 100%;
     }
     
     /* Animations */
@@ -229,11 +243,7 @@
         to { opacity: 1; }
     }
     
-    /* Responsive styles for 400px height - using body.height-400 instead of media query */
-    body.height-400, body.height-400 .content-wrapper {
-        height: 400px;
-    }
-    
+    /* Responsive styles for 400px height */
     body.height-400 .sponsors-container {
         padding: 5px;
         justify-content: flex-start;
@@ -286,20 +296,96 @@
     }
     
     body.height-400 .sponsor-item {
-        width: 180px;  /* Increased from 90px */
-        height: 120px;  /* Increased from 55px */
+        width: 180px;
+        height: 120px;
     }
     
     body.height-400 .sponsor-logo {
         padding: 5px;
     }
     
-    body.height-400 .enter-button {
-        padding: 5px 25px;
-        font-size: 0.8rem;
-        margin-top: 3px;
-        margin-bottom: 3px;
-        border-width: 1px;
+    body.height-400 .arrow-button {
+        top: 10px;
+        right: 10px;
+        width: 40px;
+        height: 40px;
+    }
+
+    body.height-400 .arrow-button i {
+        font-size: 1.2rem;
+    }
+    
+    /* New 1024x600 styles */
+    body.height-600 .sponsors-container {
+        padding: 10px;
+        justify-content: flex-start;
+    }
+    
+    body.height-600 .sponsors-title {
+        font-size: 2.8rem;
+        margin-bottom: 0.4rem;
+        margin-top: 0.4rem;
+    }
+    
+    body.height-600 .divider {
+        width: 220px;
+        height: 1.5px;
+        margin-bottom: 0.6rem;
+    }
+    
+    body.height-600 .sponsors-intro {
+        font-size: 1.1rem;
+        line-height: 1.4;
+        margin-bottom: 0.8rem;
+        max-width: 80%;
+    }
+    
+    body.height-600 .sponsors-row {
+        gap: 12px;
+        margin-bottom: 12px;
+    }
+    
+    body.height-600 .sponsor-box {
+        padding: 12px;
+        border-width: 1.5px;
+        max-width: 450px;
+    }
+    
+    body.height-600 .sponsor-box-title {
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+    }
+    
+    body.height-600 .sponsor-box-title i {
+        font-size: 1.5rem;
+    }
+    
+    body.height-600 .sponsor-box-title span {
+        font-size: 1.5rem;
+    }
+    
+    body.height-600 .sponsors-grid {
+        gap: 10px;
+    }
+    
+    body.height-600 .sponsor-item {
+        width: 190px;
+        height: 130px;
+    }
+    
+    body.height-600 .sponsor-logo {
+        padding: 8px;
+    }
+    
+    body.height-600 .arrow-button {
+        top: 15px;
+        right: 15px;
+        width: 50px;
+        height: 50px;
+    }
+
+    body.height-600 .arrow-button i {
+        font-size: 1.5rem;
     }
 </style>
 {% render_block "js" %}
@@ -311,9 +397,10 @@
             const urlParams = new URLSearchParams(window.location.search);
             const heightParam = urlParams.get('height');
             
-            if (heightParam === '400' || heightParam === '800') {
+            if (heightParam === '400' || heightParam === '800' || heightParam === '600') {
                 // Save preference to cookie if it comes from URL
                 setHeightCookie(heightParam);
+                setWidthCookie(heightParam === '600' ? '1024' : '1280');
                 return heightParam;
             }
             
@@ -327,6 +414,13 @@
             const expiryDate = new Date();
             expiryDate.setDate(expiryDate.getDate() + 30);
             document.cookie = `displayHeight=${height};expires=${expiryDate.toUTCString()};path=/`;
+        }
+        
+        // Function to set width cookie (expires in 30 days)
+        function setWidthCookie(width) {
+            const expiryDate = new Date();
+            expiryDate.setDate(expiryDate.getDate() + 30);
+            document.cookie = `displayWidth=${width};expires=${expiryDate.toUTCString()};path=/`;
         }
         
         // Function to get cookie value by name
@@ -343,12 +437,26 @@
         if (heightPreference === '400') {
             document.body.classList.add('height-400');
             document.body.classList.remove('height-800');
+            document.body.classList.remove('height-600');
+            document.body.style.width = '1280px';
             document.body.style.height = '400px';
+            document.querySelector('.content-wrapper').style.width = '1280px';
             document.querySelector('.content-wrapper').style.height = '400px';
+        } else if (heightPreference === '600') {
+            document.body.classList.add('height-600');
+            document.body.classList.remove('height-800');
+            document.body.classList.remove('height-400');
+            document.body.style.width = '1024px';
+            document.body.style.height = '600px';
+            document.querySelector('.content-wrapper').style.width = '1024px';
+            document.querySelector('.content-wrapper').style.height = '600px';
         } else {
             document.body.classList.add('height-800');
             document.body.classList.remove('height-400');
+            document.body.classList.remove('height-600');
+            document.body.style.width = '1280px';
             document.body.style.height = '800px';
+            document.querySelector('.content-wrapper').style.width = '1280px';
             document.querySelector('.content-wrapper').style.height = '800px';
         }
     });
@@ -358,6 +466,11 @@
 <body>
     {% cms_toolbar %}
     <div class="content-wrapper">
+        <!-- Add the arrow button for navigation -->
+        <a href="/" class="arrow-button">
+            <i class="fas fa-arrow-right"></i>
+        </a>
+        
         <div class="sponsors-container">
             <h1 class="sponsors-title">{% placeholder "sponsors_title" or %}Our Esteemed Sponsors{% endplaceholder %}</h1>
             
@@ -420,6 +533,7 @@
                 {% endif %}
             </div>
             
+            <!-- Original enter button - now hidden via CSS -->
             <a href="/" class="enter-button">
                 {% placeholder "enter_button_text" or %}ENTER SITE{% endplaceholder %}
             </a>

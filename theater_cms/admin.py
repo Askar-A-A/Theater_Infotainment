@@ -518,7 +518,7 @@ admin.site.register(EmailSubscription)
 @admin.register(SiteSettings)
 class SiteSettingsAdmin(admin.ModelAdmin):
     """Admin interface for site settings."""
-    list_display = ('display_height_display', 'updated_at')
+    list_display = ('display_resolution', 'updated_at')
     fieldsets = (
         ('Display Settings', {
             'fields': ('display_height',),
@@ -526,9 +526,12 @@ class SiteSettingsAdmin(admin.ModelAdmin):
         }),
     )
     
-    def display_height_display(self, obj):
-        return f"{obj.display_height}px"
-    display_height_display.short_description = 'Display Height'
+    def display_resolution(self, obj):
+        width = "1280"
+        if obj.display_height == 600:
+            width = "1024"
+        return f"{width} × {obj.display_height}px"
+    display_resolution.short_description = 'Display Resolution'
     
     def has_add_permission(self, request):
         # Prevent creation of multiple instances

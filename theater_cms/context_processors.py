@@ -15,17 +15,18 @@ def user_interaction_session_data(request):
     }
 
 def display_settings(request):
-    """Add display height to the template context."""
+    """Add display height and width to the template context."""
     from .models import SiteSettings
     
     # Get setting from database
     settings = SiteSettings.get_solo()
     
-    # Set cookie if needed
-    if request.COOKIES.get('displayHeight') != str(settings.display_height):
-        # Cookie will be set in middleware or template
-        pass
+    # Determine width based on height
+    width = 1280
+    if settings.display_height == 600:
+        width = 1024
         
     return {
         'display_height': settings.display_height,
+        'display_width': width,
     }
