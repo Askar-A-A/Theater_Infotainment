@@ -199,6 +199,57 @@
         box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
         background-color: rgba(212, 175, 55, 0.1);
     }
+
+    /* New 1024x600 styles for gold lines */
+    body.height-600 .gold-line-top { 
+        top: 40px; 
+    }
+
+    body.height-600 .gold-line-bottom { 
+        bottom: 40px; 
+    }
+
+    /* New 1024x600 styles for content box */
+    body.height-600 .feedback-content-box { 
+        padding: 1.5rem 2rem; 
+        max-width: 85%; 
+    }
+
+    /* New 1024x600 styles for corner accents */
+    body.height-600 .feedback-content-box::before,
+    body.height-600 .feedback-content-box::after,
+    body.height-600 .corner-top-right,
+    body.height-600 .corner-bottom-left {
+        width: 15px;
+        height: 15px;
+    }
+
+    /* New 1024x600 styles for title */
+    body.height-600 .feedback-title { 
+        font-size: 2.1rem; 
+        margin-bottom: 0.6rem; 
+    }
+
+    /* New 1024x600 styles for divider */
+    body.height-600 .divider { 
+        width: 150px; 
+        margin-bottom: 1.2rem; 
+    }
+
+    /* New 1024x600 styles for intro */
+    body.height-600 .feedback-intro { 
+        max-width: 550px; 
+        font-size: 0.95rem; 
+        line-height: 1.4; 
+        margin-bottom: 0.8rem; 
+    }
+
+    /* New 1024x600 styles for button */
+    body.height-600 .home-button { 
+        padding: 8px 28px; 
+        font-size: 0.95rem; 
+        margin-top: 1.2rem;
+    }
 </style>
 {% endblock %}
 
