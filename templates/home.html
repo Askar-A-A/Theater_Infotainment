@@ -3,7 +3,9 @@
 {% load static %}
 {% load menu_tags %}
 
-{% block title %}{% placeholder "theater_name" default "Vienna State Opera" %}{% endblock %}
+{% block title %}
+    {% placeholder "home_page_title" or %}Vienna State Opera{% endplaceholder %}
+{% endblock %}
 
 {% block wrapper_style %}
 <style>
@@ -60,6 +62,12 @@
         top: 8px;
         height: 68px;
     }
+    
+    /* New 1024x600 styles for logo section */
+    body.height-600 .logo-section {
+        top: 15px;
+        height: 120px;
+    }
 
     .logo-container {
         display: flex;
@@ -75,6 +83,11 @@
     
     body.height-400 .theater-logo {
         max-height: 50px;
+    }
+    
+    /* New 1024x600 styles for logo */
+    body.height-600 .theater-logo {
+        max-height: 90px;
     }
     
     .theater-logo {
@@ -106,6 +119,13 @@
         font-size: 1.5rem;
         font-weight: 600;
         margin-bottom: 0.5rem;
+    }
+    
+    /* New 1024x600 styles for title */
+    body.height-600 .theater-title {
+        font-size: 2.5rem;
+        font-weight: 650;
+        margin-bottom: var(--spacing-lg);
     }
     
     @keyframes titleGlow {
@@ -141,6 +161,13 @@
         margin-top: 75px;
         padding: 0.5rem;
     }
+    
+    /* New 1024x600 styles for container */
+    body.height-600 .theater-container {
+        height: calc(100% - 130px);
+        margin-top: 130px;
+        padding: 0.75rem;
+    }
 
     /* Main content layout */
     .main-content {
@@ -156,6 +183,13 @@
     body.height-400 .main-content {
         gap: var(--spacing-sm);
         padding-right: var(--spacing-sm);
+    }
+    
+    /* New 1024x600 styles for main content */
+    body.height-600 .main-content {
+        gap: var(--spacing-sm);
+        padding-right: var(--spacing-md);
+        max-width: 62rem; /* Adjust for smaller width */
     }
 
     /* Today's Performance section */
@@ -179,6 +213,11 @@
     body.height-400 .today-section {
         padding: 0.75rem 0.5rem;
     }
+    
+    /* New 1024x600 styles for today section */
+    body.height-600 .today-section {
+        padding: var(--spacing-md) var(--spacing-sm);
+    }
 
     .today-section:hover {
         background: var(--color-bg-hover);
@@ -198,6 +237,12 @@
         font-size: 2.5em;
         margin-bottom: 0.25rem;
     }
+    
+    /* New 1024x600 styles for today icon */
+    body.height-600 .today-icon {
+        font-size: 4em;
+        margin-bottom: 0.5rem;
+    }
 
     .today-title {
         color: #fff;
@@ -214,6 +259,11 @@
     body.height-400 .today-title {
         font-size: var(--font-size-md);
     }
+    
+    /* New 1024x600 styles for today title */
+    body.height-600 .today-title {
+        font-size: calc(var(--font-size-md) * 1.5);
+    }
 
     /* Menu Grid styles */
     .menu-grid {
@@ -226,6 +276,11 @@
     /* Height-specific grid adjustments */
     body.height-400 .menu-grid {
         gap: 0.25rem;
+    }
+    
+    /* New 1024x600 styles for menu grid */
+    body.height-600 .menu-grid {
+        gap: 0.5rem;
     }
 
     .menu-item {
@@ -249,6 +304,12 @@
         padding: 0.5rem 0.75rem;
         min-height: 2rem;
     }
+    
+    /* New 1024x600 styles for menu item */
+    body.height-600 .menu-item {
+        padding: 0.75rem 1rem;
+        min-height: 3rem;
+    }
 
     .menu-item:hover {
         background: var(--color-bg-hover);
@@ -271,6 +332,13 @@
         min-width: 1.2rem;
         margin-right: 0.5rem;
     }
+    
+    /* New 1024x600 styles for menu icon */
+    body.height-600 .menu-icon {
+        font-size: 1.6em;
+        min-width: 1.5rem;
+        margin-right: 0.75rem;
+    }
 
     .menu-title {
         color: #fff;
@@ -286,11 +354,22 @@
     body.height-400 .menu-title {
         font-size: var(--font-size-sm);
     }
+    
+    /* New 1024x600 styles for menu title */
+    body.height-600 .menu-title {
+        font-size: calc(var(--font-size-sm) * 1.1);
+    }
 
     /* Hover effects are reduced for small height */
     body.height-400 .menu-item:hover,
     body.height-400 .today-section:hover {
         transform: translateY(-3px);
+    }
+    
+    /* New 1024x600 styles for hover effects */
+    body.height-600 .menu-item:hover,
+    body.height-600 .today-section:hover {
+        transform: translateY(-4px);
     }
 
     /* Responsive adjustments */
@@ -346,6 +425,13 @@
         height: 10rem;
         margin-bottom: 0.25rem;
     }
+    
+    /* New 1024x600 styles for event image */
+    body.height-600 .today-event-image {
+        width: 18rem;
+        height: 15rem;
+        margin-bottom: 0.5rem;
+    }
 
     .today-event-image img {
         width: 100%;
@@ -379,6 +465,11 @@
     body.height-400 .today-event-title {
         font-size: var(--font-size-md);
     }
+    
+    /* New 1024x600 styles for event title */
+    body.height-600 .today-event-title {
+        font-size: calc(var(--font-size-md) * 1.5);
+    }
 
     body.height-800 .today-event-composer {
         font-size: 1.1rem;
@@ -386,6 +477,12 @@
 
     body.height-400 .today-event-composer {
         font-size: 0.9rem;
+    }
+    
+    /* New 1024x600 styles for event composer */
+    body.height-600 .today-event-composer {
+        font-size: 1rem;
+        margin-top: 0.4rem;
     }
 </style>
 {% endblock %}

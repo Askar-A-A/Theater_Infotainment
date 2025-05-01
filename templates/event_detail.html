@@ -420,6 +420,143 @@
             font-size: 1rem;
         }
     }
+
+    /* New 1024x600 styles for container */
+    body.height-600 .event-detail-container {
+        height: 600px;
+    }
+
+    /* New 1024x600 styles for header */
+    body.height-600 .event-header {
+        height: 35vh;
+        padding: var(--spacing-md);
+    }
+
+    /* New 1024x600 styles for event title */
+    body.height-600 .event-title {
+        font-size: 2.8rem;
+        margin-bottom: var(--spacing-sm);
+    }
+
+    /* New 1024x600 styles for composer */
+    body.height-600 .event-composer {
+        font-size: 1.6rem;
+        margin-bottom: var(--spacing-sm);
+    }
+
+    /* New 1024x600 styles for dates */
+    body.height-600 .event-dates {
+        font-size: calc(var(--font-size-md) * 0.9);
+    }
+
+    /* New 1024x600 styles for content area */
+    body.height-600 .event-content {
+        padding: var(--spacing-md);
+        gap: var(--spacing-md);
+    }
+
+    /* New 1024x600 styles for description */
+    body.height-600 .event-description {
+        font-size: 1.15rem;
+        line-height: 1.7;
+    }
+
+    /* New 1024x600 styles for description headings */
+    body.height-600 .event-description h2 {
+        font-size: 1.5rem;
+        margin-bottom: var(--spacing-sm);
+    }
+
+    /* New 1024x600 styles for description paragraphs */
+    body.height-600 .event-description p {
+        margin-bottom: var(--spacing-sm);
+    }
+
+    /* New 1024x600 styles for sidebar */
+    body.height-600 .event-sidebar {
+        padding: var(--spacing-md);
+    }
+
+    /* New 1024x600 styles for info items */
+    body.height-600 .event-info-item {
+        margin-bottom: var(--spacing-md);
+    }
+
+    /* New 1024x600 styles for info labels */
+    body.height-600 .info-label {
+        font-size: 1.3rem;
+        margin-bottom: calc(var(--spacing-xs) * 0.75);
+    }
+
+    /* New 1024x600 styles for info values */
+    body.height-600 .info-value {
+        font-size: 1.1rem;
+    }
+
+    /* New 1024x600 styles for cast content */
+    body.height-600 .cast-content {
+        font-size: 17px;
+        line-height: 1.6;
+    }
+
+    /* New 1024x600 styles for cast spacing */
+    body.height-600 .cast-content p {
+        margin-bottom: 0.4rem;
+    }
+
+    /* New 1024x600 styles for back button */
+    body.height-600 .back-button {
+        margin-top: var(--spacing-md);
+        padding: calc(var(--spacing-sm) * 0.8) var(--spacing-md);
+        font-size: 1.1rem;
+    }
+
+    /* New 1024x600 styles for image container */
+    body.height-600 .event-image-container {
+        height: 250px;
+    }
+
+    /* Media query adjustments for 1024x600 */
+    @media screen and (max-width: 1024px) {
+        body.height-600 .event-content {
+            padding: calc(var(--spacing-sm) + 0.25rem);
+            gap: var(--spacing-sm);
+        }
+        
+        body.height-600 .event-header {
+            padding: calc(var(--spacing-sm) + 0.25rem);
+        }
+        
+        body.height-600 .event-title {
+            font-size: 2.4rem;
+        }
+        
+        body.height-600 .event-composer {
+            font-size: 1.4rem;
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        body.height-600 .event-title-container {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        body.height-600 .event-image-container {
+            height: 140px;
+        }
+        
+        body.height-600 .event-content {
+            padding: var(--spacing-sm) calc(var(--spacing-xs) + 0.25rem);
+        }
+        
+        body.height-600 .event-title {
+            font-size: 2rem;
+        }
+        
+        body.height-600 .event-composer {
+            font-size: 1.25rem;
+        }
+    }
 </style>
 {% endblock %}
 

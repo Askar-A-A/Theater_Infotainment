@@ -236,6 +236,65 @@
             font-size: 16px;
         }
     }
+
+    /* New 1024x600 styles for qa-container */
+    body.height-600 .qa-container {
+        height: 600px;
+        padding-bottom: 40px;
+    }
+
+    /* New 1024x600 styles for page-title */
+    body.height-600 .page-title {
+        font-size: 38px;
+        margin-bottom: 30px;
+        padding: 35px 0 0 0;
+    }
+
+    /* New 1024x600 styles for qa-list */
+    body.height-600 .qa-list {
+        padding: 15px 20px;
+    }
+
+    /* New 1024x600 styles for qa-item */
+    body.height-600 .qa-item {
+        margin-bottom: 16px;
+    }
+
+    /* New 1024x600 styles for question */
+    body.height-600 .question {
+        padding: 16px 18px;
+        font-size: 22px;
+    }
+
+    /* New 1024x600 styles for answer */
+    body.height-600 .answer.active {
+        max-height: 900px;
+        padding: 16px 18px;
+        font-size: 18px;
+        line-height: 1.6;
+    }
+
+    /* Media query adjustments for 1024x600 */
+    @media screen and (max-width: 768px) {
+        body.height-600 .page-title {
+            font-size: 28px;
+            padding: 25px 0 0 0;
+        }
+        
+        body.height-600 .qa-list {
+            padding: 9px 18px;
+        }
+        
+        body.height-600 .question {
+            padding: 12px;
+            font-size: 20px;
+        }
+        
+        body.height-600 .answer.active {
+            padding: 12px;
+            font-size: 17px;
+        }
+    }
 </style>
 {% endblock %}
 

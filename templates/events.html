@@ -368,6 +368,99 @@
         scrollbar-width: thin;
         scrollbar-color: var(--color-gold) rgba(0, 0, 0, 0.2);
     }
+
+    /* New 1024x600 styles for content sections */
+    body.height-600 .content-section {
+        height: 600px;
+        padding: calc(var(--spacing-lg) + 15px) var(--spacing-md) var(--spacing-sm);
+    }
+
+    /* New 1024x600 styles for page header */
+    body.height-600 .page-header {
+        top: calc(var(--spacing-md) - 2px);
+    }
+
+    /* New 1024x600 styles for page title */
+    body.height-600 .page-title {
+        font-size: calc(var(--font-size-lg) * 0.9);
+        margin-bottom: 12px;
+    }
+
+    /* New 1024x600 styles for events grid */
+    body.height-600 .events-grid {
+        gap: var(--spacing-sm);
+        width: 90%;
+        max-width: 60rem; /* Adjusted for 1024px width */
+    }
+
+    /* New 1024x600 styles for event cards */
+    body.height-600 .event-card {
+        padding: var(--spacing-sm);
+        transform: scale(1.02);
+    }
+
+    /* New 1024x600 styles for event card hover */
+    body.height-600 .event-card:hover {
+        background: var(--color-bg-hover);
+        transform: translateY(-4px);
+    }
+
+    /* New 1024x600 styles for event images */
+    body.height-600 .event-image {
+        height: 14rem;
+        margin-bottom: calc(var(--spacing-xs) + 0.1rem);
+    }
+
+    /* New 1024x600 styles for event titles */
+    body.height-600 .event-title {
+        font-size: 1.5rem;
+        margin-bottom: 0.3rem;
+    }
+
+    /* New 1024x600 styles for composer text */
+    body.height-600 .event-composer {
+        margin-bottom: 0.3rem;
+        font-size: 1.1rem;
+    }
+
+    /* New 1024x600 styles for date text */
+    body.height-600 .event-date {
+        font-size: 1.05rem;
+    }
+
+    /* New 1024x600 styles for scroll indicators */
+    body.height-600 .scroll-indicators {
+        bottom: 5%;
+    }
+
+    /* New 1024x600 styles for scroll dots */
+    body.height-600 .scroll-dot {
+        width: 0.9rem;
+        height: 0.9rem;
+    }
+
+    /* Media query adjustments for 1024x600 */
+    @media screen and (max-width: 1024px) {
+        body.height-600 .event-image {
+            height: 12rem;
+        }
+        
+        body.height-600 .page-title {
+            font-size: 2.2rem;
+        }
+        
+        body.height-600 .event-title {
+            font-size: 1.4rem;
+        }
+        
+        body.height-600 .event-composer {
+            font-size: 1rem;
+        }
+        
+        body.height-600 .event-date {
+            font-size: 1rem;
+        }
+    }
 </style>
 {% endblock %}
 
