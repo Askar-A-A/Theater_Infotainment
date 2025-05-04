@@ -147,51 +147,6 @@
         100% { filter: brightness(0.3) sepia(0.4); }
     }
 
-    /* Vertical scroll indicators - Updated for proper centering */
-    .scroll-indicators {
-        position: fixed;
-        right: 30px;
-        display: flex;
-        flex-direction: column;
-        z-index: 100;
-    }
-    
-    /* Height-specific positioning and spacing for indicators */
-    body.height-800 .scroll-indicators {
-        top: 400px;  /* Fixed pixel value at 50% of 800px height */
-        transform: translateY(-50%);
-        gap: var(--spacing-sm);
-    }
-    
-    body.height-400 .scroll-indicators {
-        top: 250px;  /* Fixed pixel value at 50% of 400px height */
-        transform: translateY(-50%);
-        gap: var(--spacing-xs);
-    }
-
-    .scroll-dot {
-        border-radius: 50%;
-        background: rgba(255,255,255,0.3);
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-    
-    /* Height-specific adjustments for scroll dots */
-    body.height-800 .scroll-dot {
-        width: 1rem;
-        height: 1rem;
-    }
-    
-    body.height-400 .scroll-dot {
-        width: 0.75rem;
-        height: 0.75rem;
-    }
-
-    .scroll-dot.active {
-        background: var(--color-gold);
-        transform: scale(1.2);
-    }
-
     /* Content box styling */
     .content-box {
         background: var(--color-bg-dark);
@@ -420,21 +375,6 @@
         body.height-400 .awards-grid {
             grid-template-columns: repeat(2, 1fr);
         }
-        
-        /* Update scroll indicator positioning for mobile */
-        .scroll-indicators {
-            right: 10px;
-        }
-        
-        body.height-800 .scroll-dot {
-            width: 0.8rem;
-            height: 0.8rem;
-        }
-        
-        body.height-400 .scroll-dot {
-            width: 0.6rem;
-            height: 0.6rem;
-        }
     }
     
     @media screen and (max-width: 480px) {
@@ -452,19 +392,6 @@
     /* New 1024x600 styles for content-section */
     body.height-600 .content-section {
         height: 600px;
-    }
-
-    /* New 1024x600 styles for scroll indicators */
-    body.height-600 .scroll-indicators {
-        top: 300px;  /* Fixed pixel value at 50% of 600px height */
-        transform: translateY(-50%);
-        gap: calc(var(--spacing-xs) + 0.1rem);
-    }
-
-    /* New 1024x600 styles for scroll dots */
-    body.height-600 .scroll-dot {
-        width: 0.9rem;
-        height: 0.9rem;
     }
 
     /* New 1024x600 styles for content box */
@@ -544,11 +471,6 @@
         body.height-600 .awards-grid {
             grid-template-columns: repeat(2, 1fr);
         }
-        
-        body.height-600 .scroll-dot {
-            width: 0.7rem;
-            height: 0.7rem;
-        }
     }
 
     @media screen and (max-width: 480px) {
@@ -561,13 +483,6 @@
 
 {% block content %}
 <div class="theater-container">
-    <!-- Vertical Scroll Indicators -->
-    <div class="scroll-indicators">
-        <div class="scroll-dot active" data-page="0"></div>
-        <div class="scroll-dot" data-page="1"></div>
-        <div class="scroll-dot" data-page="2"></div>
-    </div>
-
     <div class="main-content">
         <!-- Introduction Section -->
         <div class="content-section" id="section-0">
@@ -652,45 +567,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const mainContent = document.querySelector('.main-content');
-        const dots = document.querySelectorAll('.scroll-dot');
         const sections = document.querySelectorAll('.content-section');
-        
-        // Function to check which section is in view
-        function checkCurrentSection() {
-            let currentSection = 0;
-            const scrollPosition = mainContent.scrollTop;
-            
-            sections.forEach((section, index) => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.offsetHeight;
-                
-                if (scrollPosition >= sectionTop - sectionHeight / 3) {
-                    currentSection = index;
-                }
-            });
-            
-            updateActiveDot(currentSection);
-        }
-        
-        // Update the active dot
-        function updateActiveDot(index) {
-            dots.forEach((dot, i) => {
-                dot.classList.toggle('active', i === index);
-            });
-        }
-        
-        // Scroll to section when dot is clicked
-        dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                sections[index].scrollIntoView({ behavior: 'smooth' });
-            });
-        });
-        
-        // Listen for scroll events
-        mainContent.addEventListener('scroll', checkCurrentSection);
-        
-        // Initialize
-        checkCurrentSection();
     });
 </script>
 {% endblock %}

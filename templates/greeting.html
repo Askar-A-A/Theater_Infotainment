@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1280, height=800, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>{% placeholder "greeting_page_title" or %}Welcome - Vienna State Opera{% endplaceholder %}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Add fonts -->
@@ -403,6 +403,91 @@
             transform: translateY(-2px);
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
         }
+
+        /* New 1024x600 styles - add this after your existing height-specific styles */
+        body.height-600, body.height-600 .content-wrapper {
+            height: 600px;
+            width: 1024px;
+        }
+
+        body.height-600 .greeting-container {
+            padding: 0 var(--spacing-md) var(--spacing-sm);
+            justify-content: center;
+            padding-top: 50px; /* Balanced space at top */
+        }
+
+        body.height-600 .language-selector {
+            top: var(--spacing-sm);
+            left: var(--spacing-md);
+        }
+
+        body.height-600 .language-selected {
+            padding: 10px 16px; 
+            font-size: 16px;
+            min-width: 160px;
+        }
+
+        body.height-600 .opera-logo {
+            width: 160px; /* In between 800px and 400px sizes */
+            height: 160px;
+            margin-bottom: var(--spacing-sm);
+            padding: 12px;
+        }
+
+        body.height-600 .welcome-titles-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        body.height-600 .welcome-title {
+            font-size: 2.8rem;
+            margin-top: 0;
+            margin-right: 10px;
+            margin-bottom: 0;
+            line-height: 1.3;
+        }
+
+        body.height-600 .welcome-subtitle {
+            font-size: 2.6rem;
+            margin-top: 0;
+            margin-bottom: 0;
+            line-height: 1.3;
+        }
+
+        body.height-600 .divider {
+            width: 190px;
+            margin-bottom: 12px;
+            margin-top: 5px;
+        }
+
+        body.height-600 .welcome-text-frame {
+            padding: var(--spacing-sm);
+            margin-bottom: 15px;
+            width: 90%;
+            max-width: 650px;
+        }
+
+        body.height-600 .welcome-text {
+            font-size: 1.2rem;
+            line-height: 1.5;
+        }
+
+        body.height-600 .enter-button {
+            padding: 12px 50px;
+            font-size: 1.25rem;
+            letter-spacing: 1.5px;
+            margin-top: 5px;
+        }
+
+        body.height-600 .height-toggle {
+            top: var(--spacing-sm);
+            right: var(--spacing-md);
+            padding: 8px 15px;
+            font-size: 15px;
+        }
     </style>
     {% render_block "js" %}
     <script>
@@ -464,7 +549,7 @@
                 const urlParams = new URLSearchParams(window.location.search);
                 const heightParam = urlParams.get('height');
                 
-                if (heightParam === '400' || heightParam === '800') {
+                if (heightParam === '400' || heightParam === '800' || heightParam === '600') {
                     // Save preference to cookie if it comes from URL
                     setHeightCookie(heightParam);
                     return heightParam;
@@ -497,12 +582,22 @@
             if (heightPreference === '400') {
                 document.body.classList.add('height-400');
                 document.body.classList.remove('height-800');
+                document.body.classList.remove('height-600');
                 // Explicitly set dimensions via inline style as well
                 document.body.style.height = '400px';
                 document.querySelector('.content-wrapper').style.height = '400px';
+            } else if (heightPreference === '600') {
+                document.body.classList.add('height-600');
+                document.body.classList.remove('height-800');
+                document.body.classList.remove('height-400');
+                document.body.style.height = '600px';
+                document.body.style.width = '1024px';
+                document.querySelector('.content-wrapper').style.height = '600px';
+                document.querySelector('.content-wrapper').style.width = '1024px';
             } else {
                 document.body.classList.add('height-800');
                 document.body.classList.remove('height-400');
+                document.body.classList.remove('height-600');
                 document.body.style.height = '800px';
                 document.querySelector('.content-wrapper').style.height = '800px';
             }
