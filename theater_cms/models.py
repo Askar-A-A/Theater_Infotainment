@@ -81,8 +81,8 @@ class UserFeedback(models.Model):
         (5, '5 Star')
     )
     name = models.CharField(max_length=50, blank=True, verbose_name="Name (Optional)")
-    rating = models.IntegerField(choices=RATING_CHOICES, null=True, blank=True, verbose_name="Your rating")
-    comments = models.TextField(max_length=500, verbose_name="Your Feedback")
+    rating = models.IntegerField(choices=RATING_CHOICES, null=True, blank=True, verbose_name="User Rating")
+    comments = models.TextField(max_length=500, verbose_name="User Feedback")
     created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):

@@ -512,7 +512,51 @@ class SeasonalSponsorAdmin(admin.ModelAdmin):
     list_display = ('name', 'website')
 
 # Register other models
-admin.site.register(UserFeedback)
+@admin.register(UserFeedback)
+class UserFeedbackAdmin(admin.ModelAdmin):
+    """Admin interface for user feedback that prevents editing of submissions."""
+    list_display = ('name', 'rating', 'created_at', 'display_comments')
+    list_filter = ('rating', 'created_at')
+    search_fields = ('name', 'comments')
+    readonly_fields = ('name', 'rating', 'comments', 'created_at')
+    
+    def display_comments(self, obj):
+        """Truncate long comments for the list view"""
+        if len(obj.comments) > 50:
+            return f"{obj.comments[:50]}..."
+        return obj.comments
+    display_comments.short_description = 'Comments'
+    
+    def has_add_permission(self, request):
+        """Prevent admins from manually adding feedback"""
+        return False
+    
+    def has_change_permission(self, request, obj=None):
+        """Prevent editing of feedback"""
+        return False
+    
+    def has_delete_permission(self, request, obj=None):
+        """Allow deletion of inappropriate feedback if needed"""
+        return True
+
+    def changeform_view(self, request, object_id=None, form_url='', extra_context=None):
+        extra_context = extra_context or {}
+        extra_context['show_save'] = False
+        extra_context['show_save_and_continue'] = False
+        extra_context['show_save_and_add_another'] = False
+        
+        # Add a notice explaining why editing is disabled
+        extra_context['additional_info'] = """
+        <div style="margin: 20px 0; padding: 10px 15px; background-color: #fef9e7; border-left: 4px solid #f1c40f;">
+            <h3 style="margin-top: 0; color: #7d6608;">Feedback Integrity Notice</h3>
+            <p>User feedback cannot be edited to maintain the integrity and authenticity of customer reviews. 
+            This helps ensure transparency and trust in our feedback system.</p>
+            <p>Inappropriate content can still be removed using the delete option if necessary.</p>
+        </div>
+        """
+        
+        return super().changeform_view(request, object_id, form_url, extra_context)
+
 admin.site.register(EmailSubscription)
 
 @admin.register(SiteSettings)
