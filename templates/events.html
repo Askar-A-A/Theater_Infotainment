@@ -344,29 +344,15 @@
         }
     }
 
-    /* Add scrollbar styling to match other pages */
+    /* Remove the browser's scrollbar but keep scrolling functionality */
     .main-content::-webkit-scrollbar {
-        width: 10px;
-        height: 10px;  /* Add height for horizontal scrollbar */
+        display: none; /* Hide scrollbar for Chrome, Safari, and newer Edge */
     }
 
-    .main-content::-webkit-scrollbar-track {
-        background: rgba(0, 0, 0, 0.2);
-    }
-
-    .main-content::-webkit-scrollbar-thumb {
-        background: var(--color-gold);
-        border-radius: 5px;
-    }
-
-    .main-content::-webkit-scrollbar-thumb:hover {
-        background: #b28e29;
-    }
-
-    /* Firefox scrollbar support */
+    /* For Firefox */
     .main-content {
-        scrollbar-width: thin;
-        scrollbar-color: var(--color-gold) rgba(0, 0, 0, 0.2);
+        scrollbar-width: none; /* Hide scrollbar for Firefox */
+        -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
     }
 
     /* New 1024x600 styles for content sections */

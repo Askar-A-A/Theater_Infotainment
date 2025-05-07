@@ -376,7 +376,7 @@ class EventAdmin(admin.ModelAdmin):
                     'rows': 5,
                     'placeholder': '2025-04-26 19:30\n2025-04-29 20:00\n2025-04-31 14:00'
                 }),
-                label=_("Performance Dates and Times"),
+                label=_("Performance Dates and Times. Copy the Example 2025-01-05 19:30"),
                 help_text=_("Enter each performance on a new line as: YYYY-MM-DD HH:MM"),
                 required=False
             )
