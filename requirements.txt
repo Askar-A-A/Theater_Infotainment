@@ -15,5 +15,4 @@ djangocms-picture==4.1.1
 djangocms-text-ckeditor==5.1.7
 easy-thumbnails==2.10
 pillow==11.1.0
-psycopg2-binary==2.9.10  # Only if using PostgreSQL
 python-dotenv==1.0.1
