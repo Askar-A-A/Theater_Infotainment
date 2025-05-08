@@ -1,32 +1,4 @@
-alembic==1.14.1
-anaconda-anon-usage @ file:///C:/b/abs_c3w_h1zzjg/croot/anaconda-anon-usage_1710965204622/work
-annotated-types==0.7.0
-anyio==4.8.0
-archspec @ file:///croot/archspec_1709217642129/work
-asgiref==3.8.1
-bcrypt==4.3.0
-blinker==1.9.0
-boltons @ file:///C:/Users/dev-admin/perseverance-python-buildout/croot/boltons_1699480450092/work
-Brotli @ file:///C:/b/abs_3d36mno480/croot/brotli-split_1714483178642/work
-certifi @ file:///C:/b/abs_1fw_exq1si/croot/certifi_1725551736618/work/certifi
-cffi @ file:///C:/b/abs_90yq4lmu83/croot/cffi_1726856448345/work
-chardet==5.2.0
-charset-normalizer @ file:///croot/charset-normalizer_1721748349566/work
-click==8.1.8
-cms==0.0.2
-colorama @ file:///C:/Users/dev-admin/perseverance-python-buildout/croot/colorama_1699472650914/work
-conda @ file:///C:/b/abs_85jnuwc__u/croot/conda_1729193917673/work
-conda-content-trust @ file:///C:/b/abs_bdfatn_wzf/croot/conda-content-trust_1714483201909/work
-conda-libmamba-solver @ file:///croot/conda-libmamba-solver_1727775630457/work/src
-conda-package-handling @ file:///C:/b/abs_831_pypuuz/croot/conda-package-handling_1718138287790/work
-conda_package_streaming @ file:///C:/b/abs_fe6zb0_j8_/croot/conda-package-streaming_1718136098642/work
-contourpy==1.3.1
-cryptography @ file:///C:/b/abs_35g500qir4/croot/cryptography_1724940575116/work
-cssselect2==0.8.0
-cycler==0.12.1
-distro @ file:///C:/b/abs_71xr36ua5r/croot/distro_1714488282676/work
 Django==5.1.4
-django-classy-tags==4.1.0
 django-cms==4.1.4
 django-filer==3.3.1
 django-filter==25.1
@@ -34,8 +6,6 @@ django-formtools==2.5.1
 django-htmx==1.21.0
 django-js-asset==3.1.2
 django-modeltranslation==0.19.14
-django-mptt==0.17.0
-django-polymorphic==3.1.0
 django-sekizai==4.1.0
 django-treebeard==4.7.1
 djangocms-admin-style==3.3.1
@@ -44,73 +14,6 @@ djangocms-link==5.0.0
 djangocms-picture==4.1.1
 djangocms-text-ckeditor==5.1.7
 easy-thumbnails==2.10
-Flask==3.1.0
-Flask-Login==0.6.3
-Flask-Migrate==4.1.0
-Flask-SQLAlchemy==3.1.1
-fonttools==4.56.0
-frozendict @ file:///C:/b/abs_2alamqss6p/croot/frozendict_1713194885124/work
-googletrans==4.0.2
-greenlet==3.1.1
-h11==0.14.0
-h2==4.2.0
-hpack==4.1.0
-html5lib==1.1
-httpcore==1.0.7
-httpx==0.28.1
-hyperframe==6.1.0
-idna @ file:///C:/b/abs_aad84bnnw5/croot/idna_1714398896795/work
-itsdangerous==2.2.0
-Jinja2==3.1.5
-jiter==0.9.0
-jsonpatch @ file:///C:/b/abs_4fdm88t7zi/croot/jsonpatch_1714483974578/work
-jsonpointer==2.1
-kiwisolver==1.4.8
-libmambapy @ file:///C:/b/abs_aam1usey89/croot/mamba-split_1725563515831/work/libmambapy
-lxml==5.3.1
-Mako==1.3.9
-MarkupSafe==3.0.2
-matplotlib==3.8.2
-menuinst @ file:///C:/b/abs_76jwd47ck1/croot/menuinst_1723567618942/work
-networkx==3.2.1
-numpy==1.26.2
-openai==1.66.0
-packaging @ file:///C:/b/abs_c3vlh0z4jw/croot/packaging_1720101866539/work
-pandas==2.1.3
 pillow==11.1.0
-platformdirs @ file:///C:/Users/dev-admin/perseverance-python-buildout/croot/platformdirs_1701797392447/work
-pluggy @ file:///C:/Users/dev-admin/perseverance-python-buildout/croot/pluggy_1699472504117/work
-psycopg==3.2.3
-psycopg2-binary==2.9.10
-pycosat @ file:///C:/b/abs_5csdern___/croot/pycosat_1714513102923/work
-pycparser @ file:///tmp/build/80754af9/pycparser_1636541352034/work
-pydantic==2.10.6
-pydantic_core==2.27.2
-pyparsing==3.2.1
-PySocks @ file:///C:/Users/dev-admin/perseverance-python-buildout/croot/pysocks_1699473336188/work
-python-dateutil==2.9.0.post0
+psycopg2-binary==2.9.10  # Only if using PostgreSQL
 python-dotenv==1.0.1
-pytz==2025.2
-reportlab==4.3.1
-requests @ file:///C:/b/abs_9frifg92q2/croot/requests_1721410901096/work
-ruamel.yaml @ file:///C:/b/abs_0cunwx_ww6/croot/ruamel.yaml_1727980181547/work
-ruamel.yaml.clib @ file:///C:/b/abs_5fk8zi6n09/croot/ruamel.yaml.clib_1727769837359/work
-seaborn==0.13.0
-setuptools==75.1.0
-six==1.17.0
-sniffio==1.3.1
-SQLAlchemy==2.0.38
-sqlparse==0.5.3
-svglib==1.5.1
-tinycss2==1.4.0
-tqdm @ file:///C:/b/abs_77wju137gk/croot/tqdm_1724853945787/work
-truststore @ file:///C:/Users/dev-admin/perseverance-python-buildout/croot/truststore_1701881385424/work
-typing_extensions==4.12.2
-tzdata==2024.2
-urllib3 @ file:///C:/b/abs_9a_f8h_bn2/croot/urllib3_1727769836930/work
-webencodings==0.5.1
-Werkzeug==3.1.3
-wheel==0.44.0
-win-inet-pton @ file:///C:/Users/dev-admin/perseverance-python-buildout/croot/win_inet_pton_1699472992992/work
-XlsxWriter==3.1.9
-zstandard @ file:///C:/b/abs_82dff2ths3/croot/zstandard_1728569207191/work
