@@ -9,7 +9,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('cms', '0037_alter_cmsplugin_id_alter_globalpagepermission_id_and_more'),
+        ('cms', '0036_auto_20240311_1028'),
         ('theater_cms', '0002_sponsorlogo'),
         migrations.swappable_dependency(settings.FILER_IMAGE_MODEL),
     ]
