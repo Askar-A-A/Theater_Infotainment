@@ -6,13 +6,14 @@ from django.conf.urls.i18n import i18n_patterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('theater_cms.urls')),  # Include your app's URLs at root level
+    # Keep this for non-i18n URLs if needed
+    # path('', include('theater_cms.urls')),
 ]
 
-# Translated URLs
+# Translated URLs - removed CMS URLs and using our theater_cms URLs instead
 urlpatterns += i18n_patterns(
     path('admin/', admin.site.urls),
-    path('', include('cms.urls')),  # Keep the CMS URLs last
+    path('', include('theater_cms.urls')),  # Replace CMS URLs with our app's URLs
 )
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

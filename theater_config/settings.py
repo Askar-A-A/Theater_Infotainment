@@ -21,7 +21,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'djangocms_admin_style',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -29,20 +28,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    'cms',
-    'menus',
-    'sekizai',
-    'treebeard',
-    'djangocms_text_ckeditor',
-    'easy_thumbnails',
-    'filer',
-    'mptt',
-    'djangocms_picture',
     'theater_cms',
 ]
 
 MIDDLEWARE = [
-    'cms.middleware.utils.ApphookReloadMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -51,10 +40,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
-    'cms.middleware.user.CurrentUserMiddleware',
-    'cms.middleware.page.CurrentPageMiddleware',
-    'cms.middleware.toolbar.ToolbarMiddleware',
-    'cms.middleware.language.LanguageCookieMiddleware',
     'theater_cms.middleware.DisplayHeightMiddleware',
 ]
 
@@ -74,8 +59,6 @@ TEMPLATES = [
                 'django.template.context_processors.media',
                 'django.template.context_processors.csrf',
                 'django.template.context_processors.tz',
-                'cms.context_processors.cms_settings',
-                'sekizai.context_processors.sekizai',
                 'theater_cms.context_processors.user_interaction_session_data',
                 'theater_cms.views.home_with_current_event',
                 'theater_cms.context_processors.display_settings',
@@ -151,21 +134,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'theater_config/static'),
 ]
 
-# CMS settings
-CMS_TEMPLATES = [
-    ('greeting.html', 'Greeting Template'),
-    ('base.html', 'Base Template'),
-    ('home.html', 'Home Template'),
-    ('about.html', 'About Us Template'),
-    ('today.html', 'Today Template'),
-    ('events.html', 'Events Template'),
-    ('event_detail.html', 'Event Detail Template'),
-    ('q&a.html', 'Questions and Answers Template'),
-    ('sponsors.html', 'Sponsors Template'),
-    ('feedback.html', 'Feedback Template'),
-    ('email_subscribe.html', 'Email Subscribe Template'),
-]
-
+# Keep language settings but removed CMS-specific configs
 SITE_ID = 1
 LANGUAGES = [
     ('en', 'English'),
@@ -183,50 +152,7 @@ LANGUAGES = [
     ('bn', 'Bengali'),
 ]
 
-CMS_CONFIRM_VERSION4 = True
-
 X_FRAME_OPTIONS = 'SAMEORIGIN'
-CMS_PERMISSION = True
-
-# This might be causing the issue if it exists in your settings
-CMS_TEMPLATE_INHERITANCE = False
-
-THUMBNAIL_PROCESSORS = (
-    'easy_thumbnails.processors.colorspace',
-    'easy_thumbnails.processors.autocrop',
-    'filer.thumbnail_processors.scale_and_crop_with_subject_location',
-    'easy_thumbnails.processors.filters',
-)
-
-THUMBNAIL_HIGH_RESOLUTION = True
-
-CMS_PLACEHOLDER_CONF = {
-    'theater_logo': {
-        'name': _('Theater Logo'),
-        'plugins': ['TheaterLogoPlugin'],
-        'default_plugins': [],
-    },
-    'theater_name': {
-        'name': _('Theater Name'),
-        'plugins': ['TextPlugin'],
-        'default_plugins': [],
-    },
-    'sponsors_intro': {
-        'name': _('Sponsors Introduction'),
-        'plugins': ['TextPlugin'],
-        'default_plugins': [],
-    },
-    'sponsors_logos': {
-        'name': _('Sponsor Logos'),
-        'plugins': ['SponsorLogoPlugin'],
-        'default_plugins': [],
-    },
-    'copyright_text': {
-        'name': _('Copyright Text'),
-        'plugins': ['TextPlugin'],
-        'default_plugins': [],
-    },
-}
 
 LOCALE_PATHS = [
     os.path.join(BASE_DIR, 'locale'),
