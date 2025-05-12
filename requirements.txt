@@ -1,19 +1,24 @@
 Django==5.1.4
-django-cms==4.1.4
-django-filer==3.3.1
+pillow==11.1.0
+python-dotenv==1.0.1
+django-filter==25.1
+django-htmx==1.21.0
+django-modeltranslation==0.19.14
 django-filter==25.1
 django-formtools==2.5.1
 django-htmx==1.21.0
 django-js-asset==3.1.2
 django-modeltranslation==0.19.14
-django-mptt==0.17.0
-django-sekizai==4.1.0
-django-treebeard==4.7.1
-djangocms-admin-style==3.3.1
-djangocms-attributes-field==4.0.0
-djangocms-link==5.0.0
-djangocms-picture==4.1.1
-djangocms-text-ckeditor==5.1.7
-easy-thumbnails==2.10
-pillow==11.1.0
-python-dotenv==1.0.1
+
+
+# django-cms==4.1.4
+# django-filer==3.3.1
+# django-mptt==0.17.0
+# django-sekizai==4.1.0
+# django-treebeard==4.7.1
+# djangocms-admin-style==3.3.1
+# djangocms-attributes-field==4.0.0
+# djangocms-link==5.0.0
+# djangocms-picture==4.1.1
+# djangocms-text-ckeditor==5.1.7
+# easy-thumbnails==2.10
