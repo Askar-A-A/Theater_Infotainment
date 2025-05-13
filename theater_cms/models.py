@@ -2,16 +2,14 @@ from django.db import models
 from django.utils import timezone
 from django.utils.text import slugify
 from django.urls import reverse
-from cms.models.pluginmodel import CMSPlugin
-from filer.fields.image import FilerImageField
 from django.utils.translation import gettext_lazy as _
-# Models for custom plugins
 
-class TheaterLogo(CMSPlugin):
-    image = FilerImageField(
+# Converted plugin models to regular Django models
+
+class TheaterLogo(models.Model):
+    image = models.ImageField(
         verbose_name="Theater Logo",
-        on_delete=models.CASCADE,
-        related_name="theater_logo"
+        upload_to="theater_logos/",
     )
     alt_text = models.CharField(
         max_length=255,
@@ -22,12 +20,11 @@ class TheaterLogo(CMSPlugin):
     def __str__(self):
         return self.alt_text or "Theater Logo"
 
-class SponsorLogo(CMSPlugin):
-    """Plugin for adding sponsor logos to the sponsors page"""
-    image = FilerImageField(
+class SponsorLogo(models.Model):
+    """Model for adding sponsor logos to the sponsors page"""
+    image = models.ImageField(
         verbose_name="Sponsor Logo",
-        on_delete=models.CASCADE,
-        related_name="sponsor_logos"
+        upload_to="sponsor_logos/"
     )
     name = models.CharField(
         max_length=100,
@@ -41,8 +38,8 @@ class SponsorLogo(CMSPlugin):
     def __str__(self):
         return self.name
 
-class EventCard(CMSPlugin):
-    """Plugin for displaying event information in the events grid"""
+class EventCard(models.Model):
+    """Model for displaying event information in the events grid"""
     title = models.CharField(
         max_length=200,
         help_text="Event title (e.g., 'Tosca')"
@@ -55,10 +52,9 @@ class EventCard(CMSPlugin):
         max_length=200,
         help_text="Performance dates (e.g., 'January 15 - March 30, 2024')"
     )
-    image = FilerImageField(
+    image = models.ImageField(
         verbose_name="Event Image",
-        on_delete=models.CASCADE,
-        related_name="event_images"
+        upload_to="event_cards/"
     )
     detail_url = models.URLField(
         blank=True,
@@ -68,7 +64,6 @@ class EventCard(CMSPlugin):
     def __str__(self):
         return self.title
     
-
 
 # Models for user interaction/data
 
@@ -107,7 +102,8 @@ class EmailSubscription(models.Model):
         verbose_name = "Email Subscription"
         verbose_name_plural = "Email Subscriptions"
 
-class QAItemPlugin(CMSPlugin):
+# Convert QA plugin to regular model
+class QAItem(models.Model):
     question = models.CharField(
         max_length=255,
         verbose_name=_("Question")
@@ -116,10 +112,15 @@ class QAItemPlugin(CMSPlugin):
         verbose_name=_("Answer"),
         help_text=_("You may use HTML for formatting")
     )
+    order = models.PositiveIntegerField(default=0, verbose_name=_("Order"))
     
     def __str__(self):
         return self.question
     
+    class Meta:
+        ordering = ['order']
+        verbose_name = _("Q&A Item")
+        verbose_name_plural = _("Q&A Items")
 
 class Event(models.Model):
     title = models.CharField(_("Title"), max_length=200)

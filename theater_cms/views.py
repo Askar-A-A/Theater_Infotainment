@@ -2,7 +2,6 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import UserFeedback, EmailSubscription, Event, Performance, SeasonalSponsor, EventSponsorImage
-from cms.utils import get_current_site
 from django.views.decorators.http import require_POST
 from django.utils import timezone
 
@@ -59,7 +58,7 @@ def process_feedback(request):
 def thank_you_page(request):
     """
     Render the thank you page.
-    This does render a template because it's a dedicated view, not a CMS page.
+    This is a dedicated view with its own template.
     """
     return render(request, 'feedback_thank_you.html')
 
@@ -123,11 +122,6 @@ def clear_subscription_messages(request):
     if 'subscription_message' in request.session:
         del request.session['subscription_message']
     return JsonResponse({'status': 'ok'})
-
-
-
-
-
 
 
 def determine_current_event():
@@ -213,3 +207,32 @@ def sponsors_page(request):
         'event_sponsors': event_sponsors,
         'event': event,
     })
+
+# Add new views to handle static pages - these will replace CMS pages
+def about_page(request):
+    """View for the about page"""
+    return render(request, 'about.html')
+
+def home_page(request):
+    """View for the home page"""
+    event = determine_current_event()
+    return render(request, 'home.html', {'current_event': event})
+
+def qa_page(request):
+    """View for the Q&A page"""
+    # Get all QA items in order
+    from .models import QAItem
+    qa_items = QAItem.objects.all().order_by('order')
+    return render(request, 'q&a.html', {'qa_items': qa_items})
+
+def email_subscribe_page(request):
+    """View for the email subscription page"""
+    return render(request, 'email_subscribe.html')
+
+def feedback_page(request):
+    """View for the feedback page"""
+    return render(request, 'feedback.html')
+
+def greeting_page(request):
+    """View for the greeting page"""
+    return render(request, 'greeting.html')

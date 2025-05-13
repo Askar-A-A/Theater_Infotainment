@@ -15,4 +15,12 @@ urlpatterns = [
     path('event/<slug:slug>/', views.event_detail, name='event_detail'),
     path('current-event/', views.current_event, name='current_event'),
     path('sponsors/', views.sponsors_page, name='sponsors_page'),
+    
+    # New static page URLs (to replace CMS pages)
+    path('', views.greeting_page, name='greeting'),
+    path('home/', views.home_page, name='home'),
+    path('about/', views.about_page, name='about'),
+    path('qa/', views.qa_page, name='qa'),
+    path('email_subscribe/', views.email_subscribe_page, name='email_subscribe'),
+    path('feedback/', views.feedback_page, name='feedback'),
 ] 
