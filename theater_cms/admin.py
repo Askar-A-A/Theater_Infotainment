@@ -128,7 +128,7 @@ class PerformanceInline(admin.TabularInline):
 class EventSponsorImageInline(admin.TabularInline):
     model = EventSponsorImage
     extra = 1  # Show one empty form by default
-    fields = ('name', 'image', 'website')
+    fields = ('name', 'image')  # website removed from fields
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
@@ -509,7 +509,7 @@ class PerformanceAdmin(admin.ModelAdmin):
 
 @admin.register(SeasonalSponsor)
 class SeasonalSponsorAdmin(admin.ModelAdmin):
-    list_display = ('name', 'website')
+    list_display = ('name',)  
 
 # Register other models
 @admin.register(UserFeedback)

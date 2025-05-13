@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block title %}
-    {% placeholder "event_detail_title" or %}Salome - {% placeholder "theater_name" or %}Vienna State Opera{% endplaceholder %}{% endplaceholder %}
+    {% placeholder "event_detail_title" or %}Salome - {% placeholder "theater_name" or %}Opera House{% endplaceholder %}{% endplaceholder %}
 {% endblock %}
 
 {% block wrapper_style %}
@@ -258,35 +258,78 @@
         font-size: 1rem;
     }
 
-    /* Cast content styling */
+    /* Enhanced cast content styling */
     .cast-content {
         color: #fff;
         line-height: 1.6;
     }
 
+    /* Cast member row styling */
+    .cast-member {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.6rem;
+        padding-bottom: 0.4rem;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .cast-member:last-child {
+        border-bottom: none;
+    }
+
+    /* Character name styling */
+    .character-name {
+        color: var(--color-gold);
+        font-weight: bold;
+        padding-right: 1rem;
+    }
+
+    /* Actor name styling */
+    .actor-name {
+        text-align: right;
+    }
+
     /* Height-specific cast content adjustments */
     body.height-800 .cast-content {
-        font-size: 20px;
+        font-size: 18px;
         line-height: 1.7;
+        max-height: 300px;
+        overflow-y: auto;
+        padding-right: 10px;
     }
 
     body.height-400 .cast-content {
         font-size: 15px;
         line-height: 1.5;
+        max-height: 150px;
+        overflow-y: auto;
+        padding-right: 8px;
     }
 
-    /* Height-specific cast spacing adjustments */
-    body.height-800 .cast-content p {
-        margin-bottom: 0.5rem;
+    body.height-600 .cast-content {
+        font-size: 16px;
+        line-height: 1.6;
+        max-height: 200px;
+        overflow-y: auto;
+        padding-right: 8px;
     }
 
-    body.height-400 .cast-content p {
-        margin-bottom: 0.25rem;
+    /* Scrollbar for cast content */
+    .cast-content::-webkit-scrollbar {
+        width: 6px;
     }
 
-    .cast-content strong {
-        color: var(--color-gold);
-        font-style: italic;
+    .cast-content::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.2);
+    }
+
+    .cast-content::-webkit-scrollbar-thumb {
+        background: var(--color-gold);
+        border-radius: 3px;
+    }
+
+    .cast-content::-webkit-scrollbar-thumb:hover {
+        background: #b28e29;
     }
 
     .back-button {
@@ -615,7 +658,17 @@
             <div class="event-info-item">
                 <div class="info-label">Cast</div>
                 <div class="cast-content">
-                    {{ event.cast_content|safe }}
+                    {% if event.cast_content %}
+                        {{ event.cast_content|safe }}
+                    {% else %}
+                        <!-- This provides a clear format for the cast when adding it manually -->
+                        {% for role in cast_roles %}
+                        <div class="cast-member">
+                            <div class="character-name">{{ role.character }}</div>
+                            <div class="actor-name">{{ role.actor }}</div>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
                 </div>
             </div>
             
@@ -647,4 +700,61 @@
         <p>No upcoming performances scheduled at this time.</p>
     {% endif %}
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const castContent = document.querySelector('.cast-content');
+    
+    if (castContent) {
+        const originalText = castContent.innerHTML.trim();
+        
+        // Skip if content already has our structured format
+        if (!originalText.includes('<div class="cast-member">')) {
+            // Parse the cast content - look for text and formatting
+            const lines = originalText.replace(/<br\s*\/?>/gi, '\n').split('\n').filter(line => line.trim());
+            
+            let formattedHTML = '';
+            
+            // Process each line
+            for (let i = 0; i < lines.length; i++) {
+                let line = lines[i].trim();
+                
+                // Skip the word "Character" if it appears alone
+                if (line.toLowerCase() === 'character') {
+                    continue;
+                }
+                
+                // Check if line contains multiple words/names
+                const parts = line.split(/\s{2,}|\t/).filter(part => part.trim());
+                
+                if (parts.length >= 2) {
+                    // If we have at least 2 parts (character and actor)
+                    const character = parts[0].trim();
+                    const actor = parts[parts.length - 1].trim();
+                    
+                    formattedHTML += `
+                        <div class="cast-member">
+                            <div class="character-name">${character}</div>
+                            <div class="actor-name">${actor}</div>
+                        </div>
+                    `;
+                } else if (parts.length === 1 && !parts[0].toLowerCase().includes('cast')) {
+                    // If we only have one part, it's probably a character with missing actor
+                    // or a character that spans multiple lines
+                    formattedHTML += `
+                        <div class="cast-member">
+                            <div class="character-name">${parts[0]}</div>
+                            <div class="actor-name"></div>
+                        </div>
+                    `;
+                }
+            }
+            
+            if (formattedHTML) {
+                castContent.innerHTML = formattedHTML;
+            }
+        }
+    }
+});
+</script>
 {% endblock %}

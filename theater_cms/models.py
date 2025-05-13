@@ -33,10 +33,6 @@ class SponsorLogo(CMSPlugin):
         max_length=100,
         help_text="Sponsor name for alt text and accessibility"
     )
-    website = models.URLField(
-        blank=True,
-        help_text="Optional link to sponsor website"
-    )
     
     def __str__(self):
         return self.name
@@ -229,7 +225,6 @@ class Performance(models.Model):
 class SeasonalSponsor(models.Model):
     name = models.CharField(max_length=100)
     image = models.ImageField(upload_to='seasonal_sponsors/', blank=True, null=True)
-    website = models.URLField(blank=True)
 
     def __str__(self):
         return self.name
@@ -245,7 +240,6 @@ class EventSponsorImage(models.Model):
     )
     name = models.CharField(max_length=100)
     image = models.ImageField(upload_to='event_sponsors/', blank=True, null=True)
-    website = models.URLField(blank=True)
 
     def __str__(self):
         return self.name

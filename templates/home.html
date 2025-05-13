@@ -4,7 +4,7 @@
 {% load menu_tags %}
 
 {% block title %}
-    {% placeholder "home_page_title" or %}Vienna State Opera{% endplaceholder %}
+    {% placeholder "home_page_title" or %}Opera House{% endplaceholder %}
 {% endblock %}
 
 {% block wrapper_style %}
@@ -492,11 +492,11 @@
 <div class="logo-section">
     <div class="logo-container">
         {% placeholder "theater_logo" or %}
-            <img src="{% static 'images/vienna-state-opera-logo.png' %}" alt="Theater Logo" class="theater-logo">
+            <img src="{% static 'images/theater-logo.png' %}" alt="Theater Logo" class="theater-logo">
         {% endplaceholder %}
     </div>
     <h1 class="theater-title">
-        {% placeholder "theater_name" default "Vienna State Opera" %}
+        {% placeholder "theater_name" default "Opera House" %}
     </h1>
 </div>
 
