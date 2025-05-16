@@ -7,6 +7,40 @@ from django.utils.html import format_html
 from .models import Event, Performance, UserFeedback, EmailSubscription, SeasonalSponsor, EventSponsorImage, SiteSettings
 from django.utils.translation import gettext_lazy as _
 from django.db import models
+from django.contrib.auth.models import Group, Permission
+from django.db.models import Q
+
+# Create a function to set up admin groups
+def setup_admin_groups():
+    # Create or get the content editor group
+    content_editors, created = Group.objects.get_or_create(name='Content Editors')
+    
+    # Clear existing permissions if the group already exists
+    if not created:
+        content_editors.permissions.clear()
+    
+    # Add specific permissions for content management
+    # Get all permissions for models that content editors should manage
+    content_permissions = Permission.objects.filter(
+        Q(content_type__app_label='theater_cms') & 
+        (Q(content_type__model='event') | 
+         Q(content_type__model='performance') |
+         Q(content_type__model='seasonalsponsor') |
+         Q(content_type__model='eventsponsorimage'))
+    )
+    
+    # Add these permissions to the group
+    content_editors.permissions.add(*content_permissions)
+    
+    # Exclude SiteSettings permissions
+    site_settings_permissions = Permission.objects.filter(
+        content_type__app_label='theater_cms',
+        content_type__model='sitesettings'
+    )
+    
+    content_editors.permissions.remove(*site_settings_permissions)
+
+# Call this function when Django loads (in apps.py or in a migration)
 
 class PerformanceInline(admin.TabularInline):
     model = Performance
@@ -579,8 +613,24 @@ class SiteSettingsAdmin(admin.ModelAdmin):
     
     def has_add_permission(self, request):
         # Prevent creation of multiple instances
-        return not SiteSettings.objects.exists()
+        return not SiteSettings.objects.exists() and self._is_super_admin(request)
     
     def has_delete_permission(self, request, obj=None):
         # Prevent deletion
         return False
+    
+    def has_module_permission(self, request):
+        # Only show the SiteSettings module to superusers
+        return self._is_super_admin(request)
+    
+    def has_view_permission(self, request, obj=None):
+        # Only allow superusers to view
+        return self._is_super_admin(request)
+    
+    def has_change_permission(self, request, obj=None):
+        # Only allow superusers to edit
+        return self._is_super_admin(request)
+    
+    def _is_super_admin(self, request):
+        # Helper method to check if user is superuser
+        return request.user.is_superuser
