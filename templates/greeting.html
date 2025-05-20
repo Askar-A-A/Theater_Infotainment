@@ -504,14 +504,15 @@
             // Set active language in dropdown
             const currentLang = document.cookie
                 .split('; ')
-                .find(row => row.startsWith('django_language='))?.split('=')[1] || 'en';
+                .find(row => row.startsWith('django_language='));
+            const langValue = currentLang ? currentLang.split('=')[1] : 'en';
                 
             const languageOptions = document.querySelectorAll('.language-option');
             let activeLanguageName = "Select Language";
             
             languageOptions.forEach(option => {
                 const langCode = option.getAttribute('href').split("'")[1];
-                if (langCode === currentLang) {
+                if (langCode === langValue) {
                     option.classList.add('active');
                     activeLanguageName = option.getAttribute('data-lang');
                 } else {
