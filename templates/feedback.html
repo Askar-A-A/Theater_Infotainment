@@ -613,33 +613,38 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Star rating functionality
-        const stars = document.querySelectorAll('.star');
-        const ratingInput = document.getElementById('rating');
+        var stars = document.querySelectorAll('.star');
+        var ratingInput = document.getElementById('rating');
         
         // Set initial star states based on any previously submitted rating
         if (ratingInput.value > 0) {
-            stars.forEach(s => {
-                if (s.getAttribute('data-rating') <= ratingInput.value) {
+            for (var i = 0; i < stars.length; i++) {
+                var s = stars[i];
+                if (parseInt(s.getAttribute('data-rating'), 10) <= parseInt(ratingInput.value, 10)) {
                     s.classList.add('active');
                 }
-            });
+            }
         }
         
-        stars.forEach(star => {
-            star.addEventListener('click', function() {
-                const rating = this.getAttribute('data-rating');
-                ratingInput.value = rating;
-                
-                // Update star visuals
-                stars.forEach(s => {
-                    if (s.getAttribute('data-rating') <= rating) {
-                        s.classList.add('active');
-                    } else {
-                        s.classList.remove('active');
+        // Add click event listeners to stars
+        for (var j = 0; j < stars.length; j++) {
+            (function(starElement) {
+                starElement.addEventListener('click', function() {
+                    var rating = this.getAttribute('data-rating');
+                    ratingInput.value = rating;
+                    
+                    // Update star visuals
+                    for (var k = 0; k < stars.length; k++) {
+                        var currentStar = stars[k];
+                        if (parseInt(currentStar.getAttribute('data-rating'), 10) <= parseInt(rating, 10)) {
+                            currentStar.classList.add('active');
+                        } else {
+                            currentStar.classList.remove('active');
+                        }
                     }
                 });
-            });
-        });
+            })(stars[j]);
+        }
     });
 </script>
 {% endblock %}

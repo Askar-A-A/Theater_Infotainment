@@ -377,26 +377,27 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const questions = document.querySelectorAll('.question');
+    var questions = document.querySelectorAll('.question');
     
-    questions.forEach(question => {
-        question.addEventListener('click', () => {
+    for (var i = 0; i < questions.length; i++) {
+        questions[i].addEventListener('click', function() {
             // Toggle active class on question
-            question.classList.toggle('active');
+            this.classList.toggle('active');
             
             // Toggle active class on answer
-            const answer = question.nextElementSibling;
+            var answer = this.nextElementSibling;
             answer.classList.toggle('active');
             
             // Close other answers
-            questions.forEach(otherQuestion => {
-                if (otherQuestion !== question) {
+            for (var j = 0; j < questions.length; j++) {
+                var otherQuestion = questions[j];
+                if (otherQuestion !== this) {
                     otherQuestion.classList.remove('active');
                     otherQuestion.nextElementSibling.classList.remove('active');
                 }
-            });
+            }
         });
-    });
+    }
 });
 </script>
 {% endblock %}

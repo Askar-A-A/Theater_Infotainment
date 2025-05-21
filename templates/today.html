@@ -521,40 +521,52 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const mainContent = document.querySelector('.main-content');
-        const dots = document.querySelectorAll('.scroll-dot');
-        const sections = document.querySelectorAll('.content-section');
+        var mainContent = document.querySelector('.main-content');
+        var dots = document.querySelectorAll('.scroll-dot');
+        var sections = document.querySelectorAll('.content-section');
         
         // Function to check which section is in view
         function checkCurrentSection() {
-            let currentSection = 0;
-            const scrollPosition = mainContent.scrollTop;
+            var currentSection = 0;
+            var scrollPosition = mainContent.scrollTop;
             
-            sections.forEach((section, index) => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.offsetHeight;
+            // Replace forEach with traditional for loop
+            for (var i = 0; i < sections.length; i++) {
+                var section = sections[i];
+                var sectionTop = section.offsetTop;
+                var sectionHeight = section.offsetHeight;
                 
                 if (scrollPosition >= sectionTop - sectionHeight / 3) {
-                    currentSection = index;
+                    currentSection = i;
                 }
-            });
+            }
             
             updateActiveDot(currentSection);
         }
         
         // Update the active dot
         function updateActiveDot(index) {
-            dots.forEach((dot, i) => {
-                dot.classList.toggle('active', i === index);
-            });
+            // Replace forEach with traditional for loop
+            for (var i = 0; i < dots.length; i++) {
+                var dot = dots[i];
+                if (i === index) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            }
         }
         
         // Scroll to section when dot is clicked
-        dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                sections[index].scrollIntoView({ behavior: 'smooth' });
-            });
-        });
+        // Replace forEach with traditional for loop
+        for (var i = 0; i < dots.length; i++) {
+            var dot = dots[i];
+            (function(index) {
+                dot.addEventListener('click', function() {
+                    sections[index].scrollIntoView({ behavior: 'smooth' });
+                });
+            })(i);
+        }
         
         // Listen for scroll events
         mainContent.addEventListener('scroll', checkCurrentSection);

@@ -685,16 +685,20 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const mainContent = document.querySelector('.main-content');
-        const dots = document.querySelectorAll('.scroll-dot');
-        const sections = document.querySelectorAll('.content-section');
-        let currentPage = 0;
+        var mainContent = document.querySelector('.main-content');
+        var dots = document.querySelectorAll('.scroll-dot');
+        var sections = document.querySelectorAll('.content-section');
+        var currentPage = 0;
 
         // Update active dot based on scroll position
         function updateDots(pageIndex) {
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === pageIndex);
-            });
+            for (var i = 0; i < dots.length; i++) {
+                if (i === pageIndex) {
+                    dots[i].classList.add('active');
+                } else {
+                    dots[i].classList.remove('active');
+                }
+            }
         }
 
         // Scroll to specific page
@@ -705,18 +709,22 @@
         }
 
         // Click handlers for dots
-        dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => scrollToPage(index));
-        });
+        for (var i = 0; i < dots.length; i++) {
+            (function(index) {
+                dots[index].addEventListener('click', function() {
+                    scrollToPage(index);
+                });
+            })(i);
+        }
 
         // Update dots on scroll
-        mainContent.addEventListener('scroll', () => {
+        mainContent.addEventListener('scroll', function() {
             // Calculate which page is most visible
-            const scrollPosition = mainContent.scrollLeft;
-            const pageWidth = mainContent.offsetWidth;
+            var scrollPosition = mainContent.scrollLeft;
+            var pageWidth = mainContent.offsetWidth;
             
             // Determine which page we're on based on scroll position
-            const newPage = Math.round(scrollPosition / pageWidth);
+            var newPage = Math.round(scrollPosition / pageWidth);
             
             if (newPage !== currentPage) {
                 currentPage = newPage;

@@ -703,21 +703,29 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const castContent = document.querySelector('.cast-content');
+    var castContent = document.querySelector('.cast-content');
     
     if (castContent) {
-        const originalText = castContent.innerHTML.trim();
+        var originalText = castContent.innerHTML.trim();
         
         // Skip if content already has our structured format
-        if (!originalText.includes('<div class="cast-member">')) {
+        if (originalText.indexOf('<div class="cast-member">') === -1) {
             // Parse the cast content - look for text and formatting
-            const lines = originalText.replace(/<br\s*\/?>/gi, '\n').split('\n').filter(line => line.trim());
+            var linesArray = originalText.replace(/<br\s*\/?>/gi, '\n').split('\n');
+            var lines = [];
             
-            let formattedHTML = '';
+            // Filter out empty lines manually
+            for (var l = 0; l < linesArray.length; l++) {
+                if (linesArray[l].trim()) {
+                    lines.push(linesArray[l]);
+                }
+            }
+            
+            var formattedHTML = '';
             
             // Process each line
-            for (let i = 0; i < lines.length; i++) {
-                let line = lines[i].trim();
+            for (var i = 0; i < lines.length; i++) {
+                var line = lines[i].trim();
                 
                 // Skip the word "Character" if it appears alone
                 if (line.toLowerCase() === 'character') {
@@ -725,28 +733,34 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 
                 // Check if line contains multiple words/names
-                const parts = line.split(/\s{2,}|\t/).filter(part => part.trim());
+                var partsArray = line.split(/\s{2,}|\t/);
+                var parts = [];
+                
+                // Filter out empty parts manually
+                for (var p = 0; p < partsArray.length; p++) {
+                    if (partsArray[p].trim()) {
+                        parts.push(partsArray[p].trim());
+                    }
+                }
                 
                 if (parts.length >= 2) {
                     // If we have at least 2 parts (character and actor)
-                    const character = parts[0].trim();
-                    const actor = parts[parts.length - 1].trim();
+                    var character = parts[0].trim();
+                    var actor = parts[parts.length - 1].trim();
                     
-                    formattedHTML += `
-                        <div class="cast-member">
-                            <div class="character-name">${character}</div>
-                            <div class="actor-name">${actor}</div>
-                        </div>
-                    `;
-                } else if (parts.length === 1 && !parts[0].toLowerCase().includes('cast')) {
+                    formattedHTML += 
+                        '<div class="cast-member">' +
+                            '<div class="character-name">' + character + '</div>' +
+                            '<div class="actor-name">' + actor + '</div>' +
+                        '</div>';
+                } else if (parts.length === 1 && parts[0].toLowerCase().indexOf('cast') === -1) {
                     // If we only have one part, it's probably a character with missing actor
                     // or a character that spans multiple lines
-                    formattedHTML += `
-                        <div class="cast-member">
-                            <div class="character-name">${parts[0]}</div>
-                            <div class="actor-name"></div>
-                        </div>
-                    `;
+                    formattedHTML += 
+                        '<div class="cast-member">' +
+                            '<div class="character-name">' + parts[0] + '</div>' +
+                            '<div class="actor-name"></div>' +
+                        '</div>';
                 }
             }
             

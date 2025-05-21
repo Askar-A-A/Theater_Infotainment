@@ -498,27 +498,35 @@
         
         document.addEventListener('DOMContentLoaded', function() {
             // Language dropdown functionality
-            const languageDropdown = document.getElementById('languageDropdown');
-            const selectedLanguageText = document.getElementById('selectedLanguage');
+            var languageDropdown = document.getElementById('languageDropdown');
+            var selectedLanguageText = document.getElementById('selectedLanguage');
             
             // Set active language in dropdown
-            const currentLang = document.cookie
-                .split('; ')
-                .find(row => row.startsWith('django_language='));
-            const langValue = currentLang ? currentLang.split('=')[1] : 'en';
+            var currentLang = null;
+            var cookies = document.cookie.split('; ');
+            for(var i=0; i < cookies.length; i++) {
+                var c = cookies[i];
+                if (c.indexOf('django_language=') === 0) {
+                    currentLang = c;
+                    break;
+                }
+            }
+            var langValue = currentLang ? currentLang.split('=')[1] : 'en';
                 
-            const languageOptions = document.querySelectorAll('.language-option');
-            let activeLanguageName = "Select Language";
+            var languageOptions = document.querySelectorAll('.language-option');
+            var activeLanguageName = "Select Language";
             
-            languageOptions.forEach(option => {
-                const langCode = option.getAttribute('href').split("'")[1];
+            // Replace forEach with for loop
+            for (var i = 0; i < languageOptions.length; i++) {
+                var option = languageOptions[i];
+                var langCode = option.getAttribute('href').split("'")[1];
                 if (langCode === langValue) {
                     option.classList.add('active');
                     activeLanguageName = option.getAttribute('data-lang');
                 } else {
                     option.classList.remove('active');
                 }
-            });
+            }
             
             // Set the selected language text
             selectedLanguageText.textContent = activeLanguageName;
@@ -535,20 +543,30 @@
             });
             
             // Close dropdown and set selected language when clicking an option
-            languageOptions.forEach(option => {
+            // Replace forEach with for loop
+            for (var i = 0; i < languageOptions.length; i++) {
+                var option = languageOptions[i];
                 option.addEventListener('click', function(e) {
                     e.stopPropagation();
                     selectedLanguageText.textContent = this.getAttribute('data-lang');
                     languageDropdown.classList.remove('open');
                     // The actual language change is handled by the setLanguage function
                 });
-            });
+            }
             
             // Get height preference from cookie
             function getHeightPreference() {
                 // First check URL parameter (takes precedence)
-                const urlParams = new URLSearchParams(window.location.search);
-                const heightParam = urlParams.get('height');
+                var heightParam = null;
+                var search = window.location.search.substring(1);
+                var params = search.split('&');
+                for (var i = 0; i < params.length; i++) {
+                    var param = params[i].split('=');
+                    if (param[0] === 'height') {
+                        heightParam = param[1];
+                        break;
+                    }
+                }
                 
                 if (heightParam === '400' || heightParam === '800' || heightParam === '600') {
                     // Save preference to cookie if it comes from URL
@@ -557,28 +575,31 @@
                 }
                 
                 // Otherwise check cookie
-                const heightCookie = getCookie('displayHeight');
+                var heightCookie = getCookie('displayHeight');
                 return heightCookie || '800'; // Default to 800px
             }
             
             // Get cookie value by name
             function getCookie(name) {
-                const cookieValue = document.cookie
-                    .split('; ')
-                    .find(row => row.startsWith(name + '='));
-                    
-                return cookieValue ? cookieValue.split('=')[1] : null;
+                var nameEQ = name + "=";
+                var ca = document.cookie.split(';');
+                for(var i=0; i < ca.length; i++) {
+                    var c = ca[i];
+                    while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+                }
+                return null;
             }
             
             // Set height cookie function
             function setHeightCookie(height) {
-                const expiryDate = new Date();
+                var expiryDate = new Date();
                 expiryDate.setDate(expiryDate.getDate() + 30);
-                document.cookie = `displayHeight=${height};expires=${expiryDate.toUTCString()};path=/`;
+                document.cookie = 'displayHeight=' + height + ';expires=' + expiryDate.toUTCString() + ';path=/';
             }
             
             // Apply height class
-            const heightPreference = getHeightPreference();
+            var heightPreference = getHeightPreference();
             console.log("Height preference detected:", heightPreference); // Debug log
             if (heightPreference === '400') {
                 document.body.classList.add('height-400');
@@ -604,7 +625,7 @@
             }
             
             // Update height label in toggle button if it exists
-            const heightLabel = document.getElementById('heightLabel');
+            var heightLabel = document.getElementById('heightLabel');
             if (heightLabel) {
                 heightLabel.textContent = heightPreference + 'px';
             }

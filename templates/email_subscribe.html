@@ -614,9 +614,9 @@
 <script>
     console.log("Height from cookie: {{ request.COOKIES.displayHeight }}");
     document.addEventListener('DOMContentLoaded', function() {
-        const subscribeForm = document.getElementById('subscribe-form');
-        const successMessage = document.getElementById('success-message');
-        const emailField = document.getElementById('email');
+        var subscribeForm = document.getElementById('subscribe-form');
+        var successMessage = document.getElementById('success-message');
+        var emailField = document.getElementById('email');
         
         // If success message is visible, hide the form
         if (successMessage.style.display === 'block') {
@@ -631,12 +631,11 @@
         emailField.style.display = 'block';
         
         // Remove the success flag after page load (for when user navigates back)
-        fetch('{% url "user_interactions:clear_subscription_messages" %}', {
-            method: 'POST',
-            headers: {
-                'X-CSRFToken': '{{ csrf_token }}'
-            }
-        });
+        // Using XMLHttpRequest instead of fetch for older browser compatibility
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '{% url "user_interactions:clear_subscription_messages" %}', true);
+        xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+        xhr.send();
     });
 </script>
 {% endblock %}
