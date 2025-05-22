@@ -135,7 +135,10 @@ USE_L10N = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Different directory for collected files
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),  # Source directory
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -145,11 +148,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Media and static files settings
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-# Add this if not present
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'theater_config/static'),
-]
 
 # CMS settings
 CMS_TEMPLATES = [

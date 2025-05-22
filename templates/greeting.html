@@ -7,9 +7,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>{% placeholder "greeting_page_title" or %}Welcome - Opera House{% endplaceholder %}</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Add fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap">
+    <link rel="stylesheet" href="{% static 'css/font-awesome/all.min.css' %}">
+    <!-- Removed Google Fonts references -->
     {% render_block "css" %}
     <style>
         /* Reset and base styles - matching base.html */
@@ -26,7 +25,7 @@
             height: 800px; 
             max-height: 100%;
             color: #fff;
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
             line-height: 1.6;
             overflow: hidden;
         }
@@ -189,7 +188,7 @@
         
         /* Content styling - Adjust margins */
         .welcome-title {
-            font-family: 'Playfair Display', serif;
+            font-family: Georgia, serif;
             font-size: 3.5rem;
             margin-bottom: 0;
             color: var(--color-gold);
@@ -201,7 +200,7 @@
         }
         
         .welcome-subtitle {
-            font-family: 'Playfair Display', serif;
+            font-family: Georgia, serif;
             font-size: 3rem;
             color: var(--color-gold);
             font-style: italic;
@@ -238,7 +237,7 @@
             color: rgba(255, 255, 255, 0.85);
             margin-bottom: 0;
             max-width: 100%;
-            font-family: 'Roboto', sans-serif;
+            font-family: Arial, sans-serif;
             font-weight: 300;
         }
         .welcome-text p {
