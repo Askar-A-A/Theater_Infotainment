@@ -60,19 +60,75 @@
         /* Gold accent lines already removed */
         /* .gold-line-top, .gold-line-bottom { display: none; } */
         
-        /* Greeting container for centering content */
+        /* Greeting container - remove animation and ensure proper z-index */
         .greeting-container {
             width: 100%;
             height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            padding: 0 var(--spacing-xl) var(--spacing-lg) var(--spacing-xl);
-            opacity: 0;
-            animation: fadeIn 1.5s ease-out 0.5s forwards;
+            /* Replace flexbox with table layout for older browsers */
+            display: block;
             text-align: center;
+            padding: 0 4rem 2.5rem 4rem; /* Use direct values instead of variables */
+            position: relative;
+            z-index: 10;
+            /* Remove opacity and animation */
+            opacity: 1;
+            animation: none;
+        }
+        
+        /* Center content using older-compatible approach */
+        .greeting-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+        }
+        
+        /* Simplify divider */
+        .divider {
+            width: 220px;
+            height: 1px;
+            background: #d4af37; /* Solid color instead of gradient */
+            margin: 0 auto 0.75rem;
+        }
+        
+        /* Simplify welcome text frame */
+        .welcome-text-frame {
+            border: 1px solid #b8a062;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            max-width: 750px;
+            width: 85%;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 8px;
+            background-color: #000; /* Solid color instead of transparent */
+        }
+        
+        /* Make enter button more robust */
+        .enter-button {
+            display: inline-block;
+            padding: 15px 60px;
+            font-size: 1.3rem;
+            line-height: 1.4;
+            letter-spacing: 1.8px;
+            color: #d4af37;
+            background-color: #000; /* Solid color */
+            border: 1px solid #d4af37;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            position: relative;
+            font-weight: 500;
+            z-index: 100;
+            /* Remove effects that might cause issues */
+            overflow: visible;
+            box-shadow: none;
+        }
+        
+        /* Remove pseudo-element with gradient and animation */
+        .enter-button::before {
+            display: none;
         }
         
         /* Language selector - Positioned closer to content */
@@ -210,27 +266,6 @@
             font-weight: 400;
         }
         
-        .divider {
-            width: 220px;
-            height: 1px;
-            background: linear-gradient(to right, transparent 0%, var(--color-gold) 50%, transparent 100%);
-            margin: 0 auto var(--spacing-sm);
-            opacity: 0.7;
-        }
-        
-        /* Style the new frame for welcome text */
-        .welcome-text-frame {
-            border: 1px solid var(--color-gold-muted);
-            padding: var(--spacing-md);
-            margin-bottom: var(--spacing-md);
-            max-width: 750px;
-            width: 85%;
-            margin-left: auto;
-            margin-right: auto;
-            border-radius: var(--border-radius);
-            background-color: rgba(255, 255, 255, 0.02);
-        }
-        
         .welcome-text {
             font-size: 1.25rem;
             line-height: 1.7;
@@ -252,7 +287,7 @@
             line-height: 1.4;
             letter-spacing: 1.8px;
             color: var(--color-gold);
-            background-color: rgba(0, 0, 0, 0.3);
+            background-color: rgba(0, 0, 0, 0.7);
             border: 1px solid var(--color-gold);
             border-radius: 5px;
             cursor: pointer;
@@ -262,6 +297,7 @@
             overflow: hidden;
             font-weight: 500;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 100;
         }
         
         .enter-button::before {

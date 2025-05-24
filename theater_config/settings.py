@@ -224,6 +224,7 @@ CMS_PLACEHOLDER_CONF = {
         'plugins': ['TextPlugin'],
         'default_plugins': [],
     },
+              
 }
 
 LOCALE_PATHS = [
