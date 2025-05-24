@@ -39,40 +39,23 @@
             overflow: hidden;
         }
         
-        /* Variables for greeting page */
-        :root {
-            --color-gold: #d4af37;
-            --color-gold-muted: #b8a062;
-            --color-dark: #000;
-            --color-dark-accent: #111;
-            --spacing-sm: 0.75rem;
-            --spacing-md: 1.5rem;
-            --spacing-lg: 2.5rem;
-            --spacing-xl: 4rem;
-            --border-radius: 8px;
-        }
+        /* Remove CSS variables and use direct values */
         
         /* Background elements */
         .bg-pattern {
             display: none;
         }
         
-        /* Gold accent lines already removed */
-        /* .gold-line-top, .gold-line-bottom { display: none; } */
-        
-        /* Greeting container - remove animation and ensure proper z-index */
+        /* Greeting container - simplified for compatibility */
         .greeting-container {
             width: 100%;
             height: 100%;
-            /* Replace flexbox with table layout for older browsers */
             display: block;
             text-align: center;
-            padding: 0 4rem 2.5rem 4rem; /* Use direct values instead of variables */
+            padding: 0 4rem 2.5rem 4rem;
             position: relative;
             z-index: 10;
-            /* Remove opacity and animation */
-            opacity: 1;
-            animation: none;
+            opacity: 1; /* Set opacity to 1 */
         }
         
         /* Center content using older-compatible approach */
@@ -80,62 +63,17 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
             width: 90%;
-        }
-        
-        /* Simplify divider */
-        .divider {
-            width: 220px;
-            height: 1px;
-            background: #d4af37; /* Solid color instead of gradient */
-            margin: 0 auto 0.75rem;
-        }
-        
-        /* Simplify welcome text frame */
-        .welcome-text-frame {
-            border: 1px solid #b8a062;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            max-width: 750px;
-            width: 85%;
-            margin-left: auto;
-            margin-right: auto;
-            border-radius: 8px;
-            background-color: #000; /* Solid color instead of transparent */
-        }
-        
-        /* Make enter button more robust */
-        .enter-button {
-            display: inline-block;
-            padding: 15px 60px;
-            font-size: 1.3rem;
-            line-height: 1.4;
-            letter-spacing: 1.8px;
-            color: #d4af37;
-            background-color: #000; /* Solid color */
-            border: 1px solid #d4af37;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
-            position: relative;
-            font-weight: 500;
-            z-index: 100;
-            /* Remove effects that might cause issues */
-            overflow: visible;
-            box-shadow: none;
-        }
-        
-        /* Remove pseudo-element with gradient and animation */
-        .enter-button::before {
-            display: none;
+            /* Use margin instead of transform for older browser compatibility */
+            margin-left: -45%; /* Half of width */
+            margin-top: -20%; /* Approximate vertical centering */
         }
         
         /* Language selector - Positioned closer to content */
         .language-selector {
             position: absolute;
-            top: var(--spacing-md);
-            left: var(--spacing-xl);
+            top: 1.5rem;
+            left: 4rem;
             z-index: 10;
         }
         
@@ -145,43 +83,42 @@
         }
         
         .language-selected {
-            color: var(--color-gold);
-            background-color: rgba(0, 0, 0, 0.5);
-            border: 1px solid var(--color-gold-muted);
+            color: #d4af37;
+            background-color: #000;
+            border: 1px solid #b8a062;
             padding: 12px 18px;
             font-size: 17px;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            display: block;
             min-width: 160px;
-            /* Round all corners initially */
             border-radius: 5px;
             position: relative;
             z-index: 11;
+            text-align: left;
         }
         
         .language-selected i {
             margin-left: 10px;
-            transition: transform 0.3s;
+            float: right;
         }
         
         .language-options {
             position: absolute;
-            /* Position slightly overlapping the button's bottom edge */
-            top: calc(100% - 1px);
+            top: 100%;
             left: 0;
-            background-color: rgba(0, 0, 0, 0.8);
-            border: 1px solid var(--color-gold-muted);
+            background-color: #000;
+            border: 1px solid #b8a062;
             border-top: none;
             border-radius: 0 0 5px 5px;
             width: 100%;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-            /* Adjust shadow slightly if needed, maybe add a vertical offset */
-            box-shadow: 0 6px 15px -1px rgba(0, 0, 0, 0.3);
+            /* Replace max-height transition with display property */
+            display: none;
             z-index: 10;
+        }
+        
+        /* Show options when dropdown is open */
+        .language-dropdown.open .language-options {
+            display: block;
         }
         
         /* When dropdown is open, adjust the selected button's radius */
@@ -189,18 +126,13 @@
             border-radius: 5px 5px 0 0;
         }
         
-        .language-dropdown.open .language-options {
-            max-height: 350px;
-        }
-        
         .language-option {
-            color: rgba(255, 255, 255, 0.7);
+            color: #cccccc;
             text-decoration: none;
             font-size: 16px;
-            transition: all 0.3s ease;
             padding: 8px 15px;
             display: block;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid #333;
         }
         
         .language-option:last-child {
@@ -208,162 +140,146 @@
         }
         
         .language-option:hover, .language-option.active {
-            color: var(--color-gold);
-            background-color: rgba(212, 175, 55, 0.1);
+            color: #d4af37;
+            background-color: #111;
         }
         
-        /* Main content box - Remove all styles as the div will be removed */
-        .content-box {
-            /* All rules removed */
-        }
-        
-        /* Corner accents already removed */
-        /* .content-box::before, ... { display: none; } */
-        
-        /* Logo container - Make larger and adjust margins */
+        /* Logo container - simplified styles */
         .opera-logo {
-            display: flex;
-            justify-content: center;
-            align-items: center;
             width: 220px;
             height: 220px;
-            margin: 0 auto var(--spacing-lg);
+            margin: 0 auto 2.5rem;
             position: relative;
             background-color: #fff;
             border-radius: 50%;
             padding: 15px;
-            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+            text-align: center;
         }
         
         .opera-logo img {
             max-width: 100%;
             max-height: 100%;
-            object-fit: contain;
             display: block;
+            margin: 0 auto;
         }
         
-        /* Content styling - Adjust margins */
+        /* Titles container for alignment */
+        .welcome-titles-container {
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+        
+        /* Content styling - simplified */
         .welcome-title {
             font-family: Georgia, serif;
             font-size: 3.5rem;
             margin-bottom: 0;
-            color: var(--color-gold);
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
-            margin-top: -0.7em;
-            position: relative;
+            color: #d4af37;
+            text-shadow: none;
             font-style: normal;
             font-weight: 700;
+            display: inline-block;
         }
         
         .welcome-subtitle {
             font-family: Georgia, serif;
             font-size: 3rem;
-            color: var(--color-gold);
+            color: #d4af37;
             font-style: italic;
-            margin-bottom: var(--spacing-sm);
-            margin-top: -0.3em;
-            position: relative;
+            margin-bottom: 0.75rem;
             font-weight: 400;
+            display: inline-block;
+        }
+        
+        /* Simplify divider */
+        .divider {
+            width: 220px;
+            height: 1px;
+            background: #d4af37;
+            margin: 0 auto 0.75rem;
+        }
+        
+        /* Style the new frame for welcome text */
+        .welcome-text-frame {
+            border: 1px solid #b8a062;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            max-width: 750px;
+            width: 85%;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 8px;
+            background-color: #111;
         }
         
         .welcome-text {
             font-size: 1.25rem;
             line-height: 1.7;
-            color: rgba(255, 255, 255, 0.85);
+            color: #dddddd;
             margin-bottom: 0;
             max-width: 100%;
             font-family: Arial, sans-serif;
             font-weight: 300;
         }
+        
         .welcome-text p {
             margin: 0;
         }
         
-        /* Enhanced enter button - Adjust padding for text */
+        /* Simplified enter button - remove all effects */
         .enter-button {
             display: inline-block;
             padding: 15px 60px;
             font-size: 1.3rem;
             line-height: 1.4;
             letter-spacing: 1.8px;
-            color: var(--color-gold);
-            background-color: rgba(0, 0, 0, 0.7);
-            border: 1px solid var(--color-gold);
+            color: #d4af37;
+            background-color: #000;
+            border: 1px solid #d4af37;
             border-radius: 5px;
             cursor: pointer;
-            transition: all 0.3s ease;
             text-decoration: none;
             position: relative;
-            overflow: hidden;
             font-weight: 500;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             z-index: 100;
         }
         
-        .enter-button::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: all 0.5s ease;
-        }
-        
         .enter-button:hover {
-            color: #fff;
-            border-color: #fff;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
-            background-color: rgba(212, 175, 55, 0.1);
+            color: #ffffff;
+            border-color: #ffffff;
+            background-color: #222;
         }
         
-        .enter-button:hover::before {
-            left: 100%;
-        }
-        
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        /* Responsive styles for 400px height - with improved spacing */
+        /* Responsive styles for 400px height - simplified */
         body.height-400, body.height-400 .content-wrapper {
             height: 400px;
         }
 
         body.height-400 .greeting-container {
-            padding: 0 var(--spacing-sm) 5px;
-            justify-content: flex-start;
-            padding-top: 20px; /* Reduced but still gives some space at top */
+            padding: 0 0.75rem 5px;
+            padding-top: 20px;
         }
 
         body.height-400 .language-selector {
-            top: 12px; /* Adjusted for balance */
+            top: 12px;
             left: 18px;
         }
         
         body.height-400 .language-selected {
-            padding: 9px 16px; /* Increased */
-            font-size: 17px; /* Increased */
-            min-width: 170px; /* Increased */
+            padding: 9px 16px;
+            font-size: 17px;
+            min-width: 170px;
         }
 
         body.height-400 .opera-logo {
-            width: 120px; /* Slightly smaller to create more space */
+            width: 120px;
             height: 120px;
-            margin-bottom: 5px; /* Added some spacing */
+            margin-bottom: 5px;
             padding: 10px;
         }
 
         body.height-400 .welcome-titles-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 5px; /* Increased from 0.1rem */
-            flex-wrap: wrap;
+            margin-bottom: 5px;
         }
 
         body.height-400 .welcome-title {
@@ -371,40 +287,40 @@
             margin-top: 0;
             margin-right: 12px;
             margin-bottom: 0;
-            line-height: 1.2; /* Slightly increased */
+            line-height: 1.2;
         }
 
         body.height-400 .welcome-subtitle {
             font-size: 2.2rem;
             margin-top: 0;
             margin-bottom: 0;
-            line-height: 1.2; /* Slightly increased */
+            line-height: 1.2;
             font-style: normal;
             font-weight: 700;
         }
 
         body.height-400 .divider {
             width: 170px;
-            margin-bottom: 6px; /* Increased for more separation */
-            margin-top: 3px; /* Added top margin */
+            margin-bottom: 6px;
+            margin-top: 3px;
         }
 
         body.height-400 .welcome-text-frame {
             padding: 10px;
-            margin-bottom: 8px; /* Increased from 5px */
+            margin-bottom: 8px;
             width: 95%;
         }
 
         body.height-400 .welcome-text {
-            font-size: 1.3rem; /* Slightly reduced to fit better */
+            font-size: 1.3rem;
             line-height: 1.35;
         }
 
         body.height-400 .enter-button {
             padding: 8px 45px;
-            font-size: 1.35rem; /* Slightly reduced */
+            font-size: 1.35rem;
             letter-spacing: 1px;
-            margin-top: 4px; /* Added some space before button */
+            margin-top: 4px;
         }
         
         body.height-400 .height-toggle {
@@ -414,46 +330,41 @@
             font-size: 11px;
         }
         
-        /* Height toggle button - Positioned closer to content */
+        /* Height toggle button - simplified styling */
         .height-toggle {
             position: absolute;
-            top: var(--spacing-md);
-            right: var(--spacing-xl);
+            top: 1.5rem;
+            right: 4rem;
             z-index: 9999;
-            background: rgba(0, 0, 0, 0.5);
-            color: var(--color-gold);
+            background: #000;
+            color: #d4af37;
             padding: 12px 22px;
-            border: 1px solid var(--color-gold);
+            border: 1px solid #d4af37;
             border-radius: 5px;
             cursor: pointer;
             font-size: 17px;
-            transition: all 0.3s ease;
             font-weight: 500;
             letter-spacing: 1px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         }
         
         .height-toggle:hover {
-            background-color: rgba(212, 175, 55, 0.1);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+            background-color: #111;
         }
 
-        /* New 1024x600 styles - add this after your existing height-specific styles */
+        /* New 1024x600 styles - simplified */
         body.height-600, body.height-600 .content-wrapper {
             height: 600px;
             width: 1024px;
         }
 
         body.height-600 .greeting-container {
-            padding: 0 var(--spacing-md) var(--spacing-sm);
-            justify-content: center;
-            padding-top: 50px; /* Balanced space at top */
+            padding: 0 1.5rem 0.75rem;
+            padding-top: 50px;
         }
 
         body.height-600 .language-selector {
-            top: var(--spacing-sm);
-            left: var(--spacing-md);
+            top: 0.75rem;
+            left: 1.5rem;
         }
 
         body.height-600 .language-selected {
@@ -463,18 +374,14 @@
         }
 
         body.height-600 .opera-logo {
-            width: 160px; /* In between 800px and 400px sizes */
+            width: 160px;
             height: 160px;
-            margin-bottom: var(--spacing-sm);
+            margin-bottom: 0.75rem;
             padding: 12px;
         }
 
         body.height-600 .welcome-titles-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
             margin-bottom: 10px;
-            flex-wrap: wrap;
         }
 
         body.height-600 .welcome-title {
@@ -499,7 +406,7 @@
         }
 
         body.height-600 .welcome-text-frame {
-            padding: var(--spacing-sm);
+            padding: 0.75rem;
             margin-bottom: 15px;
             width: 90%;
             max-width: 650px;
@@ -518,8 +425,8 @@
         }
 
         body.height-600 .height-toggle {
-            top: var(--spacing-sm);
-            right: var(--spacing-md);
+            top: 0.75rem;
+            right: 1.5rem;
             padding: 8px 15px;
             font-size: 15px;
         }
@@ -531,7 +438,8 @@
             window.location.reload();
         }
         
-        document.addEventListener('DOMContentLoaded', function() {
+        // Simplified initialization script
+        function initGreetingPage() {
             // Language dropdown functionality
             var languageDropdown = document.getElementById('languageDropdown');
             var selectedLanguageText = document.getElementById('selectedLanguage');
@@ -548,115 +456,82 @@
             }
             var langValue = currentLang ? currentLang.split('=')[1] : 'en';
                 
-            var languageOptions = document.querySelectorAll('.language-option');
+            var languageOptions = document.getElementsByClassName('language-option');
             var activeLanguageName = "Select Language";
             
-            // Replace forEach with for loop
+            // Loop through options to find active language
             for (var i = 0; i < languageOptions.length; i++) {
                 var option = languageOptions[i];
                 var langCode = option.getAttribute('href').split("'")[1];
                 if (langCode === langValue) {
-                    option.classList.add('active');
+                    option.className += ' active';
                     activeLanguageName = option.getAttribute('data-lang');
-                } else {
-                    option.classList.remove('active');
                 }
             }
             
             // Set the selected language text
-            selectedLanguageText.textContent = activeLanguageName;
+            if (selectedLanguageText) {
+                selectedLanguageText.textContent = activeLanguageName;
+            }
             
             // Toggle dropdown on click
-            languageDropdown.querySelector('.language-selected').addEventListener('click', function(e) {
-                e.stopPropagation();
-                languageDropdown.classList.toggle('open');
-            });
+            if (languageDropdown) {
+                var languageSelectedButton = languageDropdown.getElementsByClassName('language-selected')[0];
+                if (languageSelectedButton) {
+                    languageSelectedButton.onclick = function(e) {
+                        if (e.stopPropagation) e.stopPropagation();
+                        
+                        // Toggle the open class
+                        if (languageDropdown.className.indexOf('open') === -1) {
+                            languageDropdown.className += ' open';
+                        } else {
+                            languageDropdown.className = languageDropdown.className.replace(' open', '');
+                        }
+                        return false;
+                    };
+                }
+            }
             
             // Close dropdown when clicking outside
-            document.addEventListener('click', function() {
-                languageDropdown.classList.remove('open');
-            });
-            
-            // Close dropdown and set selected language when clicking an option
-            // Replace forEach with for loop
-            for (var i = 0; i < languageOptions.length; i++) {
-                var option = languageOptions[i];
-                option.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    selectedLanguageText.textContent = this.getAttribute('data-lang');
-                    languageDropdown.classList.remove('open');
-                    // The actual language change is handled by the setLanguage function
-                });
-            }
-            
-            // Get height preference from cookie
-            function getHeightPreference() {
-                // First check URL parameter (takes precedence)
-                var heightParam = null;
-                var search = window.location.search.substring(1);
-                var params = search.split('&');
-                for (var i = 0; i < params.length; i++) {
-                    var param = params[i].split('=');
-                    if (param[0] === 'height') {
-                        heightParam = param[1];
-                        break;
-                    }
+            document.onclick = function() {
+                if (languageDropdown && languageDropdown.className.indexOf('open') !== -1) {
+                    languageDropdown.className = languageDropdown.className.replace(' open', '');
                 }
-                
-                if (heightParam === '400' || heightParam === '800' || heightParam === '600') {
-                    // Save preference to cookie if it comes from URL
-                    setHeightCookie(heightParam);
-                    return heightParam;
-                }
-                
-                // Otherwise check cookie
-                var heightCookie = getCookie('displayHeight');
-                return heightCookie || '800'; // Default to 800px
-            }
+            };
             
-            // Get cookie value by name
-            function getCookie(name) {
-                var nameEQ = name + "=";
-                var ca = document.cookie.split(';');
-                for(var i=0; i < ca.length; i++) {
-                    var c = ca[i];
-                    while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-                    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-                }
-                return null;
-            }
-            
-            // Set height cookie function
-            function setHeightCookie(height) {
-                var expiryDate = new Date();
-                expiryDate.setDate(expiryDate.getDate() + 30);
-                document.cookie = 'displayHeight=' + height + ';expires=' + expiryDate.toUTCString() + ';path=/';
-            }
-            
-            // Apply height class
+            // Apply height class based on preference
             var heightPreference = getHeightPreference();
-            console.log("Height preference detected:", heightPreference); // Debug log
+            
             if (heightPreference === '400') {
-                document.body.classList.add('height-400');
-                document.body.classList.remove('height-800');
-                document.body.classList.remove('height-600');
-                // Explicitly set dimensions via inline style as well
+                document.body.className = 'height-400';
+                document.body.style.width = '1280px';
                 document.body.style.height = '400px';
-                document.querySelector('.content-wrapper').style.height = '400px';
+                
+                var contentWrapper = document.getElementsByClassName('content-wrapper')[0];
+                if (contentWrapper) {
+                    contentWrapper.style.width = '1280px';
+                    contentWrapper.style.height = '400px';
+                }
             } else if (heightPreference === '600') {
-                document.body.classList.add('height-600');
-                document.body.classList.remove('height-800');
-                document.body.classList.remove('height-400');
-                document.body.style.height = '600px';
+                document.body.className = 'height-600';
                 document.body.style.width = '1024px';
-                document.querySelector('.content-wrapper').style.height = '600px';
-                document.querySelector('.content-wrapper').style.width = '1024px';
+                document.body.style.height = '600px';
+                
+                var contentWrapper = document.getElementsByClassName('content-wrapper')[0];
+                if (contentWrapper) {
+                    contentWrapper.style.width = '1024px';
+                    contentWrapper.style.height = '600px';
+                }
             } else {
-                document.body.classList.add('height-800');
-                document.body.classList.remove('height-400');
-                document.body.classList.remove('height-600');
+                document.body.className = 'height-800';
+                document.body.style.width = '1280px';
                 document.body.style.height = '800px';
-                document.querySelector('.content-wrapper').style.height = '800px';
+                
+                var contentWrapper = document.getElementsByClassName('content-wrapper')[0];
+                if (contentWrapper) {
+                    contentWrapper.style.width = '1280px';
+                    contentWrapper.style.height = '800px';
+                }
             }
             
             // Update height label in toggle button if it exists
@@ -664,17 +539,75 @@
             if (heightLabel) {
                 heightLabel.textContent = heightPreference + 'px';
             }
-        });
+        }
+        
+        // Function to get height preference from cookie or URL
+        function getHeightPreference() {
+            // First check URL parameter (takes precedence)
+            var heightParam = null;
+            var search = window.location.search.substring(1);
+            var params = search.split('&');
+            for (var i = 0; i < params.length; i++) {
+                var param = params[i].split('=');
+                if (param[0] === 'height') {
+                    heightParam = param[1];
+                    break;
+                }
+            }
+            
+            if (heightParam === '400' || heightParam === '800' || heightParam === '600') {
+                // Save preference to cookie if it comes from URL
+                setHeightCookie(heightParam);
+                setWidthCookie(heightParam === '600' ? '1024' : '1280');
+                return heightParam;
+            }
+            
+            // Otherwise check cookie
+            var heightCookie = getCookie('displayHeight');
+            return heightCookie || '800'; // Default to 800px
+        }
+        
+        // Function to set height cookie (expires in 30 days)
+        function setHeightCookie(height) {
+            var expiryDate = new Date();
+            expiryDate.setDate(expiryDate.getDate() + 30);
+            document.cookie = 'displayHeight=' + height + ';expires=' + expiryDate.toUTCString() + ';path=/';
+        }
+        
+        // Function to set width cookie (expires in 30 days)
+        function setWidthCookie(width) {
+            var expiryDate = new Date();
+            expiryDate.setDate(expiryDate.getDate() + 30);
+            document.cookie = 'displayWidth=' + width + ';expires=' + expiryDate.toUTCString() + ';path=/';
+        }
+        
+        // Function to get cookie value by name
+        function getCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for(var i=0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+        
+        // Cross-browser way to initialize the page
+        if (window.addEventListener) {
+            window.addEventListener('load', initGreetingPage);
+        } else if (window.attachEvent) {
+            window.attachEvent('onload', initGreetingPage);
+        } else {
+            window.onload = initGreetingPage;
+        }
     </script>
 </head>
 
-<body>
+<body class="height-800">
     {% cms_toolbar %}
     <div class="content-wrapper">
         <div class="greeting-container">
-            <!-- Background pattern -->
-            <div class="bg-pattern"></div>
-            
             <!-- Language selector - converted to dropdown at top left -->
             <div class="language-selector">
                 <div class="language-dropdown" id="languageDropdown">
@@ -697,39 +630,42 @@
                 </div>
             </div>
             
-            <!-- Opera logo placeholder -->
-            <div class="opera-logo">
-                {% placeholder "opera_logo" %}
-            </div>
-            
-            <div class="welcome-titles-container">
-                <h1 class="welcome-title">
-                    {% placeholder "greeting_title" or %}Welcome{% endplaceholder %}
-                </h1>
-                
-                <h2 class="welcome-subtitle">
-                    {% placeholder "theater_name" or %}Theater Name{% endplaceholder %}
-                </h2>
-            </div>
-            
-            <div class="divider"></div>
-            
-            <!-- Added wrapper for the text frame -->
-            <div class="welcome-text-frame">
-                <div class="welcome-text">
-                    {% placeholder "greeting_text" or %}
-                    <p>
-                        Experience extraordinary performances in one of the world's most beautiful opera houses. 
-                        Our digital infotainment system offers information about today's performance, upcoming events, 
-                        and the rich history of our celebrated institution.
-                    </p>
-                    {% endplaceholder %}
+            <!-- Content container for better centering -->
+            <div class="greeting-content">
+                <!-- Opera logo placeholder -->
+                <div class="opera-logo">
+                    {% placeholder "opera_logo" %}
                 </div>
+                
+                <div class="welcome-titles-container">
+                    <h1 class="welcome-title">
+                        {% placeholder "greeting_title" or %}Welcome{% endplaceholder %}
+                    </h1>
+                    
+                    <h2 class="welcome-subtitle">
+                        {% placeholder "theater_name" or %}Theater Name{% endplaceholder %}
+                    </h2>
+                </div>
+                
+                <div class="divider"></div>
+                
+                <!-- Added wrapper for the text frame -->
+                <div class="welcome-text-frame">
+                    <div class="welcome-text">
+                        {% placeholder "greeting_text" or %}
+                        <p>
+                            Experience extraordinary performances in one of the world's most beautiful opera houses. 
+                            Our digital infotainment system offers information about today's performance, upcoming events, 
+                            and the rich history of our celebrated institution.
+                        </p>
+                        {% endplaceholder %}
+                    </div>
+                </div>
+                
+                <a href="/sponsors/" class="enter-button">
+                    {% placeholder "enter_button_text" or %}ENTER{% endplaceholder %}
+                </a>
             </div>
-            
-            <a href="/sponsors/" class="enter-button">
-                {% placeholder "enter_button_text" or %}ENTER{% endplaceholder %}
-            </a>
         </div>
     </div>
 
