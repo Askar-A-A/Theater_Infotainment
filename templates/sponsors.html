@@ -35,20 +35,19 @@
         width: 1280px;
         height: 800px;
         position: relative;
-        background: #000; /* Changed to solid black */
+        background: rgb(59, 57, 57); /* Match the background in base.html */
         overflow: hidden;
     }
     
-    /* Variables for consistent styling */
-    :root {
-        --color-gold: #d4af37;
-        --color-gold-muted: #b8a062;
-        --spacing-sm: 0.75rem;
-        --spacing-md: 1.5rem;
-        --spacing-lg: 2.5rem;
-        --spacing-xl: 4rem;
-        --border-radius: 8px;
-    }
+    /* COMPATIBILITY: Replaced CSS variables with direct values */
+    /* Color and spacing constants as comments for reference */
+    /* --color-gold: #d4af37; */
+    /* --color-gold-muted: #b8a062; */
+    /* --spacing-sm: 0.75rem; */
+    /* --spacing-md: 1.5rem; */
+    /* --spacing-lg: 2.5rem; */
+    /* --spacing-xl: 4rem; */
+    /* --border-radius: 8px; */
     
     /* Resolution-specific adjustments */
     body.height-800, 
@@ -73,32 +72,30 @@
     .sponsors-container {
         width: 100%;
         height: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-between;
+        /* COMPATIBILITY: Replaced flexbox with table-based layout */
         position: relative;
-        padding: var(--spacing-lg) var(--spacing-md);
-        opacity: 0;
-        animation: fadeIn 1.5s ease-out 0.5s forwards;
+        padding: 2.5rem 1.5rem;
         text-align: center;
+        /* COMPATIBILITY: Removed animation opacity:0 and replaced with simple display */
+        display: block;
     }
     
     /* Title area */
     .sponsors-title {
         font-family: Georgia, serif;
         font-size: 3.5rem;
-        color: var(--color-gold);
-        margin-bottom: var(--spacing-sm);
-        text-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+        color: #d4af37; /* Direct gold color */
+        margin-bottom: 0.75rem;
+        /* COMPATIBILITY: Removed text-shadow */
     }
     
     /* Divider */
     .divider {
         width: 300px;
         height: 2px;
-        background: linear-gradient(to right, transparent 0%, var(--color-gold) 50%, transparent 100%);
-        margin: 0 auto var(--spacing-md);
+        /* COMPATIBILITY: Replaced gradient with solid color */
+        background: #d4af37;
+        margin: 0 auto 1.5rem;
         opacity: 0.7;
     }
     
@@ -106,7 +103,7 @@
     .sponsors-intro {
         text-align: center;
         max-width: 80%;
-        margin: 0 auto var(--spacing-lg);
+        margin: 0 auto 2.5rem;
         color: rgba(255, 255, 255, 0.9);
         font-size: 1.4rem;
         line-height: 1.6;
@@ -114,60 +111,66 @@
         font-weight: 300;
     }
     
-    /* New side-by-side sponsor sections */
+    /* COMPATIBILITY: Replaced flexbox row with table layout */
     .sponsors-row {
-        display: flex;
-        justify-content: center;
         width: 100%;
-        gap: var(--spacing-lg);
-        margin-bottom: var(--spacing-lg);
-        flex-grow: 1;
+        margin-bottom: 2.5rem;
+        /* COMPATIBILITY: Use table for layout */
+        display: table;
+        table-layout: fixed;
     }
     
     /* Sponsor category boxes */
     .sponsor-box {
-        flex: 1;
-        max-width: 500px; /* Very slight increase */
+        /* COMPATIBILITY: Replaced flex with table-cell */
+        display: table-cell;
+        width: 50%;
+        max-width: 500px;
         background-color: rgba(0, 0, 0, 0.4);
         border: 2px solid rgba(212, 175, 55, 0.3);
         border-radius: 10px;
-        padding: var(--spacing-md) var(--spacing-md) var(--spacing-lg);
+        padding: 1.5rem 1.5rem 2.5rem;
         position: relative;
-        display: flex;
-        flex-direction: column;
+        vertical-align: top;
+    }
+    
+    /* Add spacing between boxes */
+    .sponsor-box:first-child {
+        padding-right: 1.25rem;
+    }
+    
+    .sponsor-box:last-child {
+        padding-left: 1.25rem;
     }
     
     /* Category headers with elegant styling */
     .sponsor-box-title {
         position: relative;
         text-align: center;
-        margin-bottom: var(--spacing-md);
-        padding-bottom: var(--spacing-sm);
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
         border-bottom: 1px solid rgba(212, 175, 55, 0.4);
     }
     
     .sponsor-box-title i {
-        color: var(--color-gold);
+        color: #d4af37; /* Direct gold color */
         font-size: 1.8rem;
         margin-right: 0.6rem;
         vertical-align: middle;
     }
     
     .sponsor-box-title span {
-        color: var(--color-gold);
+        color: #d4af37; /* Direct gold color */
         font-size: 1.8rem;
         font-weight: bold;
         vertical-align: middle;
     }
     
-    /* Sponsor grid within each box */
+    /* COMPATIBILITY: Replaced flexbox grid with table-based layout */
     .sponsors-grid {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: var(--spacing-md);
-        flex-grow: 1;
-        align-content: center;
+        /* COMPATIBILITY: Use float and inline-block instead of flexbox */
+        text-align: center;
+        margin: 0 auto;
     }
     
     /* Sponsor items - only slight increase to width */
@@ -177,11 +180,13 @@
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         width: 210px; /* Slight increase */
         height: 140px; /* More increase in height */
-        transition: all 0.3s ease;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        overflow: hidden;
+        /* COMPATIBILITY: Simplified transition */
+        transition: transform 0.3s;
+        /* COMPATIBILITY: Use inline-block instead of flex */
+        display: inline-block;
+        margin: 0.75rem;
+        position: relative;
+        vertical-align: middle;
     }
     
     .sponsor-item:hover {
@@ -193,7 +198,9 @@
         display: block;
         width: 100%;
         height: 100%;
-        object-fit: contain;
+        /* COMPATIBILITY: Removed object-fit */
+        max-width: 100%;
+        max-height: 100%;
         padding: 12px;
     }
     
@@ -210,42 +217,41 @@
         width: 60px;
         height: 60px;
         background-color: rgba(0, 0, 0, 0.5);
-        border: 2px solid var(--color-gold);
+        border: 2px solid #d4af37; /* Direct gold color */
         border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        /* COMPATIBILITY: Replaced flexbox with table-cell */
+        display: table-cell;
+        text-align: center;
+        vertical-align: middle;
         cursor: pointer;
-        transition: all 0.3s ease;
+        /* COMPATIBILITY: Simplified transition */
+        transition: background-color 0.3s;
         z-index: 10;
         text-decoration: none;
     }
 
     .arrow-button i {
-        color: var(--color-gold);
+        color: #d4af37; /* Direct gold color */
         font-size: 1.8rem;
-        transition: all 0.3s ease;
+        transition: color 0.3s;
+        /* COMPATIBILITY: Add line-height for vertical centering with table-cell */
+        line-height: 60px;
     }
 
     .arrow-button:hover {
         background-color: rgba(212, 175, 55, 0.2);
-        transform: scale(1.05);
+        /* COMPATIBILITY: Removed transform */
     }
 
     .arrow-button:hover i {
         color: #fff;
     }
     
-    /* Animations */
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
+    /* COMPATIBILITY: Removed keyframes animations */
     
     /* Responsive styles for 400px height */
     body.height-400 .sponsors-container {
         padding: 5px;
-        justify-content: flex-start;
     }
     
     body.height-400 .sponsors-title {
@@ -268,13 +274,20 @@
     }
     
     body.height-400 .sponsors-row {
-        gap: 8px;
         margin-bottom: 5px;
     }
     
     body.height-400 .sponsor-box {
         padding: 5px;
         border-width: 1px;
+    }
+    
+    body.height-400 .sponsor-box:first-child {
+        padding-right: 4px;
+    }
+    
+    body.height-400 .sponsor-box:last-child {
+        padding-left: 4px;
     }
     
     body.height-400 .sponsor-box-title {
@@ -290,13 +303,10 @@
         font-size: 1.1rem;
     }
     
-    body.height-400 .sponsors-grid {
-        gap: 4px;
-    }
-    
     body.height-400 .sponsor-item {
         width: 180px;
         height: 120px;
+        margin: 2px;
     }
     
     body.height-400 .sponsor-logo {
@@ -312,12 +322,12 @@
 
     body.height-400 .arrow-button i {
         font-size: 1.2rem;
+        line-height: 40px;
     }
     
     /* New 1024x600 styles */
     body.height-600 .sponsors-container {
         padding: 10px;
-        justify-content: flex-start;
     }
     
     body.height-600 .sponsors-title {
@@ -340,7 +350,6 @@
     }
     
     body.height-600 .sponsors-row {
-        gap: 12px;
         margin-bottom: 12px;
     }
     
@@ -348,6 +357,14 @@
         padding: 12px;
         border-width: 1.5px;
         max-width: 450px;
+    }
+    
+    body.height-600 .sponsor-box:first-child {
+        padding-right: 6px;
+    }
+    
+    body.height-600 .sponsor-box:last-child {
+        padding-left: 6px;
     }
     
     body.height-600 .sponsor-box-title {
@@ -363,13 +380,10 @@
         font-size: 1.5rem;
     }
     
-    body.height-600 .sponsors-grid {
-        gap: 10px;
-    }
-    
     body.height-600 .sponsor-item {
         width: 190px;
         height: 130px;
+        margin: 5px;
     }
     
     body.height-600 .sponsor-logo {
@@ -385,11 +399,27 @@
 
     body.height-600 .arrow-button i {
         font-size: 1.5rem;
+        line-height: 50px;
     }
 </style>
 {% render_block "js" %}
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    /* COMPATIBILITY: Using older event attachment method with fallback */
+    function addLoadEvent(func) {
+        var oldonload = window.onload;
+        if (typeof window.onload != 'function') {
+            window.onload = func;
+        } else {
+            window.onload = function() {
+                if (oldonload) {
+                    oldonload();
+                }
+                func();
+            }
+        }
+    }
+
+    addLoadEvent(function() {
         // Function to get height from cookie or URL parameter
         function getHeightPreference() {
             // First check URL parameter (takes precedence)
@@ -445,29 +475,35 @@
         // Apply height class based on preference
         var heightPreference = getHeightPreference();
         if (heightPreference === '400') {
-            document.body.classList.add('height-400');
-            document.body.classList.remove('height-800');
-            document.body.classList.remove('height-600');
+            document.body.className = 'height-400';
             document.body.style.width = '1280px';
             document.body.style.height = '400px';
-            document.querySelector('.content-wrapper').style.width = '1280px';
-            document.querySelector('.content-wrapper').style.height = '400px';
+            
+            var contentWrapper = document.querySelector('.content-wrapper');
+            if (contentWrapper) {
+                contentWrapper.style.width = '1280px';
+                contentWrapper.style.height = '400px';
+            }
         } else if (heightPreference === '600') {
-            document.body.classList.add('height-600');
-            document.body.classList.remove('height-800');
-            document.body.classList.remove('height-400');
+            document.body.className = 'height-600';
             document.body.style.width = '1024px';
             document.body.style.height = '600px';
-            document.querySelector('.content-wrapper').style.width = '1024px';
-            document.querySelector('.content-wrapper').style.height = '600px';
+            
+            var contentWrapper = document.querySelector('.content-wrapper');
+            if (contentWrapper) {
+                contentWrapper.style.width = '1024px';
+                contentWrapper.style.height = '600px';
+            }
         } else {
-            document.body.classList.add('height-800');
-            document.body.classList.remove('height-400');
-            document.body.classList.remove('height-600');
+            document.body.className = 'height-800';
             document.body.style.width = '1280px';
             document.body.style.height = '800px';
-            document.querySelector('.content-wrapper').style.width = '1280px';
-            document.querySelector('.content-wrapper').style.height = '800px';
+            
+            var contentWrapper = document.querySelector('.content-wrapper');
+            if (contentWrapper) {
+                contentWrapper.style.width = '1280px';
+                contentWrapper.style.height = '800px';
+            }
         }
     });
 </script>
