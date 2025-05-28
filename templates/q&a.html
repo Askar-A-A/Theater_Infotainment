@@ -151,20 +151,21 @@
 
     /* Answer styling */
     .answer {
-        max-height: 0;
+        height: 0;
         overflow: hidden;
-        /* COMPATIBILITY: Use height auto and display none instead of transitions for older browsers */
-        display: none;
-        padding: 0 20px;
+        /* COMPATIBILITY: Simplified for Android WebView 6.0 */
+        padding: 0;
         color: #fff;
         line-height: 1.6;
         box-sizing: border-box;
         text-align: left;
+        visibility: hidden;
     }
     
-    /* COMPATIBILITY: Show active answers with display block instead of max-height */
+    /* COMPATIBILITY: Simplified active state for older browsers */
     .answer.active {
-        display: block;
+        height: auto;
+        visibility: visible;
     }
     
     /* Height-specific adjustments for answer */
@@ -178,6 +179,12 @@
         padding: 12px 15px;
         font-size: 17px;
         line-height: 1.5;
+    }
+
+    body.height-600 .answer.active {
+        padding: 16px 18px;
+        font-size: 18px;
+        line-height: 1.6;
     }
 
     .answer a {
@@ -392,31 +399,53 @@ function addLoadEvent(func) {
 addLoadEvent(function() {
     var questions = document.getElementsByClassName('question');
     
+    function closeAllAnswers(exceptQuestion) {
+        for (var j = 0; j < questions.length; j++) {
+            var question = questions[j];
+            if (question !== exceptQuestion) {
+                question.classList.remove('active');
+                var answer = question.nextElementSibling;
+                if (answer) {
+                    // COMPATIBILITY: Simple display toggle for Android WebView
+                    answer.classList.remove('active');
+                    answer.style.height = '0';
+                    answer.style.padding = '0';
+                    answer.style.visibility = 'hidden';
+                }
+            }
+        }
+    }
+    
     for (var i = 0; i < questions.length; i++) {
         questions[i].onclick = function() {
-            // Toggle active class on question
-            if (this.className.indexOf('active') === -1) {
-                this.className += ' active';
-            } else {
-                this.className = this.className.replace(' active', '');
-            }
+            var answer = this.nextElementSibling;
+            var isExpanding = !this.classList.contains('active');
             
-            // Toggle active class on answer
-            var answer = this.nextElementSibling || this.nextSibling;
-            if (answer.className.indexOf('active') === -1) {
-                answer.className += ' active';
-            } else {
-                answer.className = answer.className.replace(' active', '');
-            }
+            // Close all other answers first
+            closeAllAnswers(isExpanding ? this : null);
             
-            // Close other answers
-            for (var j = 0; j < questions.length; j++) {
-                var otherQuestion = questions[j];
-                if (otherQuestion !== this) {
-                    otherQuestion.className = otherQuestion.className.replace(' active', '');
-                    var otherAnswer = otherQuestion.nextElementSibling || otherQuestion.nextSibling;
-                    otherAnswer.className = otherAnswer.className.replace(' active', '');
+            // Toggle active state
+            this.classList.toggle('active');
+            
+            // COMPATIBILITY: Simple toggle for Android WebView
+            if (isExpanding) {
+                answer.classList.add('active');
+                answer.style.visibility = 'visible';
+                answer.style.height = 'auto';
+                
+                // Set padding based on screen height
+                if (document.body.classList.contains('height-800')) {
+                    answer.style.padding = '20px';
+                } else if (document.body.classList.contains('height-400')) {
+                    answer.style.padding = '12px 15px';
+                } else if (document.body.classList.contains('height-600')) {
+                    answer.style.padding = '16px 18px';
                 }
+            } else {
+                answer.classList.remove('active');
+                answer.style.height = '0';
+                answer.style.padding = '0';
+                answer.style.visibility = 'hidden';
             }
         };
     }
