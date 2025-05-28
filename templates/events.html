@@ -44,60 +44,120 @@
         height: 100%;
         position: relative;
         box-sizing: border-box;
-        overflow: hidden;
+        /* COMPATIBILITY: Changed to vertical scrolling */
+        overflow-y: auto;
+        overflow-x: hidden;
+        /* Remove WebView scrollbar */
+        -ms-overflow-style: none;
+        scrollbar-width: none;
     }
 
-    /* Setup horizontal scroll snapping */
+    .theater-container::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Main content styles - converted to vertical layout */
     .main-content {
-        height: 100%;
         width: 100%;
-        overflow-x: scroll;
-        overflow-y: hidden;
-        scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
-        display: flex;
-        scroll-behavior: smooth;
+        /* COMPATIBILITY: Removed horizontal scroll */
+        overflow: visible;
+        display: block; /* Changed from flex to block */
+        padding-bottom: 60px; /* Space for dots */
     }
 
     .content-section {
-        min-width: 100%;
-        scroll-snap-align: start;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
+        width: 100%;
+        min-height: auto; /* Allow natural height */
+        padding: 20px;
+        margin-bottom: 40px;
         box-sizing: border-box;
     }
-    
-    /* Height-specific adjustments for content sections */
-    body.height-800 .content-section {
-        height: 800px;
-        padding: calc(var(--spacing-xl) + 20px) var(--spacing-md) var(--spacing-md);
-    }
-    
-    body.height-400 .content-section {
-        height: 400px;
-        padding: calc(var(--spacing-md) + 15px) var(--spacing-md) var(--spacing-xs);
+
+    /* Events grid - maintained same look */
+    .events-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--spacing-md);
+        width: 92.7%;
+        max-width: 74.7rem;
+        margin: 0 auto;
     }
 
-    /* Page title */
+    /* Page header - fixed at top */
     .page-header {
-        position: absolute;
+        position: sticky;
+        top: 0;
         left: 0;
         width: 100%;
         text-align: center;
         z-index: 10;
-    }
-    
-    /* Height-specific adjustments for page header */
-    body.height-800 .page-header {
-        top: calc(var(--spacing-xl) - 10px);
-    }
-    
-    body.height-400 .page-header {
-        top: calc(var(--spacing-sm) - 5px);
+        background: rgba(59, 57, 57, 0.9); /* Match site background */
+        padding: 20px 0;
+        margin-bottom: 30px;
     }
 
+    /* Scroll indicators - repositioned for vertical scroll */
+    .scroll-indicators {
+        position: fixed;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-xs);
+        z-index: 20;
+    }
+
+    .scroll-dot {
+        border-radius: 50%;
+        background: rgba(255,255,255,0.3);
+        cursor: pointer;
+        margin: 5px 0;
+    }
+
+    /* Height-specific adjustments */
+    body.height-800 .content-section {
+        padding-top: 20px;
+    }
+
+    body.height-400 .content-section {
+        padding-top: 15px;
+    }
+
+    body.height-600 .content-section {
+        padding-top: 18px;
+    }
+
+    /* Update responsive styles */
+    @media screen and (max-width: 1024px) {
+        .events-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-md);
+            width: 85%;
+        }
+        
+        .scroll-indicators {
+            right: 10px;
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        .events-grid {
+            grid-template-columns: 1fr;
+            width: 80%;
+        }
+        
+        .scroll-indicators {
+            right: 5px;
+        }
+        
+        .scroll-dot {
+            width: 8px;
+            height: 8px;
+        }
+    }
+
+    /* Page title */
     .page-title {
         color: var(--color-gold);
         font-family: 'Playfair Display', serif;
@@ -112,20 +172,6 @@
     body.height-400 .page-title {
         font-size: var(--font-size-lg);
         margin-bottom: 8px;
-    }
-
-    /* Events grid */
-    .events-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: var(--spacing-md);
-        width: 92.7%;
-        max-width: 74.7rem;
-    }
-    
-    /* Height-specific adjustments for grid */
-    body.height-400 .events-grid {
-        gap: var(--spacing-sm);
     }
 
     .event-card {
@@ -235,217 +281,6 @@
     
     body.height-400 .event-date {
         font-size: 0.94rem;
-    }
-
-    /* Scroll indicators */
-    .scroll-indicators {
-        position: absolute;
-        left: 0;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        gap: var(--spacing-xs);
-    }
-    
-    /* Height-specific adjustments for scroll indicators */
-    body.height-800 .scroll-indicators {
-        bottom: 7%;
-    }
-    
-    body.height-400 .scroll-indicators {
-        bottom: 2%;
-    }
-
-    .scroll-dot {
-        border-radius: 50%;
-        background: rgba(255,255,255,0.3);
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-    
-    /* Height-specific adjustments for scroll dots */
-    body.height-800 .scroll-dot {
-        width: 1.125rem; /* 18px */
-        height: 1.125rem;
-    }
-    
-    body.height-400 .scroll-dot {
-        width: 0.75rem; /* 12px */
-        height: 0.75rem;
-    }
-
-    .scroll-dot.active {
-        background: var(--color-gold);
-    }
-
-    /* Responsive adjustments */
-    @media screen and (max-width: 1024px) {
-        .events-grid {
-            grid-template-columns: repeat(2, 1fr);
-            gap: var(--spacing-md);
-        }
-        
-        body.height-400 .events-grid {
-            gap: var(--spacing-sm);
-        }
-    }
-
-    @media screen and (max-width: 768px) {
-        .events-grid {
-            grid-template-columns: 1fr;
-        }
-        
-        body.height-800 .events-grid {
-            gap: var(--spacing-md);
-        }
-        
-        body.height-400 .events-grid {
-            gap: var(--spacing-xs);
-        }
-        
-        body.height-800 .event-image {
-            height: 15rem;
-        }
-        
-        body.height-400 .event-image {
-            height: 7rem;
-        }
-        
-        body.height-800 .page-title {
-            font-size: 2.5rem;
-        }
-        
-        body.height-400 .page-title {
-            font-size: 1.88rem;
-        }
-        
-        body.height-800 .event-title {
-            font-size: 1.63rem;
-        }
-        
-        body.height-400 .event-title {
-            font-size: 1.13rem;
-        }
-        
-        body.height-800 .event-composer {
-            font-size: 1.13rem;
-        }
-        
-        body.height-400 .event-composer {
-            font-size: 0.94rem;
-        }
-        
-        body.height-800 .event-date {
-            font-size: 1.13rem;
-        }
-        
-        body.height-400 .event-date {
-            font-size: 0.88rem;
-        }
-    }
-
-    /* Remove the browser's scrollbar but keep scrolling functionality */
-    .main-content::-webkit-scrollbar {
-        display: none; /* Hide scrollbar for Chrome, Safari, and newer Edge */
-    }
-
-    /* For Firefox */
-    .main-content {
-        scrollbar-width: none; /* Hide scrollbar for Firefox */
-        -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
-    }
-
-    /* New 1024x600 styles for content sections */
-    body.height-600 .content-section {
-        height: 600px;
-        padding: calc(var(--spacing-lg) + 15px) var(--spacing-md) var(--spacing-sm);
-    }
-
-    /* New 1024x600 styles for page header */
-    body.height-600 .page-header {
-        top: calc(var(--spacing-md) - 2px);
-    }
-
-    /* New 1024x600 styles for page title */
-    body.height-600 .page-title {
-        font-size: calc(var(--font-size-lg) * 0.9);
-        margin-bottom: 12px;
-    }
-
-    /* New 1024x600 styles for events grid */
-    body.height-600 .events-grid {
-        gap: var(--spacing-sm);
-        width: 90%;
-        max-width: 60rem; /* Adjusted for 1024px width */
-    }
-
-    /* New 1024x600 styles for event cards */
-    body.height-600 .event-card {
-        padding: var(--spacing-sm);
-        transform: scale(1.02);
-    }
-
-    /* New 1024x600 styles for event card hover */
-    body.height-600 .event-card:hover {
-        background: var(--color-bg-hover);
-        transform: translateY(-4px);
-    }
-
-    /* New 1024x600 styles for event images */
-    body.height-600 .event-image {
-        height: 14rem;
-        margin-bottom: calc(var(--spacing-xs) + 0.1rem);
-    }
-
-    /* New 1024x600 styles for event titles */
-    body.height-600 .event-title {
-        font-size: 1.5rem;
-        margin-bottom: 0.3rem;
-    }
-
-    /* New 1024x600 styles for composer text */
-    body.height-600 .event-composer {
-        margin-bottom: 0.3rem;
-        font-size: 1.1rem;
-    }
-
-    /* New 1024x600 styles for date text */
-    body.height-600 .event-date {
-        font-size: 1.05rem;
-    }
-
-    /* New 1024x600 styles for scroll indicators */
-    body.height-600 .scroll-indicators {
-        bottom: 5%;
-    }
-
-    /* New 1024x600 styles for scroll dots */
-    body.height-600 .scroll-dot {
-        width: 0.9rem;
-        height: 0.9rem;
-    }
-
-    /* Media query adjustments for 1024x600 */
-    @media screen and (max-width: 1024px) {
-        body.height-600 .event-image {
-            height: 12rem;
-        }
-        
-        body.height-600 .page-title {
-            font-size: 2.2rem;
-        }
-        
-        body.height-600 .event-title {
-            font-size: 1.4rem;
-        }
-        
-        body.height-600 .event-composer {
-            font-size: 1rem;
-        }
-        
-        body.height-600 .event-date {
-            font-size: 1rem;
-        }
     }
 </style>
 {% endblock %}
@@ -685,52 +520,52 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var mainContent = document.querySelector('.main-content');
+        var container = document.querySelector('.theater-container');
         var dots = document.querySelectorAll('.scroll-dot');
         var sections = document.querySelectorAll('.content-section');
-        var currentPage = 0;
+        var currentSection = 0;
 
         // Update active dot based on scroll position
-        function updateDots(pageIndex) {
-            for (var i = 0; i < dots.length; i++) {
-                if (i === pageIndex) {
-                    dots[i].classList.add('active');
-                } else {
-                    dots[i].classList.remove('active');
+        function updateDots() {
+            var scrollPosition = container.scrollTop;
+            var windowHeight = window.innerHeight;
+            
+            // Find the most visible section
+            var maxVisibility = 0;
+            var mostVisibleSection = 0;
+            
+            sections.forEach(function(section, index) {
+                var rect = section.getBoundingClientRect();
+                var visibility = Math.min(rect.bottom, windowHeight) - Math.max(rect.top, 0);
+                
+                if (visibility > maxVisibility) {
+                    maxVisibility = visibility;
+                    mostVisibleSection = index;
                 }
-            }
+            });
+            
+            // Update dots
+            dots.forEach(function(dot, index) {
+                if (index === mostVisibleSection) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
         }
 
-        // Scroll to specific page
-        function scrollToPage(pageIndex) {
-            currentPage = pageIndex;
-            sections[pageIndex].scrollIntoView({ behavior: 'smooth', inline: 'start' });
-            updateDots(pageIndex);
-        }
-
-        // Click handlers for dots
-        for (var i = 0; i < dots.length; i++) {
-            (function(index) {
-                dots[index].addEventListener('click', function() {
-                    scrollToPage(index);
-                });
-            })(i);
-        }
+        // Scroll to section when dot is clicked
+        dots.forEach(function(dot, index) {
+            dot.addEventListener('click', function() {
+                sections[index].scrollIntoView({ behavior: 'smooth' });
+            });
+        });
 
         // Update dots on scroll
-        mainContent.addEventListener('scroll', function() {
-            // Calculate which page is most visible
-            var scrollPosition = mainContent.scrollLeft;
-            var pageWidth = mainContent.offsetWidth;
-            
-            // Determine which page we're on based on scroll position
-            var newPage = Math.round(scrollPosition / pageWidth);
-            
-            if (newPage !== currentPage) {
-                currentPage = newPage;
-                updateDots(currentPage);
-            }
-        });
+        container.addEventListener('scroll', updateDots);
+        
+        // Initial update
+        updateDots();
     });
 </script>
 {% endblock %}
