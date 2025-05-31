@@ -17,7 +17,7 @@
 
 {% block extra_css %}
 <style>
-    /* Variables for consistent measurements (same as other pages) */
+    /* Variables for consistent measurements - Optimized for 1024x600 */
     :root {
         --spacing-xs: 0.5rem;
         --spacing-sm: 1rem;
@@ -46,7 +46,7 @@
         overflow: hidden;
     }
 
-    /* Setup scroll snapping with enhanced scrollbar */
+    /* Setup scroll snapping with enhanced scrollbar - Fixed for 1024x600 */
     .main-content {
         height: 100%;
         width: 100%;
@@ -56,7 +56,7 @@
         scroll-behavior: smooth;
     }
     
-    /* Add beautiful gold scrollbar styling */
+    /* Beautiful gold scrollbar styling - Fixed for 1024x600 */
     .main-content::-webkit-scrollbar {
         width: 10px;
     }
@@ -74,8 +74,11 @@
         background: #b28e29;
     }
 
+    /* Content sections - Fixed for 1024x600 */
     .content-section {
         width: 100%;
+        height: 600px;
+        padding: 60px 55px 30px 35px;
         scroll-snap-align: start;
         display: flex;
         flex-direction: column;
@@ -84,55 +87,25 @@
         box-sizing: border-box;
     }
     
-    /* Height-specific adjustments for content sections */
-    body.height-800 .content-section {
-        height: 800px;
-        padding: 80px 70px 40px 40px;
-    }
-    
-    body.height-400 .content-section {
-        height: 400px;
-        padding: 40px 70px 20px 40px;
-    }
-    
-    /* Updated vertical scroll indicators to match other pages */
+    /* Vertical scroll indicators - Fixed for 1024x600 */
     .scroll-indicators {
         position: fixed;
         right: 30px;
+        top: 300px;  /* Fixed at 50% of 600px height */
+        transform: translateY(-50%);
         display: flex;
         flex-direction: column;
-        z-index: 100;
-    }
-    
-    /* Height-specific adjustments for scroll indicators */
-    body.height-800 .scroll-indicators {
-        top: 400px;  /* Fixed pixel value at 50% of 800px height */
-        transform: translateY(-50%);
         gap: var(--spacing-sm);
-    }
-
-    body.height-400 .scroll-indicators {
-        top: 250px;  /* Fixed pixel value at 50% of 400px height */
-        transform: translateY(-50%);
-        gap: var(--spacing-xs);
+        z-index: 100;
     }
 
     .scroll-dot {
+        width: 0.9rem;
+        height: 0.9rem;
         border-radius: 50%;
         background: rgba(255,255,255,0.3);
         cursor: pointer;
         transition: all 0.3s ease;
-    }
-    
-    /* Height-specific adjustments for scroll dots */
-    body.height-800 .scroll-dot {
-        width: 1rem;
-        height: 1rem;
-    }
-    
-    body.height-400 .scroll-dot {
-        width: 0.75rem;
-        height: 0.75rem;
     }
 
     .scroll-dot.active {
@@ -140,33 +113,24 @@
         transform: scale(1.2);
     }
 
-    /* Content styling */
+    /* Content styling - Fixed for 1024x600 */
     .content-box {
         background: var(--color-bg-dark);
         border: var(--border-thin);
         border-radius: var(--border-radius);
+        padding: var(--spacing-lg);
         width: 90%;
         max-width: 1000px;
+        max-height: 82vh;
         display: flex;
         flex-direction: column;
         align-items: center;
-        overflow-y: auto; /* Allow scrolling within the box if needed */
+        overflow-y: auto;
     }
     
-    /* Height-specific adjustments for content box */
-    body.height-800 .content-box {
-        padding: var(--spacing-xl);
-        max-height: 80vh;
-    }
-    
-    body.height-400 .content-box {
-        padding: var(--spacing-md);
-        max-height: 85vh;
-    }
-    
-    /* Style the content-box scrollbar too */
+    /* Content box scrollbar styling - Fixed for 1024x600 */
     .content-box::-webkit-scrollbar {
-        width: 8px; /* Slightly smaller than main scrollbar */
+        width: 8px;
     }
 
     .content-box::-webkit-scrollbar-track {
@@ -182,114 +146,57 @@
         background: #b28e29;
     }
 
+    /* Section styling - Fixed for 1024x600 */
     .section-icon {
         color: var(--color-gold);
+        font-size: 42px;
         margin-bottom: var(--spacing-md);
-    }
-    
-    /* Height-specific adjustments for section icon */
-    body.height-800 .section-icon {
-        font-size: 48px;
-    }
-    
-    body.height-400 .section-icon {
-        font-size: 36px;
-        margin-bottom: var(--spacing-sm);
     }
 
     .section-title {
         color: var(--color-gold);
-        margin-bottom: 25px;
+        font-size: 28px;
+        margin-bottom: 20px;
         font-family: 'Playfair Display', serif;
         text-align: center;
     }
-    
-    /* Height-specific adjustments for section title */
-    body.height-800 .section-title {
-        font-size: 32px;
-    }
-    
-    body.height-400 .section-title {
-        font-size: 24px;
-        margin-bottom: 15px;
-    }
 
-    /* Production team styling */
+    /* Production team styling - Fixed for 1024x600 */
     .production-grid {
         display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 22px;
         width: 100%;
-    }
-    
-    /* Height-specific adjustments for production grid */
-    body.height-800 .production-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 30px;
-    }
-    
-    body.height-400 .production-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 15px;
     }
 
     .team-section {
         margin-bottom: var(--spacing-md);
         width: 100%;
     }
-    
-    /* Height-specific adjustments for team section */
-    body.height-400 .team-section {
-        margin-bottom: var(--spacing-sm);
-    }
 
     .team-title {
         color: var(--color-gold);
-        margin-bottom: 15px;
+        font-size: 24px;
+        margin-bottom: 12px;
         text-align: center;
-    }
-    
-    /* Height-specific adjustments for team title */
-    body.height-800 .team-title {
-        font-size: 27px;
-    }
-    
-    body.height-400 .team-title {
-        font-size: 22px;
-        margin-bottom: 10px;
     }
 
     .team-content {
         background: rgba(0,0,0,0.3);
         border: var(--border-thin);
         border-radius: var(--border-radius);
+        padding: var(--spacing-md);
         color: #fff;
-        line-height: 1.6;
+        font-size: 18px;
+        line-height: 1.7;
+        min-height: 225px;
         height: 100%;
         overflow-y: auto;
     }
     
-    /* Height-specific adjustments for team content */
-    body.height-800 .team-content {
-        padding: var(--spacing-md);
-        font-size: 20px;
-        min-height: 300px;
-        line-height: 1.8;
-    }
-    
-    body.height-400 .team-content {
-        padding: var(--spacing-sm);
-        font-size: 17px;
-        min-height: 150px;
-        line-height: 1.5;
-    }
-    
-    /* Specific adjustment for team content paragraphs on 400px height */
-    body.height-400 .team-content p {
-        margin-bottom: 5px;
-    }
-    
-    /* Style the team-content scrollbar too for consistency */
+    /* Team content scrollbar styling - Fixed for 1024x600 */
     .team-content::-webkit-scrollbar {
-        width: 6px; /* Even smaller for this element */
+        width: 6px;
     }
 
     .team-content::-webkit-scrollbar-track {
@@ -305,19 +212,13 @@
         background: #b28e29;
     }
 
-    /* Cast styling */
+    /* Cast styling - Fixed for 1024x600 */
     .cast-member {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 12px;
+        margin-bottom: 9px;
         border-bottom: var(--border-thin);
-        padding-bottom: 8px;
-    }
-    
-    /* Height-specific adjustments for cast members */
-    body.height-400 .cast-member {
-        margin-bottom: 6px;
-        padding-bottom: 4px;
+        padding-bottom: 6px;
     }
 
     .character {
@@ -332,98 +233,52 @@
         font-size: 1.15em;
     }
 
-    /* Summary styling */
+    /* Summary styling - Fixed for 1024x600 */
     .summary-content {
         color: #fff;
-        line-height: 1.6;
+        font-size: 18px;
+        line-height: 1.7;
         text-align: left;
-        margin-bottom: 15px;
+        margin-bottom: 12px;
         width: 100%;
     }
     
-    /* Height-specific adjustments for summary content */
-    body.height-800 .summary-content {
-        font-size: 20px;
-        line-height: 1.8;
-    }
-    
-    body.height-400 .summary-content {
-        font-size: 17px;
-        line-height: 1.5;
-        margin-bottom: 10px;
-    }
-    
-    /* Improve paragraph spacing in synopsis */
-    body.height-800 .summary-content p {
-        margin-bottom: 1rem;
-    }
-    
-    body.height-400 .summary-content p {
-        margin-bottom: 0.5rem;
+    .summary-content p {
+        margin-bottom: 0.8rem;
     }
     
     .summary-content p:last-child {
         margin-bottom: 0;
     }
 
-    /* Responsive adjustments */
+    /* Responsive adjustments for smaller screens */
     @media screen and (max-width: 768px) {
-        body.height-800 .content-box,
-        body.height-400 .content-box {
+        .content-box {
             width: 95%;
-        }
-        
-        body.height-800 .content-box {
-            padding: var(--spacing-lg);
-        }
-        
-        body.height-400 .content-box {
-            padding: var(--spacing-sm);
+            padding: var(--spacing-md);
         }
         
         .scroll-indicators {
             right: 10px;
         }
         
-        body.height-800 .scroll-dot {
-            width: 0.8rem;
-            height: 0.8rem;
+        .scroll-dot {
+            width: 0.7rem;
+            height: 0.7rem;
         }
         
-        body.height-400 .scroll-dot {
-            width: 0.6rem;
-            height: 0.6rem;
-        }
-        
-        body.height-800 .production-grid,
-        body.height-400 .production-grid {
+        .production-grid {
             grid-template-columns: 1fr;
+            gap: 15px;
         }
         
-        body.height-800 .production-grid {
-            gap: 20px;
-        }
-        
-        body.height-400 .production-grid {
-            gap: 10px;
-        }
-        
-        body.height-800 .team-content {
+        .team-content {
             padding: var(--spacing-sm);
-            font-size: 18px;
+            font-size: 17px;
         }
         
-        body.height-400 .team-content {
-            padding: calc(var(--spacing-sm) / 2);
-            font-size: 16px;
-        }
-        
-        body.height-800 .summary-content {
-            font-size: 18px;
-        }
-        
-        body.height-400 .summary-content {
-            font-size: 16px;
+        .summary-content {
+            font-size: 17px;
         }
     }
 </style>
@@ -431,7 +286,7 @@
 
 {% block content %}
 <div class="theater-container">
-    <!-- Vertical Scroll Indicators - Now on right side -->
+    <!-- Vertical Scroll Indicators -->
     <div class="scroll-indicators">
         <div class="scroll-dot active" data-page="0"></div>
         <div class="scroll-dot" data-page="1"></div>

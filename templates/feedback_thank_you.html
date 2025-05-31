@@ -39,8 +39,7 @@
         --font-size-xl: 3rem;
     }
 
-    /* Include all the necessary styles from feedback.html */
-    /* Background and container styles */
+    /* Background and container styles - Optimized for 1024x600 */
     .bg-pattern {
         position: absolute;
         top: 0;
@@ -52,7 +51,7 @@
         z-index: 0;
     }
 
-    /* Gold accent lines */
+    /* Gold accent lines - Optimized for 1024x600 */
     .gold-line-top, .gold-line-bottom {
         position: absolute;
         width: 100%;
@@ -60,10 +59,13 @@
         background: linear-gradient(to right, transparent 0%, var(--color-gold) 50%, transparent 100%);
     }
     
-    body.height-800 .gold-line-top { top: 50px; }
-    body.height-800 .gold-line-bottom { bottom: 50px; }
-    body.height-400 .gold-line-top { top: 30px; }
-    body.height-400 .gold-line-bottom { bottom: 30px; }
+    .gold-line-top { 
+        top: 40px; 
+    }
+
+    .gold-line-bottom { 
+        bottom: 40px; 
+    }
 
     .feedback-container {
         width: 100%;
@@ -76,8 +78,9 @@
     }
 
     .feedback-content-box {
-        max-width: 700px;
-        width: 90%;
+        max-width: 85%;
+        width: 700px;
+        padding: 1.5rem 2rem;
         background-color: rgba(0, 0, 0, 0.7);
         border: 1px solid var(--color-gold-muted);
         border-radius: var(--border-radius);
@@ -87,18 +90,15 @@
         box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
     }
     
-    body.height-800 .feedback-content-box { padding: 2rem 2.5rem; }
-    body.height-400 .feedback-content-box { padding: 1rem 1.5rem; max-width: 80%; }
-    
-    /* Corner styles */
+    /* Corner styles - Optimized for 1024x600 */
     .feedback-content-box::before,
     .feedback-content-box::after,
     .corner-top-right,
     .corner-bottom-left {
         content: "";
         position: absolute;
-        width: 20px;
-        height: 20px;
+        width: 15px;
+        height: 15px;
         border-color: var(--color-gold);
     }
     
@@ -134,48 +134,36 @@
         border-bottom-left-radius: var(--border-radius);
     }
     
-    /* Title and content styles */
+    /* Title and content styles - Optimized for 1024x600 */
     .feedback-title {
         font-family: 'Playfair Display', serif;
         color: var(--color-gold);
+        font-size: 2.1rem;
+        margin-bottom: 0.6rem;
     }
-    
-    body.height-800 .feedback-title { font-size: 2.5rem; margin-bottom: 0.8rem; }
-    body.height-400 .feedback-title { font-size: 1.6rem; margin-bottom: 0.3rem; }
 
     .divider {
-        width: 180px;
+        width: 150px;
         height: 1px;
         background: linear-gradient(to right, transparent 0%, var(--color-gold) 50%, transparent 100%);
-        margin: 0 auto;
+        margin: 0 auto 1.2rem;
     }
-    
-    body.height-800 .divider { margin-bottom: 1.5rem; }
-    body.height-400 .divider { width: 120px; margin-bottom: 0.8rem; }
 
     .feedback-intro {
         text-align: center;
+        max-width: 550px;
         margin: 0 auto;
         color: rgba(255, 255, 255, 0.9);
+        font-size: 0.95rem;
+        line-height: 1.4;
+        margin-bottom: 0.8rem;
     }
     
-    body.height-800 .feedback-intro { 
-        max-width: 600px; 
-        font-size: 1.05rem; 
-        line-height: 1.5; 
-        margin-bottom: 1.2rem; 
-    }
-    
-    body.height-400 .feedback-intro { 
-        max-width: 90%; 
-        font-size: 0.85rem; 
-        line-height: 1.3; 
-        margin-bottom: 0.5rem; 
-    }
-    
-    /* Button styles */
+    /* Button styles - Optimized for 1024x600 */
     .home-button {
         display: inline-block;
+        padding: 8px 28px;
+        font-size: 0.95rem;
         letter-spacing: 1px;
         color: var(--color-gold);
         background-color: rgba(0, 0, 0, 0.3);
@@ -186,11 +174,8 @@
         text-decoration: none;
         position: relative;
         overflow: hidden;
-        margin-top: 1.5rem;
+        margin-top: 1.2rem;
     }
-    
-    body.height-800 .home-button { padding: 10px 35px; font-size: 1rem; }
-    body.height-400 .home-button { padding: 6px 20px; font-size: 0.85rem; }
 
     .home-button:hover {
         color: #fff;
@@ -200,55 +185,34 @@
         background-color: rgba(212, 175, 55, 0.1);
     }
 
-    /* New 1024x600 styles for gold lines */
-    body.height-600 .gold-line-top { 
-        top: 40px; 
-    }
-
-    body.height-600 .gold-line-bottom { 
-        bottom: 40px; 
-    }
-
-    /* New 1024x600 styles for content box */
-    body.height-600 .feedback-content-box { 
-        padding: 1.5rem 2rem; 
-        max-width: 85%; 
-    }
-
-    /* New 1024x600 styles for corner accents */
-    body.height-600 .feedback-content-box::before,
-    body.height-600 .feedback-content-box::after,
-    body.height-600 .corner-top-right,
-    body.height-600 .corner-bottom-left {
-        width: 15px;
-        height: 15px;
-    }
-
-    /* New 1024x600 styles for title */
-    body.height-600 .feedback-title { 
-        font-size: 2.1rem; 
-        margin-bottom: 0.6rem; 
-    }
-
-    /* New 1024x600 styles for divider */
-    body.height-600 .divider { 
-        width: 150px; 
-        margin-bottom: 1.2rem; 
-    }
-
-    /* New 1024x600 styles for intro */
-    body.height-600 .feedback-intro { 
-        max-width: 550px; 
-        font-size: 0.95rem; 
-        line-height: 1.4; 
-        margin-bottom: 0.8rem; 
-    }
-
-    /* New 1024x600 styles for button */
-    body.height-600 .home-button { 
-        padding: 8px 28px; 
-        font-size: 0.95rem; 
-        margin-top: 1.2rem;
+    /* Responsive adjustments for smaller screens */
+    @media screen and (max-width: 768px) {
+        .feedback-content-box {
+            max-width: 90%;
+            padding: 1.2rem 1.5rem;
+        }
+        
+        .feedback-title {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .divider {
+            width: 120px;
+            margin-bottom: 1rem;
+        }
+        
+        .feedback-intro {
+            font-size: 0.9rem;
+            line-height: 1.3;
+            margin-bottom: 0.7rem;
+        }
+        
+        .home-button {
+            padding: 7px 24px;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
     }
 </style>
 {% endblock %}

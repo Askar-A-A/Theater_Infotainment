@@ -4,7 +4,7 @@ from django.urls import path, reverse
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.utils.html import format_html
-from .models import Event, Performance, UserFeedback, EmailSubscription, SeasonalSponsor, EventSponsorImage, SiteSettings
+from .models import Event, Performance, UserFeedback, EmailSubscription, SeasonalSponsor, EventSponsorImage
 from django.utils.translation import gettext_lazy as _
 from django.db import models
 from django.contrib.auth.models import Group, Permission
@@ -31,14 +31,6 @@ def setup_admin_groups():
     
     # Add these permissions to the group
     content_editors.permissions.add(*content_permissions)
-    
-    # Exclude SiteSettings permissions
-    site_settings_permissions = Permission.objects.filter(
-        content_type__app_label='theater_cms',
-        content_type__model='sitesettings'
-    )
-    
-    content_editors.permissions.remove(*site_settings_permissions)
 
 # Call this function when Django loads (in apps.py or in a migration)
 
@@ -592,45 +584,3 @@ class UserFeedbackAdmin(admin.ModelAdmin):
         return super().changeform_view(request, object_id, form_url, extra_context)
 
 admin.site.register(EmailSubscription)
-
-@admin.register(SiteSettings)
-class SiteSettingsAdmin(admin.ModelAdmin):
-    """Admin interface for site settings."""
-    list_display = ('display_resolution', 'updated_at')
-    fieldsets = (
-        ('Display Settings', {
-            'fields': ('display_height',),
-            'description': 'These settings control the display across all theater screens.'
-        }),
-    )
-    
-    def display_resolution(self, obj):
-        width = "1280"
-        if obj.display_height == 600:
-            width = "1024"
-        return f"{width} × {obj.display_height}px"
-    display_resolution.short_description = 'Display Resolution'
-    
-    def has_add_permission(self, request):
-        # Prevent creation of multiple instances
-        return not SiteSettings.objects.exists() and self._is_super_admin(request)
-    
-    def has_delete_permission(self, request, obj=None):
-        # Prevent deletion
-        return False
-    
-    def has_module_permission(self, request):
-        # Only show the SiteSettings module to superusers
-        return self._is_super_admin(request)
-    
-    def has_view_permission(self, request, obj=None):
-        # Only allow superusers to view
-        return self._is_super_admin(request)
-    
-    def has_change_permission(self, request, obj=None):
-        # Only allow superusers to edit
-        return self._is_super_admin(request)
-    
-    def _is_super_admin(self, request):
-        # Helper method to check if user is superuser
-        return request.user.is_superuser

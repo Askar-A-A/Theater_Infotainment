@@ -16,12 +16,12 @@
             box-sizing: border-box;
         }
 
-        /* Base size configuration - will be overridden by height-specific classes */
+        /* Fixed 1024x600 configuration */
         html, body {
             margin: 0;
             padding: 0;
-            width: 1280px;
-            height: 800px; 
+            width: 1024px;
+            height: 600px; 
             color: #fff;
             font-family: Arial, sans-serif;
             line-height: 1.6;
@@ -30,48 +30,25 @@
 
         /* Define standard content wrapper */
         .content-wrapper {
-            width: 1280px;
-            height: 800px;
+            width: 1024px;
+            height: 600px;
             position: relative;
             /* COMPATIBILITY: Replaced gradient with dark gray color for better compatibility */
             background:rgb(59, 57, 57);
             overflow: hidden;
         }
-        
-        /* Height-specific configurations */
-        body.height-800, body.height-800 .content-wrapper {
-            height: 800px;
-            width: 1280px;
-        }
-        
-        body.height-400, body.height-400 .content-wrapper {
-            height: 400px;
-            width: 1280px;
-        }
-        
-        /* New 1024x600 configuration */
-        body.height-600, body.height-600 .content-wrapper {
-            height: 600px;
-            width: 1024px; 
-        }
 
-        /* Home Navigation Icon - Updated for consistent positioning across heights */
+        /* Home Navigation Icon */
         .home-nav {
             position: absolute;
-            right: 20px;
-            top: 20px;
-            z-index: 100;
-        }
-        
-        /* Adjust home nav for 600px height */
-        body.height-600 .home-nav {
             right: 15px;
             top: 15px;
+            z-index: 100;
         }
 
         .home-icon {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             background: rgba(0,0,0,0.7);
             border-radius: 50%;
             /* COMPATIBILITY: Replaced flexbox with table-cell layout */
@@ -82,32 +59,11 @@
             /* COMPATIBILITY: Simplified transition */
             transition: background-color 0.3s;
         }
-        
-        /* Adjust home icon for different resolutions */
-        body.height-400 .home-icon {
-            width: 40px;
-            height: 40px;
-        }
-        
-        body.height-600 .home-icon {
-            width: 50px;
-            height: 50px;
-        }
 
         .home-icon i {
             color: #fff;
-            font-size: 1.2em;
-            /* COMPATIBILITY: Add line-height for vertical centering with table-cell */
-            line-height: 60px;
-        }
-        
-        body.height-400 .home-icon i {
-            font-size: 1em;
-            line-height: 40px;
-        }
-        
-        body.height-600 .home-icon i {
             font-size: 1.1em;
+            /* COMPATIBILITY: Add line-height for vertical centering with table-cell */
             line-height: 50px;
         }
 
@@ -115,143 +71,17 @@
             background: rgba(2, 124, 39, 0.73);
         }
         
-        /* Height toggle control - for development only */
-        .height-toggle {
-            position: fixed;
-            bottom: 10px;
-            left: 10px;
-            z-index: 9999;
-            background: rgba(0,0,0,0.8);
-            color: white;
-            padding: 5px 10px;
-            border: 1px solid #555;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        
         /* Add this block-level CSS to control page-specific overflow */
         {% block wrapper_style %}{% endblock %}
     </style>
     {% block extra_css %}{% endblock %}
-    
-    <script>
-        /* COMPATIBILITY: Using older event attachment method with fallback */
-        function addLoadEvent(func) {
-            var oldonload = window.onload;
-            if (typeof window.onload != 'function') {
-                window.onload = func;
-            } else {
-                window.onload = function() {
-                    if (oldonload) {
-                        oldonload();
-                    }
-                    func();
-                }
-            }
-        }
-
-        addLoadEvent(function() {
-            // Function to get height from cookie or URL parameter
-            function getHeightPreference() {
-                // First check URL parameter (takes precedence)
-                var heightParam = null;
-                var search = window.location.search.substring(1);
-                var params = search.split('&');
-                for (var i = 0; i < params.length; i++) {
-                    var param = params[i].split('=');
-                    if (param[0] === 'height') {
-                        heightParam = param[1];
-                        break;
-                    }
-                }
-                
-                if (heightParam === '400' || heightParam === '800' || heightParam === '600') {
-                    // Save preference to cookie if it comes from URL
-                    setHeightCookie(heightParam);
-                    setWidthCookie(heightParam === '600' ? '1024' : '1280');
-                    return heightParam;
-                }
-                
-                // Otherwise check cookie
-                var heightCookie = getCookie('displayHeight');
-                return heightCookie || '800'; // Default to 800px
-            }
-            
-            // Function to get width from cookie
-            function getWidthPreference() {
-                var heightPref = getHeightPreference();
-                if (heightPref === '600') {
-                    return '1024';
-                }
-                return '1280';
-            }
-            
-            // Function to set height cookie (expires in 30 days)
-            function setHeightCookie(height) {
-                var expiryDate = new Date();
-                expiryDate.setDate(expiryDate.getDate() + 30);
-                document.cookie = 'displayHeight=' + height + ';expires=' + expiryDate.toUTCString() + ';path=/';
-            }
-            
-            // Function to set width cookie (expires in 30 days)
-            function setWidthCookie(width) {
-                var expiryDate = new Date();
-                expiryDate.setDate(expiryDate.getDate() + 30);
-                document.cookie = 'displayWidth=' + width + ';expires=' + expiryDate.toUTCString() + ';path=/';
-            }
-            
-            // Function to get cookie value by name
-            function getCookie(name) {
-                var nameEQ = name + "=";
-                var ca = document.cookie.split(';');
-                for(var i=0; i < ca.length; i++) {
-                    var c = ca[i];
-                    while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-                    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-                }
-                return null;
-            }
-            
-            // Apply height class based on preference
-            var heightPreference = getHeightPreference();
-            var contentWrapper = document.querySelector('.content-wrapper');
-            
-            if (heightPreference === '400') {
-                document.body.className = 'height-400'; // Replace classList with className for maximum compatibility
-                document.body.style.width = '1280px';
-                document.body.style.height = '400px';
-                if (contentWrapper) {
-                    contentWrapper.style.width = '1280px';
-                    contentWrapper.style.height = '400px';
-                }
-            } else if (heightPreference === '600') {
-                document.body.className = 'height-600';
-                document.body.style.width = '1024px';
-                document.body.style.height = '600px';
-                if (contentWrapper) {
-                    contentWrapper.style.width = '1024px';
-                    contentWrapper.style.height = '600px';
-                }
-            } else {
-                document.body.className = 'height-800';
-                document.body.style.width = '1280px';
-                document.body.style.height = '800px';
-                if (contentWrapper) {
-                    contentWrapper.style.width = '1280px';
-                    contentWrapper.style.height = '800px';
-                }
-            }
-            
-            // Don't add the toggle button here, we'll only show it on greeting page
-        });
-    </script>
 </head>
-<body class="height-800">
+<body>
     {% cms_toolbar %}
     <div class="content-wrapper">
         {% block content %}{% endblock content %}
         
-        <!-- Home Navigation Icon - Single icon replacing the previous nav-icons section -->
+        <!-- Home Navigation Icon -->
         <a href="/home/" class="home-nav">
             <div class="home-icon">
                 <i class="fas fa-home"></i>

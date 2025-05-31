@@ -45,23 +45,15 @@
         overflow: hidden; /* Ensure no horizontal scrolling at container level */
     }
 
-    /* Main content area with scrolling */
+    /* Main content area with scrolling - Fixed for 1024x600 */
     .main-content {
         width: 100%;
+        height: 600px;
         overflow-x: hidden; /* Prevent horizontal scrolling */
         overflow-y: scroll;
         scroll-snap-type: y mandatory;
         -webkit-overflow-scrolling: touch;
         scroll-behavior: smooth;
-    }
-    
-    /* Height-specific adjustments for main-content */
-    body.height-800 .main-content {
-        height: 800px;
-    }
-    
-    body.height-400 .main-content {
-        height: 400px;
     }
     
     /* Style the scrollbar for better visibility */
@@ -82,9 +74,10 @@
         background: #b28e29;
     }
 
-    /* Section styling with snap points */
+    /* Section styling with snap points - Fixed for 1024x600 */
     .content-section {
         width: 100%;
+        height: 600px;
         scroll-snap-align: start;
         display: flex;
         flex-direction: column;
@@ -92,15 +85,6 @@
         justify-content: center;
         position: relative;
         overflow: hidden; /* Prevent horizontal scrolling within sections */
-    }
-    
-    /* Height-specific adjustments for content-section */
-    body.height-800 .content-section {
-        height: 800px;
-    }
-    
-    body.height-400 .content-section {
-        height: 400px;
     }
 
     /* Background overlay for sections */
@@ -147,30 +131,21 @@
         100% { filter: brightness(0.3) sepia(0.4); }
     }
 
-    /* Content box styling */
+    /* Content box styling - Optimized for 1024x600 */
     .content-box {
         background: var(--color-bg-dark);
         border: var(--border-thin);
         border-radius: var(--border-radius);
         width: 95%;
         max-width: 900px;
+        padding: calc(var(--spacing-lg) + 0.5rem);
+        max-height: 82vh;
         display: flex;
         flex-direction: column;
         align-items: center;
         backdrop-filter: blur(5px);
         overflow-y: auto;
         overflow-x: hidden; /* Prevent horizontal scrolling in content box */
-    }
-    
-    /* Height-specific adjustments for content box */
-    body.height-800 .content-box {
-        padding: var(--spacing-xl);
-        max-height: 80vh;
-    }
-    
-    body.height-400 .content-box {
-        padding: var(--spacing-md);
-        max-height: 85vh;
     }
     
     /* Add scrollbar for content-box when needed */
@@ -191,290 +166,101 @@
         background: #b28e29;
     }
 
-    /* Icon styling */
+    /* Icon styling - Optimized for 1024x600 */
     .section-icon {
         color: var(--color-gold);
-    }
-    
-    /* Height-specific adjustments for section icon */
-    body.height-800 .section-icon {
-        font-size: 52px;
-        margin-bottom: 15px;
-    }
-    
-    body.height-400 .section-icon {
-        font-size: 36px;
-        margin-bottom: 8px;
+        font-size: 44px;
+        margin-bottom: 12px;
     }
 
-    /* Title styling */
+    /* Title styling - Optimized for 1024x600 */
     .section-title {
         color: var(--color-gold);
         font-family: 'Playfair Display', serif;
         text-align: center;
         text-shadow: 0 0 10px rgba(0,0,0,0.5);
         max-width: 100%; /* Prevent text overflow causing horizontal scroll */
-    }
-    
-    /* Height-specific adjustments for section title */
-    body.height-800 .section-title {
-        font-size: 42px;
-        margin-bottom: 40px;
-    }
-    
-    body.height-400 .section-title {
-        font-size: 28px;
-        margin-bottom: 20px;
+        font-size: 36px;
+        margin-bottom: 30px;
     }
 
-    /* Content styling */
+    /* Content styling - Optimized for 1024x600 */
     .section-content {
         color: #fff;
-        line-height: 1.8;
+        line-height: 1.7;
         text-align: center;
         width: 100%;
-    }
-    
-    /* Height-specific adjustments for section content */
-    body.height-800 .section-content {
-        font-size: 22px;
-    }
-    
-    body.height-400 .section-content {
-        font-size: 17px;
-        line-height: 1.6;
+        font-size: 19px;
     }
 
-    /* Paragraph spacing adjustments */
-    body.height-800 .section-content p {
-        margin-bottom: 1.5rem;
-    }
-    
-    body.height-400 .section-content p {
-        margin-bottom: 0.75rem;
+    /* Paragraph spacing - Optimized for 1024x600 */
+    .section-content p {
+        margin-bottom: 1.2rem;
     }
 
     .section-content p:last-child {
         margin-bottom: 0;
     }
     
-    /* Awards grid styling */
+    /* Awards grid styling - Optimized for 1024x600 */
     .awards-grid {
         display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--spacing-sm);
         width: 100%;
         margin-top: var(--spacing-md);
-    }
-    
-    /* Height-specific adjustments for awards grid */
-    body.height-800 .awards-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: var(--spacing-md);
-    }
-    
-    body.height-400 .awards-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: var(--spacing-xs);
-        margin-top: var(--spacing-sm);
     }
     
     .award-item {
         background: rgba(255, 255, 255, 0.1);
         border-radius: var(--border-radius);
+        padding: var(--spacing-sm);
         display: flex;
         flex-direction: column;
         align-items: center;
         text-align: center;
     }
     
-    /* Height-specific adjustments for award items */
-    body.height-800 .award-item {
-        padding: var(--spacing-md);
-    }
-    
-    body.height-400 .award-item {
-        padding: var(--spacing-sm);
-    }
-    
     .award-icon {
         color: var(--color-gold);
-    }
-    
-    /* Height-specific adjustments for award icons */
-    body.height-800 .award-icon {
-        font-size: 36px;
-        margin-bottom: var(--spacing-sm);
-    }
-    
-    body.height-400 .award-icon {
-        font-size: 24px;
+        font-size: 30px;
         margin-bottom: var(--spacing-xs);
     }
     
     .award-title {
         color: var(--color-gold);
-    }
-    
-    /* Height-specific adjustments for award titles */
-    body.height-800 .award-title {
-        font-size: 22px;
-        margin-bottom: var(--spacing-xs);
-    }
-    
-    body.height-400 .award-title {
-        font-size: 17px;
-        margin-bottom: calc(var(--spacing-xs) / 2);
+        font-size: 19px;
+        margin-bottom: calc(var(--spacing-xs) * 0.75);
     }
     
     .award-year {
         color: rgba(255, 255, 255, 0.8);
-    }
-    
-    /* Height-specific adjustments for award years */
-    body.height-800 .award-year {
-        font-size: 17px;
-    }
-    
-    body.height-400 .award-year {
-        font-size: 15px;
-    }
-
-    /* Responsive adjustments */
-    @media screen and (max-width: 768px) {
-        body.height-800 .content-box,
-        body.height-400 .content-box {
-            width: 95%;
-        }
-        
-        body.height-800 .content-box {
-            padding: var(--spacing-lg);
-        }
-        
-        body.height-400 .content-box {
-            padding: var(--spacing-sm);
-        }
-        
-        body.height-800 .section-title {
-            font-size: 32px;
-            margin-bottom: 30px;
-        }
-        
-        body.height-400 .section-title {
-            font-size: 22px;
-            margin-bottom: 15px;
-        }
-        
-        body.height-800 .section-content {
-            font-size: 20px;
-        }
-        
-        body.height-400 .section-content {
-            font-size: 16px;
-        }
-        
-        body.height-800 .awards-grid,
-        body.height-400 .awards-grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
-    }
-    
-    @media screen and (max-width: 480px) {
-        body.height-800 .awards-grid,
-        body.height-400 .awards-grid {
-            grid-template-columns: 1fr;
-        }
-    }
-
-    /* New 1024x600 styles for main-content */
-    body.height-600 .main-content {
-        height: 600px;
-    }
-
-    /* New 1024x600 styles for content-section */
-    body.height-600 .content-section {
-        height: 600px;
-    }
-
-    /* New 1024x600 styles for content box */
-    body.height-600 .content-box {
-        padding: calc(var(--spacing-lg) + 0.5rem);
-        max-height: 82vh;
-    }
-
-    /* New 1024x600 styles for section icon */
-    body.height-600 .section-icon {
-        font-size: 44px;
-        margin-bottom: 12px;
-    }
-
-    /* New 1024x600 styles for section title */
-    body.height-600 .section-title {
-        font-size: 36px;
-        margin-bottom: 30px;
-    }
-
-    /* New 1024x600 styles for section content */
-    body.height-600 .section-content {
-        font-size: 19px;
-        line-height: 1.7;
-    }
-
-    /* New 1024x600 styles for paragraph spacing */
-    body.height-600 .section-content p {
-        margin-bottom: 1.2rem;
-    }
-
-    /* New 1024x600 styles for awards grid */
-    body.height-600 .awards-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: var(--spacing-sm);
-        margin-top: var(--spacing-md);
-    }
-
-    /* New 1024x600 styles for award items */
-    body.height-600 .award-item {
-        padding: var(--spacing-sm);
-    }
-
-    /* New 1024x600 styles for award icons */
-    body.height-600 .award-icon {
-        font-size: 30px;
-        margin-bottom: var(--spacing-xs);
-    }
-
-    /* New 1024x600 styles for award titles */
-    body.height-600 .award-title {
-        font-size: 19px;
-        margin-bottom: calc(var(--spacing-xs) * 0.75);
-    }
-
-    /* New 1024x600 styles for award years */
-    body.height-600 .award-year {
         font-size: 16px;
     }
 
-    /* Media query adjustments for 1024x600 */
+    /* Responsive adjustments for smaller screens */
     @media screen and (max-width: 768px) {
-        body.height-600 .content-box {
+        .content-box {
             width: 95%;
             padding: var(--spacing-md);
         }
         
-        body.height-600 .section-title {
+        .section-title {
             font-size: 26px;
             margin-bottom: 22px;
         }
         
-        body.height-600 .section-content {
+        .section-content {
             font-size: 18px;
         }
         
-        body.height-600 .awards-grid {
+        .awards-grid {
             grid-template-columns: repeat(2, 1fr);
         }
     }
-
+    
     @media screen and (max-width: 480px) {
-        body.height-600 .awards-grid {
+        .awards-grid {
             grid-template-columns: 1fr;
         }
     }

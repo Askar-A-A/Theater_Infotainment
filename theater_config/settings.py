@@ -55,7 +55,6 @@ MIDDLEWARE = [
     'cms.middleware.page.CurrentPageMiddleware',
     'cms.middleware.toolbar.ToolbarMiddleware',
     'cms.middleware.language.LanguageCookieMiddleware',
-    'theater_cms.middleware.DisplayHeightMiddleware',
 ]
 
 ROOT_URLCONF = 'theater_config.urls'

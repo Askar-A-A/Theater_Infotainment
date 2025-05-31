@@ -8,10 +8,9 @@
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>{% placeholder "sponsors_page_title" or %}Our Sponsors - Opera House{% endplaceholder %}</title>
     <link rel="stylesheet" href="{% static 'css/font-awesome/all.min.css' %}">
-    <!-- Removed Google Fonts references -->
     {% render_block "css" %}
 <style>
-    /* Reset and base styles */
+    /* Reset and base styles - Fixed for 1024x600 */
     * {
         margin: 0;
         padding: 0;
@@ -21,8 +20,8 @@
     html, body {
         margin: 0;
         padding: 0;
-        width: 1280px;
-        height: 800px; 
+        width: 1024px;
+        height: 600px; 
         max-height: 100%;
         color: #fff;
         font-family: Arial, sans-serif;
@@ -30,161 +29,124 @@
         overflow: hidden;
     }
 
-    /* Define content wrapper - Plain Black Background */
+    /* Content wrapper - Fixed for 1024x600 */
     .content-wrapper {
-        width: 1280px;
-        height: 800px;
+        width: 1024px;
+        height: 600px;
         position: relative;
-        background: rgb(59, 57, 57); /* Match the background in base.html */
+        background: rgb(59, 57, 57);
         overflow: hidden;
     }
     
-    /* COMPATIBILITY: Replaced CSS variables with direct values */
-    /* Color and spacing constants as comments for reference */
-    /* --color-gold: #d4af37; */
-    /* --color-gold-muted: #b8a062; */
-    /* --spacing-sm: 0.75rem; */
-    /* --spacing-md: 1.5rem; */
-    /* --spacing-lg: 2.5rem; */
-    /* --spacing-xl: 4rem; */
-    /* --border-radius: 8px; */
-    
-    /* Resolution-specific adjustments */
-    body.height-800, 
-    body.height-800 .content-wrapper {
-        width: 1280px;
-        height: 800px;
-    }
-    
-    body.height-400, 
-    body.height-400 .content-wrapper {
-        width: 1280px;
-        height: 400px;
-    }
-    
-    body.height-600, 
-    body.height-600 .content-wrapper {
-        width: 1024px;
-        height: 600px;
-    }
-    
-    /* Main container */
+    /* Main container - Fixed for 1024x600 */
     .sponsors-container {
         width: 100%;
         height: 100%;
-        /* COMPATIBILITY: Replaced flexbox with table-based layout */
         position: relative;
-        padding: 2.5rem 1.5rem;
+        padding: 10px;
         text-align: center;
-        /* COMPATIBILITY: Removed animation opacity:0 and replaced with simple display */
         display: block;
     }
     
-    /* Title area */
+    /* Title area - Fixed for 1024x600 */
     .sponsors-title {
         font-family: Georgia, serif;
-        font-size: 3.5rem;
-        color: #d4af37; /* Direct gold color */
-        margin-bottom: 0.75rem;
-        /* COMPATIBILITY: Removed text-shadow */
+        font-size: 2.8rem;
+        color: #d4af37;
+        margin-bottom: 0.4rem;
+        margin-top: 0.4rem;
     }
     
-    /* Divider */
+    /* Divider - Fixed for 1024x600 */
     .divider {
-        width: 300px;
-        height: 2px;
-        /* COMPATIBILITY: Replaced gradient with solid color */
+        width: 220px;
+        height: 1.5px;
         background: #d4af37;
-        margin: 0 auto 1.5rem;
+        margin: 0 auto 0.6rem;
         opacity: 0.7;
     }
     
-    /* Sponsors info */
+    /* Sponsors info - Fixed for 1024x600 */
     .sponsors-intro {
         text-align: center;
         max-width: 80%;
-        margin: 0 auto 2.5rem;
+        margin: 0 auto 0.8rem;
         color: rgba(255, 255, 255, 0.9);
-        font-size: 1.4rem;
-        line-height: 1.6;
+        font-size: 1.1rem;
+        line-height: 1.4;
         font-family: Arial, sans-serif;
         font-weight: 300;
     }
     
-    /* COMPATIBILITY: Replaced flexbox row with table layout */
+    /* Sponsors row layout - Fixed for 1024x600 */
     .sponsors-row {
         width: 100%;
-        margin-bottom: 2.5rem;
-        /* COMPATIBILITY: Use table for layout */
+        margin-bottom: 12px;
         display: table;
         table-layout: fixed;
     }
     
-    /* Sponsor category boxes */
+    /* Sponsor category boxes - Fixed for 1024x600 */
     .sponsor-box {
-        /* COMPATIBILITY: Replaced flex with table-cell */
         display: table-cell;
         width: 50%;
-        max-width: 500px;
+        max-width: 450px;
         background-color: rgba(0, 0, 0, 0.4);
-        border: 2px solid rgba(212, 175, 55, 0.3);
+        border: 1.5px solid rgba(212, 175, 55, 0.3);
         border-radius: 10px;
-        padding: 1.5rem 1.5rem 2.5rem;
+        padding: 12px;
         position: relative;
         vertical-align: top;
     }
     
-    /* Add spacing between boxes */
+    /* Add spacing between boxes - Fixed for 1024x600 */
     .sponsor-box:first-child {
-        padding-right: 1.25rem;
+        padding-right: 6px;
     }
     
     .sponsor-box:last-child {
-        padding-left: 1.25rem;
+        padding-left: 6px;
     }
     
-    /* Category headers with elegant styling */
+    /* Category headers - Fixed for 1024x600 */
     .sponsor-box-title {
         position: relative;
         text-align: center;
-        margin-bottom: 1.5rem;
-        padding-bottom: 0.75rem;
+        margin-bottom: 10px;
+        padding-bottom: 5px;
         border-bottom: 1px solid rgba(212, 175, 55, 0.4);
     }
     
     .sponsor-box-title i {
-        color: #d4af37; /* Direct gold color */
-        font-size: 1.8rem;
+        color: #d4af37;
+        font-size: 1.5rem;
         margin-right: 0.6rem;
         vertical-align: middle;
     }
     
     .sponsor-box-title span {
-        color: #d4af37; /* Direct gold color */
-        font-size: 1.8rem;
+        color: #d4af37;
+        font-size: 1.5rem;
         font-weight: bold;
         vertical-align: middle;
     }
     
-    /* COMPATIBILITY: Replaced flexbox grid with table-based layout */
+    /* Sponsors grid - Fixed for 1024x600 */
     .sponsors-grid {
-        /* COMPATIBILITY: Use float and inline-block instead of flexbox */
         text-align: center;
         margin: 0 auto;
     }
     
-    /* Sponsor items - only slight increase to width */
+    /* Sponsor items - Fixed for 1024x600 */
     .sponsor-item {
         background-color: rgba(255, 255, 255, 0.95);
         border-radius: 8px;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        width: 210px; /* Slight increase */
-        height: 140px; /* More increase in height */
-        /* COMPATIBILITY: Simplified transition */
+        width: 190px;
+        height: 130px;
         transition: transform 0.3s;
-        /* COMPATIBILITY: Use inline-block instead of flex */
         display: inline-block;
-        margin: 0.75rem;
+        margin: 5px;
         position: relative;
         vertical-align: middle;
     }
@@ -198,213 +160,53 @@
         display: block;
         width: 100%;
         height: 100%;
-        /* COMPATIBILITY: Removed object-fit */
         max-width: 100%;
         max-height: 100%;
-        padding: 12px;
+        padding: 8px;
     }
     
-    /* Enter button - hide it since we're using the arrow button instead */
+    /* Enter button - hidden since we're using the arrow button */
     .enter-button {
         display: none;
     }
     
-    /* Arrow button styles */
+    /* Arrow button styles - Fixed for 1024x600 */
     .arrow-button {
         position: absolute;
-        top: 20px;
-        right: 20px;
-        width: 60px;
-        height: 60px;
+        top: 15px;
+        right: 15px;
+        width: 50px;
+        height: 50px;
         background-color: rgba(0, 0, 0, 0.5);
-        border: 2px solid #d4af37; /* Direct gold color */
+        border: 2px solid #d4af37;
         border-radius: 50%;
-        /* COMPATIBILITY: Replaced flexbox with table-cell */
         display: table-cell;
         text-align: center;
         vertical-align: middle;
         cursor: pointer;
-        /* COMPATIBILITY: Simplified transition */
         transition: background-color 0.3s;
         z-index: 10;
         text-decoration: none;
     }
 
     .arrow-button i {
-        color: #d4af37; /* Direct gold color */
-        font-size: 1.8rem;
+        color: #d4af37;
+        font-size: 1.5rem;
         transition: color 0.3s;
-        /* COMPATIBILITY: Add line-height for vertical centering with table-cell */
-        line-height: 60px;
+        line-height: 50px;
     }
 
     .arrow-button:hover {
         background-color: rgba(212, 175, 55, 0.2);
-        /* COMPATIBILITY: Removed transform */
     }
 
     .arrow-button:hover i {
         color: #fff;
     }
-    
-    /* COMPATIBILITY: Removed keyframes animations */
-    
-    /* Responsive styles for 400px height */
-    body.height-400 .sponsors-container {
-        padding: 5px;
-    }
-    
-    body.height-400 .sponsors-title {
-        font-size: 1.5rem;
-        margin-bottom: 0.2rem;
-        margin-top: 0;
-    }
-    
-    body.height-400 .divider {
-        width: 120px;
-        height: 1px;
-        margin-bottom: 0.3rem;
-    }
-    
-    body.height-400 .sponsors-intro {
-        font-size: 0.9rem;
-        line-height: 1.2;
-        margin-bottom: 0.3rem;
-        max-width: 70%;
-    }
-    
-    body.height-400 .sponsors-row {
-        margin-bottom: 5px;
-    }
-    
-    body.height-400 .sponsor-box {
-        padding: 5px;
-        border-width: 1px;
-    }
-    
-    body.height-400 .sponsor-box:first-child {
-        padding-right: 4px;
-    }
-    
-    body.height-400 .sponsor-box:last-child {
-        padding-left: 4px;
-    }
-    
-    body.height-400 .sponsor-box-title {
-        margin-bottom: 5px;
-        padding-bottom: 2px;
-    }
-    
-    body.height-400 .sponsor-box-title i {
-        font-size: 1.1rem;
-    }
-    
-    body.height-400 .sponsor-box-title span {
-        font-size: 1.1rem;
-    }
-    
-    body.height-400 .sponsor-item {
-        width: 180px;
-        height: 120px;
-        margin: 2px;
-    }
-    
-    body.height-400 .sponsor-logo {
-        padding: 5px;
-    }
-    
-    body.height-400 .arrow-button {
-        top: 10px;
-        right: 10px;
-        width: 40px;
-        height: 40px;
-    }
-
-    body.height-400 .arrow-button i {
-        font-size: 1.2rem;
-        line-height: 40px;
-    }
-    
-    /* New 1024x600 styles */
-    body.height-600 .sponsors-container {
-        padding: 10px;
-    }
-    
-    body.height-600 .sponsors-title {
-        font-size: 2.8rem;
-        margin-bottom: 0.4rem;
-        margin-top: 0.4rem;
-    }
-    
-    body.height-600 .divider {
-        width: 220px;
-        height: 1.5px;
-        margin-bottom: 0.6rem;
-    }
-    
-    body.height-600 .sponsors-intro {
-        font-size: 1.1rem;
-        line-height: 1.4;
-        margin-bottom: 0.8rem;
-        max-width: 80%;
-    }
-    
-    body.height-600 .sponsors-row {
-        margin-bottom: 12px;
-    }
-    
-    body.height-600 .sponsor-box {
-        padding: 12px;
-        border-width: 1.5px;
-        max-width: 450px;
-    }
-    
-    body.height-600 .sponsor-box:first-child {
-        padding-right: 6px;
-    }
-    
-    body.height-600 .sponsor-box:last-child {
-        padding-left: 6px;
-    }
-    
-    body.height-600 .sponsor-box-title {
-        margin-bottom: 10px;
-        padding-bottom: 5px;
-    }
-    
-    body.height-600 .sponsor-box-title i {
-        font-size: 1.5rem;
-    }
-    
-    body.height-600 .sponsor-box-title span {
-        font-size: 1.5rem;
-    }
-    
-    body.height-600 .sponsor-item {
-        width: 190px;
-        height: 130px;
-        margin: 5px;
-    }
-    
-    body.height-600 .sponsor-logo {
-        padding: 8px;
-    }
-    
-    body.height-600 .arrow-button {
-        top: 15px;
-        right: 15px;
-        width: 50px;
-        height: 50px;
-    }
-
-    body.height-600 .arrow-button i {
-        font-size: 1.5rem;
-        line-height: 50px;
-    }
 </style>
 {% render_block "js" %}
 <script>
-    /* COMPATIBILITY: Using older event attachment method with fallback */
+    /* Android 6.0 compatible event attachment with fallback */
     function addLoadEvent(func) {
         var oldonload = window.onload;
         if (typeof window.onload != 'function') {
@@ -420,91 +222,8 @@
     }
 
     addLoadEvent(function() {
-        // Function to get height from cookie or URL parameter
-        function getHeightPreference() {
-            // First check URL parameter (takes precedence)
-            var heightParam = null;
-            var search = window.location.search.substring(1);
-            var params = search.split('&');
-            for (var i = 0; i < params.length; i++) {
-                var param = params[i].split('=');
-                if (param[0] === 'height') {
-                    heightParam = param[1];
-                    break;
-                }
-            }
-            
-            if (heightParam === '400' || heightParam === '800' || heightParam === '600') {
-                // Save preference to cookie if it comes from URL
-                setHeightCookie(heightParam);
-                setWidthCookie(heightParam === '600' ? '1024' : '1280');
-                return heightParam;
-            }
-            
-            // Otherwise check cookie
-            var heightCookie = getCookie('displayHeight');
-            return heightCookie || '800'; // Default to 800px
-        }
-        
-        // Function to set height cookie (expires in 30 days)
-        function setHeightCookie(height) {
-            var expiryDate = new Date();
-            expiryDate.setDate(expiryDate.getDate() + 30);
-            document.cookie = 'displayHeight=' + height + ';expires=' + expiryDate.toUTCString() + ';path=/';
-        }
-        
-        // Function to set width cookie (expires in 30 days)
-        function setWidthCookie(width) {
-            var expiryDate = new Date();
-            expiryDate.setDate(expiryDate.getDate() + 30);
-            document.cookie = 'displayWidth=' + width + ';expires=' + expiryDate.toUTCString() + ';path=/';
-        }
-        
-        // Function to get cookie value by name
-        function getCookie(name) {
-            var nameEQ = name + "=";
-            var ca = document.cookie.split(';');
-            for(var i=0; i < ca.length; i++) {
-                var c = ca[i];
-                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-            }
-            return null;
-        }
-        
-        // Apply height class based on preference
-        var heightPreference = getHeightPreference();
-        if (heightPreference === '400') {
-            document.body.className = 'height-400';
-            document.body.style.width = '1280px';
-            document.body.style.height = '400px';
-            
-            var contentWrapper = document.querySelector('.content-wrapper');
-            if (contentWrapper) {
-                contentWrapper.style.width = '1280px';
-                contentWrapper.style.height = '400px';
-            }
-        } else if (heightPreference === '600') {
-            document.body.className = 'height-600';
-            document.body.style.width = '1024px';
-            document.body.style.height = '600px';
-            
-            var contentWrapper = document.querySelector('.content-wrapper');
-            if (contentWrapper) {
-                contentWrapper.style.width = '1024px';
-                contentWrapper.style.height = '600px';
-            }
-        } else {
-            document.body.className = 'height-800';
-            document.body.style.width = '1280px';
-            document.body.style.height = '800px';
-            
-            var contentWrapper = document.querySelector('.content-wrapper');
-            if (contentWrapper) {
-                contentWrapper.style.width = '1280px';
-                contentWrapper.style.height = '800px';
-            }
-        }
+        // Simple initialization for 1024x600 layout
+        // No dynamic height detection needed
     });
 </script>
 </head>
@@ -512,7 +231,7 @@
 <body>
     {% cms_toolbar %}
     <div class="content-wrapper">
-        <!-- Add the arrow button for navigation -->
+        <!-- Arrow button for navigation -->
         <a href="/home/" class="arrow-button">
             <i class="fas fa-arrow-right"></i>
         </a>
@@ -579,7 +298,7 @@
                 {% endif %}
             </div>
             
-            <!-- Original enter button - now hidden via CSS -->
+            <!-- Original enter button - hidden via CSS -->
             <a href="/home/" class="enter-button">
                 {% placeholder "enter_button_text" or %}ENTER SITE{% endplaceholder %}
             </a>

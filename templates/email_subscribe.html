@@ -8,37 +8,12 @@
 
 {% block wrapper_style %}
 <style>
-    /* Force specific height on the wrapper */
+    /* Fixed height for 1024x600 resolution */
     .content-wrapper {
-        height: 800px;
+        height: 600px;
+        width: 1024px;
         overflow: hidden;
     }
-    
-    /* Check for cookie to override height directly in HTML, not waiting for JS */
-    {% if request.COOKIES.displayHeight == '400' %}
-    @media screen and (min-height: 400px) {
-        .content-wrapper {
-            height: 400px !important;
-        }
-        body {
-            height: 400px !important;
-        }
-    }
-    {% endif %}
-
-    /* First, add the height-600 to the content-wrapper styles */
-    {% if request.COOKIES.displayHeight == '600' %}
-    @media screen and (min-height: 600px) {
-        .content-wrapper {
-            height: 600px !important;
-            width: 1024px !important;
-        }
-        body {
-            height: 600px !important;
-            width: 1024px !important;
-        }
-    }
-    {% endif %}
 </style>
 {% endblock %}
 
@@ -55,7 +30,7 @@
         --border-radius: 8px;
     }
     
-    /* Main container */
+    /* Main container - Optimized for 1024x600 */
     .subscribe-container {
         width: 100%;
         height: 100%;
@@ -66,10 +41,11 @@
         position: relative;
     }
     
-    /* General styles for all heights */
+    /* Content box - Optimized for 1024x600 */
     .subscribe-content-box {
-        max-width: 550px;
-        width: 80%;
+        max-width: 600px;
+        width: 94%;
+        padding: 1.8rem 2.5rem;
         background-color: rgba(0, 0, 0, 0.7);
         border: 1px solid var(--color-gold-muted);
         border-radius: var(--border-radius);
@@ -91,94 +67,91 @@
         z-index: 0;
     }
     
-    /* Gold accent lines */
-    .gold-line-top, .gold-line-bottom {
-        display: none; /* Hide the gold lines */
-    }
-    
-    /* Corner accents */
+    /* Corner accents - Optimized for 1024x600 */
     .subscribe-content-box::before,
     .subscribe-content-box::after,
     .corner-top-right,
     .corner-bottom-left {
         content: "";
         position: absolute;
-        width: 15px;
-        height: 15px;
+        width: 12px;
+        height: 12px;
         border-color: var(--color-gold);
+        border-width: 1.5px;
     }
     
     .subscribe-content-box::before {
         top: -1px;
         left: -1px;
-        border-top: 2px solid var(--color-gold);
-        border-left: 2px solid var(--color-gold);
+        border-top: 1.5px solid var(--color-gold);
+        border-left: 1.5px solid var(--color-gold);
         border-top-left-radius: var(--border-radius);
     }
     
     .subscribe-content-box::after {
         bottom: -1px;
         right: -1px;
-        border-bottom: 2px solid var(--color-gold);
-        border-right: 2px solid var(--color-gold);
+        border-bottom: 1.5px solid var(--color-gold);
+        border-right: 1.5px solid var(--color-gold);
         border-bottom-right-radius: var(--border-radius);
     }
     
     .corner-top-right {
         top: -1px;
         right: -1px;
-        border-top: 2px solid var(--color-gold);
-        border-right: 2px solid var(--color-gold);
+        border-top: 1.5px solid var(--color-gold);
+        border-right: 1.5px solid var(--color-gold);
         border-top-right-radius: var(--border-radius);
     }
     
     .corner-bottom-left {
         bottom: -1px;
         left: -1px;
-        border-bottom: 2px solid var(--color-gold);
-        border-left: 2px solid var(--color-gold);
+        border-bottom: 1.5px solid var(--color-gold);
+        border-left: 1.5px solid var(--color-gold);
         border-bottom-left-radius: var(--border-radius);
     }
     
-    /* Subscribe form */
-    .subscribe-form {
-        width: 100%;
-        max-width: 450px;
-        margin: 0 auto;
-        text-align: center;
-    }
-    
-    /* 800px height styles */
-    {% if request.COOKIES.displayHeight == '800' or not request.COOKIES.displayHeight %}
-    .subscribe-content-box {
-        padding: 2.2rem 2.2rem;
-    }
-    
+    /* Title - Optimized for 1024x600 */
     .subscribe-title {
         font-family: 'Playfair Display', serif;
-        font-size: 2.8rem;
+        font-size: 2.6rem;
         color: var(--color-gold);
-        margin-bottom: 0.9rem;
+        margin-bottom: 0.5rem;
     }
     
+    /* Divider - Optimized for 1024x600 */
     .divider {
-        width: 180px;
+        width: 200px;
         height: 1px;
         background: linear-gradient(to right, transparent 0%, var(--color-gold) 50%, transparent 100%);
-        margin: 0 auto 1.5rem;
+        margin: 0 auto 0.8rem;
     }
     
+    /* Intro text - Optimized for 1024x600 */
     .subscribe-intro {
         text-align: center;
-        max-width: 90%;
-        margin: 0 auto 1.4rem;
+        max-width: 92%;
+        margin: 0 auto 1.2rem;
         color: rgba(255, 255, 255, 0.9);
-        font-size: 1.3rem;
-        line-height: 1.6;
+        font-size: 1.2rem;
+        line-height: 1.3;
     }
     
+    /* Subscribe form - Optimized for 1024x600 */
+    .subscribe-form {
+        width: 100%;
+        max-width: 520px;
+        margin: 0 auto;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    /* Form groups - Optimized for 1024x600 */
     .form-group {
-        margin-bottom: 1rem;
+        margin-bottom: 0.8rem;
         position: relative;
         text-align: left;
     }
@@ -186,7 +159,7 @@
     .form-group label {
         display: block;
         text-align: left;
-        margin-bottom: 0.3rem;
+        margin-bottom: 0.25rem;
         color: rgba(255, 255, 255, 0.9);
         font-size: 1.2rem;
         font-weight: 500;
@@ -194,23 +167,26 @@
     
     .form-control {
         width: 100%;
-        padding: 10px 15px;
+        padding: 9px 15px;
         background: rgba(255, 255, 255, 0.08);
         border: 1px solid rgba(255, 255, 255, 0.15);
         border-radius: 4px;
         color: white;
         font-size: 1.1rem;
+        min-height: 44px;
     }
     
+    /* Checkbox container - Optimized for 1024x600 */
     .checkbox-container {
         display: flex;
         align-items: flex-start;
-        margin-bottom: 1rem;
+        margin-bottom: 0.9rem;
+        margin-top: 0.5rem;
         text-align: left;
     }
     
     .checkbox-container input[type="checkbox"] {
-        margin-right: 10px;
+        margin-right: 12px;
         margin-top: 4px;
         transform: scale(1.2);
     }
@@ -218,13 +194,14 @@
     .checkbox-container label {
         color: rgba(255, 255, 255, 0.9);
         font-size: 1.1rem;
-        line-height: 1.4;
+        line-height: 1.3;
     }
     
+    /* Subscribe button - Optimized for 1024x600 */
     .btn-subscribe {
         display: inline-block;
-        padding: 12px 40px;
-        font-size: 1.25rem;
+        padding: 10px 35px;
+        font-size: 1.2rem;
         letter-spacing: 1.2px;
         color: var(--color-gold);
         background-color: rgba(0, 0, 0, 0.3);
@@ -235,129 +212,9 @@
         text-decoration: none;
         position: relative;
         overflow: hidden;
-        margin-top: 1.5rem;
-        min-width: 180px;
+        margin-top: 1rem;
+        min-width: 190px;
     }
-    {% endif %}
-    
-    {% if request.COOKIES.displayHeight == '400' %}
-    /* 400px height styles - AGGRESSIVELY COMPACT */
-    .subscribe-content-box {
-        padding: 0.5rem 1rem;
-        max-width: 80%;
-    }
-    
-    .subscribe-title {
-        font-family: 'Playfair Display', serif;
-        font-size: 1.3rem;
-        color: var(--color-gold);
-        margin-bottom: 0.1rem;
-    }
-    
-    .divider {
-        width: 80px;
-        height: 1px;
-        background: linear-gradient(to right, transparent 0%, var(--color-gold) 50%, transparent 100%);
-        margin: 0 auto 0.2rem;
-    }
-    
-    .subscribe-intro {
-        text-align: center;
-        max-width: 90%;
-        margin: 0 auto 0.3rem;
-        color: rgba(255, 255, 255, 0.9);
-        font-size: 0.75rem;
-        line-height: 1.2;
-    }
-    
-    .subscribe-form {
-        display: flex;
-        flex-direction: column;
-        gap: 0.2rem;
-    }
-    
-    .form-group {
-        margin-bottom: 0.2rem;
-        position: relative;
-        text-align: left;
-    }
-    
-    .form-group label {
-        display: block;
-        text-align: left;
-        margin-bottom: 0.1rem;
-        color: rgba(255, 255, 255, 0.9);
-        font-size: 0.7rem;
-        font-weight: 500;
-    }
-    
-    .form-control {
-        width: 100%;
-        padding: 0.25rem 0.5rem;
-        background: rgba(255, 255, 255, 0.08);
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        border-radius: 4px;
-        color: white;
-        font-size: 0.75rem;
-        min-height: 1.8rem;
-    }
-    
-    /* Hide the optional name field in 400px mode to save space */
-    /* Target specifically the name field by using a better selector */
-    .form-group label[for="name"] {
-        display: none;
-    }
-    .form-group input#name {
-        display: none;
-    }
-    
-    .checkbox-container {
-        display: flex;
-        align-items: flex-start;
-        margin-bottom: 0.2rem;
-        text-align: left;
-    }
-    
-    .checkbox-container input[type="checkbox"] {
-        margin-right: 0.3rem;
-        margin-top: 0.15rem;
-        transform: scale(0.9);
-    }
-    
-    .checkbox-container label {
-        color: rgba(255, 255, 255, 0.9);
-        font-size: 0.65rem;
-        line-height: 1.1;
-    }
-    
-    .btn-subscribe {
-        display: inline-block;
-        padding: 0.25rem 0.75rem;
-        font-size: 0.75rem;
-        letter-spacing: 0.5px;
-        color: var(--color-gold);
-        background-color: rgba(0, 0, 0, 0.3);
-        border: 1px solid var(--color-gold);
-        border-radius: 4px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        text-decoration: none;
-        position: relative;
-        overflow: hidden;
-        margin-top: 0.3rem;
-        min-width: 100px;
-    }
-    
-    /* Simplify corner accents in 400px mode */
-    .subscribe-content-box::before,
-    .subscribe-content-box::after,
-    .corner-top-right,
-    .corner-bottom-left {
-        width: 8px;
-        height: 8px;
-        border-width: 1px;
-    }
-    {% endif %}
     
     /* Hover effects and animations */
     .form-control:focus {
@@ -390,141 +247,48 @@
         left: 100%;
     }
     
-    /* Success message */
+    /* Success message - Optimized for 1024x600 */
     .success-message {
         display: none;
         background: rgba(0, 100, 0, 0.1);
         border: 1px solid rgba(0, 150, 0, 0.3);
         border-radius: 4px;
         color: #fff;
-        {% if request.COOKIES.displayHeight == '400' %}
-        padding: 0.4rem;
-        margin-top: 0.4rem;
-        font-size: 0.7rem;
-        {% else %}
         padding: 1rem;
-        margin-top: 1rem;
-        font-size: 0.95rem;
-        {% endif %}
-    }
-
-    /* Then add the 600px height styles block */
-    {% if request.COOKIES.displayHeight == '600' %}
-    /* 600px height styles - MEDIUM COMPACT */
-    .subscribe-content-box {
-        padding: 1.5rem 2rem;
-        max-width: 85%;
-    }
-
-    .subscribe-title {
-        font-family: 'Playfair Display', serif;
-        font-size: 2.2rem;
-        color: var(--color-gold);
-        margin-bottom: 0.6rem;
-    }
-
-    .divider {
-        width: 150px;
-        height: 1px;
-        background: linear-gradient(to right, transparent 0%, var(--color-gold) 50%, transparent 100%);
-        margin: 0 auto 1rem;
-    }
-
-    .subscribe-intro {
-        text-align: center;
-        max-width: 90%;
-        margin: 0 auto 1rem;
-        color: rgba(255, 255, 255, 0.9);
-        font-size: 1.1rem;
-        line-height: 1.4;
-    }
-
-    .subscribe-form {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-
-    .form-group {
-        margin-bottom: 0.6rem;
-        position: relative;
-        text-align: left;
-    }
-
-    .form-group label {
-        display: block;
-        text-align: left;
-        margin-bottom: 0.2rem;
-        color: rgba(255, 255, 255, 0.9);
-        font-size: 1rem;
-        font-weight: 500;
-    }
-
-    .form-control {
-        width: 100%;
-        padding: 8px 12px;
-        background: rgba(255, 255, 255, 0.08);
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        border-radius: 4px;
-        color: white;
-        font-size: 1rem;
-        min-height: 2.5rem;
-    }
-
-    .checkbox-container {
-        display: flex;
-        align-items: flex-start;
-        margin-bottom: 0.6rem;
-        text-align: left;
-    }
-
-    .checkbox-container input[type="checkbox"] {
-        margin-right: 0.6rem;
-        margin-top: 0.25rem;
-        transform: scale(1.1);
-    }
-
-    .checkbox-container label {
-        color: rgba(255, 255, 255, 0.9);
-        font-size: 0.95rem;
-        line-height: 1.3;
-    }
-
-    .btn-subscribe {
-        display: inline-block;
-        padding: 8px 30px;
-        font-size: 1.1rem;
-        letter-spacing: 0.8px;
-        color: var(--color-gold);
-        background-color: rgba(0, 0, 0, 0.3);
-        border: 1px solid var(--color-gold);
-        border-radius: 4px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        text-decoration: none;
-        position: relative;
-        overflow: hidden;
         margin-top: 0.8rem;
-        min-width: 150px;
+        font-size: 1.05rem;
     }
 
-    /* Medium size corner accents */
-    .subscribe-content-box::before,
-    .subscribe-content-box::after,
-    .corner-top-right,
-    .corner-bottom-left {
-        width: 12px;
-        height: 12px;
-        border-width: 1.5px;
-    }
-
-    /* Success message */
-    .success-message {
-        padding: 0.8rem;
-        margin-top: 0.8rem;
+    /* Error message styling */
+    .error-message {
+        color: #ff6b6b;
         font-size: 0.9rem;
+        margin-top: 5px;
     }
-    {% endif %}
+
+    /* Responsive adjustments for smaller screens */
+    @media screen and (max-width: 768px) {
+        .subscribe-content-box {
+            width: 95%;
+            padding: 1.5rem 2rem;
+        }
+        
+        .subscribe-title {
+            font-size: 2.2rem;
+        }
+        
+        .subscribe-intro {
+            font-size: 1.1rem;
+        }
+        
+        .form-group label {
+            font-size: 1.1rem;
+        }
+        
+        .form-control {
+            font-size: 1rem;
+        }
+    }
 </style>
 {% endblock %}
 
@@ -532,21 +296,17 @@
 <div class="subscribe-container">
     <div class="bg-pattern"></div>
     
-    <!-- LARGER BOX FOR 800px ONLY -->
-    <div class="subscribe-content-box" style="{% if request.COOKIES.displayHeight == '400' %}max-width: 550px; width: 92%; padding: 1rem 2rem;{% elif request.COOKIES.displayHeight == '600' %}max-width: 600px; width: 94%; padding: 1.8rem 2.5rem;{% else %}max-width: 680px; width: 95%; padding: 2.5rem 3rem;{% endif %}">
+    <div class="subscribe-content-box">
         <div class="corner-top-right"></div>
         <div class="corner-bottom-left"></div>
         
-        <!-- LARGER TITLE FOR 800px -->
-        <h1 class="subscribe-title" style="{% if request.COOKIES.displayHeight == '400' %}font-size: 2rem; margin-bottom: 0.25rem;{% elif request.COOKIES.displayHeight == '600' %}font-size: 2.6rem; margin-bottom: 0.5rem;{% else %}font-size: 3.2rem; margin-bottom: 0.7rem;{% endif %}">
+        <h1 class="subscribe-title">
             {% placeholder "subscribe_title" or %}Stay Informed{% endplaceholder %}
         </h1>
         
-        <!-- WIDER DIVIDER FOR 800px -->
-        <div class="divider" style="{% if request.COOKIES.displayHeight == '400' %}width: 170px; margin-bottom: 0.4rem;{% elif request.COOKIES.displayHeight == '600' %}width: 200px; margin-bottom: 0.8rem;{% else %}width: 220px; margin-bottom: 1.2rem;{% endif %}"></div>
+        <div class="divider"></div>
         
-        <!-- LARGER INTRO TEXT FOR 800px -->
-        <div class="subscribe-intro" style="{% if request.COOKIES.displayHeight == '400' %}max-width: 94%; font-size: 0.95rem; line-height: 1.2; margin-bottom: 0.6rem;{% elif request.COOKIES.displayHeight == '600' %}max-width: 92%; font-size: 1.2rem; line-height: 1.3; margin-bottom: 1.2rem;{% else %}max-width: 90%; font-size: 1.4rem; line-height: 1.5; margin-bottom: 1.8rem;{% endif %}">
+        <div class="subscribe-intro">
             {% placeholder "subscribe_intro" or %}
                 <p>
                     Subscribe to our newsletter and be the first to know about upcoming performances, 
@@ -555,51 +315,47 @@
             {% endplaceholder %}
         </div>
         
-        <!-- WIDER FORM FOR 800px -->
-        <form id="subscribe-form" class="subscribe-form" method="post" action="{% url 'user_interactions:process_subscription' %}" style="{% if request.COOKIES.displayHeight == '400' %}max-width: 460px;{% elif request.COOKIES.displayHeight == '600' %}max-width: 520px;{% else %}max-width: 580px;{% endif %}">
+        <form id="subscribe-form" class="subscribe-form" method="post" action="{% url 'user_interactions:process_subscription' %}">
             {% csrf_token %}
             
-            <!-- Email field - LARGER FOR 800px -->
-            <div class="form-group" style="{% if request.COOKIES.displayHeight == '400' %}margin-bottom: 0.35rem;{% elif request.COOKIES.displayHeight == '600' %}margin-bottom: 0.8rem;{% else %}margin-bottom: 1.2rem;{% endif %}">
-                <label for="email" style="{% if request.COOKIES.displayHeight == '400' %}font-size: 0.9rem; margin-bottom: 0.1rem;{% elif request.COOKIES.displayHeight == '600' %}font-size: 1.2rem; margin-bottom: 0.25rem;{% else %}font-size: 1.4rem; margin-bottom: 0.4rem;{% endif %}">Email Address</label>
+            <!-- Email field -->
+            <div class="form-group">
+                <label for="email">Email Address</label>
                 <input type="email" id="email" name="email" class="form-control" 
                        placeholder="Your email address" required
-                       style="{% if request.COOKIES.displayHeight == '400' %}font-size: 0.9rem; padding: 6px 12px; height: 32px;{% elif request.COOKIES.displayHeight == '600' %}font-size: 1.1rem; padding: 9px 15px; height: 44px;{% else %}font-size: 1.3rem; padding: 12px 18px; height: 56px;{% endif %}"
                        value="{{ request.session.subscription_data.email|default:'' }}">
                 {% if request.session.subscription_errors.email %}
-                    <div class="error-message" style="color: #ff6b6b; font-size: 0.8rem; margin-top: 5px;">
+                    <div class="error-message">
                         {{ request.session.subscription_errors.email }}
                     </div>
                 {% endif %}
             </div>
             
-            <!-- Name field - LARGER FOR 800px -->
-            <div class="form-group" style="{% if request.COOKIES.displayHeight == '400' %}margin-bottom: 0.35rem;{% elif request.COOKIES.displayHeight == '600' %}margin-bottom: 0.8rem;{% else %}margin-bottom: 1.2rem;{% endif %}">
-                <label for="name" style="{% if request.COOKIES.displayHeight == '400' %}font-size: 0.9rem; margin-bottom: 0.1rem;{% elif request.COOKIES.displayHeight == '600' %}font-size: 1.2rem; margin-bottom: 0.25rem;{% else %}font-size: 1.4rem; margin-bottom: 0.4rem;{% endif %}">Name (Optional)</label>
+            <!-- Name field -->
+            <div class="form-group">
+                <label for="name">Name (Optional)</label>
                 <input type="text" id="name" name="name" class="form-control" 
                        placeholder="Your name"
-                       style="{% if request.COOKIES.displayHeight == '400' %}font-size: 0.9rem; padding: 6px 12px; height: 32px;{% elif request.COOKIES.displayHeight == '600' %}font-size: 1.1rem; padding: 9px 15px; height: 44px;{% else %}font-size: 1.3rem; padding: 12px 18px; height: 56px;{% endif %}"
                        value="{{ request.session.subscription_data.name|default:'' }}">
             </div>
             
-            <!-- Checkbox - LARGER FOR 800px -->
-            <div class="checkbox-container" style="{% if request.COOKIES.displayHeight == '400' %}margin-bottom: 0.4rem; margin-top: 0.3rem;{% elif request.COOKIES.displayHeight == '600' %}margin-bottom: 0.9rem; margin-top: 0.5rem;{% else %}margin-bottom: 1.5rem; margin-top: 0.8rem;{% endif %}">
+            <!-- Checkbox -->
+            <div class="checkbox-container">
                 <input type="checkbox" id="preferences" name="preferences" 
-                       {% if request.session.subscription_data.preferences %}checked{% endif %}
-                       style="{% if request.COOKIES.displayHeight == '600' %}transform: scale(1.2); margin-top: 4px; margin-right: 12px;{% elif request.COOKIES.displayHeight != '400' %}transform: scale(1.4); margin-top: 6px; margin-right: 15px;{% endif %}">
-                <label for="preferences" style="{% if request.COOKIES.displayHeight == '400' %}font-size: 0.85rem; line-height: 1.2;{% elif request.COOKIES.displayHeight == '600' %}font-size: 1.1rem; line-height: 1.3;{% else %}font-size: 1.3rem; line-height: 1.5;{% endif %}">
+                       {% if request.session.subscription_data.preferences %}checked{% endif %}>
+                <label for="preferences">
                     I would like to receive information about special events, premieres, and exclusive offers.
                 </label>
             </div>
             
-            <!-- Button - LARGER FOR 800px -->
-            <button type="submit" class="btn-subscribe" style="{% if request.COOKIES.displayHeight == '400' %}min-width: 160px; padding: 6px 30px; font-size: 0.95rem; margin-top: 0.4rem;{% elif request.COOKIES.displayHeight == '600' %}min-width: 190px; padding: 10px 35px; font-size: 1.2rem; margin-top: 1rem; letter-spacing: 1.2px;{% else %}min-width: 220px; padding: 14px 40px; font-size: 1.4rem; margin-top: 1.5rem; letter-spacing: 1.5px;{% endif %}">
+            <!-- Submit button -->
+            <button type="submit" class="btn-subscribe">
                 {% placeholder "subscribe_button_text" or %}Subscribe{% endplaceholder %}
             </button>
         </form>
         
-        <!-- Success message - conditionally styled -->
-        <div id="success-message" class="success-message" style="{% if request.session.subscription_success or request.session.subscription_message %}display: block;{% endif %} {% if request.COOKIES.displayHeight == '600' %}font-size: 1.05rem; padding: 1rem;{% elif request.COOKIES.displayHeight != '400' %}font-size: 1.2rem; padding: 1.2rem;{% endif %}">
+        <!-- Success message -->
+        <div id="success-message" class="success-message" style="{% if request.session.subscription_success or request.session.subscription_message %}display: block;{% endif %}">
             {% if request.session.subscription_message %}
                 <p>{{ request.session.subscription_message }}</p>
             {% else %}
@@ -612,23 +368,14 @@
 </div>
 
 <script>
-    console.log("Height from cookie: {{ request.COOKIES.displayHeight }}");
     document.addEventListener('DOMContentLoaded', function() {
         var subscribeForm = document.getElementById('subscribe-form');
         var successMessage = document.getElementById('success-message');
-        var emailField = document.getElementById('email');
         
         // If success message is visible, hide the form
         if (successMessage.style.display === 'block') {
             subscribeForm.style.display = 'none';
         }
-        
-        // Force debug logging to console about current height and form elements
-        console.log("Current display height: {{ request.COOKIES.displayHeight|default:'800' }}px");
-        console.log("Email field visible:", emailField.offsetParent !== null);
-        
-        // Make sure email field is always visible regardless of height
-        emailField.style.display = 'block';
         
         // Remove the success flag after page load (for when user navigates back)
         // Using XMLHttpRequest instead of fetch for older browser compatibility

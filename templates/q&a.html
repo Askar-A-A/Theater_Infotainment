@@ -8,136 +8,62 @@
 
 {% block extra_css %}
 <style>
-    /* COMPATIBILITY: Replaced CSS variables with direct values */
-    /* Original variables were:
-    :root {
-        --spacing-xs: 0.5rem;
-        --spacing-sm: 1rem;
-        --spacing-md: 1.5rem;
-        --spacing-lg: 2rem;
-        --spacing-xl: 3rem;
-        
-        --border-radius: 10px;
-        --border-thin: 1px solid rgba(255,255,255,0.1);
-        
-        --color-gold: #d4af37;
-        --color-bg-dark: rgba(0,0,0,0.7);
-        --color-bg-hover: rgba(255,255,255,0.1);
-        
-        --font-size-sm: 1rem;
-        --font-size-md: 1.25rem;
-        --font-size-lg: 2.25rem;
-        --font-size-xl: 3rem;
-    }
-    */
-
-    /* Container with height-specific styles */
+    /* Container styles - Fixed for 1024x600 */
     .qa-container {
         width: 100%;
+        height: 600px;
+        padding-bottom: 40px;
         position: relative;
         overflow-y: auto;
     }
-    
-    /* Height-specific adjustments for qa-container */
-    body.height-800 .qa-container {
-        height: 800px;
-        padding-bottom: 50px;
-    }
-    
-    body.height-400 .qa-container {
-        height: 400px;
-        padding-bottom: 30px;
-    }
 
-    /* Page title with height-specific adjustments */
+    /* Page title - Fixed for 1024x600 */
     .page-title {
-        color: #d4af37; /* COMPATIBILITY: Direct value replacing var(--color-gold) */
+        color: #d4af37;
         font-family: 'Playfair Display', serif;
         text-align: center;
-    }
-    
-    /* Height-specific adjustments for page-title */
-    body.height-800 .page-title {
-        font-size: 45px;
-        margin-bottom: 40px;
-        padding: 50px 0 0 0;
-    }
-    
-    body.height-400 .page-title {
-        font-size: 32px;
-        margin-bottom: 20px;
-        padding: 25px 0 0 0;
+        font-size: 38px;
+        margin-bottom: 30px;
+        padding: 35px 0 0 0;
     }
 
-    /* Modified to be centered with max-width but no scrolling */
+    /* QA list container - Fixed for 1024x600 */
     .qa-list {
         max-width: 1000px;
         margin: 0 auto;
-        overflow-y: visible; /* Remove scrolling from list */
-    }
-    
-    /* Height-specific adjustments for qa-list */
-    body.height-800 .qa-list {
-        padding: 20px 20px;
-    }
-    
-    body.height-400 .qa-list {
-        padding: 10px 20px;
+        padding: 15px 20px;
+        overflow-y: visible;
     }
 
-    /* COMPATIBILITY: Removed custom scrollbar styling */
-
-    /* Q&A item styling with height-specific adjustments */
+    /* Q&A item styling - Fixed for 1024x600 */
     .qa-item {
-        background: rgba(0,0,0,0.7); /* COMPATIBILITY: Direct value replacing var(--color-bg-dark) */
-        border: 1px solid rgba(255,255,255,0.1); /* COMPATIBILITY: Direct value replacing var(--border-thin) */
-        border-radius: 10px; /* COMPATIBILITY: Direct value replacing var(--border-radius) */
+        background: rgba(0,0,0,0.7);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 10px;
+        margin-bottom: 16px;
         overflow: hidden;
     }
-    
-    /* Height-specific adjustments for qa-item */
-    body.height-800 .qa-item {
-        margin-bottom: 20px;
-    }
-    
-    body.height-400 .qa-item {
-        margin-bottom: 12px;
-    }
 
-    /* Question styling */
+    /* Question styling - Fixed for 1024x600 */
     .question {
+        padding: 16px 18px;
+        font-size: 22px;
         cursor: pointer;
-        /* COMPATIBILITY: Replaced flexbox with table display */
         display: table;
         width: 100%;
-        color: #d4af37; /* COMPATIBILITY: Direct value replacing var(--color-gold) */
-        /* COMPATIBILITY: Simplified transition */
+        color: #d4af37;
         transition: background-color 0.3s;
         text-align: left;
     }
-    
-    /* Height-specific adjustments for question */
-    body.height-800 .question {
-        padding: 20px;
-        font-size: 25px;
-    }
-    
-    body.height-400 .question {
-        padding: 12px 15px;
-        font-size: 20px;
-    }
 
     .question span {
-        /* COMPATIBILITY: Replaced flex with table-cell */
         display: table-cell;
         width: 95%;
         padding-right: 20px;
     }
 
     .question i {
-        /* COMPATIBILITY: Simplified transition */
         transition: transform 0.3s;
-        /* COMPATIBILITY: Replaced flex with table-cell */
         display: table-cell;
         width: 5%;
         text-align: right;
@@ -145,15 +71,13 @@
     }
 
     .question.active i {
-        /* COMPATIBILITY: Maintain rotation for icon */
         transform: rotate(180deg);
     }
 
-    /* Answer styling */
+    /* Answer styling - Fixed for 1024x600 */
     .answer {
         height: 0;
         overflow: hidden;
-        /* COMPATIBILITY: Simplified for Android WebView 6.0 */
         padding: 0;
         color: #fff;
         line-height: 1.6;
@@ -162,33 +86,16 @@
         visibility: hidden;
     }
     
-    /* COMPATIBILITY: Simplified active state for older browsers */
     .answer.active {
         height: auto;
         visibility: visible;
-    }
-    
-    /* Height-specific adjustments for answer */
-    body.height-800 .answer.active {
-        padding: 20px;
-        font-size: 20px;
-        line-height: 1.7;
-    }
-    
-    body.height-400 .answer.active {
-        padding: 12px 15px;
-        font-size: 17px;
-        line-height: 1.5;
-    }
-
-    body.height-600 .answer.active {
         padding: 16px 18px;
         font-size: 18px;
         line-height: 1.6;
     }
 
     .answer a {
-        color: #d4af37; /* COMPATIBILITY: Direct value replacing var(--color-gold) */
+        color: #d4af37;
         text-decoration: none;
     }
 
@@ -196,106 +103,23 @@
         text-decoration: underline;
     }
     
-    /* Responsive adjustments */
-    @media screen and (max-width: 1280px) {
-        .qa-container {
-            width: 100%;
-        }
-    }
-    
+    /* Responsive adjustments for smaller screens */
     @media screen and (max-width: 768px) {
-        body.height-800 .page-title {
-            font-size: 32px;
-            padding: 30px 0 0 0;
-        }
-        
-        body.height-400 .page-title {
-            font-size: 24px;
-            padding: 20px 0 0 0;
-        }
-        
-        body.height-800 .qa-list {
-            padding: 10px 20px;
-        }
-        
-        body.height-400 .qa-list {
-            padding: 8px 15px;
-        }
-        
-        body.height-800 .question {
-            padding: 15px;
-            font-size: 22px;
-        }
-        
-        body.height-400 .question {
-            padding: 10px;
-            font-size: 17px;
-        }
-        
-        body.height-800 .answer.active {
-            padding: 15px;
-            font-size: 18px;
-        }
-        
-        body.height-400 .answer.active {
-            padding: 10px;
-            font-size: 16px;
-        }
-    }
-
-    /* New 1024x600 styles for qa-container */
-    body.height-600 .qa-container {
-        height: 600px;
-        padding-bottom: 40px;
-    }
-
-    /* New 1024x600 styles for page-title */
-    body.height-600 .page-title {
-        font-size: 38px;
-        margin-bottom: 30px;
-        padding: 35px 0 0 0;
-    }
-
-    /* New 1024x600 styles for qa-list */
-    body.height-600 .qa-list {
-        padding: 15px 20px;
-    }
-
-    /* New 1024x600 styles for qa-item */
-    body.height-600 .qa-item {
-        margin-bottom: 16px;
-    }
-
-    /* New 1024x600 styles for question */
-    body.height-600 .question {
-        padding: 16px 18px;
-        font-size: 22px;
-    }
-
-    /* New 1024x600 styles for answer */
-    body.height-600 .answer.active {
-        padding: 16px 18px;
-        font-size: 18px;
-        line-height: 1.6;
-    }
-
-    /* Media query adjustments for 1024x600 */
-    @media screen and (max-width: 768px) {
-        body.height-600 .page-title {
+        .page-title {
             font-size: 28px;
             padding: 25px 0 0 0;
         }
         
-        body.height-600 .qa-list {
+        .qa-list {
             padding: 9px 18px;
         }
         
-        body.height-600 .question {
+        .question {
             padding: 12px;
             font-size: 20px;
         }
         
-        body.height-600 .answer.active {
+        .answer.active {
             padding: 12px;
             font-size: 17px;
         }
@@ -305,9 +129,9 @@
 
 {% block wrapper_style %}
 <style>
-    /* Override base template styles to ensure full-page scrolling */
+    /* Override base template styles to ensure proper scrolling */
     .content-wrapper {
-        overflow: hidden; /* Keep this hidden to prevent double scrollbars */
+        overflow: hidden;
     }
 </style>
 {% endblock %}
@@ -316,7 +140,7 @@
 <div class="qa-container">
     <h1 class="page-title">{% placeholder "faq_heading" or %}Frequently Asked Questions{% endplaceholder %}</h1>
     <div class="qa-list">
-        <!-- Core QA Items (First 5 questions) -->
+        <!-- Core QA Items -->
         <!-- QA Item 1 -->
         <div class="qa-item">
             <div class="question">
@@ -381,7 +205,7 @@
 </div>
 
 <script>
-/* COMPATIBILITY: Using older event attachment method with fallback */
+/* Android 6.0 compatible event attachment with fallback */
 function addLoadEvent(func) {
     var oldonload = window.onload;
     if (typeof window.onload != 'function') {
@@ -406,7 +230,6 @@ addLoadEvent(function() {
                 question.classList.remove('active');
                 var answer = question.nextElementSibling;
                 if (answer) {
-                    // COMPATIBILITY: Simple display toggle for Android WebView
                     answer.classList.remove('active');
                     answer.style.height = '0';
                     answer.style.padding = '0';
@@ -427,20 +250,12 @@ addLoadEvent(function() {
             // Toggle active state
             this.classList.toggle('active');
             
-            // COMPATIBILITY: Simple toggle for Android WebView
+            // Simple toggle for Android WebView compatibility
             if (isExpanding) {
                 answer.classList.add('active');
                 answer.style.visibility = 'visible';
                 answer.style.height = 'auto';
-                
-                // Set padding based on screen height
-                if (document.body.classList.contains('height-800')) {
-                    answer.style.padding = '20px';
-                } else if (document.body.classList.contains('height-400')) {
-                    answer.style.padding = '12px 15px';
-                } else if (document.body.classList.contains('height-600')) {
-                    answer.style.padding = '16px 18px';
-                }
+                answer.style.padding = '16px 18px';
             } else {
                 answer.classList.remove('active');
                 answer.style.height = '0';

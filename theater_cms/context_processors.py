@@ -15,18 +15,8 @@ def user_interaction_session_data(request):
     }
 
 def display_settings(request):
-    """Add display height and width to the template context."""
-    from .models import SiteSettings
-    
-    # Get setting from database
-    settings = SiteSettings.get_solo()
-    
-    # Determine width based on height
-    width = 1280
-    if settings.display_height == 600:
-        width = 1024
-        
+    """Add fixed display height and width to the template context for 1024x600 resolution."""
     return {
-        'display_height': settings.display_height,
-        'display_width': width,
+        'display_height': 600,
+        'display_width': 1024,
     }
