@@ -17,7 +17,7 @@
 
 {% block extra_css %}
 <style>
-    /* Reuse the same styles from feedback.html for consistency */
+    /* Variables for consistent measurements - Optimized for 1280x800 */
     :root {
         --spacing-xs: 0.5rem;
         --spacing-sm: 1rem;
@@ -39,7 +39,7 @@
         --font-size-xl: 3rem;
     }
 
-    /* Background and container styles - Optimized for 1024x600 */
+    /* Background and container styles - Optimized for 1280x800 */
     .bg-pattern {
         position: absolute;
         top: 0;
@@ -51,7 +51,7 @@
         z-index: 0;
     }
 
-    /* Gold accent lines - Optimized for 1024x600 */
+    /* Gold accent lines - Optimized for 1280x800 */
     .gold-line-top, .gold-line-bottom {
         position: absolute;
         width: 100%;
@@ -90,7 +90,7 @@
         box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
     }
     
-    /* Corner styles - Optimized for 1024x600 */
+    /* Corner styles - Optimized for 1280x800 */
     .feedback-content-box::before,
     .feedback-content-box::after,
     .corner-top-right,
@@ -134,7 +134,7 @@
         border-bottom-left-radius: var(--border-radius);
     }
     
-    /* Title and content styles - Optimized for 1024x600 */
+    /* Title and content styles - Optimized for 1280x800 */
     .feedback-title {
         font-family: 'Playfair Display', serif;
         color: var(--color-gold);
@@ -159,7 +159,7 @@
         margin-bottom: 0.8rem;
     }
     
-    /* Button styles - Optimized for 1024x600 */
+    /* Button styles - Optimized for 1280x800 */
     .home-button {
         display: inline-block;
         padding: 8px 28px;

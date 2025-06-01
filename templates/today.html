@@ -17,7 +17,7 @@
 
 {% block extra_css %}
 <style>
-    /* Variables for consistent measurements - Optimized for 1024x600 */
+    /* Variables for consistent measurements - Optimized for 1280x800 */
     :root {
         --spacing-xs: 0.5rem;
         --spacing-sm: 1rem;
@@ -46,7 +46,7 @@
         overflow: hidden;
     }
 
-    /* Setup scroll snapping with enhanced scrollbar - Fixed for 1024x600 */
+    /* Setup scroll snapping with enhanced scrollbar - Fixed for 1280x800 */
     .main-content {
         height: 100%;
         width: 100%;
@@ -56,7 +56,7 @@
         scroll-behavior: smooth;
     }
     
-    /* Beautiful gold scrollbar styling - Fixed for 1024x600 */
+    /* Beautiful gold scrollbar styling - Fixed for 1280x800 */
     .main-content::-webkit-scrollbar {
         width: 10px;
     }
@@ -74,10 +74,10 @@
         background: #b28e29;
     }
 
-    /* Content sections - Fixed for 1024x600 */
+    /* Content sections - Fixed for 1280x800 */
     .content-section {
         width: 100%;
-        height: 600px;
+        height: 800px;
         padding: 60px 55px 30px 35px;
         scroll-snap-align: start;
         display: flex;
@@ -87,11 +87,11 @@
         box-sizing: border-box;
     }
     
-    /* Vertical scroll indicators - Fixed for 1024x600 */
+    /* Vertical scroll indicators - Fixed for 1280x800 */
     .scroll-indicators {
         position: fixed;
         right: 30px;
-        top: 300px;  /* Fixed at 50% of 600px height */
+        top: 400px;  /* Fixed at 50% of 800px height */
         transform: translateY(-50%);
         display: flex;
         flex-direction: column;
@@ -113,7 +113,7 @@
         transform: scale(1.2);
     }
 
-    /* Content styling - Fixed for 1024x600 */
+    /* Content styling - Fixed for 1280x800 */
     .content-box {
         background: var(--color-bg-dark);
         border: var(--border-thin);
@@ -128,7 +128,7 @@
         overflow-y: auto;
     }
     
-    /* Content box scrollbar styling - Fixed for 1024x600 */
+    /* Content box scrollbar styling - Fixed for 1280x800 */
     .content-box::-webkit-scrollbar {
         width: 8px;
     }
@@ -146,7 +146,7 @@
         background: #b28e29;
     }
 
-    /* Section styling - Fixed for 1024x600 */
+    /* Section styling - Fixed for 1280x800 */
     .section-icon {
         color: var(--color-gold);
         font-size: 42px;
@@ -161,7 +161,7 @@
         text-align: center;
     }
 
-    /* Production team styling - Fixed for 1024x600 */
+    /* Production team styling - Fixed for 1280x800 */
     .production-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -194,7 +194,7 @@
         overflow-y: auto;
     }
     
-    /* Team content scrollbar styling - Fixed for 1024x600 */
+    /* Team content scrollbar styling - Fixed for 1280x800 */
     .team-content::-webkit-scrollbar {
         width: 6px;
     }
@@ -212,7 +212,7 @@
         background: #b28e29;
     }
 
-    /* Cast styling - Fixed for 1024x600 */
+    /* Cast styling - Fixed for 1280x800 */
     .cast-member {
         display: flex;
         justify-content: space-between;
@@ -233,7 +233,7 @@
         font-size: 1.15em;
     }
 
-    /* Summary styling - Fixed for 1024x600 */
+    /* Summary styling - Fixed for 1280x800 */
     .summary-content {
         color: #fff;
         font-size: 18px;
