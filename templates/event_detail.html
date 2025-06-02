@@ -223,19 +223,23 @@
     }
 
     .event-image-container {
-        width: 30%;
-        height: 250px;
+        width: 35%;  /* Slightly increased width for better proportion */
+        height: auto;  /* Let height adjust automatically */
+        min-height: 200px;  /* Minimum height to maintain presence */
+        max-height: 280px;  /* Maximum height to prevent oversizing */
         overflow: hidden;
         border-radius: var(--border-radius);
         display: flex;
         align-items: center;
         justify-content: center;
+        background: rgba(0, 0, 0, 0.2);  /* Subtle background for empty space */
     }
 
     .event-image-container img {
-        max-width: 100%;
-        max-height: 100%;
-        object-fit: contain;
+        width: 100%;  /* Fill the container width */
+        height: auto;  /* Maintain aspect ratio */
+        max-height: 280px;  /* Prevent oversizing */
+        object-fit: cover;  /* Cover the container while maintaining aspect ratio */
         border-radius: var(--border-radius);
     }
 
@@ -319,7 +323,9 @@
         
         .event-image-container {
             width: 100%;
-            height: 140px;
+            height: auto;
+            min-height: 180px;
+            max-height: 220px;
         }
         
         .event-content {
@@ -409,30 +415,6 @@
             
             {{ event.additional_details|safe }}
         </div>
-    </div>
-
-    <div class="event-schedule">
-        <h3>Upcoming Performances</h3>
-        
-        {% if upcoming_performances %}
-            <div class="performance-list">
-                {% for performance in upcoming_performances %}
-                    <div class="performance-item">
-                        <div class="performance-date">
-                            {{ performance.start_time|date:"l, F d, Y" }}
-                        </div>
-                        <div class="performance-time">
-                            {{ performance.start_time|date:"g:i A" }}
-                        </div>
-                        {% if performance.notes %}
-                            <div class="performance-notes">{{ performance.notes }}</div>
-                        {% endif %}
-                    </div>
-                {% endfor %}
-            </div>
-        {% else %}
-            <p>No upcoming performances scheduled at this time.</p>
-        {% endif %}
     </div>
 </div>
 
