@@ -8,7 +8,7 @@
 
 {% block wrapper_style %}
 <style>
-    /* Enable horizontal scrolling for events page */
+    /* Enable vertical scrolling for events page */
     .content-wrapper {
         overflow: hidden;
     }
@@ -17,15 +17,15 @@
 
 {% block extra_css %}
 <style>
-    /* Variables for consistent measurements (same as other pages) */
+    /* Variables for consistent measurements */
     :root {
-        --spacing-xs: 0.5rem;
-        --spacing-sm: 1rem;
-        --spacing-md: 1.5rem;
-        --spacing-lg: 2rem;
-        --spacing-xl: 3rem;
+        --spacing-xs: 0.65rem;  /* Scaled up by 30% */
+        --spacing-sm: 1.3rem;   /* Scaled up by 30% */
+        --spacing-md: 1.95rem;  /* Scaled up by 30% */
+        --spacing-lg: 2.6rem;   /* Scaled up by 30% */
+        --spacing-xl: 3.9rem;   /* Scaled up by 30% */
         
-        --border-radius: 10px;
+        --border-radius: 13px;  /* Scaled up by 30% */
         --border-thin: 1px solid rgba(255,255,255,0.1);
         
         --color-gold: #d4af37;
@@ -38,98 +38,85 @@
         --font-size-xl: 3.75rem;
     }
 
-    /* Container styles - Fixed for 1024x600 */
+    /* Container styles - Fixed for 1024x600 with standard scrollbar */
     .theater-container {
         width: 100%;
         height: 100%;
         position: relative;
         box-sizing: border-box;
-        /* COMPATIBILITY: Changed to vertical scrolling */
         overflow-y: auto;
         overflow-x: hidden;
-        /* Remove WebView scrollbar */
-        -ms-overflow-style: none;
-        scrollbar-width: none;
+        /* Show standard scrollbar */
+        scrollbar-width: auto;
+        -ms-overflow-style: auto;
     }
 
+    /* Standard scrollbar styling for WebView compatibility */
     .theater-container::-webkit-scrollbar {
-        display: none;
+        width: 12px;
+        background: rgba(0, 0, 0, 0.3);
     }
 
-    /* Main content styles - converted to vertical layout */
+    .theater-container::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 6px;
+    }
+
+    .theater-container::-webkit-scrollbar-thumb {
+        background: var(--color-gold);
+        border-radius: 6px;
+        border: 2px solid rgba(0, 0, 0, 0.3);
+    }
+
+    .theater-container::-webkit-scrollbar-thumb:hover {
+        background: #b28e29;
+    }
+
+    /* Main content styles */
     .main-content {
         width: 100%;
-        /* COMPATIBILITY: Removed horizontal scroll */
         overflow: visible;
-        display: block; /* Changed from flex to block */
-        padding-bottom: 60px; /* Space for dots */
+        display: block;
+        padding-bottom: 78px;  /* Scaled up by 30% */
     }
 
     .content-section {
         width: 100%;
-        min-height: auto; /* Allow natural height */
-        padding: 18px 20px 20px 20px;
-        margin-bottom: 40px;
+        min-height: auto;
+        padding: 20px 39px 33px 39px;  /* Scaled up by 30% */
+        margin-bottom: 26px;  /* Scaled up by 30% */
         box-sizing: border-box;
     }
 
-    /* Events grid - maintained same look - Optimized for 1024x600 */
-    .events-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: var(--spacing-md);
-        width: 92.7%;
-        max-width: 74.7rem;
+    /* Events container - now single column */
+    .events-container {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-lg);
+        width: 100%;
+        max-width: 1235px;  /* Scaled up by 30% */
         margin: 0 auto;
     }
 
-    /* Page header - fixed at top */
+    /* Page header - static positioning (scrolls with content) */
     .page-header {
-        position: sticky;
-        top: 0;
-        left: 0;
+        position: static;
         width: 100%;
         text-align: center;
-        z-index: 10;
-        background: rgba(59, 57, 57, 0.9); /* Match site background */
-        padding: 20px 0;
-        margin-bottom: 30px;
+        background: rgba(59, 57, 57, 0.9);
+        padding: 26px 0;  /* Scaled up by 30% */
+        margin-bottom: 26px;  /* Scaled up by 30% */
     }
 
-    /* Scroll indicators - repositioned for vertical scroll */
-    .scroll-indicators {
-        position: fixed;
-        right: 20px;
-        top: 50%;
-        transform: translateY(-50%);
-        display: flex;
-        flex-direction: column;
-        gap: var(--spacing-xs);
-        z-index: 20;
-    }
-
-    .scroll-dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background: rgba(255,255,255,0.3);
-        cursor: pointer;
-        margin: 5px 0;
-        transition: background-color 0.3s ease;
-    }
-
-    .scroll-dot.active {
-        background: var(--color-gold);
-    }
-
-    /* Page title - Optimized for 1024x600 */
+    /* Page title */
     .page-title {
         color: var(--color-gold);
         font-family: 'Playfair Display', serif;
-        font-size: calc(var(--font-size-lg) + 0.2rem);
-        margin-bottom: 12px;
+        font-size: calc(var(--font-size-lg) + 0.26rem);  /* Scaled up by 30% */
+        margin-bottom: 16px;  /* Scaled up by 30% */
     }
 
+    /* Redesigned event card - proportional layout (scaled up 30%) */
     .event-card {
         background: var(--color-bg-dark);
         border: var(--border-thin);
@@ -137,27 +124,27 @@
         cursor: pointer;
         transition: all 0.3s ease;
         display: flex;
-        flex-direction: column;
         align-items: center;
         text-decoration: none;
-        transform: scale(1.03);
-        margin: 1.5%;
-        padding: calc(var(--spacing-sm) + 0.2rem);
+        padding: var(--spacing-md);
+        height: 234px;  /* 180px * 1.3 */
+        margin-bottom: var(--spacing-sm);
     }
 
-    /* Event card hover effects - Optimized for 1024x600 */
     .event-card:hover {
         background: var(--color-bg-hover);
-        transform: translateY(-4px);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);  /* Scaled up by 30% */
     }
 
+    /* Event image - left side (scaled up 30%) */
     .event-image {
-        width: 100%;
-        height: 12rem;
+        width: 312px;  /* 240px * 1.3 */
+        height: 195px;  /* 150px * 1.3 */
         border-radius: var(--border-radius);
-        margin-bottom: calc(var(--spacing-sm) - 0.2rem);
         overflow: hidden;
+        margin-right: var(--spacing-lg);
+        flex-shrink: 0;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -170,99 +157,147 @@
         border-radius: var(--border-radius);
     }
 
+    /* Event content - middle section (takes remaining 60%) */
+    .event-content {
+        flex: 6;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 100%;
+        padding: var(--spacing-sm) 0;
+        margin-right: var(--spacing-lg);
+    }
+
     .event-title {
         color: var(--color-gold);
-        margin-bottom: calc(var(--spacing-xs) - 0.1rem);
-        text-align: center;
+        margin-bottom: var(--spacing-sm);
         font-family: 'Playfair Display', serif;
-        font-size: 1.6rem;
+        font-size: 2.86rem;  /* 2.2rem * 1.3 */
+        line-height: 1.2;
     }
 
     .event-composer {
         color: #fff;
         font-style: italic;
+        font-size: 1.82rem;  /* 1.4rem * 1.3 */
+    }
+
+    /* Event date - right side (takes 40% of remaining space) */
+    .event-date-section {
+        flex: 4;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
         text-align: center;
-        margin-bottom: calc(var(--spacing-xs) + 0.1rem);
-        font-size: 1.1rem;
+        flex-shrink: 0;
+        border-left: 1px solid rgba(255, 255, 255, 0.1);
+        padding-left: var(--spacing-md);
+        min-width: 260px;  /* 200px * 1.3 */
     }
 
     .event-date {
-        color: #fff;
-        text-align: center;
-        font-size: 1.05rem;
+        color: var(--color-gold);
+        font-size: 2.34rem;  /* 1.8rem * 1.3 */
+        font-weight: 600;
+        font-family: 'Georgia', serif;
+        line-height: 1.3;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);  /* Scaled shadow */
     }
 
-    /* Responsive adjustments for smaller screens */
+    /* Responsive adjustments */
     @media screen and (max-width: 1024px) {
-        .events-grid {
-            grid-template-columns: repeat(2, 1fr);
-            gap: var(--spacing-md);
-            width: 85%;
-        }
-        
-        .scroll-indicators {
-            right: 10px;
+        .content-section {
+            padding: 16px 26px 26px 26px;  /* Scaled up by 30% */
         }
         
         .event-card {
+            height: 208px;  /* 160px * 1.3 */
             padding: var(--spacing-sm);
         }
         
         .event-image {
-            height: 10rem;
+            width: 260px;  /* 200px * 1.3 */
+            height: 169px;  /* 130px * 1.3 */
+            margin-right: var(--spacing-md);
+        }
+        
+        .event-content {
+            margin-right: var(--spacing-sm);
         }
         
         .event-title {
-            font-size: 1.4rem;
+            font-size: 2.47rem;  /* 1.9rem * 1.3 */
         }
         
         .event-composer {
-            font-size: 1rem;
+            font-size: 1.56rem;  /* 1.2rem * 1.3 */
+        }
+        
+        .event-date-section {
+            padding-left: var(--spacing-sm);
+            min-width: 260px;  /* Scaled up by 30% */
         }
         
         .event-date {
-            font-size: 1rem;
+            font-size: 2.08rem;  /* 1.6rem * 1.3 */
         }
     }
 
     @media screen and (max-width: 768px) {
-        .events-grid {
-            grid-template-columns: 1fr;
-            width: 80%;
-        }
-        
-        .scroll-indicators {
-            right: 5px;
-        }
-        
-        .scroll-dot {
-            width: 8px;
-            height: 8px;
-        }
-        
         .event-card {
-            padding: calc(var(--spacing-xs) + 0.2rem);
+            flex-direction: column;
+            height: auto;
+            padding: var(--spacing-sm);
+            text-align: center;
         }
         
         .event-image {
-            height: 8rem;
+            width: 100%;
+            height: 182px;  /* 140px * 1.3 */
+            margin-right: 0;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .event-content {
+            padding: 0;
+            margin-right: 0;
+            margin-bottom: var(--spacing-sm);
+            flex: none;
+        }
+        
+        .event-date-section {
+            flex: none;
+            width: 100%;
+            border-left: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-left: 0;
+            padding-top: var(--spacing-sm);
+            height: auto;
+            min-width: auto;
         }
         
         .event-title {
-            font-size: 1.25rem;
+            font-size: 2.08rem;  /* 1.6rem * 1.3 */
+            margin-bottom: calc(var(--spacing-xs) + 0.26rem);  /* Scaled up by 30% */
         }
         
         .event-composer {
-            font-size: 0.95rem;
+            font-size: 1.43rem;  /* 1.1rem * 1.3 */
         }
         
         .event-date {
-            font-size: 0.9rem;
+            font-size: 1.82rem;  /* 1.4rem * 1.3 */
         }
         
         .page-title {
             font-size: var(--font-size-lg);
-            margin-bottom: 10px;
+        }
+        
+        /* Scrollbar adjustments for mobile */
+        .theater-container::-webkit-scrollbar {
+            width: 8px;
         }
     }
 </style>
@@ -278,277 +313,134 @@
 
     <div class="main-content">
         {% if events %}
-            <!-- Dynamically generate pages with 3 events per page -->
+            <!-- Show one event per page -->
             {% for event in events %}
-                {% if forloop.counter0|divisibleby:3 %}
-                    {% if not forloop.first %}</div></div>{% endif %}
-                    <div class="content-section">
-                    <div class="events-grid">
-                {% endif %}
-                
-                <a href="{{ event.get_absolute_url }}" class="event-card">
-                    <div class="event-image">
-                        {% if event.image %}
-                            <img src="{{ event.image.url }}" alt="{{ event.title }}">
-                        {% endif %}
-                    </div>
-                    <h2 class="event-title">{{ event.title }}</h2>
-                    <div class="event-composer">{{ event.composer }}</div>
-                    <div class="event-date">{{ event.date_range_display }}</div>
-                </a>
-                
-                {% if forloop.last %}</div></div>{% endif %}
-            {% empty %}
-                <!-- Fallback to original static content when no events -->
                 <div class="content-section">
-                    <div class="events-grid">
-                        <!-- Static content for empty state -->
-                        <!-- Event Card 1 -->
+                    <div class="events-container">
+                        <a href="{{ event.get_absolute_url }}" class="event-card">
+                            <div class="event-image">
+                                {% if event.image %}
+                                    <img src="{{ event.image.url }}" alt="{{ event.title }}">
+                                {% endif %}
+                            </div>
+                            <div class="event-content">
+                                <h2 class="event-title">{{ event.title }}</h2>
+                                <div class="event-composer">{{ event.composer }}</div>
+                            </div>
+                            <div class="event-date-section">
+                                <div class="event-date">{{ event.date_range_display }}</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            {% empty %}
+                <!-- Fallback static content -->
+                <div class="content-section">
+                    <div class="events-container">
                         <a href="/event-aida/" class="event-card">
                             <div class="event-image">
                                 {% placeholder "event_1_image" or %}
                                     <img src="{% static 'images/events/aida.jpg' %}" alt="Aida">
                                 {% endplaceholder %}
                             </div>
-                            <h2 class="event-title">
-                                {% placeholder "event_1_title" or %}Aida{% endplaceholder %}
-                            </h2>
-                            <div class="event-composer">
-                                {% placeholder "event_1_composer" or %}Giuseppe Verdi{% endplaceholder %}
+                            <div class="event-content">
+                                <h2 class="event-title">
+                                    {% placeholder "event_1_title" or %}Aida{% endplaceholder %}
+                                </h2>
+                                <div class="event-composer">
+                                    {% placeholder "event_1_composer" or %}Giuseppe Verdi{% endplaceholder %}
+                                </div>
                             </div>
-                            <div class="event-date">
-                                {% placeholder "event_1_date" or %}January 15 - March 20, 2024{% endplaceholder %}
+                            <div class="event-date-section">
+                                <div class="event-date">
+                                    {% placeholder "event_1_date" or %}January 15 - March 20, 2024{% endplaceholder %}
+                                </div>
                             </div>
                         </a>
+                    </div>
+                </div>
 
-                        <!-- Event Card 2 -->
+                <div class="content-section">
+                    <div class="events-container">
                         <a href="/event-carmen/" class="event-card">
                             <div class="event-image">
                                 {% placeholder "event_2_image" or %}
                                     <img src="{% static 'images/events/carmen.jpg' %}" alt="Carmen">
                                 {% endplaceholder %}
                             </div>
-                            <h2 class="event-title">
-                                {% placeholder "event_2_title" or %}Carmen{% endplaceholder %}
-                            </h2>
-                            <div class="event-composer">
-                                {% placeholder "event_2_composer" or %}Georges Bizet{% endplaceholder %}
+                            <div class="event-content">
+                                <h2 class="event-title">
+                                    {% placeholder "event_2_title" or %}Carmen{% endplaceholder %}
+                                </h2>
+                                <div class="event-composer">
+                                    {% placeholder "event_2_composer" or %}Georges Bizet{% endplaceholder %}
+                                </div>
                             </div>
-                            <div class="event-date">
-                                {% placeholder "event_2_date" or %}February 1 - April 15, 2024{% endplaceholder %}
+                            <div class="event-date-section">
+                                <div class="event-date">
+                                    {% placeholder "event_2_date" or %}February 1 - April 15, 2024{% endplaceholder %}
+                                </div>
                             </div>
                         </a>
+                    </div>
+                </div>
 
-                        <!-- Event Card 3 -->
+                <div class="content-section">
+                    <div class="events-container">
                         <a href="/event-magic-flute/" class="event-card">
                             <div class="event-image">
                                 {% placeholder "event_3_image" or %}
                                     <img src="{% static 'images/events/magic-flute.jpg' %}" alt="The Magic Flute">
                                 {% endplaceholder %}
                             </div>
-                            <h2 class="event-title">
-                                {% placeholder "event_3_title" or %}The Magic Flute{% endplaceholder %}
-                            </h2>
-                            <div class="event-composer">
-                                {% placeholder "event_3_composer" or %}Wolfgang Amadeus Mozart{% endplaceholder %}
+                            <div class="event-content">
+                                <h2 class="event-title">
+                                    {% placeholder "event_3_title" or %}The Magic Flute{% endplaceholder %}
+                                </h2>
+                                <div class="event-composer">
+                                    {% placeholder "event_3_composer" or %}Wolfgang Amadeus Mozart{% endplaceholder %}
+                                </div>
                             </div>
-                            <div class="event-date">
-                                {% placeholder "event_3_date" or %}March 10 - May 20, 2024{% endplaceholder %}
-                            </div>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Page 2 static content -->
-                <div class="content-section">
-                    <div class="events-grid">
-                        <!-- Event Card 4 -->
-                        <a href="/event-rigoletto/" class="event-card">
-                            <div class="event-image">
-                                {% placeholder "event_4_image" or %}
-                                    <img src="{% static 'images/events/rigoletto.jpg' %}" alt="Rigoletto">
-                                {% endplaceholder %}
-                            </div>
-                            <h2 class="event-title">
-                                {% placeholder "event_4_title" or %}Rigoletto{% endplaceholder %}
-                            </h2>
-                            <div class="event-composer">
-                                {% placeholder "event_4_composer" or %}Giuseppe Verdi{% endplaceholder %}
-                            </div>
-                            <div class="event-date">
-                                {% placeholder "event_4_date" or %}April 5 - June 25, 2024{% endplaceholder %}
-                            </div>
-                        </a>
-
-                        <!-- Event Card 5 -->
-                        <a href="/event-salome/" class="event-card">
-                            <div class="event-image">
-                                {% placeholder "event_5_image" or %}
-                                    <img src="{% static 'images/events/salome.jpg' %}" alt="Salome">
-                                {% endplaceholder %}
-                            </div>
-                            <h2 class="event-title">
-                                {% placeholder "event_5_title" or %}Salome{% endplaceholder %}
-                            </h2>
-                            <div class="event-composer">
-                                {% placeholder "event_5_composer" or %}Richard Strauss{% endplaceholder %}
-                            </div>
-                            <div class="event-date">
-                                {% placeholder "event_5_date" or %}May 15 - July 30, 2024{% endplaceholder %}
-                            </div>
-                        </a>
-
-                        <!-- Event Card 6 -->
-                        <a href="/event-turandot/" class="event-card">
-                            <div class="event-image">
-                                {% placeholder "event_6_image" or %}
-                                    <img src="{% static 'images/events/turandot.jpg' %}" alt="Turandot">
-                                {% endplaceholder %}
-                            </div>
-                            <h2 class="event-title">
-                                {% placeholder "event_6_title" or %}Turandot{% endplaceholder %}
-                            </h2>
-                            <div class="event-composer">
-                                {% placeholder "event_6_composer" or %}Giacomo Puccini{% endplaceholder %}
-                            </div>
-                            <div class="event-date">
-                                {% placeholder "event_6_date" or %}June 1 - August 15, 2024{% endplaceholder %}
+                            <div class="event-date-section">
+                                <div class="event-date">
+                                    {% placeholder "event_3_date" or %}March 10 - May 20, 2024{% endplaceholder %}
+                                </div>
                             </div>
                         </a>
                     </div>
                 </div>
             {% endfor %}
         {% else %}
-            <!-- Fallback if events variable isn't provided -->
+            <!-- Default fallback content -->
             <div class="content-section">
-                <div class="events-grid">
-                    <!-- Static content as fallback -->
-                    <!-- Event Card 1 -->
+                <div class="events-container">
                     <a href="/event-aida/" class="event-card">
                         <div class="event-image">
                             {% placeholder "event_1_image" or %}
                                 <img src="{% static 'images/events/aida.jpg' %}" alt="Aida">
                             {% endplaceholder %}
                         </div>
-                        <h2 class="event-title">
-                            {% placeholder "event_1_title" or %}Aida{% endplaceholder %}
-                        </h2>
-                        <div class="event-composer">
-                            {% placeholder "event_1_composer" or %}Giuseppe Verdi{% endplaceholder %}
+                        <div class="event-content">
+                            <h2 class="event-title">
+                                {% placeholder "event_1_title" or %}Aida{% endplaceholder %}
+                            </h2>
+                            <div class="event-composer">
+                                {% placeholder "event_1_composer" or %}Giuseppe Verdi{% endplaceholder %}
+                            </div>
                         </div>
-                        <div class="event-date">
-                            {% placeholder "event_1_date" or %}January 15 - March 20, 2024{% endplaceholder %}
-                        </div>
-                    </a>
-
-                    <!-- Event Card 2 -->
-                    <a href="/event-carmen/" class="event-card">
-                        <div class="event-image">
-                            {% placeholder "event_2_image" or %}
-                                <img src="{% static 'images/events/carmen.jpg' %}" alt="Carmen">
-                            {% endplaceholder %}
-                        </div>
-                        <h2 class="event-title">
-                            {% placeholder "event_2_title" or %}Carmen{% endplaceholder %}
-                        </h2>
-                        <div class="event-composer">
-                            {% placeholder "event_2_composer" or %}Georges Bizet{% endplaceholder %}
-                        </div>
-                        <div class="event-date">
-                            {% placeholder "event_2_date" or %}February 1 - April 15, 2024{% endplaceholder %}
-                        </div>
-                    </a>
-
-                    <!-- Event Card 3 -->
-                    <a href="/event-magic-flute/" class="event-card">
-                        <div class="event-image">
-                            {% placeholder "event_3_image" or %}
-                                <img src="{% static 'images/events/magic-flute.jpg' %}" alt="The Magic Flute">
-                            {% endplaceholder %}
-                        </div>
-                        <h2 class="event-title">
-                            {% placeholder "event_3_title" or %}The Magic Flute{% endplaceholder %}
-                        </h2>
-                        <div class="event-composer">
-                            {% placeholder "event_3_composer" or %}Wolfgang Amadeus Mozart{% endplaceholder %}
-                        </div>
-                        <div class="event-date">
-                            {% placeholder "event_3_date" or %}March 10 - May 20, 2024{% endplaceholder %}
+                        <div class="event-date-section">
+                            <div class="event-date">
+                                {% placeholder "event_1_date" or %}January 15 - March 20, 2024{% endplaceholder %}
+                            </div>
                         </div>
                     </a>
                 </div>
             </div>
         {% endif %}
     </div>
-
-    <!-- Scroll Indicators -->
-    <div class="scroll-indicators">
-        {% if events %}
-            <!-- First dot is always active -->
-            <div class="scroll-dot active"></div>
-            
-            <!-- Add more dots based on number of events (one dot per page) -->
-            {% for event in events %}
-                {% if forloop.counter0|divisibleby:3 and forloop.counter0 > 0 %}
-                    <div class="scroll-dot"></div>
-                {% endif %}
-            {% endfor %}
-        {% else %}
-            <!-- Default two dots for static content -->
-            <div class="scroll-dot active"></div>
-            <div class="scroll-dot"></div>
-        {% endif %}
-    </div>
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var container = document.querySelector('.theater-container');
-        var dots = document.querySelectorAll('.scroll-dot');
-        var sections = document.querySelectorAll('.content-section');
-        var currentSection = 0;
-
-        // Update active dot based on scroll position
-        function updateDots() {
-            var scrollPosition = container.scrollTop;
-            var windowHeight = window.innerHeight;
-            
-            // Find the most visible section
-            var maxVisibility = 0;
-            var mostVisibleSection = 0;
-            
-            sections.forEach(function(section, index) {
-                var rect = section.getBoundingClientRect();
-                var visibility = Math.min(rect.bottom, windowHeight) - Math.max(rect.top, 0);
-                
-                if (visibility > maxVisibility) {
-                    maxVisibility = visibility;
-                    mostVisibleSection = index;
-                }
-            });
-            
-            // Update dots
-            dots.forEach(function(dot, index) {
-                if (index === mostVisibleSection) {
-                    dot.classList.add('active');
-                } else {
-                    dot.classList.remove('active');
-                }
-            });
-        }
-
-        // Scroll to section when dot is clicked
-        dots.forEach(function(dot, index) {
-            dot.addEventListener('click', function() {
-                sections[index].scrollIntoView({ behavior: 'smooth' });
-            });
-        });
-
-        // Update dots on scroll
-        container.addEventListener('scroll', updateDots);
-        
-        // Initial update
-        updateDots();
-    });
+// No JavaScript needed for standard scrollbar functionality
 </script>
 {% endblock %}
