@@ -46,30 +46,6 @@
         overflow-y: auto;
     }
 
-    /* Add scrollbar styling to match other pages */
-    .event-detail-container::-webkit-scrollbar {
-        width: 10px;
-    }
-
-    .event-detail-container::-webkit-scrollbar-track {
-        background: rgba(0, 0, 0, 0.2);
-    }
-
-    .event-detail-container::-webkit-scrollbar-thumb {
-        background: var(--color-gold);
-        border-radius: 5px;
-    }
-
-    .event-detail-container::-webkit-scrollbar-thumb:hover {
-        background: #b28e29;
-    }
-
-    /* Firefox scrollbar support */
-    .event-detail-container {
-        scrollbar-width: thin;
-        scrollbar-color: var(--color-gold) rgba(0, 0, 0, 0.2);
-    }
-
     /* Event header with image and title - Optimized for 1024x600 */
     .event-header {
         position: relative;
@@ -185,24 +161,6 @@
     /* Actor name styling */
     .actor-name {
         text-align: right;
-    }
-
-    /* Scrollbar for cast content */
-    .cast-content::-webkit-scrollbar {
-        width: 6px;
-    }
-
-    .cast-content::-webkit-scrollbar-track {
-        background: rgba(0, 0, 0, 0.2);
-    }
-
-    .cast-content::-webkit-scrollbar-thumb {
-        background: var(--color-gold);
-        border-radius: 3px;
-    }
-
-    .cast-content::-webkit-scrollbar-thumb:hover {
-        background: #b28e29;
     }
 
     .back-button {
