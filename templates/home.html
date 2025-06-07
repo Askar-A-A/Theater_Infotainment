@@ -251,8 +251,9 @@
     .menu-item.today-performance .today-event-image img {
         width: 200px; /* Increased from 150px */
         height: 150px; /* Increased from 110px */
-        object-fit: cover;
+        object-fit: contain; /* Changed from 'cover' to 'contain' - shows entire image */
         border-radius: 15px; /* Larger border radius */
+        background: rgba(0,0,0,0.1); /* Add subtle background for any empty space */
     }
 
     /* Much larger text styling for today's performance */
