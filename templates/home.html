@@ -25,7 +25,6 @@
         --spacing-md: 1.5rem;
         --spacing-lg: 2rem;
         --spacing-xl: 3rem;
-        --spacing-xxl: 4rem;
         
         --border-radius: 10px;
         --border-thin: 1px solid rgba(255,255,255,0.1);
@@ -37,7 +36,6 @@
         --font-size-sm: 1rem;
         --font-size-md: 1.25rem;
         --font-size-lg: 2.25rem;
-        --font-size-xl: 3rem;
     }
 
     /* Logo section styles - Fixed for 1024x600 */
@@ -47,18 +45,15 @@
         width: 100%;
         top: 15px;
         height: 120px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+        display: block;
+        text-align: center;
         z-index: 20;
     }
 
     .logo-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        display: inline-block;
         max-width: 90%;
+        margin: 0 auto;
     }
     
     .theater-logo {
@@ -66,188 +61,239 @@
         max-width: 100%;
         width: auto;
         height: auto;
-        object-fit: scale-down;
     }
     
-    /* Theater title styles - Fixed for 1024x600 */
+    /* Theater title styles */
     .theater-title {
         font-family: 'Playfair Display', serif;
         color: var(--color-gold);
         text-align: center;
         letter-spacing: 1px;
         text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-        animation: titleGlow 3s infinite alternate;
-        margin-top: 0;
+        margin-top: 10px;
         font-size: 2.5rem;
         font-weight: 650;
-        margin-bottom: var(--spacing-lg);
-    }
-    
-    @keyframes titleGlow {
-        from {
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-        }
-        to {
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.3), 0 0 20px rgba(212, 175, 55, 0.2);
-        }
+        margin-bottom: 0;
     }
 
-    /* Theater container styles - Fixed for 1024x600 */
+    /* Theater container - Single column optimized */
     .theater-container {
         width: 100%;
         height: calc(100% - 130px);
         margin-top: 130px;
-        padding: 0.75rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        box-sizing: border-box;
-        overflow: hidden;
+        padding: 1rem;
+        overflow-y: auto;
+        overflow-x: hidden;
     }
 
-    /* Main content layout - Fixed for 1024x600 */
+    /* Main content - Single column layout */
     .main-content {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: var(--spacing-sm);
         width: 100%;
-        max-width: 62rem; /* Adjusted for 1024px width */
-        padding-right: var(--spacing-md);
+        max-width: 800px;
+        margin: 0 auto;
     }
 
-    /* Today's Performance section - Fixed for 1024x600 */
+    /* Today's Performance section - Simple and humble */
     .today-section {
         background: var(--color-bg-dark);
         border: var(--border-thin);
         border-radius: var(--border-radius);
-        padding: var(--spacing-md) var(--spacing-sm);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
         cursor: pointer;
-        transition: all 0.3s ease;
+        transition: background-color 0.3s ease;
+        /* Make it more compact */
+        min-height: 80px;
+        max-height: 120px;
     }
 
     .today-section:hover {
         background: var(--color-bg-hover);
-        transform: translateY(-4px);
     }
 
-    .today-icon {
-        display: none;
-        font-size: 4em;
-        margin-bottom: 0.5rem;
-    }
-
-    .today-title {
-        color: #fff;
-        margin: 0;
-        text-align: center;
-        font-weight: bold;
-        font-size: calc(var(--font-size-md) * 1.5);
-    }
-
-    /* Menu Grid styles - Fixed for 1024x600 */
-    .menu-grid {
-        display: grid;
-        grid-template-rows: repeat(5, 1fr);
-        gap: 0.5rem;
-        height: 100%;
-    }
-
-    .menu-item {
-        background: var(--color-bg-dark);
-        border: var(--border-thin);
-        border-radius: var(--border-radius);
-        padding: 0.75rem 1rem;
-        min-height: 3rem;
-        text-align: center;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-    }
-
-    .menu-item:hover {
-        background: var(--color-bg-hover);
-        transform: translateY(-4px);
-    }
-
-    .menu-icon {
-        color: var(--color-gold);
-        font-size: 1.6em;
-        min-width: 1.5rem;
-        margin-right: 0.75rem;
-    }
-
-    .menu-title {
-        color: #fff;
-        margin: 0;
-        text-align: left;
-        font-size: calc(var(--font-size-sm) * 1.1);
-    }
-
-    /* Responsive adjustments for smaller screens */
-    @media screen and (max-width: 768px) {
-        .main-content {
-            grid-template-columns: 1fr;
-            gap: var(--spacing-lg);
-            padding-right: 0;
-        }
-
-        .today-section {
-            margin-bottom: var(--spacing-md);
-        }
-        
-        .logo-container {
-            max-width: 95%;
-        }
-    }
-
-    /* Event display styles - Fixed for 1024x600 */
+    /* Simple horizontal layout */
     .today-event-container {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
+        display: block;
+        overflow: hidden;
     }
 
     .today-event-image {
-        width: 18rem;
-        height: 15rem;
-        margin-bottom: 0.5rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-        border-radius: var(--border-radius);
+        float: left;
+        width: 80px;
+        height: 60px;
+        margin-right: 1rem;
+        margin-bottom: 0;
     }
 
     .today-event-image img {
         width: 100%;
         height: 100%;
         object-fit: cover;
+        border-radius: 5px;
+    }
+
+    .today-event-info {
+        overflow: hidden;
+        padding-top: 5px;
     }
 
     .today-event-title {
         color: #fff;
-        margin: 0;
-        text-align: center;
+        margin: 0 0 5px 0;
         font-weight: bold;
-        font-size: calc(var(--font-size-md) * 1.5);
+        font-size: 1.3rem;
+        line-height: 1.2;
     }
 
     .today-event-composer {
+        color: rgba(255,255,255,0.7);
+        font-style: italic;
+        font-size: 0.9rem;
+        margin: 0;
+    }
+
+    /* Simple fallback */
+    .today-icon-fallback {
+        width: 80px;
+        height: 60px;
+        background: rgba(255,255,255,0.1);
+        border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 5px;
+        text-align: center;
+        color: rgba(255,255,255,0.5);
+        font-size: 0.8rem;
+        line-height: 60px;
+        float: left;
+        margin-right: 1rem;
+    }
+
+    /* Menu Grid - Single column with larger items */
+    .menu-grid {
+        width: 100%;
+    }
+
+    .menu-item {
+        background: var(--color-bg-dark);
+        border: var(--border-thin);
+        border-radius: var(--border-radius);
+        padding: 1.2rem 1.5rem;
+        margin-bottom: 0.8rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        display: table;
+        width: 100%;
+        min-height: 60px;
+    }
+
+    .menu-item:hover {
+        background: var(--color-bg-hover);
+    }
+
+    .menu-icon {
+        display: table-cell;
+        width: 60px;
+        color: var(--color-gold);
+        font-size: 2rem;
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    .menu-title {
+        display: table-cell;
+        color: #fff;
+        margin: 0;
+        font-size: 1.4rem;
+        font-weight: bold;
+        vertical-align: middle;
+        padding-left: 1rem;
+    }
+
+    /* Special styling for today's performance when it has an image */
+    .menu-item .today-event-image {
+        display: table-cell;
+        width: 60px;
+        height: 45px;
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    .menu-item .today-event-image img {
+        width: 50px;
+        height: 40px;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+
+    .menu-item .today-fallback {
+        display: table-cell;
+        width: 60px;
+        color: var(--color-gold);
+        font-size: 1.5rem;
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    /* Special styling for today's performance - Make it much taller */
+    .menu-item.today-performance {
+        min-height: 200px; /* Increased from 160px */
+        padding: 1.5rem;
+    }
+
+    /* Much larger image for today's performance */
+    .menu-item.today-performance .today-event-image {
+        display: table-cell;
+        width: 220px; /* Increased from 160px */
+        height: 160px; /* Increased from 120px */
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    .menu-item.today-performance .today-event-image img {
+        width: 200px; /* Increased from 150px */
+        height: 150px; /* Increased from 110px */
+        object-fit: cover;
+        border-radius: 15px; /* Larger border radius */
+    }
+
+    /* Much larger text styling for today's performance */
+    .menu-item.today-performance .menu-title {
+        display: table-cell;
+        color: #fff;
+        margin: 0;
+        font-size: 2.4rem; /* Increased from 1.8rem */
+        font-weight: bold;
+        vertical-align: middle;
+        padding-left: 2rem; /* Increased padding */
+        line-height: 1.2;
+    }
+
+    /* Much larger composer styling */
+    .menu-item.today-performance .event-composer {
         color: rgba(255,255,255,0.8);
         font-style: italic;
+        font-size: 1.8rem; /* Increased from 1.2rem */
+        font-weight: normal;
+        margin-top: 8px; /* Increased margin */
+        display: block;
+    }
+
+    /* Larger fallback icons to match */
+    .menu-item.today-performance .today-fallback {
+        display: table-cell;
+        width: 220px; /* Increased from 160px */
+        color: var(--color-gold);
+        font-size: 6rem; /* Increased from 4.5rem */
+        vertical-align: middle;
         text-align: center;
-        margin-top: 0.4rem;
-        font-size: 1rem;
+    }
+
+    .menu-item.today-performance .menu-icon {
+        display: table-cell;
+        width: 220px; /* Increased from 160px */
+        color: var(--color-gold);
+        font-size: 7rem; /* Increased from 5rem */
+        vertical-align: middle;
+        text-align: center;
     }
 </style>
 {% endblock %}
@@ -267,51 +313,52 @@
 
 <div class="theater-container">
     <div class="main-content">
-        <!-- Today's Performance -->
-        <a href="{% url 'user_interactions:current_event' %}" class="today-section" style="text-decoration: none;">
-            <div class="today-event-container">
-                {% if current_event %}
-                    <!-- Show the event image -->
+        <!-- Menu Items - Now including Today's Performance as first item -->
+        <div class="menu-grid">
+            <!-- Today's Performance as a menu item -->
+            <a href="{% url 'user_interactions:current_event' %}" class="menu-item today-performance" style="text-decoration: none;">
+                {% if current_event and current_event.image %}
                     <div class="today-event-image">
-                        {% if current_event.image %}
-                            <img src="{{ current_event.image.url }}" alt="{{ current_event.title }}">
-                        {% else %}
-                            <!-- Fallback to icon if no image available -->
-                            <i class="fas fa-ticket-alt today-icon" style="display: block; font-size: 4em;"></i>
+                        <img src="{{ current_event.image.url }}" alt="{{ current_event.title }}">
+                    </div>
+                    <div class="menu-title">
+                        {{ current_event.title }}
+                        {% if current_event.composer %}
+                            <span class="event-composer">{{ current_event.composer }}</span>
                         {% endif %}
                     </div>
-                    <h2 class="today-title">{{ current_event.title }}</h2>
-                    <div class="today-event-composer">
-                        {{ current_event.composer }}
+                {% elif current_event %}
+                    <div class="today-fallback">🎭</div>
+                    <div class="menu-title">
+                        {{ current_event.title }}
+                        {% if current_event.composer %}
+                            <span class="event-composer">{{ current_event.composer }}</span>
+                        {% endif %}
                     </div>
                 {% else %}
-                    <!-- Original fallback display -->
-                    <i class="fas fa-ticket-alt today-icon" style="display: block;"></i>
-                    <h2 class="today-title">Today's Performance</h2>
+                    <div class="menu-icon">🎟️</div>
+                    <div class="menu-title">Today's Performance</div>
                 {% endif %}
-            </div>
-        </a>
-        
-        <!-- Menu Items -->
-        <div class="menu-grid">
+            </a>
+            
             <a href="/events/" class="menu-item" style="text-decoration: none;">
-                <i class="fas fa-calendar-alt menu-icon"></i>
+                <div class="menu-icon">📅</div>
                 <h2 class="menu-title">Events</h2>
             </a>
             <a href="/about/" class="menu-item" style="text-decoration: none;">
-                <i class="fas fa-theater-masks menu-icon"></i>
+                <div class="menu-icon">🎭</div>
                 <h2 class="menu-title">About us</h2>
             </a>
             <a href="/qa/" class="menu-item" style="text-decoration: none;">
-                <i class="fas fa-question-circle menu-icon"></i>
+                <div class="menu-icon">❓</div>
                 <h2 class="menu-title">Questions & Answers</h2>
             </a>
             <a href="/email_subscribe/" class="menu-item" style="text-decoration: none;">
-                <i class="fas fa-envelope menu-icon"></i>
+                <div class="menu-icon">✉️</div>
                 <h2 class="menu-title">Subscribe to Mail</h2>
             </a>
             <a href="/feedback/" class="menu-item" style="text-decoration: none;">
-                <i class="fas fa-comment-alt menu-icon"></i>
+                <div class="menu-icon">💬</div>
                 <h2 class="menu-title">Leave Your Feedback</h2>
             </a>
         </div>
