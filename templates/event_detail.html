@@ -84,14 +84,18 @@
     .event-content {
         display: grid;
         grid-template-columns: 2fr 1fr;
-        padding: var(--spacing-md);
-        gap: var(--spacing-md);
+        padding: var(--spacing-lg) var(--spacing-xl);
+        gap: var(--spacing-lg);
+        margin: 0 var(--spacing-md);
     }
 
     .event-description {
         color: #fff;
         line-height: 1.7;
         font-size: 1.15rem;
+        padding-right: var(--spacing-md);
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
 
     .event-description h2 {
@@ -109,7 +113,10 @@
     .event-sidebar {
         background: rgba(0, 0, 0, 0.3);
         border-radius: var(--border-radius);
-        padding: var(--spacing-md);
+        padding: var(--spacing-lg);
+        margin-left: var(--spacing-sm);
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
 
     .event-info-item {
@@ -135,7 +142,10 @@
         font-size: 16px;
         max-height: 200px;
         overflow-y: auto;
-        padding-right: 8px;
+        padding-right: var(--spacing-sm);
+        padding-left: var(--spacing-xs);
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
 
     /* Cast member row styling */
@@ -251,12 +261,13 @@
     /* Responsive adjustments for smaller screens */
     @media screen and (max-width: 1024px) {
         .event-content {
-            padding: calc(var(--spacing-sm) + 0.25rem);
-            gap: var(--spacing-sm);
+            padding: var(--spacing-md) var(--spacing-lg);
+            gap: var(--spacing-md);
+            margin: 0 var(--spacing-sm);
         }
         
         .event-header {
-            padding: calc(var(--spacing-sm) + 0.25rem);
+            padding: var(--spacing-md) var(--spacing-lg);
         }
         
         .event-title {
@@ -288,7 +299,13 @@
         
         .event-content {
             grid-template-columns: 1fr;
-            padding: var(--spacing-sm) calc(var(--spacing-xs) + 0.25rem);
+            padding: var(--spacing-md);
+            margin: 0 var(--spacing-sm);
+        }
+        
+        .event-sidebar {
+            margin-left: 0;
+            margin-top: var(--spacing-md);
         }
         
         .event-title {
@@ -298,6 +315,14 @@
         .event-composer {
             font-size: 1.25rem;
         }
+    }
+
+    .event-description p,
+    .info-value,
+    .cast-content {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        max-width: 100%;
     }
 </style>
 {% endblock %}
