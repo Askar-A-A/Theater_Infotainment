@@ -15,4 +15,7 @@ urlpatterns += i18n_patterns(
     path('', include('cms.urls')),  # Keep the CMS URLs last
 )
 
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# Fix: Remove the manual static configuration - Django handles this automatically when DEBUG=True
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    # Django automatically serves static files when DEBUG=True, no need to add static URL patterns
