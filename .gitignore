@@ -18,6 +18,3 @@ env/
 .vscode/
 *.swp
 *.swo
-
-# Django CMS specific
-static/
