@@ -170,7 +170,7 @@
         display: none;
     }
     
-    /* Arrow button styles - Fixed for 1024x600 */
+    /* Home button styles - Fixed for 1024x600 */
     .arrow-button {
         position: absolute;
         top: 15px;
@@ -187,21 +187,18 @@
         transition: background-color 0.3s;
         z-index: 10;
         text-decoration: none;
-    }
-
-    .arrow-button i {
-        color: #d4af37;
         font-size: 1.5rem;
-        transition: color 0.3s;
         line-height: 50px;
+        color: #d4af37;
     }
 
     .arrow-button:hover {
         background-color: rgba(212, 175, 55, 0.2);
+        color: #fff;
     }
 
-    .arrow-button:hover i {
-        color: #fff;
+    .arrow-button i {
+        display: none;
     }
 </style>
 {% render_block "js" %}
@@ -231,9 +228,9 @@
 <body>
     {% cms_toolbar %}
     <div class="content-wrapper">
-        <!-- Arrow button for navigation -->
+        <!-- Home button for navigation -->
         <a href="/home/" class="arrow-button">
-            <i class="fas fa-arrow-right"></i>
+            🏠
         </a>
         
         <div class="sponsors-container">

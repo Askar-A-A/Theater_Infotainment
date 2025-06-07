@@ -95,7 +95,7 @@
     /* Redesigned event card - proportional layout (scaled up 30%) */
     .event-card {
         background: var(--color-bg-dark);
-        border: var(--border-thin);
+        border: 2px solid rgba(255,255,255,0.3); /* Made border much more visible */
         border-radius: var(--border-radius);
         cursor: pointer;
         transition: all 0.3s ease;
@@ -109,8 +109,9 @@
 
     .event-card:hover {
         background: var(--color-bg-hover);
+        border: 2px solid rgba(255,255,255,0.5); /* More visible hover border */
         transform: translateY(-2px);
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);  /* Scaled up by 30% */
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
     }
 
     /* Event image - left side (scaled up 30%) */
@@ -119,11 +120,13 @@
         height: 195px;  /* 150px * 1.3 */
         border-radius: var(--border-radius);
         overflow: hidden;
-        margin-right: var(--spacing-lg);
+        /* COMPATIBILITY: Use padding instead of margin for spacing */
+        padding-right: var(--spacing-lg);
         flex-shrink: 0;
         display: flex;
         align-items: center;
         justify-content: center;
+        box-sizing: border-box;
     }
 
     .event-image img {
@@ -140,22 +143,23 @@
         flex-direction: column;
         justify-content: center;
         height: 100%;
-        padding: var(--spacing-sm) 0;
-        margin-right: var(--spacing-lg);
+        padding: var(--spacing-sm) var(--spacing-lg) var(--spacing-sm) 0; /* Added right padding for spacing */
     }
 
     .event-title {
-        color: var(--color-gold);
+        color: #d4af37 !important; /* Fixed: Use actual gold color instead of variable */
         margin-bottom: var(--spacing-sm);
         font-family: 'Playfair Display', serif;
         font-size: 2.86rem;  /* 2.2rem * 1.3 */
         line-height: 1.2;
+        text-decoration: none !important; /* Ensure no blue link color */
     }
 
     .event-composer {
-        color: #fff;
+        color: #ffffff !important; /* Fixed: Use actual white color instead of variable */
         font-style: italic;
         font-size: 1.82rem;  /* 1.4rem * 1.3 */
+        text-decoration: none !important; /* Ensure no blue link color */
     }
 
     /* Event date - right side (takes 40% of remaining space) */
@@ -168,18 +172,33 @@
         justify-content: center;
         text-align: center;
         flex-shrink: 0;
-        border-left: 1px solid rgba(255, 255, 255, 0.1);
+        border-left: 2px solid rgba(255, 255, 255, 0.3); /* Made border more visible */
         padding-left: var(--spacing-md);
         min-width: 260px;  /* 200px * 1.3 */
     }
 
     .event-date {
-        color: var(--color-gold);
+        color: #d4af37 !important; /* Fixed: Use actual gold color */
         font-size: 2.34rem;  /* 1.8rem * 1.3 */
         font-weight: 600;
         font-family: 'Georgia', serif;
         line-height: 1.3;
-        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);  /* Scaled shadow */
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        text-decoration: none !important; /* Ensure no blue link color */
+    }
+
+    /* Additional fix: Ensure link doesn't override colors */
+    a.event-card,
+    a.event-card:visited,
+    a.event-card:link {
+        text-decoration: none !important;
+        color: inherit !important;
+    }
+
+    a.event-card .event-title,
+    a.event-card .event-composer,
+    a.event-card .event-date {
+        color: inherit !important;
     }
 
     /* Responsive adjustments */

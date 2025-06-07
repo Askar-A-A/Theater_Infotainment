@@ -51,19 +51,15 @@
             height: 50px;
             background: rgba(0,0,0,0.7);
             border-radius: 50%;
-            /* COMPATIBILITY: Replaced flexbox with table-cell layout */
+            /* COMPATIBILITY: Use table-cell layout */
             display: table-cell;
             vertical-align: middle;
             text-align: center;
             cursor: pointer;
             /* COMPATIBILITY: Simplified transition */
             transition: background-color 0.3s;
-        }
-
-        .home-icon i {
-            color: #fff;
-            font-size: 1.1em;
-            /* COMPATIBILITY: Add line-height for vertical centering with table-cell */
+            /* Add font size for emoji */
+            font-size: 1.5rem;
             line-height: 50px;
         }
 
@@ -84,7 +80,7 @@
         <!-- Home Navigation Icon -->
         <a href="/home/" class="home-nav">
             <div class="home-icon">
-                <i class="fas fa-home"></i>
+                🏠
             </div>
         </a>
     </div>
