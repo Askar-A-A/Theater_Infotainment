@@ -38,12 +38,15 @@
         --font-size-xl: 3rem;
     }
 
-    /* Event detail container - Fixed for 1024x600 */
+    /* Event detail container - Fixed for 1024x600 with WebView safety margins */
     .event-detail-container {
         width: 100%;
         height: 600px;
         position: relative;
         overflow-y: auto;
+        /* Add safety margins for WebView */
+        padding: 0 var(--spacing-md);
+        box-sizing: border-box;
     }
 
     /* Event header with image and title - Optimized for 1024x600 */
@@ -54,7 +57,10 @@
         background: var(--color-bg-dark);
         overflow: hidden;
         height: 35vh;
-        padding: var(--spacing-md);
+        padding: var(--spacing-lg) var(--spacing-md);
+        margin: 0 var(--spacing-sm);
+        border-radius: var(--border-radius);
+        box-sizing: border-box;
     }
 
     .event-title-container {
@@ -86,16 +92,20 @@
         grid-template-columns: 2fr 1fr;
         padding: var(--spacing-lg) var(--spacing-xl);
         gap: var(--spacing-lg);
-        margin: 0 var(--spacing-md);
+        margin: var(--spacing-md) var(--spacing-lg);
+        box-sizing: border-box;
     }
 
     .event-description {
         color: #fff;
         line-height: 1.7;
         font-size: 1.15rem;
-        padding-right: var(--spacing-md);
+        padding-right: var(--spacing-lg);
+        padding-left: var(--spacing-sm);
         word-wrap: break-word;
         overflow-wrap: break-word;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .event-description h2 {
@@ -113,10 +123,13 @@
     .event-sidebar {
         background: rgba(0, 0, 0, 0.3);
         border-radius: var(--border-radius);
-        padding: var(--spacing-lg);
-        margin-left: var(--spacing-sm);
+        padding: var(--spacing-lg) var(--spacing-md);
+        margin-left: var(--spacing-md);
+        margin-right: var(--spacing-sm);
         word-wrap: break-word;
         overflow-wrap: break-word;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .event-info-item {
@@ -213,10 +226,11 @@
 
     /* Event schedule styling */
     .event-schedule {
-        padding: var(--spacing-md);
+        padding: var(--spacing-lg) var(--spacing-md);
         background: rgba(0, 0, 0, 0.3);
-        margin: var(--spacing-md);
+        margin: var(--spacing-md) var(--spacing-lg);
         border-radius: var(--border-radius);
+        box-sizing: border-box;
     }
 
     .event-schedule h3 {
@@ -263,11 +277,12 @@
         .event-content {
             padding: var(--spacing-md) var(--spacing-lg);
             gap: var(--spacing-md);
-            margin: 0 var(--spacing-sm);
+            margin: var(--spacing-md) var(--spacing-md);
         }
         
         .event-header {
             padding: var(--spacing-md) var(--spacing-lg);
+            margin: 0 var(--spacing-xs);
         }
         
         .event-title {
@@ -277,12 +292,28 @@
         .event-composer {
             font-size: 1.4rem;
         }
+        
+        .event-description {
+            padding-left: var(--spacing-xs);
+            padding-right: var(--spacing-md);
+        }
+        
+        .event-sidebar {
+            margin-left: var(--spacing-sm);
+            margin-right: var(--spacing-xs);
+        }
     }
 
     @media screen and (max-width: 768px) {
+        .event-detail-container {
+            padding: 0 var(--spacing-sm);
+        }
+        
         .event-header {
             flex-direction: column;
             height: auto;
+            padding: var(--spacing-md);
+            margin: 0 var(--spacing-xs);
         }
         
         .event-title-container {
@@ -299,13 +330,20 @@
         
         .event-content {
             grid-template-columns: 1fr;
-            padding: var(--spacing-md);
-            margin: 0 var(--spacing-sm);
+            padding: var(--spacing-md) var(--spacing-sm);
+            margin: var(--spacing-md) var(--spacing-sm);
         }
         
         .event-sidebar {
             margin-left: 0;
+            margin-right: 0;
             margin-top: var(--spacing-md);
+            padding: var(--spacing-md) var(--spacing-sm);
+        }
+        
+        .event-description {
+            padding-left: var(--spacing-xs);
+            padding-right: var(--spacing-xs);
         }
         
         .event-title {
@@ -314,6 +352,11 @@
         
         .event-composer {
             font-size: 1.25rem;
+        }
+        
+        .event-schedule {
+            margin: var(--spacing-md) var(--spacing-sm);
+            padding: var(--spacing-md) var(--spacing-sm);
         }
     }
 
