@@ -38,15 +38,42 @@
             overflow: hidden;
         }
 
-        /* Home Navigation Icon */
+        /* Navigation Icons */
         .home-nav {
             position: absolute;
             right: 15px;
             top: 15px;
             z-index: 100;
+            text-decoration: none !important;
+            color: #ffffff !important;
         }
 
-        .home-icon {
+        .home-nav:visited,
+        .home-nav:link,
+        .home-nav:hover,
+        .home-nav:active {
+            text-decoration: none !important;
+            color: #ffffff !important;
+        }
+
+        .greetings-nav {
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            z-index: 100;
+            text-decoration: none !important;
+            color: #ffffff !important;
+        }
+
+        .greetings-nav:visited,
+        .greetings-nav:link,
+        .greetings-nav:hover,
+        .greetings-nav:active {
+            text-decoration: none !important;
+            color: #ffffff !important;
+        }
+
+        .back-icon {
             width: 50px;
             height: 50px;
             background: rgba(0,0,0,0.7);
@@ -63,7 +90,28 @@
             line-height: 50px;
         }
 
-        .home-icon:hover {
+        .back-icon:hover {
+            background: rgba(108, 117, 125, 0.73);
+        }
+
+        .greetings-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(0,0,0,0.7);
+            border-radius: 50%;
+            /* COMPATIBILITY: Use table-cell layout */
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+            cursor: pointer;
+            /* COMPATIBILITY: Simplified transition */
+            transition: background-color 0.3s;
+            /* Add font size for emoji */
+            font-size: 1.5rem;
+            line-height: 50px;
+        }
+
+        .greetings-icon:hover {
             background: rgba(2, 124, 39, 0.73);
         }
         
@@ -77,12 +125,17 @@
     <div class="content-wrapper">
         {% block content %}{% endblock content %}
         
-        <!-- Home Navigation Icon -->
+        <!-- Back Navigation Icon -->
         <a href="/home/" class="home-nav">
-            <div class="home-icon">
-                🏠
+            <div class="back-icon">
+                ⬅️
             </div>
         </a>
+        <a href="/" class="greetings-nav">
+            <div class="greetings-icon">
+                🏠
+            </div>    
+        </a>    
     </div>
     {% render_block "js" %}
 </body>

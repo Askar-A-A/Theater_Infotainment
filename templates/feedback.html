@@ -17,315 +17,279 @@
 
 {% block extra_css %}
 <style>
-    /* Variables for consistent measurements - Optimized for 1024x600 */
-    :root {
-        --spacing-xs: 0.5rem;
-        --spacing-sm: 1rem;
-        --spacing-md: 1.5rem;
-        --spacing-lg: 2rem;
-        --spacing-xl: 3rem;
-        
-        --border-radius: 10px;
-        --border-thin: 1px solid rgba(255,255,255,0.1);
-        
-        --color-gold: #d4af37;
-        --color-gold-muted: #b8a062;
-        --color-bg-dark: rgba(0,0,0,0.7);
-        --color-bg-hover: rgba(255,255,255,0.1);
-        
-        --font-size-sm: 1rem;
-        --font-size-md: 1.25rem;
-        --font-size-lg: 2.25rem;
-        --font-size-xl: 3rem;
-    }
-
-    /* Background pattern */
-    .bg-pattern {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMwLTkuOTQtOC4wNi0xOC0xOC0xOHY2YzYuNjI3IDAgMTIgNS4zNzMgMTIgMTJoNnptLTYgNmMwLTYuNjI3LTUuMzczLTEyLTEyLTEydjZjMy4zMTQgMCA2IDIuNjg2IDYgNmg2em0tNiA2YzAtMy4zMTQtMi42ODYtNi02LTZ2Nmg2eiIgZmlsbD0iIzJkMmQyZCIvPjwvZz48L3N2Zz4=');
-        opacity: 0.03;
-        z-index: 0;
-    }
-    
-    /* Gold accent lines - Fixed for 1024x600 */
-    .gold-line-top, .gold-line-bottom {
-        position: absolute;
-        width: 100%;
-        height: 1px;
-        background: linear-gradient(to right, transparent 0%, var(--color-gold) 50%, transparent 100%);
-    }
-    
-    .gold-line-top {
-        top: 40px;
-    }
-    
-    .gold-line-bottom {
-        bottom: 40px;
-    }
-
-    /* Feedback container styles */
+    /* Compact styles for 1024x600 viewport */
     .feedback-container {
         width: 100%;
         height: 100%;
         display: flex;
-        flex-direction: column;
         align-items: center;
         justify-content: center;
-        position: relative;
+        padding: 10px;
+        box-sizing: border-box;
+        overflow-y: auto;
     }
 
-    /* Feedback content box - Optimized for 1024x600 */
     .feedback-content-box {
-        max-width: 720px;
-        width: 90%;
-        padding: 1.5rem 2rem;
-        background-color: rgba(0, 0, 0, 0.7);
-        border: 1px solid var(--color-gold-muted);
-        border-radius: var(--border-radius);
+        width: 100%;
+        max-width: 650px;
+        padding: 20px;
+        background-color: rgba(0, 0, 0, 0.8);
+        border: 3px solid #d4af37;
+        border-radius: 15px;
         text-align: center;
-        position: relative;
-        z-index: 2;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-    }
-
-    /* Corner accents */
-    .feedback-content-box::before,
-    .feedback-content-box::after,
-    .corner-top-right,
-    .corner-bottom-left {
-        content: "";
-        position: absolute;
-        width: 12px;
-        height: 12px;
-        border-color: var(--color-gold);
+        box-sizing: border-box;
     }
     
-    .feedback-content-box::before {
-        top: -1px;
-        left: -1px;
-        border-top: 2px solid var(--color-gold);
-        border-left: 2px solid var(--color-gold);
-        border-top-left-radius: var(--border-radius);
-    }
-    
-    .feedback-content-box::after {
-        bottom: -1px;
-        right: -1px;
-        border-bottom: 2px solid var(--color-gold);
-        border-right: 2px solid var(--color-gold);
-        border-bottom-right-radius: var(--border-radius);
-    }
-    
-    .corner-top-right {
-        top: -1px;
-        right: -1px;
-        border-top: 2px solid var(--color-gold);
-        border-right: 2px solid var(--color-gold);
-        border-top-right-radius: var(--border-radius);
-    }
-    
-    .corner-bottom-left {
-        bottom: -1px;
-        left: -1px;
-        border-bottom: 2px solid var(--color-gold);
-        border-left: 2px solid var(--color-gold);
-        border-bottom-left-radius: var(--border-radius);
-    }
-
-    /* Title styling - Fixed for 1024x600 */
+    /* Compact title styles */
     .feedback-title {
-        font-family: 'Playfair Display', serif;
-        color: var(--color-gold);
-        font-size: 2.2rem;
-        margin-bottom: 0.5rem;
+        color: #d4af37;
+        font-size: 1.8rem;
+        font-weight: bold;
+        margin-bottom: 8px;
+        margin-top: 0;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     }
 
-    /* Divider - Fixed for 1024x600 */
+    /* Smaller divider line */
     .divider {
-        width: 140px;
-        height: 1px;
-        background: linear-gradient(to right, transparent 0%, var(--color-gold) 50%, transparent 100%);
-        margin: 0 auto 1rem;
+        width: 120px;
+        height: 2px;
+        background-color: #d4af37;
+        margin: 0 auto 12px auto;
     }
 
-    /* Feedback intro text - Fixed for 1024x600 */
+    /* Compact intro text */
     .feedback-intro {
-        text-align: center;
-        margin: 0 auto;
-        color: rgba(255, 255, 255, 0.9);
-        font-size: 1.1rem;
-        line-height: 1.4;
-        margin-bottom: 0.8rem;
-        max-width: 75%;
+        color: #ffffff;
+        font-size: 0.95rem;
+        line-height: 1.3;
+        margin-bottom: 15px;
+        margin-top: 0;
+        max-width: 90%;
+        margin-left: auto;
+        margin-right: auto;
     }
-
-    /* Form container - Fixed for 1024x600 */
+    
+    /* Compact form container */
     .feedback-form {
         width: 100%;
-        max-width: 470px;
+        max-width: 450px;
         margin: 0 auto;
-        text-align: center;
-        padding: 0.3rem 0;
-    }
-
-    /* Form element styling */
-    .form-group {
-        position: relative;
         text-align: left;
-        margin-bottom: 0.6rem;
     }
 
-    /* Form label styling - Fixed for 1024x600 */
+    /* Compact form groups */
+    .form-group {
+        margin-bottom: 12px;
+        text-align: left;
+    }
+
+    /* Compact form labels */
     .form-label {
         display: block;
-        color: rgba(255, 255, 255, 0.9);
+        color: #ffffff;
+        font-size: 1rem;
+        font-weight: bold;
+        margin-bottom: 4px;
         text-align: left;
-        font-weight: 500;
-        font-size: 1.1rem;
-        margin-bottom: 0.2rem;
     }
 
-    /* Form controls - Fixed for 1024x600 */
+    /* Compact form controls */
     .form-control {
         width: 100%;
-        background: rgba(255, 255, 255, 0.08);
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        border-radius: 4px;
-        color: white;
+        background-color: rgba(255, 255, 255, 0.1);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 6px;
+        color: #ffffff;
+        padding: 8px 10px;
+        font-size: 0.95rem;
         box-sizing: border-box;
-        padding: 6px 12px;
-        font-size: 1rem;
     }
 
     .form-control:focus {
         outline: none;
-        background: rgba(255, 255, 255, 0.1);
-        border-color: var(--color-gold-muted);
-        box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+        background-color: rgba(255, 255, 255, 0.15);
+        border-color: #d4af37;
     }
 
-    /* Form control placeholder text - Fixed for 1024x600 */
+    /* Placeholder text */
     .form-control::placeholder {
-        color: rgba(255, 255, 255, 0.5);
-        font-size: 0.95rem;
+        color: rgba(255, 255, 255, 0.6);
     }
 
-    /* Textarea specific styling - Fixed for 1024x600 */
+    /* Compact textarea */
     textarea.form-control {
+        min-height: 70px;
         resize: vertical;
-        width: 100%;
-        min-height: 80px;
-        max-width: 100%;
     }
 
-    /* Rating stars - Fixed for 1024x600 and old WebView */
+    /* Compact name field */
+    #name {
+        height: 35px;
+    }
+
+    /* Compact rating stars */
     .rating-container {
         display: flex;
         align-items: center;
         justify-content: flex-start;
+        margin-top: 2px;
     }
 
     .star {
-        color: rgba(255, 255, 255, 0.3); /* Dimmed when not selected */
+        color: rgba(255, 255, 255, 0.4);
         cursor: pointer;
-        transition: all 0.2s ease;
-        font-size: 2rem; /* Larger for better touch targets */
-        margin-right: 12px;
-        user-select: none; /* Prevent text selection */
+        font-size: 1.6rem;
+        margin-right: 10px;
         display: inline-block;
-        filter: grayscale(100%); /* Make unselected stars gray */
     }
 
     .star:hover, .star.active {
-        color: #ffd700; /* Bright gold for selected stars */
-        filter: grayscale(0%); /* Remove grayscale for selected stars */
-        transform: scale(1.1); /* Slightly larger when active */
+        color: #ffd700;
     }
 
     .star:last-child {
         margin-right: 0;
     }
 
-    /* Submit button - Fixed for 1024x600 */
+    /* Compact submit button */
     .submit-button {
         display: inline-block;
-        padding: 8px 30px;
-        font-size: 1.1rem;
-        letter-spacing: 1px;
-        color: var(--color-gold);
-        background-color: rgba(0, 0, 0, 0.3);
-        border: 1px solid var(--color-gold);
-        border-radius: 4px;
-        cursor: pointer;
-        transition: all 0.3s ease;
+        padding: 8px 24px;
+        font-size: 1rem;
+        color: #d4af37;
+        background-color: transparent;
+        border: 2px solid #d4af37;
+        border-radius: 6px;
         text-decoration: none;
-        position: relative;
-        overflow: hidden;
-        font-weight: 500;
-        margin-left: auto;
-        margin-right: auto;
+        font-weight: bold;
+        margin-top: 12px;
+        cursor: pointer;
         width: auto;
-        min-width: 160px;
-        margin-top: 1rem;
+        min-width: 150px;
     }
 
-    .submit-button::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-        transition: all 0.5s ease;
-    }
-    
     .submit-button:hover {
-        color: #fff;
-        border-color: #fff;
-        transform: translateY(-2px);
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
-        background-color: rgba(212, 175, 55, 0.1);
+        color: #000000;
+        background-color: #d4af37;
     }
-    
-    .submit-button:hover::before {
-        left: 100%;
+
+    /* Error messages */
+    .error-message {
+        color: #ff6b6b;
+        font-size: 0.9rem;
+        margin-top: 5px;
+        text-align: left;
     }
 
     /* Success message */
     .success-message {
         display: none;
-        padding: 1rem;
-        background: rgba(0, 100, 0, 0.1);
-        border: 1px solid rgba(0, 150, 0, 0.3);
-        border-radius: 4px;
-        color: #fff;
-        margin-top: 1rem;
-        font-size: 0.95rem;
+        padding: 15px;
+        background-color: rgba(0, 150, 0, 0.2);
+        border: 2px solid rgba(0, 150, 0, 0.5);
+        border-radius: 8px;
+        color: #ffffff;
+        margin-top: 20px;
+        text-align: center;
     }
 
-    /* Name field specific styling - Fixed for 1024x600 */
-    #name {
-        height: 32px;
-        max-width: 100%;
+    /* Mobile responsive - more compact */
+    @media screen and (max-width: 768px) {
+        .feedback-container {
+            padding: 8px;
+        }
+        
+        .feedback-content-box {
+            padding: 15px;
+        }
+        
+        .feedback-title {
+            font-size: 1.6rem;
+            margin-bottom: 6px;
+        }
+        
+        .divider {
+            width: 100px;
+            margin-bottom: 10px;
+        }
+        
+        .feedback-intro {
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+        }
+        
+        .form-group {
+            margin-bottom: 10px;
+        }
+        
+        .form-label {
+            font-size: 0.95rem;
+            margin-bottom: 3px;
+        }
+        
+        .form-control {
+            padding: 6px 8px;
+            font-size: 0.9rem;
+        }
+        
+        .star {
+            font-size: 1.4rem;
+            margin-right: 8px;
+        }
+        
+        .submit-button {
+            padding: 8px 20px;
+            font-size: 0.95rem;
+            margin-top: 10px;
+        }
+        
+        textarea.form-control {
+            min-height: 60px;
+        }
+        
+        #name {
+            height: 32px;
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        .feedback-content-box {
+            padding: 12px;
+        }
+        
+        .feedback-title {
+            font-size: 1.5rem;
+        }
+        
+        .feedback-intro {
+            font-size: 0.85rem;
+        }
+        
+        .form-control {
+            padding: 6px;
+        }
+        
+        .star {
+            font-size: 1.3rem;
+            margin-right: 6px;
+        }
+        
+        .submit-button {
+            padding: 8px 18px;
+            font-size: 0.9rem;
+        }
+        
+        textarea.form-control {
+            min-height: 50px;
+        }
     }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="feedback-container">
-    <!-- Background pattern -->
-    <div class="bg-pattern"></div>
-    
-    <!-- Main content box -->
     <div class="feedback-content-box">
-        <div class="corner-top-right"></div>
-        <div class="corner-bottom-left"></div>
-        
         <h1 class="feedback-title">
             {% placeholder "feedback_page_title" or %}Share Your Feedback{% endplaceholder %}
         </h1>
@@ -394,38 +358,41 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Star rating functionality
+        // Simplified star rating for WebView compatibility
         var stars = document.querySelectorAll('.star');
         var ratingInput = document.getElementById('rating');
         
-        // Set initial star states based on any previously submitted rating
-        if (ratingInput.value > 0) {
+        // Set initial star states
+        if (ratingInput && ratingInput.value > 0) {
             for (var i = 0; i < stars.length; i++) {
-                var s = stars[i];
-                if (parseInt(s.getAttribute('data-rating'), 10) <= parseInt(ratingInput.value, 10)) {
-                    s.classList.add('active');
+                var star = stars[i];
+                var starRating = parseInt(star.getAttribute('data-rating'));
+                var currentRating = parseInt(ratingInput.value);
+                if (starRating <= currentRating) {
+                    star.classList.add('active');
                 }
             }
         }
         
-        // Add click event listeners to stars
+        // Add click listeners
         for (var j = 0; j < stars.length; j++) {
-            (function(starElement) {
-                starElement.addEventListener('click', function() {
-                    var rating = this.getAttribute('data-rating');
-                    ratingInput.value = rating;
+            stars[j].onclick = function() {
+                var rating = this.getAttribute('data-rating');
+                ratingInput.value = rating;
+                
+                // Update all stars
+                for (var k = 0; k < stars.length; k++) {
+                    var currentStar = stars[k];
+                    var currentStarRating = parseInt(currentStar.getAttribute('data-rating'));
+                    var selectedRating = parseInt(rating);
                     
-                    // Update star visuals
-                    for (var k = 0; k < stars.length; k++) {
-                        var currentStar = stars[k];
-                        if (parseInt(currentStar.getAttribute('data-rating'), 10) <= parseInt(rating, 10)) {
-                            currentStar.classList.add('active');
-                        } else {
-                            currentStar.classList.remove('active');
-                        }
+                    if (currentStarRating <= selectedRating) {
+                        currentStar.classList.add('active');
+                    } else {
+                        currentStar.classList.remove('active');
                     }
-                });
-            })(stars[j]);
+                }
+            };
         }
     });
 </script>

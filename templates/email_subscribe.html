@@ -19,274 +19,250 @@
 
 {% block extra_css %}
 <style>
-    /* Variables for consistent styling */
-    :root {
-        --color-gold: #d4af37;
-        --color-gold-muted: #b8a062;
-        --spacing-sm: 0.75rem;
-        --spacing-md: 1.5rem;
-        --spacing-lg: 2.5rem;
-        --spacing-xl: 4rem;
-        --border-radius: 8px;
-    }
-    
-    /* Main container - Optimized for 1024x600 */
+    /* Simplified styles for Android 6.0 WebView compatibility */
     .subscribe-container {
         width: 100%;
         height: 100%;
         display: flex;
-        flex-direction: column;
         align-items: center;
         justify-content: center;
-        position: relative;
+        padding: 10px;
+        box-sizing: border-box;
+        overflow-y: auto;
     }
-    
-    /* Content box - Optimized for 1024x600 */
+
     .subscribe-content-box {
-        max-width: 600px;
-        width: 94%;
-        padding: 1.8rem 2.5rem;
-        background-color: rgba(0, 0, 0, 0.7);
-        border: 1px solid var(--color-gold-muted);
-        border-radius: var(--border-radius);
-        text-align: center;
-        position: relative;
-        z-index: 2;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-    }
-    
-    /* Background pattern */
-    .bg-pattern {
-        position: absolute;
-        top: 0;
-        left: 0;
         width: 100%;
-        height: 100%;
-        background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMwLTkuOTQtOC4wNi0xOC0xOC0xOHY2YzYuNjI3IDAgMTIgNS4zNzMgMTIgMTJoNnptLTYgNmMwLTYuNjI3LTUuMzczLTEyLTEyLTEydjZjMy4zMTQgMCA2IDIuNjg2IDYgNmg2em0tNiA2YzAtMy4zMTQtMi42ODYtNi02LTZ2Nmg2eiIgZmlsbD0iIzJkMmQyZCIvPjwvZz48L3N2Zz4=');
-        opacity: 0.03;
-        z-index: 0;
-    }
-    
-    /* Corner accents - Optimized for 1024x600 */
-    .subscribe-content-box::before,
-    .subscribe-content-box::after,
-    .corner-top-right,
-    .corner-bottom-left {
-        content: "";
-        position: absolute;
-        width: 12px;
-        height: 12px;
-        border-color: var(--color-gold);
-        border-width: 1.5px;
-    }
-    
-    .subscribe-content-box::before {
-        top: -1px;
-        left: -1px;
-        border-top: 1.5px solid var(--color-gold);
-        border-left: 1.5px solid var(--color-gold);
-        border-top-left-radius: var(--border-radius);
-    }
-    
-    .subscribe-content-box::after {
-        bottom: -1px;
-        right: -1px;
-        border-bottom: 1.5px solid var(--color-gold);
-        border-right: 1.5px solid var(--color-gold);
-        border-bottom-right-radius: var(--border-radius);
-    }
-    
-    .corner-top-right {
-        top: -1px;
-        right: -1px;
-        border-top: 1.5px solid var(--color-gold);
-        border-right: 1.5px solid var(--color-gold);
-        border-top-right-radius: var(--border-radius);
-    }
-    
-    .corner-bottom-left {
-        bottom: -1px;
-        left: -1px;
-        border-bottom: 1.5px solid var(--color-gold);
-        border-left: 1.5px solid var(--color-gold);
-        border-bottom-left-radius: var(--border-radius);
-    }
-    
-    /* Title - Optimized for 1024x600 */
-    .subscribe-title {
-        font-family: 'Playfair Display', serif;
-        font-size: 2.6rem;
-        color: var(--color-gold);
-        margin-bottom: 0.5rem;
-    }
-    
-    /* Divider - Optimized for 1024x600 */
-    .divider {
-        width: 200px;
-        height: 1px;
-        background: linear-gradient(to right, transparent 0%, var(--color-gold) 50%, transparent 100%);
-        margin: 0 auto 0.8rem;
-    }
-    
-    /* Intro text - Optimized for 1024x600 */
-    .subscribe-intro {
+        max-width: 650px;
+        padding: 20px;
+        background-color: rgba(0, 0, 0, 0.8);
+        border: 3px solid #d4af37;
+        border-radius: 15px;
         text-align: center;
-        max-width: 92%;
-        margin: 0 auto 1.2rem;
-        color: rgba(255, 255, 255, 0.9);
-        font-size: 1.2rem;
-        line-height: 1.3;
+        box-sizing: border-box;
     }
     
-    /* Subscribe form - Optimized for 1024x600 */
+    /* Compact title styles */
+    .subscribe-title {
+        color: #d4af37;
+        font-size: 1.8rem;
+        font-weight: bold;
+        margin-bottom: 8px;
+        margin-top: 0;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Simple divider line */
+    .divider {
+        width: 120px;
+        height: 2px;
+        background-color: #d4af37;
+        margin: 0 auto 12px auto;
+    }
+
+    /* Compact intro text */
+    .subscribe-intro {
+        color: #ffffff;
+        font-size: 0.95rem;
+        line-height: 1.3;
+        margin-bottom: 15px;
+        margin-top: 0;
+        max-width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    /* Compact form container */
     .subscribe-form {
         width: 100%;
-        max-width: 520px;
+        max-width: 450px;
         margin: 0 auto;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-    
-    /* Form groups - Optimized for 1024x600 */
-    .form-group {
-        margin-bottom: 0.8rem;
-        position: relative;
         text-align: left;
     }
-    
+
+    /* Compact form groups */
+    .form-group {
+        margin-bottom: 12px;
+        text-align: left;
+    }
+
+    /* Compact form labels */
     .form-group label {
         display: block;
+        color: #ffffff;
+        font-size: 1rem;
+        font-weight: bold;
+        margin-bottom: 4px;
         text-align: left;
-        margin-bottom: 0.25rem;
-        color: rgba(255, 255, 255, 0.9);
-        font-size: 1.2rem;
-        font-weight: 500;
     }
-    
+
+    /* Compact form controls */
     .form-control {
         width: 100%;
-        padding: 9px 15px;
-        background: rgba(255, 255, 255, 0.08);
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        border-radius: 4px;
-        color: white;
-        font-size: 1.1rem;
-        min-height: 44px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 6px;
+        color: #ffffff;
+        padding: 8px 10px;
+        font-size: 0.95rem;
+        box-sizing: border-box;
+        min-height: 35px;
     }
-    
-    /* Checkbox container - Optimized for 1024x600 */
+
+    .form-control:focus {
+        outline: none;
+        background-color: rgba(255, 255, 255, 0.15);
+        border-color: #d4af37;
+    }
+
+    /* Placeholder text */
+    .form-control::placeholder {
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    /* Compact checkbox container */
     .checkbox-container {
         display: flex;
         align-items: flex-start;
-        margin-bottom: 0.9rem;
-        margin-top: 0.5rem;
+        margin-bottom: 12px;
+        margin-top: 8px;
         text-align: left;
     }
     
     .checkbox-container input[type="checkbox"] {
-        margin-right: 12px;
-        margin-top: 4px;
-        transform: scale(1.2);
+        margin-right: 8px;
+        margin-top: 2px;
     }
     
     .checkbox-container label {
-        color: rgba(255, 255, 255, 0.9);
-        font-size: 1.1rem;
+        color: #ffffff;
+        font-size: 0.9rem;
         line-height: 1.3;
-    }
-    
-    /* Subscribe button - Optimized for 1024x600 */
-    .btn-subscribe {
-        display: inline-block;
-        padding: 10px 35px;
-        font-size: 1.2rem;
-        letter-spacing: 1.2px;
-        color: var(--color-gold);
-        background-color: rgba(0, 0, 0, 0.3);
-        border: 1px solid var(--color-gold);
-        border-radius: 4px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        text-decoration: none;
-        position: relative;
-        overflow: hidden;
-        margin-top: 1rem;
-        min-width: 190px;
-    }
-    
-    /* Hover effects and animations */
-    .form-control:focus {
-        outline: none;
-        background: rgba(255, 255, 255, 0.1);
-        border-color: var(--color-gold-muted);
-        box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
-    }
-    
-    .btn-subscribe::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-        transition: all 0.5s ease;
-    }
-    
-    .btn-subscribe:hover {
-        color: #fff;
-        border-color: #fff;
-        transform: translateY(-2px);
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
-        background-color: rgba(212, 175, 55, 0.1);
-    }
-    
-    .btn-subscribe:hover::before {
-        left: 100%;
-    }
-    
-    /* Success message - Optimized for 1024x600 */
-    .success-message {
-        display: none;
-        background: rgba(0, 100, 0, 0.1);
-        border: 1px solid rgba(0, 150, 0, 0.3);
-        border-radius: 4px;
-        color: #fff;
-        padding: 1rem;
-        margin-top: 0.8rem;
-        font-size: 1.05rem;
+        font-weight: normal;
     }
 
-    /* Error message styling */
+    /* Compact subscribe button */
+    .btn-subscribe {
+        display: inline-block;
+        padding: 8px 24px;
+        font-size: 1rem;
+        color: #d4af37;
+        background-color: transparent;
+        border: 2px solid #d4af37;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
+        margin-top: 12px;
+        cursor: pointer;
+        width: auto;
+        min-width: 150px;
+    }
+
+    .btn-subscribe:hover {
+        color: #000000;
+        background-color: #d4af37;
+    }
+
+    /* Error messages */
     .error-message {
         color: #ff6b6b;
         font-size: 0.9rem;
         margin-top: 5px;
+        text-align: left;
     }
 
-    /* Responsive adjustments for smaller screens */
+    /* Success message */
+    .success-message {
+        display: none;
+        padding: 15px;
+        background-color: rgba(0, 150, 0, 0.2);
+        border: 2px solid rgba(0, 150, 0, 0.5);
+        border-radius: 8px;
+        color: #ffffff;
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    /* Mobile responsive - more compact */
     @media screen and (max-width: 768px) {
+        .subscribe-container {
+            padding: 8px;
+        }
+        
         .subscribe-content-box {
-            width: 95%;
-            padding: 1.5rem 2rem;
+            padding: 15px;
         }
         
         .subscribe-title {
-            font-size: 2.2rem;
+            font-size: 1.6rem;
+            margin-bottom: 6px;
+        }
+        
+        .divider {
+            width: 100px;
+            margin-bottom: 10px;
         }
         
         .subscribe-intro {
-            font-size: 1.1rem;
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+        }
+        
+        .form-group {
+            margin-bottom: 10px;
         }
         
         .form-group label {
-            font-size: 1.1rem;
+            font-size: 0.95rem;
+            margin-bottom: 3px;
         }
         
         .form-control {
-            font-size: 1rem;
+            padding: 6px 8px;
+            font-size: 0.9rem;
+            min-height: 32px;
+        }
+        
+        .checkbox-container {
+            margin-bottom: 10px;
+            margin-top: 6px;
+        }
+        
+        .checkbox-container label {
+            font-size: 0.85rem;
+        }
+        
+        .btn-subscribe {
+            padding: 8px 20px;
+            font-size: 0.95rem;
+            margin-top: 10px;
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        .subscribe-content-box {
+            padding: 12px;
+        }
+        
+        .subscribe-title {
+            font-size: 1.5rem;
+        }
+        
+        .subscribe-intro {
+            font-size: 0.85rem;
+        }
+        
+        .form-control {
+            padding: 6px;
+        }
+        
+        .checkbox-container label {
+            font-size: 0.8rem;
+        }
+        
+        .btn-subscribe {
+            padding: 8px 18px;
+            font-size: 0.9rem;
         }
     }
 </style>
@@ -294,12 +270,7 @@
 
 {% block content %}
 <div class="subscribe-container">
-    <div class="bg-pattern"></div>
-    
     <div class="subscribe-content-box">
-        <div class="corner-top-right"></div>
-        <div class="corner-bottom-left"></div>
-        
         <h1 class="subscribe-title">
             {% placeholder "subscribe_title" or %}Stay Informed{% endplaceholder %}
         </h1>
@@ -308,10 +279,8 @@
         
         <div class="subscribe-intro">
             {% placeholder "subscribe_intro" or %}
-                <p>
-                    Subscribe to our newsletter and be the first to know about upcoming performances, 
-                    special events, and exclusive offers from the Opera House.
-                </p>
+                Subscribe to our newsletter and be the first to know about upcoming performances, 
+                special events, and exclusive offers from the Opera House.
             {% endplaceholder %}
         </div>
         
@@ -369,16 +338,18 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // Simplified JavaScript for WebView compatibility
         var subscribeForm = document.getElementById('subscribe-form');
         var successMessage = document.getElementById('success-message');
         
         // If success message is visible, hide the form
-        if (successMessage.style.display === 'block') {
-            subscribeForm.style.display = 'none';
+        if (successMessage && successMessage.style.display === 'block') {
+            if (subscribeForm) {
+                subscribeForm.style.display = 'none';
+            }
         }
         
-        // Remove the success flag after page load (for when user navigates back)
-        // Using XMLHttpRequest instead of fetch for older browser compatibility
+        // Clear messages using basic XMLHttpRequest for older browser compatibility
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '{% url "user_interactions:clear_subscription_messages" %}', true);
         xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
