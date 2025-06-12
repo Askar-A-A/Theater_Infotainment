@@ -8,8 +8,10 @@
 
 {% block wrapper_style %}
 <style>
-    /* Enable smooth scrolling for about page */
+    /* Fixed height for 1024x600 resolution */
     .content-wrapper {
+        height: 600px;
+        width: 1024px;
         overflow: hidden;
     }
 </style>
@@ -17,59 +19,96 @@
 
 {% block extra_css %}
 <style>
-    :root {
-        --spacing-xs: 0.5rem;
-        --spacing-sm: 1rem;
-        --spacing-md: 1.5rem;
-        --spacing-lg: 2rem;
-        --spacing-xl: 3rem;
-        
-        --border-radius: 10px;
-        --border-thin: 1px solid rgba(255,255,255,0.1);
-        
-        --color-gold: #d4af37;
-        --color-bg-dark: rgba(0,0,0,0.7);
-        --color-bg-hover: rgba(255,255,255,0.1);
-        
-        --font-size-sm: 1.25rem;
-        --font-size-md: 1.55rem;
-        --font-size-lg: 2.8rem;
-        --font-size-xl: 3.75rem;
-    }
-
+    /* Simplified styles for Android 6.0 WebView compatibility */
     .theater-container {
         width: 100%;
         height: 100%;
         position: relative;
         box-sizing: border-box;
-        overflow: hidden; /* Ensure no horizontal scrolling at container level */
+        overflow: hidden;
+        padding: 10px;
     }
 
-    /* Main content area with scrolling - Fixed for 1024x600 */
+    /* Main content area with scrolling */
     .main-content {
         width: 100%;
-        height: 600px;
-        overflow-x: hidden; /* Prevent horizontal scrolling */
-        overflow-y: scroll;
-        scroll-snap-type: y mandatory;
-        -webkit-overflow-scrolling: touch;
-        scroll-behavior: smooth;
+        height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+        box-sizing: border-box;
+        position: relative;
     }
 
-    /* Section styling with snap points - Fixed for 1024x600 */
+    /* Scroll Indicators */
+    .scroll-indicator {
+        position: absolute;
+        right: 15px;
+        width: 45px;
+        height: 45px;
+        background: rgba(212, 175, 55, 0.8);  /* Theater gold theme */
+        border-radius: 50%;                   /* Circular design */
+        display: flex;                        /* Modern centering */
+        align-items: center;                  /* Vertical center */
+        justify-content: center;              /* Horizontal center */
+        color: #000;
+        font-size: 24px;                      /* Larger for better visibility */
+        font-weight: bold;
+        z-index: 30;                          /* Above content */
+        transition: opacity 0.3s;             /* Smooth fade in/out */
+    }
+
+    .scroll-indicator.top {
+        top: 15px;
+    }
+
+    .scroll-indicator.bottom {
+        bottom: 15px;
+    }
+
+    .scroll-indicator.hidden {
+        opacity: 0;
+    }
+
+    .scroll-indicator.visible {
+        opacity: 1;
+    }
+
+    /* Gradient overlays for better scroll indication */
+    .scroll-fade {
+        position: absolute;
+        left: 0;
+        right: 75px;
+        height: 25px;
+        pointer-events: none;
+        z-index: 25;
+    }
+
+    .scroll-fade.top {
+        top: 0;
+        background: linear-gradient(to bottom, rgba(59, 57, 57, 1), rgba(59, 57, 57, 0));
+    }
+
+    .scroll-fade.bottom {
+        bottom: 0;
+        background: linear-gradient(to top, rgba(59, 57, 57, 1), rgba(59, 57, 57, 0));
+    }
+
+    /* Section styling - simplified */
     .content-section {
         width: 100%;
-        height: 600px;
-        scroll-snap-align: start;
+        min-height: 580px;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         position: relative;
-        overflow: hidden; /* Prevent horizontal scrolling within sections */
+        overflow: hidden;
+        margin-bottom: 15px;
+        padding: 15px;
+        box-sizing: border-box;
     }
 
-    /* Background overlay for sections */
+    /* Background overlay for sections - simplified */
     .section-bg {
         position: absolute;
         top: 0;
@@ -78,154 +117,160 @@
         height: 100%;
         background-size: cover;
         background-position: center;
-        filter: brightness(0.3);
+        background-color: rgba(0, 0, 0, 0.7);
         z-index: -1;
     }
 
-    /* Section backgrounds */
+    /* Section backgrounds - removed complex animations */
     .intro-bg {
         background-image: url('{% static "images/theater-interior.jpg" %}');
-        animation: slowZoom 60s infinite alternate;
+        background-color: rgba(0, 0, 0, 0.8);
     }
 
     .history-bg {
         background-image: url('{% static "images/theater-exterior.jpg" %}');
-        animation: slowPan 60s infinite alternate;
+        background-color: rgba(0, 0, 0, 0.8);
     }
     
     .awards-bg {
         background-image: url('{% static "images/theater-stage.jpg" %}');
-        animation: slowFade 60s infinite alternate;
+        background-color: rgba(0, 0, 0, 0.8);
     }
 
-    @keyframes slowZoom {
-        0% { transform: scale(1); }
-        100% { transform: scale(1.1); }
-    }
-
-    @keyframes slowPan {
-        0% { background-position: center left; }
-        100% { background-position: center right; }
-    }
-    
-    @keyframes slowFade {
-        0% { filter: brightness(0.3) sepia(0); }
-        100% { filter: brightness(0.3) sepia(0.4); }
-    }
-
-    /* Content box styling - Optimized for 1024x600 */
+    /* Content box styling */
     .content-box {
-        background: var(--color-bg-dark);
-        border: var(--border-thin);
-        border-radius: var(--border-radius);
+        background-color: rgba(0, 0, 0, 0.8);
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-radius: 15px;
         width: 95%;
-        max-width: 900px;
-        padding: calc(var(--spacing-lg) + 0.5rem);
-        max-height: 82vh;
+        max-width: 800px;
+        padding: 25px;
+        max-height: 90%;
         display: flex;
         flex-direction: column;
         align-items: center;
-        backdrop-filter: blur(5px);
         overflow-y: auto;
-        overflow-x: hidden; /* Prevent horizontal scrolling in content box */
+        overflow-x: hidden;
+        box-sizing: border-box;
+        /* Enhanced spacing for WebView */
+        margin: 10px;
+        padding-left: 30px;
+        padding-right: 30px;
     }
     
-    /* Icon styling - Optimized for 1024x600 */
+    /* Icon styling */
     .section-icon {
-        color: var(--color-gold);
-        font-size: 44px;
+        color: #d4af37;
+        font-size: 2.5rem;
         margin-bottom: 12px;
     }
 
-    /* Title styling - Optimized for 1024x600 */
+    /* Title styling */
     .section-title {
-        color: var(--color-gold);
-        font-family: 'Playfair Display', serif;
+        color: #d4af37;
+        font-size: 2rem;
+        font-weight: bold;
         text-align: center;
-        text-shadow: 0 0 10px rgba(0,0,0,0.5);
-        max-width: 100%; /* Prevent text overflow causing horizontal scroll */
-        font-size: 36px;
-        margin-bottom: 30px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        max-width: 100%;
+        margin-bottom: 20px;
+        margin-top: 0;
+        line-height: 1.2;
     }
 
-    /* Content styling - Optimized for 1024x600 */
+    /* Content styling */
     .section-content {
-        color: #fff;
-        line-height: 1.7;
+        color: #ffffff;
+        line-height: 1.6;
         text-align: center;
         width: 100%;
-        font-size: 19px;
+        font-size: 1rem;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
 
-    /* Paragraph spacing - Optimized for 1024x600 */
+    /* Paragraph spacing */
     .section-content p {
-        margin-bottom: 1.2rem;
+        margin-bottom: 15px;
+        margin-top: 0;
+        padding-left: 10px;
+        padding-right: 10px;
     }
 
     .section-content p:last-child {
         margin-bottom: 0;
     }
-    
-    /* Awards grid styling - Optimized for 1024x600 */
-    .awards-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: var(--spacing-sm);
-        width: 100%;
-        margin-top: var(--spacing-md);
-    }
-    
-    .award-item {
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: var(--border-radius);
-        padding: var(--spacing-sm);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-    
-    .award-icon {
-        color: var(--color-gold);
-        font-size: 30px;
-        margin-bottom: var(--spacing-xs);
-    }
-    
-    .award-title {
-        color: var(--color-gold);
-        font-size: 19px;
-        margin-bottom: calc(var(--spacing-xs) * 0.75);
-    }
-    
-    .award-year {
-        color: rgba(255, 255, 255, 0.8);
-        font-size: 16px;
-    }
 
-    /* Responsive adjustments for smaller screens */
+    /* Mobile responsive */
     @media screen and (max-width: 768px) {
+        .theater-container {
+            padding: 8px;
+        }
+        
+        .content-section {
+            min-height: 500px;
+            padding: 12px;
+        }
+        
         .content-box {
-            width: 95%;
-            padding: var(--spacing-md);
+            width: 98%;
+            padding: 20px;
+            margin: 5px;
+            padding-left: 25px;
+            padding-right: 25px;
+        }
+        
+        .section-icon {
+            font-size: 2rem;
         }
         
         .section-title {
-            font-size: 26px;
-            margin-bottom: 22px;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
         }
         
         .section-content {
-            font-size: 18px;
+            font-size: 0.95rem;
         }
         
-        .awards-grid {
-            grid-template-columns: repeat(2, 1fr);
+        .section-content p {
+            padding-left: 5px;
+            padding-right: 5px;
+            margin-bottom: 12px;
         }
     }
     
     @media screen and (max-width: 480px) {
-        .awards-grid {
-            grid-template-columns: 1fr;
+        .theater-container {
+            padding: 6px;
+        }
+        
+        .content-section {
+            min-height: 450px;
+            padding: 10px;
+        }
+        
+        .content-box {
+            padding: 15px;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        
+        .section-icon {
+            font-size: 1.8rem;
+        }
+        
+        .section-title {
+            font-size: 1.6rem;
+            margin-bottom: 12px;
+        }
+        
+        .section-content {
+            font-size: 0.9rem;
+        }
+        
+        .section-content p {
+            margin-bottom: 10px;
         }
     }
 </style>
@@ -233,7 +278,15 @@
 
 {% block content %}
 <div class="theater-container">
-    <div class="main-content">
+    <div class="main-content" id="main-content">
+        <!-- Scroll Indicators -->
+        <div class="scroll-indicator top hidden" id="scroll-up">↑</div>
+        <div class="scroll-indicator bottom visible" id="scroll-down">↓</div>
+        
+        <!-- Fade overlays for better visual indication -->
+        <div class="scroll-fade top" id="fade-top"></div>
+        <div class="scroll-fade bottom" id="fade-bottom"></div>
+        
         <!-- Introduction Section -->
         <div class="content-section" id="section-0">
             <div class="section-bg intro-bg"></div>
@@ -316,11 +369,63 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // Scroll indicator functionality
+        var container = document.getElementById('main-content');
+        var scrollUp = document.getElementById('scroll-up');
+        var scrollDown = document.getElementById('scroll-down');
+        var fadeTop = document.getElementById('fade-top');
+        var fadeBottom = document.getElementById('fade-bottom');
+        
+        function updateScrollIndicators() {
+            if (!container) return;
+            
+            var scrollTop = container.scrollTop;
+            var scrollHeight = container.scrollHeight;
+            var clientHeight = container.clientHeight;
+            var maxScroll = scrollHeight - clientHeight;
+            
+            // Smart visibility logic with 10px threshold
+            if (scrollTop > 10) {
+                scrollUp.classList.remove('hidden');
+                scrollUp.classList.add('visible');
+                fadeTop.style.opacity = '1';
+            } else {
+                scrollUp.classList.add('hidden');
+                scrollUp.classList.remove('visible');
+                fadeTop.style.opacity = '0';
+            }
+            
+            if (scrollTop < maxScroll - 10) {
+                scrollDown.classList.remove('hidden');
+                scrollDown.classList.add('visible');
+                fadeBottom.style.opacity = '1';
+            } else {
+                scrollDown.classList.add('hidden');
+                scrollDown.classList.remove('visible');
+                fadeBottom.style.opacity = '0';
+            }
+        }
+        
+        // Initial check
+        updateScrollIndicators();
+        
+        // Listen for scroll events
+        if (container) {
+            container.addEventListener('scroll', updateScrollIndicators);
+        }
+        
+        // Check again after page load (in case content loaded dynamically)
+        setTimeout(updateScrollIndicators, 500);
+        
+        // Simplified JavaScript for WebView compatibility
         var mainContent = document.querySelector('.main-content');
         var sections = document.querySelectorAll('.content-section');
         
-        // The original script doesn't actually do anything with these variables,
-        // but if you planned to add functionality, you would add it here
+        // Basic functionality only - no complex animations or features
+        if (mainContent && sections.length > 0) {
+            // Simple scroll behavior is handled by CSS
+            // No additional JavaScript required for WebView compatibility
+        }
     });
 </script>
 {% endblock %}

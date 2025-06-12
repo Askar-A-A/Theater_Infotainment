@@ -17,6 +17,60 @@
         overflow-y: auto;
     }
 
+    /* Scroll Indicators */
+    .scroll-indicator {
+        position: absolute;
+        right: 15px;
+        width: 45px;
+        height: 45px;
+        background: rgba(212, 175, 55, 0.8);  /* Theater gold theme */
+        border-radius: 50%;                   /* Circular design */
+        display: flex;                        /* Modern centering */
+        align-items: center;                  /* Vertical center */
+        justify-content: center;              /* Horizontal center */
+        color: #000;
+        font-size: 24px;                      /* Larger for better visibility */
+        font-weight: bold;
+        z-index: 30;                          /* Above content */
+        transition: opacity 0.3s;             /* Smooth fade in/out */
+    }
+
+    .scroll-indicator.top {
+        top: 15px;
+    }
+
+    .scroll-indicator.bottom {
+        bottom: 15px;
+    }
+
+    .scroll-indicator.hidden {
+        opacity: 0;
+    }
+
+    .scroll-indicator.visible {
+        opacity: 1;
+    }
+
+    /* Gradient overlays for better scroll indication */
+    .scroll-fade {
+        position: absolute;
+        left: 0;
+        right: 75px;
+        height: 25px;
+        pointer-events: none;
+        z-index: 25;
+    }
+
+    .scroll-fade.top {
+        top: 0;
+        background: linear-gradient(to bottom, rgba(59, 57, 57, 1), rgba(59, 57, 57, 0));
+    }
+
+    .scroll-fade.bottom {
+        bottom: 0;
+        background: linear-gradient(to top, rgba(59, 57, 57, 1), rgba(59, 57, 57, 0));
+    }
+
     /* Page title - Fixed for 1024x600 */
     .page-title {
         color: #d4af37;
@@ -137,7 +191,15 @@
 {% endblock %}
 
 {% block content %}
-<div class="qa-container">
+<div class="qa-container" id="qa-container">
+    <!-- Scroll Indicators -->
+    <div class="scroll-indicator top hidden" id="scroll-up">↑</div>
+    <div class="scroll-indicator bottom visible" id="scroll-down">↓</div>
+    
+    <!-- Fade overlays for better visual indication -->
+    <div class="scroll-fade top" id="fade-top"></div>
+    <div class="scroll-fade bottom" id="fade-bottom"></div>
+    
     <h1 class="page-title">{% placeholder "faq_heading" or %}Frequently Asked Questions{% endplaceholder %}</h1>
     <div class="qa-list">
         <!-- Core QA Items -->
@@ -221,6 +283,54 @@ function addLoadEvent(func) {
 }
 
 addLoadEvent(function() {
+    // Scroll indicator functionality
+    var container = document.getElementById('qa-container');
+    var scrollUp = document.getElementById('scroll-up');
+    var scrollDown = document.getElementById('scroll-down');
+    var fadeTop = document.getElementById('fade-top');
+    var fadeBottom = document.getElementById('fade-bottom');
+    
+    function updateScrollIndicators() {
+        var scrollTop = container.scrollTop;
+        var scrollHeight = container.scrollHeight;
+        var clientHeight = container.clientHeight;
+        var maxScroll = scrollHeight - clientHeight;
+        
+        // Show/hide up indicator
+        if (scrollTop > 10) {
+            scrollUp.classList.remove('hidden');
+            scrollUp.classList.add('visible');
+            fadeTop.style.opacity = '1';
+        } else {
+            scrollUp.classList.add('hidden');
+            scrollUp.classList.remove('visible');
+            fadeTop.style.opacity = '0';
+        }
+        
+        // Show/hide down indicator
+        if (scrollTop < maxScroll - 10) {
+            scrollDown.classList.remove('hidden');
+            scrollDown.classList.add('visible');
+            fadeBottom.style.opacity = '1';
+        } else {
+            scrollDown.classList.add('hidden');
+            scrollDown.classList.remove('visible');
+            fadeBottom.style.opacity = '0';
+        }
+    }
+    
+    // Initial check
+    updateScrollIndicators();
+    
+    // Listen for scroll events
+    if (container) {
+        container.addEventListener('scroll', updateScrollIndicators);
+    }
+    
+    // Check again after page load (in case content loaded dynamically)
+    setTimeout(updateScrollIndicators, 500);
+
+    // Q&A functionality
     var questions = document.getElementsByClassName('question');
     
     function closeAllAnswers(exceptQuestion) {
@@ -262,6 +372,9 @@ addLoadEvent(function() {
                 answer.style.padding = '0';
                 answer.style.visibility = 'hidden';
             }
+            
+            // Update scroll indicators after expanding/collapsing
+            setTimeout(updateScrollIndicators, 100);
         };
     }
 });

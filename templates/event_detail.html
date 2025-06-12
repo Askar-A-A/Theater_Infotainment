@@ -8,364 +8,303 @@
 
 {% block wrapper_style %}
 <style>
-    /* Override base template styles to ensure full-page scrolling */
+    /* Fixed height for 1024x600 resolution */
     .content-wrapper {
-        overflow: hidden; /* Keep this hidden to prevent double scrollbars */
+        height: 600px;
+        width: 1024px;
+        overflow: hidden;
     }
 </style>
 {% endblock %}
 
 {% block extra_css %}
 <style>
-    /* Variables for consistent measurements (same as other pages) */
-    :root {
-        --spacing-xs: 0.5rem;
-        --spacing-sm: 1rem;
-        --spacing-md: 1.5rem;
-        --spacing-lg: 2rem;
-        --spacing-xl: 3rem;
-        
-        --border-radius: 10px;
-        --border-thin: 1px solid rgba(255,255,255,0.1);
-        
-        --color-gold: #d4af37;
-        --color-bg-dark: rgba(0,0,0,0.7);
-        --color-bg-hover: rgba(255,255,255,0.1);
-        
-        --font-size-sm: 1rem;
-        --font-size-md: 1.25rem;
-        --font-size-lg: 2.25rem;
-        --font-size-xl: 3rem;
-    }
-
-    /* Event detail container - Fixed for 1024x600 with WebView safety margins */
+    /* Simplified styles for Android 6.0 WebView compatibility */
     .event-detail-container {
         width: 100%;
-        height: 600px;
+        height: 100%;
         position: relative;
         overflow-y: auto;
-        /* Add safety margins for WebView */
-        padding: 0 var(--spacing-md);
+        padding: 10px 20px;
         box-sizing: border-box;
     }
 
-    /* Event header with image and title - Optimized for 1024x600 */
+    /* Event header - simplified layout */
     .event-header {
-        position: relative;
-        display: flex;
-        justify-content: space-between;
-        background: var(--color-bg-dark);
-        overflow: hidden;
-        height: 35vh;
-        padding: var(--spacing-lg) var(--spacing-md);
-        margin: 0 var(--spacing-sm);
-        border-radius: var(--border-radius);
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        border: 3px solid #d4af37;
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 15px;
         box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        gap: 20px;
     }
 
-    .event-title-container {
-        width: 45%;
+    .event-title-section {
+        flex: 2;
+        padding-right: 15px;
     }
 
     .event-title {
-        color: #fff;
-        margin-bottom: var(--spacing-sm);
-        font-family: 'Playfair Display', serif;
-        font-size: 2.8rem;
+        color: #d4af37;
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 8px;
+        margin-top: 0;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        line-height: 1.2;
     }
 
     .event-composer {
-        color: var(--color-gold);
+        color: #ffffff;
         font-style: italic;
-        font-size: 1.6rem;
-        margin-bottom: var(--spacing-sm);
+        font-size: 1.3rem;
+        margin-bottom: 8px;
     }
 
     .event-dates {
-        color: #fff;
-        font-size: calc(var(--font-size-md) * 0.9);
+        color: #ffffff;
+        font-size: 1rem;
+        margin-bottom: 0;
     }
 
-    /* Main content area with description and sidebar - Optimized for 1024x600 */
+    .event-image-section {
+        flex: 1;
+        max-width: 300px;
+    }
+
+    .event-image-container {
+        width: 100%;
+        height: auto;
+        min-height: 150px;
+        max-height: 200px;
+        border-radius: 10px;
+        overflow: hidden;
+        background-color: rgba(0, 0, 0, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .event-image-container img {
+        width: 100%;
+        height: auto;
+        max-height: 200px;
+        object-fit: cover;
+    }
+
+    /* Main content area - simplified grid */
     .event-content {
-        display: grid;
-        grid-template-columns: 2fr 1fr;
-        padding: var(--spacing-lg) var(--spacing-xl);
-        gap: var(--spacing-lg);
-        margin: var(--spacing-md) var(--spacing-lg);
-        box-sizing: border-box;
+        display: flex;
+        gap: 20px;
+        margin-bottom: 15px;
     }
 
-    .event-description {
-        color: #fff;
-        line-height: 1.7;
-        font-size: 1.15rem;
-        padding-right: var(--spacing-lg);
-        padding-left: var(--spacing-sm);
-        word-wrap: break-word;
-        overflow-wrap: break-word;
-        max-width: 100%;
+    .event-description-section {
+        flex: 2;
+        background-color: rgba(0, 0, 0, 0.8);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 10px;
+        padding: 20px;
         box-sizing: border-box;
     }
 
     .event-description h2 {
-        color: var(--color-gold);
-        font-family: 'Playfair Display', serif;
-        font-size: 1.5rem;
-        margin-bottom: var(--spacing-sm);
+        color: #d4af37;
+        font-size: 1.4rem;
+        font-weight: bold;
+        margin-bottom: 12px;
+        margin-top: 0;
+    }
+
+    .event-description {
+        color: #ffffff;
+        line-height: 1.6;
+        font-size: 1rem;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
 
     .event-description p {
-        margin-bottom: var(--spacing-sm);
+        margin-bottom: 12px;
+        margin-top: 0;
     }
 
-    /* Sidebar with event information - Optimized for 1024x600 */
+    /* Sidebar - simplified styling */
     .event-sidebar {
-        background: rgba(0, 0, 0, 0.3);
-        border-radius: var(--border-radius);
-        padding: var(--spacing-lg) var(--spacing-md);
-        margin-left: var(--spacing-md);
-        margin-right: var(--spacing-sm);
-        word-wrap: break-word;
-        overflow-wrap: break-word;
-        max-width: 100%;
+        flex: 1;
+        background-color: rgba(0, 0, 0, 0.8);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 10px;
+        padding: 20px;
         box-sizing: border-box;
     }
 
     .event-info-item {
-        margin-bottom: var(--spacing-md);
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .event-info-item:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
     }
 
     .info-label {
-        color: var(--color-gold);
+        color: #d4af37;
         font-weight: bold;
-        font-size: 1.3rem;
-        margin-bottom: calc(var(--spacing-xs) * 0.75);
+        font-size: 1.1rem;
+        margin-bottom: 5px;
+        display: block;
     }
 
     .info-value {
-        color: #fff;
-        font-size: 1.1rem;
-    }
-
-    /* Enhanced cast content styling - Optimized for 1024x600 */
-    .cast-content {
-        color: #fff;
-        line-height: 1.6;
-        font-size: 16px;
-        max-height: 200px;
-        overflow-y: auto;
-        padding-right: var(--spacing-sm);
-        padding-left: var(--spacing-xs);
+        color: #ffffff;
+        font-size: 1rem;
+        line-height: 1.4;
         word-wrap: break-word;
         overflow-wrap: break-word;
     }
 
-    /* Cast member row styling */
+    /* Cast content styling - simplified */
+    .cast-content {
+        color: #ffffff;
+        line-height: 1.5;
+        font-size: 0.95rem;
+        max-height: 180px;
+        overflow-y: auto;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
     .cast-member {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 0.6rem;
-        padding-bottom: 0.4rem;
-        border-bottom: 1px solid rgba(255,255,255,0.1);
+        margin-bottom: 8px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .cast-member:last-child {
         border-bottom: none;
+        margin-bottom: 0;
     }
 
-    /* Character name styling */
     .character-name {
-        color: var(--color-gold);
+        color: #d4af37;
         font-weight: bold;
-        padding-right: 1rem;
+        padding-right: 15px;
+        flex: 1;
     }
 
-    /* Actor name styling */
     .actor-name {
         text-align: right;
+        flex: 1;
     }
 
+    /* Back button - simplified */
     .back-button {
         display: inline-block;
-        background: rgba(212, 175, 55, 0.2);
-        color: var(--color-gold);
+        padding: 8px 20px;
+        background-color: transparent;
+        color: #d4af37;
+        border: 2px solid #d4af37;
+        border-radius: 6px;
         text-decoration: none;
-        border: 1px solid var(--color-gold);
-        border-radius: 5px;
-        transition: all 0.3s ease;
-        margin-top: var(--spacing-md);
-        padding: calc(var(--spacing-sm) * 0.8) var(--spacing-md);
-        font-size: 1.1rem;
+        font-weight: bold;
+        margin-top: 15px;
+        font-size: 1rem;
     }
 
     .back-button:hover {
-        background: rgba(212, 175, 55, 0.4);
+        background-color: #d4af37;
+        color: #000000;
     }
 
-    .event-image-container {
-        width: 35%;  /* Slightly increased width for better proportion */
-        height: auto;  /* Let height adjust automatically */
-        min-height: 200px;  /* Minimum height to maintain presence */
-        max-height: 280px;  /* Maximum height to prevent oversizing */
-        overflow: hidden;
-        border-radius: var(--border-radius);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: rgba(0, 0, 0, 0.2);  /* Subtle background for empty space */
-    }
-
-    .event-image-container img {
-        width: 100%;  /* Fill the container width */
-        height: auto;  /* Maintain aspect ratio */
-        max-height: 280px;  /* Prevent oversizing */
-        object-fit: cover;  /* Cover the container while maintaining aspect ratio */
-        border-radius: var(--border-radius);
-    }
-
-    /* Event schedule styling */
-    .event-schedule {
-        padding: var(--spacing-lg) var(--spacing-md);
-        background: rgba(0, 0, 0, 0.3);
-        margin: var(--spacing-md) var(--spacing-lg);
-        border-radius: var(--border-radius);
-        box-sizing: border-box;
-    }
-
-    .event-schedule h3 {
-        color: var(--color-gold);
-        font-family: 'Playfair Display', serif;
-        font-size: 1.5rem;
-        margin-bottom: var(--spacing-md);
-    }
-
-    .performance-list {
-        display: flex;
-        flex-direction: column;
-        gap: var(--spacing-sm);
-    }
-
-    .performance-item {
-        background: rgba(255, 255, 255, 0.05);
-        padding: var(--spacing-sm);
-        border-radius: 5px;
-        border-left: 3px solid var(--color-gold);
-    }
-
-    .performance-date {
-        color: var(--color-gold);
-        font-weight: bold;
-        font-size: 1.1rem;
-    }
-
-    .performance-time {
-        color: #fff;
-        font-size: 1rem;
-        margin-top: 0.25rem;
-    }
-
-    .performance-notes {
-        color: rgba(255, 255, 255, 0.8);
-        font-size: 0.9rem;
-        margin-top: 0.25rem;
-        font-style: italic;
-    }
-
-    /* Responsive adjustments for smaller screens */
-    @media screen and (max-width: 1024px) {
-        .event-content {
-            padding: var(--spacing-md) var(--spacing-lg);
-            gap: var(--spacing-md);
-            margin: var(--spacing-md) var(--spacing-md);
-        }
-        
-        .event-header {
-            padding: var(--spacing-md) var(--spacing-lg);
-            margin: 0 var(--spacing-xs);
-        }
-        
-        .event-title {
-            font-size: 2.4rem;
-        }
-        
-        .event-composer {
-            font-size: 1.4rem;
-        }
-        
-        .event-description {
-            padding-left: var(--spacing-xs);
-            padding-right: var(--spacing-md);
-        }
-        
-        .event-sidebar {
-            margin-left: var(--spacing-sm);
-            margin-right: var(--spacing-xs);
-        }
-    }
-
+    /* Mobile responsive */
     @media screen and (max-width: 768px) {
         .event-detail-container {
-            padding: 0 var(--spacing-sm);
+            padding: 8px 12px;
         }
         
         .event-header {
             flex-direction: column;
-            height: auto;
-            padding: var(--spacing-md);
-            margin: 0 var(--spacing-xs);
+            text-align: center;
+            padding: 15px;
         }
         
-        .event-title-container {
-            width: 100%;
-            margin-bottom: var(--spacing-sm);
+        .event-title-section {
+            padding-right: 0;
+            margin-bottom: 15px;
         }
         
-        .event-image-container {
-            width: 100%;
-            height: auto;
-            min-height: 180px;
-            max-height: 220px;
+        .event-image-section {
+            max-width: 100%;
         }
         
         .event-content {
-            grid-template-columns: 1fr;
-            padding: var(--spacing-md) var(--spacing-sm);
-            margin: var(--spacing-md) var(--spacing-sm);
-        }
-        
-        .event-sidebar {
-            margin-left: 0;
-            margin-right: 0;
-            margin-top: var(--spacing-md);
-            padding: var(--spacing-md) var(--spacing-sm);
-        }
-        
-        .event-description {
-            padding-left: var(--spacing-xs);
-            padding-right: var(--spacing-xs);
+            flex-direction: column;
+            gap: 15px;
         }
         
         .event-title {
-            font-size: 2rem;
+            font-size: 1.8rem;
         }
         
         .event-composer {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
         }
         
-        .event-schedule {
-            margin: var(--spacing-md) var(--spacing-sm);
-            padding: var(--spacing-md) var(--spacing-sm);
+        .event-description-section,
+        .event-sidebar {
+            padding: 15px;
+        }
+        
+        .info-label {
+            font-size: 1rem;
+        }
+        
+        .cast-content {
+            max-height: 150px;
         }
     }
 
-    .event-description p,
-    .info-value,
-    .cast-content {
-        word-wrap: break-word;
-        overflow-wrap: break-word;
-        max-width: 100%;
+    @media screen and (max-width: 480px) {
+        .event-header {
+            padding: 12px;
+        }
+        
+        .event-title {
+            font-size: 1.6rem;
+        }
+        
+        .event-composer {
+            font-size: 1.1rem;
+        }
+        
+        .event-description-section,
+        .event-sidebar {
+            padding: 12px;
+        }
+        
+        .cast-member {
+            flex-direction: column;
+            text-align: left;
+        }
+        
+        .character-name {
+            padding-right: 0;
+            margin-bottom: 3px;
+        }
+        
+        .actor-name {
+            text-align: left;
+            padding-left: 15px;
+        }
     }
 </style>
 {% endblock %}
@@ -374,7 +313,7 @@
 <div class="event-detail-container">
     <!-- Event Header -->
     <div class="event-header">
-        <div class="event-title-container">
+        <div class="event-title-section">
             <h1 class="event-title">
                 {{ event.title }}
             </h1>
@@ -385,20 +324,26 @@
                 {{ event.date_range_display }}
             </div>
         </div>
-        <div class="event-image-container">
-            {% if event.image %}
-                <img src="{{ event.image.url }}" alt="{{ event.title }}">
-            {% endif %}
+        <div class="event-image-section">
+            <div class="event-image-container">
+                {% if event.image %}
+                    <img src="{{ event.image.url }}" alt="{{ event.title }}">
+                {% endif %}
+            </div>
         </div>
     </div>
     
     <!-- Event Content -->
     <div class="event-content">
-        <div class="event-description">
+        <div class="event-description-section">
             <h2>About the Performance</h2>
-            {{ event.about_content|safe }}
+            <div class="event-description">
+                {{ event.about_content|safe }}
+                
+                {% placeholder "event_additional_description" or %}{% endplaceholder %}
+            </div>
             
-            {% placeholder "event_additional_description" or %}{% endplaceholder %}
+            <a href="/events/" class="back-button">← Back to Events</a>
         </div>
         
         <div class="event-sidebar">
@@ -428,7 +373,6 @@
                     {% if event.cast_content %}
                         {{ event.cast_content|safe }}
                     {% else %}
-                        <!-- This provides a clear format for the cast when adding it manually -->
                         {% for role in cast_roles %}
                         <div class="cast-member">
                             <div class="character-name">{{ role.character }}</div>
@@ -445,73 +389,55 @@
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    var castContent = document.querySelector('.cast-content');
-    
-    if (castContent) {
-        var originalText = castContent.innerHTML.trim();
+    document.addEventListener('DOMContentLoaded', function() {
+        // Simplified cast content formatting for WebView compatibility
+        var castContent = document.querySelector('.cast-content');
         
-        // Skip if content already has our structured format
-        if (originalText.indexOf('<div class="cast-member">') === -1) {
-            // Parse the cast content - look for text and formatting
-            var linesArray = originalText.replace(/<br\s*\/?>/gi, '\n').split('\n');
-            var lines = [];
+        if (castContent) {
+            var originalText = castContent.innerHTML.trim();
             
-            // Filter out empty lines manually
-            for (var l = 0; l < linesArray.length; l++) {
-                if (linesArray[l].trim()) {
-                    lines.push(linesArray[l]);
-                }
-            }
-            
-            var formattedHTML = '';
-            
-            // Process each line
-            for (var i = 0; i < lines.length; i++) {
-                var line = lines[i].trim();
+            // Skip if content already has structured format
+            if (originalText.indexOf('<div class="cast-member">') === -1) {
+                var lines = originalText.replace(/<br\s*\/?>/gi, '\n').split('\n');
+                var formattedHTML = '';
                 
-                // Skip the word "Character" if it appears alone
-                if (line.toLowerCase() === 'character') {
-                    continue;
-                }
-                
-                // Check if line contains multiple words/names
-                var partsArray = line.split(/\s{2,}|\t/);
-                var parts = [];
-                
-                // Filter out empty parts manually
-                for (var p = 0; p < partsArray.length; p++) {
-                    if (partsArray[p].trim()) {
-                        parts.push(partsArray[p].trim());
+                for (var i = 0; i < lines.length; i++) {
+                    var line = lines[i].trim();
+                    
+                    if (line && line.toLowerCase() !== 'character') {
+                        var parts = line.split(/\s{2,}|\t/);
+                        var cleanParts = [];
+                        
+                        for (var j = 0; j < parts.length; j++) {
+                            if (parts[j].trim()) {
+                                cleanParts.push(parts[j].trim());
+                            }
+                        }
+                        
+                        if (cleanParts.length >= 2) {
+                            var character = cleanParts[0];
+                            var actor = cleanParts[cleanParts.length - 1];
+                            
+                            formattedHTML += 
+                                '<div class="cast-member">' +
+                                    '<div class="character-name">' + character + '</div>' +
+                                    '<div class="actor-name">' + actor + '</div>' +
+                                '</div>';
+                        } else if (cleanParts.length === 1 && cleanParts[0].toLowerCase().indexOf('cast') === -1) {
+                            formattedHTML += 
+                                '<div class="cast-member">' +
+                                    '<div class="character-name">' + cleanParts[0] + '</div>' +
+                                    '<div class="actor-name"></div>' +
+                                '</div>';
+                        }
                     }
                 }
                 
-                if (parts.length >= 2) {
-                    // If we have at least 2 parts (character and actor)
-                    var character = parts[0].trim();
-                    var actor = parts[parts.length - 1].trim();
-                    
-                    formattedHTML += 
-                        '<div class="cast-member">' +
-                            '<div class="character-name">' + character + '</div>' +
-                            '<div class="actor-name">' + actor + '</div>' +
-                        '</div>';
-                } else if (parts.length === 1 && parts[0].toLowerCase().indexOf('cast') === -1) {
-                    // If we only have one part, it's probably a character with missing actor
-                    // or a character that spans multiple lines
-                    formattedHTML += 
-                        '<div class="cast-member">' +
-                            '<div class="character-name">' + parts[0] + '</div>' +
-                            '<div class="actor-name"></div>' +
-                        '</div>';
+                if (formattedHTML) {
+                    castContent.innerHTML = formattedHTML;
                 }
             }
-            
-            if (formattedHTML) {
-                castContent.innerHTML = formattedHTML;
-            }
         }
-    }
-});
+    });
 </script>
 {% endblock %}

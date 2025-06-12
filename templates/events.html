@@ -8,8 +8,10 @@
 
 {% block wrapper_style %}
 <style>
-    /* Enable vertical scrolling for events page */
+    /* Fixed height for 1024x600 resolution */
     .content-wrapper {
+        height: 600px;
+        width: 1024px;
         overflow: hidden;
     }
 </style>
@@ -17,28 +19,7 @@
 
 {% block extra_css %}
 <style>
-    /* Variables for consistent measurements */
-    :root {
-        --spacing-xs: 0.65rem;  /* Scaled up by 30% */
-        --spacing-sm: 1.3rem;   /* Scaled up by 30% */
-        --spacing-md: 1.95rem;  /* Scaled up by 30% */
-        --spacing-lg: 2.6rem;   /* Scaled up by 30% */
-        --spacing-xl: 3.9rem;   /* Scaled up by 30% */
-        
-        --border-radius: 13px;  /* Scaled up by 30% */
-        --border-thin: 1px solid rgba(255,255,255,0.1);
-        
-        --color-gold: #d4af37;
-        --color-bg-dark: rgba(0,0,0,0.7);
-        --color-bg-hover: rgba(255,255,255,0.1);
-        
-        --font-size-sm: 1.25rem;
-        --font-size-md: 1.55rem;
-        --font-size-lg: 2.8rem;
-        --font-size-xl: 3.75rem;
-    }
-
-    /* Container styles - Fixed for 1024x600 with native scrollbar */
+    /* Simplified styles for Android 6.0 WebView compatibility */
     .theater-container {
         width: 100%;
         height: 100%;
@@ -46,6 +27,28 @@
         box-sizing: border-box;
         overflow-y: auto;
         overflow-x: hidden;
+        padding: 10px 20px;
+    }
+
+    /* Page header */
+    .page-header {
+        width: 100%;
+        text-align: center;
+        background-color: rgba(59, 57, 57, 0.9);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 10px;
+        padding: 20px 0;
+        margin-bottom: 20px;
+        box-sizing: border-box;
+    }
+
+    .page-title {
+        color: #d4af37;
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 0;
+        margin-top: 0;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     }
 
     /* Main content styles */
@@ -53,123 +56,112 @@
         width: 100%;
         overflow: visible;
         display: block;
-        padding-bottom: 78px;  /* Scaled up by 30% */
+        padding-bottom: 60px;
     }
 
     .content-section {
         width: 100%;
         min-height: auto;
-        padding: 20px 39px 33px 39px;  /* Scaled up by 30% */
-        margin-bottom: 26px;  /* Scaled up by 30% */
+        padding: 15px 25px 20px 25px;
+        margin-bottom: 20px;
         box-sizing: border-box;
     }
 
-    /* Events container - now single column */
+    /* Events container */
     .events-container {
         display: flex;
         flex-direction: column;
-        gap: var(--spacing-lg);
+        gap: 20px;
         width: 100%;
-        max-width: 1235px;  /* Scaled up by 30% */
+        max-width: 950px;
         margin: 0 auto;
     }
 
-    /* Page header - static positioning (scrolls with content) */
-    .page-header {
-        position: static;
-        width: 100%;
-        text-align: center;
-        background: rgba(59, 57, 57, 0.9);
-        padding: 26px 0;  /* Scaled up by 30% */
-        margin-bottom: 26px;  /* Scaled up by 30% */
-    }
-
-    /* Page title */
-    .page-title {
-        color: var(--color-gold);
-        font-family: 'Playfair Display', serif;
-        font-size: calc(var(--font-size-lg) + 0.26rem);  /* Scaled up by 30% */
-        margin-bottom: 16px;  /* Scaled up by 30% */
-    }
-
-    /* Redesigned event card - proportional layout (scaled up 30%) */
+    /* Event card - simplified layout */
     .event-card {
-        background: var(--color-bg-dark);
-        border: 2px solid rgba(255,255,255,0.3); /* Made border much more visible */
-        border-radius: var(--border-radius);
+        background-color: rgba(0, 0, 0, 0.7);
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-radius: 15px;
         cursor: pointer;
-        transition: all 0.3s ease;
         display: flex;
         align-items: center;
         text-decoration: none;
-        padding: var(--spacing-md);
-        height: 234px;  /* 180px * 1.3 */
-        margin-bottom: var(--spacing-sm);
+        padding: 20px;
+        height: 180px;
+        margin-bottom: 15px;
+        box-sizing: border-box;
+        /* Enhanced spacing for WebView compatibility */
+        margin-left: 10px;
+        margin-right: 10px;
+        padding-left: 25px;
+        padding-right: 25px;
     }
 
     .event-card:hover {
-        background: var(--color-bg-hover);
-        border: 2px solid rgba(255,255,255,0.5); /* More visible hover border */
+        background-color: rgba(255, 255, 255, 0.1);
+        border: 3px solid rgba(255, 255, 255, 0.5);
         transform: translateY(-2px);
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
     }
 
-    /* Event image - left side (scaled up 30%) */
+    /* Event image - left side */
     .event-image {
-        width: 312px;  /* 240px * 1.3 */
-        height: 195px;  /* 150px * 1.3 */
-        border-radius: var(--border-radius);
+        width: 240px;
+        height: 140px;
+        border-radius: 10px;
         overflow: hidden;
-        /* ENHANCED COMPATIBILITY: Use both margin and padding for WebView */
-        margin-right: var(--spacing-lg);
-        padding-right: var(--spacing-md);
         flex-shrink: 0;
         display: flex;
         align-items: center;
         justify-content: center;
         box-sizing: border-box;
+        /* Enhanced spacing for WebView */
+        margin-right: 25px;
+        padding-right: 15px;
+        background-color: rgba(0, 0, 0, 0.3);
     }
 
     .event-image img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        border-radius: var(--border-radius);
+        border-radius: 10px;
     }
 
-    /* Event content - middle section (takes remaining 60%) */
+    /* Event content - middle section */
     .event-content {
-        flex: 6;
+        flex: 2;
         display: flex;
         flex-direction: column;
         justify-content: center;
         height: 100%;
-        /* ENHANCED COMPATIBILITY: Use both margin and padding for WebView spacing */
-        margin-left: var(--spacing-sm);
-        margin-right: var(--spacing-md);
-        padding: var(--spacing-sm) var(--spacing-lg) var(--spacing-sm) var(--spacing-sm);
+        /* Enhanced spacing for WebView */
+        margin-left: 15px;
+        margin-right: 20px;
+        padding: 15px 20px 15px 15px;
         box-sizing: border-box;
     }
 
     .event-title {
-        color: #d4af37 !important; /* Fixed: Use actual gold color instead of variable */
-        margin-bottom: var(--spacing-sm);
-        font-family: 'Playfair Display', serif;
-        font-size: 2.86rem;  /* 2.2rem * 1.3 */
+        color: #d4af37 !important;
+        margin-bottom: 12px;
+        margin-top: 0;
+        font-size: 2.2rem;
         line-height: 1.2;
-        text-decoration: none !important; /* Ensure no blue link color */
+        text-decoration: none !important;
+        font-weight: bold;
     }
 
     .event-composer {
-        color: #ffffff !important; /* Fixed: Use actual white color instead of variable */
+        color: #ffffff !important;
         font-style: italic;
-        font-size: 1.82rem;  /* 1.4rem * 1.3 */
-        text-decoration: none !important; /* Ensure no blue link color */
+        font-size: 1.4rem;
+        text-decoration: none !important;
+        margin-bottom: 0;
     }
 
-    /* Event date - right side (takes 40% of remaining space) */
+    /* Event date - right side */
     .event-date-section {
-        flex: 4;
+        flex: 1;
         height: 100%;
         display: flex;
         flex-direction: column;
@@ -177,25 +169,26 @@
         justify-content: center;
         text-align: center;
         flex-shrink: 0;
-        border-left: 2px solid rgba(255, 255, 255, 0.3); /* Made border more visible */
-        /* ENHANCED COMPATIBILITY: Use both margin and padding for WebView spacing */
-        margin-left: var(--spacing-sm);
-        padding-left: var(--spacing-lg);
-        min-width: 260px;  /* 200px * 1.3 */
+        border-left: 2px solid rgba(255, 255, 255, 0.3);
+        /* Enhanced spacing for WebView */
+        margin-left: 15px;
+        padding-left: 20px;
+        min-width: 200px;
         box-sizing: border-box;
     }
 
     .event-date {
-        color: #d4af37 !important; /* Fixed: Use actual gold color */
-        font-size: 2.34rem;  /* 1.8rem * 1.3 */
+        color: #d4af37 !important;
+        font-size: 1.8rem;
         font-weight: 600;
-        font-family: 'Georgia', serif;
         line-height: 1.3;
         text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-        text-decoration: none !important; /* Ensure no blue link color */
+        text-decoration: none !important;
+        margin-bottom: 0;
+        margin-top: 0;
     }
 
-    /* Additional fix: Ensure link doesn't override colors */
+    /* Link color overrides */
     a.event-card,
     a.event-card:visited,
     a.event-card:link {
@@ -209,70 +202,99 @@
         color: inherit !important;
     }
 
-    /* Responsive adjustments */
+    /* Mobile responsive */
     @media screen and (max-width: 1024px) {
+        .theater-container {
+            padding: 8px 15px;
+        }
+        
         .content-section {
-            padding: 16px 26px 26px 26px;  /* Scaled up by 30% */
+            padding: 12px 20px 15px 20px;
         }
         
         .event-card {
-            height: 208px;  /* 160px * 1.3 */
-            padding: var(--spacing-sm);
+            height: 160px;
+            padding: 15px;
+            margin-left: 5px;
+            margin-right: 5px;
+            padding-left: 20px;
+            padding-right: 20px;
         }
         
         .event-image {
-            width: 260px;  /* 200px * 1.3 */
-            height: 169px;  /* 130px * 1.3 */
-            margin-right: var(--spacing-md);
-            padding-right: var(--spacing-sm);
+            width: 200px;
+            height: 120px;
+            margin-right: 20px;
+            padding-right: 12px;
         }
         
         .event-content {
-            margin-left: var(--spacing-xs);
-            margin-right: var(--spacing-sm);
-            padding-left: var(--spacing-xs);
+            margin-left: 12px;
+            margin-right: 15px;
+            padding-left: 12px;
         }
         
         .event-title {
-            font-size: 2.47rem;  /* 1.9rem * 1.3 */
+            font-size: 1.9rem;
         }
         
         .event-composer {
-            font-size: 1.56rem;  /* 1.2rem * 1.3 */
+            font-size: 1.2rem;
         }
         
         .event-date-section {
-            margin-left: var(--spacing-xs);
-            padding-left: var(--spacing-md);
-            min-width: 260px;  /* Scaled up by 30% */
+            margin-left: 12px;
+            padding-left: 15px;
+            min-width: 180px;
         }
         
         .event-date {
-            font-size: 2.08rem;  /* 1.6rem * 1.3 */
+            font-size: 1.6rem;
+        }
+        
+        .page-title {
+            font-size: 2.2rem;
         }
     }
 
     @media screen and (max-width: 768px) {
+        .theater-container {
+            padding: 8px 12px;
+        }
+        
+        .page-header {
+            padding: 15px 0;
+            margin-bottom: 15px;
+        }
+        
+        .page-title {
+            font-size: 2rem;
+        }
+        
         .event-card {
             flex-direction: column;
             height: auto;
-            padding: var(--spacing-sm);
+            padding: 15px;
             text-align: center;
+            margin-left: 0;
+            margin-right: 0;
+            padding-left: 15px;
+            padding-right: 15px;
         }
         
         .event-image {
             width: 100%;
-            height: 182px;  /* 140px * 1.3 */
+            height: 140px;
             margin-right: 0;
-            margin-bottom: var(--spacing-md);
+            margin-bottom: 15px;
             padding-right: 0;
         }
         
         .event-content {
-            padding: var(--spacing-sm) var(--spacing-xs);
+            padding: 12px 8px;
             margin-left: 0;
             margin-right: 0;
-            margin-bottom: var(--spacing-md);
+            margin-bottom: 15px;
             flex: none;
         }
         
@@ -280,29 +302,63 @@
             flex: none;
             width: 100%;
             border-left: none;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
             margin-left: 0;
             padding-left: 0;
-            padding-top: var(--spacing-md);
+            padding-top: 15px;
             height: auto;
             min-width: auto;
         }
         
         .event-title {
-            font-size: 2.08rem;  /* 1.6rem * 1.3 */
-            margin-bottom: calc(var(--spacing-xs) + 0.26rem);  /* Scaled up by 30% */
+            font-size: 1.6rem;
+            margin-bottom: 8px;
         }
         
         .event-composer {
-            font-size: 1.43rem;  /* 1.1rem * 1.3 */
+            font-size: 1.1rem;
         }
         
         .event-date {
-            font-size: 1.82rem;  /* 1.4rem * 1.3 */
+            font-size: 1.4rem;
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        .theater-container {
+            padding: 6px 10px;
+        }
+        
+        .page-header {
+            padding: 12px 0;
         }
         
         .page-title {
-            font-size: var(--font-size-lg);
+            font-size: 1.8rem;
+        }
+        
+        .event-card {
+            padding: 12px;
+        }
+        
+        .event-image {
+            height: 120px;
+        }
+        
+        .event-content {
+            padding: 10px 6px;
+        }
+        
+        .event-title {
+            font-size: 1.5rem;
+        }
+        
+        .event-composer {
+            font-size: 1rem;
+        }
+        
+        .event-date {
+            font-size: 1.3rem;
         }
     }
 </style>
@@ -318,7 +374,6 @@
 
     <div class="main-content">
         {% if events %}
-            <!-- Show one event per page -->
             {% for event in events %}
                 <div class="content-section">
                     <div class="events-container">
@@ -446,6 +501,10 @@
 </div>
 
 <script>
-// No JavaScript needed for standard scrollbar functionality
+    // Simplified JavaScript for WebView compatibility - no complex functionality needed
+    document.addEventListener('DOMContentLoaded', function() {
+        // Basic hover effects are handled by CSS
+        // No additional JavaScript required for WebView compatibility
+    });
 </script>
 {% endblock %}
