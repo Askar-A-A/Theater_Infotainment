@@ -18,33 +18,15 @@
 
 {% block extra_css %}
 <style>
-    /* Variables for consistent measurements - Optimized for 1024x600 */
-    :root {
-        --spacing-xs: 0.5rem;
-        --spacing-sm: 1rem;
-        --spacing-md: 1.5rem;
-        --spacing-lg: 2rem;
-        --spacing-xl: 3rem;
-        
-        --border-radius: 10px;
-        --border-thin: 1px solid rgba(255,255,255,0.1);
-        
-        --color-gold: #d4af37;
-        --color-bg-dark: rgba(0,0,0,0.7);
-        --color-bg-hover: rgba(255,255,255,0.1);
-        
-        --font-size-sm: 1rem;
-        --font-size-md: 1.25rem;
-        --font-size-lg: 2.25rem;
-    }
+    /* Simplified styles for Android 6.0 WebView compatibility */
 
-    /* Logo section styles - Fixed for 1024x600 */
+    /* Logo section styles - Compact for 1024x600 */
     .logo-section {
         position: absolute;
         left: 0;
         width: 100%;
-        top: 15px;
-        height: 120px;
+        top: 10px;
+        height: 100px;
         display: block;
         text-align: center;
         z-index: 20;
@@ -55,246 +37,159 @@
         max-width: 90%;
         margin: 0 auto;
     }
-    
+
     .theater-logo {
-        max-height: 90px;
+        max-height: 70px;
         max-width: 100%;
         width: auto;
         height: auto;
     }
-    
+
     /* Theater title styles */
     .theater-title {
-        font-family: 'Playfair Display', serif;
-        color: var(--color-gold);
+        color: #d4af37;
         text-align: center;
-        letter-spacing: 1px;
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-        margin-top: 10px;
-        font-size: 2.5rem;
-        font-weight: 650;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        margin-top: 8px;
+        font-size: 2rem;
+        font-weight: bold;
         margin-bottom: 0;
     }
 
-    /* Theater container - Single column optimized */
+    /* Theater container - Compact layout */
     .theater-container {
         width: 100%;
-        height: calc(100% - 130px);
-        margin-top: 130px;
-        padding: 1rem;
+        height: calc(100% - 110px);
+        margin-top: 110px;
+        padding: 10px;
         overflow-y: auto;
         overflow-x: hidden;
+        box-sizing: border-box;
     }
 
     /* Main content - Single column layout */
     .main-content {
         width: 100%;
-        max-width: 800px;
+        max-width: 750px;
         margin: 0 auto;
     }
 
-    /* Today's Performance section - Simple and humble */
-    .today-section {
-        background: var(--color-bg-dark);
-        border: var(--border-thin);
-        border-radius: var(--border-radius);
-        padding: 1rem;
-        margin-bottom: 1.5rem;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-        /* Make it more compact */
-        min-height: 80px;
-        max-height: 120px;
-    }
-
-    .today-section:hover {
-        background: var(--color-bg-hover);
-    }
-
-    /* Simple horizontal layout */
-    .today-event-container {
-        display: block;
-        overflow: hidden;
-    }
-
-    .today-event-image {
-        float: left;
-        width: 80px;
-        height: 60px;
-        margin-right: 1rem;
-        margin-bottom: 0;
-    }
-
-    .today-event-image img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 5px;
-    }
-
-    .today-event-info {
-        overflow: hidden;
-        padding-top: 5px;
-    }
-
-    .today-event-title {
-        color: #fff;
-        margin: 0 0 5px 0;
-        font-weight: bold;
-        font-size: 1.3rem;
-        line-height: 1.2;
-    }
-
-    .today-event-composer {
-        color: rgba(255,255,255,0.7);
-        font-style: italic;
-        font-size: 0.9rem;
-        margin: 0;
-    }
-
-    /* Simple fallback */
-    .today-icon-fallback {
-        width: 80px;
-        height: 60px;
-        background: rgba(255,255,255,0.1);
-        border: 1px solid rgba(255,255,255,0.2);
-        border-radius: 5px;
-        text-align: center;
-        color: rgba(255,255,255,0.5);
-        font-size: 0.8rem;
-        line-height: 60px;
-        float: left;
-        margin-right: 1rem;
-    }
-
-    /* Menu Grid - Single column with larger items */
+    /* Menu Grid - Single column with compact items */
     .menu-grid {
         width: 100%;
     }
 
     .menu-item {
-        background: var(--color-bg-dark);
-        border: var(--border-thin);
-        border-radius: var(--border-radius);
-        padding: 1.2rem 1.5rem;
-        margin-bottom: 0.8rem;
+        background-color: rgba(0, 0, 0, 0.8);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 10px;
+        padding: 15px 20px;
+        margin-bottom: 12px;
         cursor: pointer;
-        transition: background-color 0.3s ease;
         display: table;
         width: 100%;
-        min-height: 60px;
+        min-height: 50px;
+        box-sizing: border-box;
+        text-decoration: none !important;
     }
 
     .menu-item:hover {
-        background: var(--color-bg-hover);
+        background-color: rgba(255, 255, 255, 0.1);
+        border-color: #d4af37;
     }
 
     .menu-icon {
         display: table-cell;
-        width: 60px;
-        color: var(--color-gold);
-        font-size: 2rem;
+        width: 50px;
+        color: #d4af37;
+        font-size: 1.8rem;
         vertical-align: middle;
         text-align: center;
     }
 
     .menu-title {
         display: table-cell;
-        color: #fff;
+        color: #ffffff;
         margin: 0;
-        font-size: 1.4rem;
+        font-size: 1.3rem;
         font-weight: bold;
         vertical-align: middle;
-        padding-left: 1rem;
+        padding-left: 15px;
     }
 
-    /* Special styling for today's performance when it has an image */
-    .menu-item .today-event-image {
-        display: table-cell;
-        width: 60px;
-        height: 45px;
-        vertical-align: middle;
-        text-align: center;
-    }
-
-    .menu-item .today-event-image img {
-        width: 50px;
-        height: 40px;
-        object-fit: cover;
-        border-radius: 5px;
-    }
-
-    .menu-item .today-fallback {
-        display: table-cell;
-        width: 60px;
-        color: var(--color-gold);
-        font-size: 1.5rem;
-        vertical-align: middle;
-        text-align: center;
-    }
-
-    /* Special styling for today's performance - Make it much taller */
+    /* Special styling for today's performance */
     .menu-item.today-performance {
-        min-height: 200px; /* Increased from 160px */
-        padding: 1.5rem;
+        min-height: 140px;
+        padding: 20px;
+        border: 3px solid #d4af37;
     }
 
-    /* Much larger image for today's performance */
+    /* Image for today's performance */
     .menu-item.today-performance .today-event-image {
         display: table-cell;
-        width: 220px; /* Increased from 160px */
-        height: 160px; /* Increased from 120px */
+        width: 160px;
+        height: 120px;
         vertical-align: middle;
         text-align: center;
     }
 
     .menu-item.today-performance .today-event-image img {
-        width: 200px; /* Increased from 150px */
-        height: 150px; /* Increased from 110px */
-        object-fit: contain; /* Changed from 'cover' to 'contain' - shows entire image */
-        border-radius: 15px; /* Larger border radius */
-        background: rgba(0,0,0,0.1); /* Add subtle background for any empty space */
+        width: 140px;
+        height: 105px;
+        object-fit: contain;
+        border-radius: 10px;
+        background-color: rgba(0,0,0,0.1);
     }
 
-    /* Much larger text styling for today's performance */
+    /* Text styling for today's performance */
     .menu-item.today-performance .menu-title {
         display: table-cell;
-        color: #fff;
+        color: #ffffff;
         margin: 0;
-        font-size: 2.4rem; /* Increased from 1.8rem */
+        font-size: 1.8rem;
         font-weight: bold;
         vertical-align: middle;
-        padding-left: 2rem; /* Increased padding */
+        padding-left: 20px;
         line-height: 1.2;
     }
 
-    /* Much larger composer styling */
+    /* Composer styling */
     .menu-item.today-performance .event-composer {
         color: rgba(255,255,255,0.8);
         font-style: italic;
-        font-size: 1.8rem; /* Increased from 1.2rem */
+        font-size: 1.3rem;
         font-weight: normal;
-        margin-top: 8px; /* Increased margin */
+        margin-top: 6px;
         display: block;
     }
 
-    /* Larger fallback icons to match */
+    /* Fallback icons */
     .menu-item.today-performance .today-fallback {
         display: table-cell;
-        width: 220px; /* Increased from 160px */
-        color: var(--color-gold);
-        font-size: 6rem; /* Increased from 4.5rem */
+        width: 160px;
+        color: #d4af37;
+        font-size: 4rem;
         vertical-align: middle;
         text-align: center;
     }
 
     .menu-item.today-performance .menu-icon {
         display: table-cell;
-        width: 220px; /* Increased from 160px */
-        color: var(--color-gold);
-        font-size: 7rem; /* Increased from 5rem */
+        width: 160px;
+        color: #d4af37;
+        font-size: 4.5rem;
         vertical-align: middle;
         text-align: center;
+    }
+
+    /* Remove link styling */
+    .menu-item,
+    .menu-item:visited,
+    .menu-item:link,
+    .menu-item:hover,
+    .menu-item:active {
+        text-decoration: none !important;
+        color: inherit !important;
     }
 </style>
 {% endblock %}
