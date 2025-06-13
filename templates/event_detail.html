@@ -32,27 +32,29 @@
     /* Scroll Indicators */
     .scroll-indicator {
         position: absolute;
-        right: 15px;
-        width: 45px;
-        height: 45px;
-        background: rgba(212, 175, 55, 0.8);  /* Theater gold theme */
-        border-radius: 50%;                   /* Circular design */
-        display: flex;                        /* Modern centering */
-        align-items: center;                  /* Vertical center */
-        justify-content: center;              /* Horizontal center */
-        color: #000;
-        font-size: 24px;                      /* Larger for better visibility */
-        font-weight: bold;
-        z-index: 30;                          /* Above content */
-        transition: opacity 0.3s;             /* Smooth fade in/out */
-    }
-
-    .scroll-indicator.top {
-        top: 15px;
+        right: 8px;
+        min-width: 120px;
+        height: 56px;
+        background: #000;
+        border-radius: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 40px;
+        font-weight: 900;
+        z-index: 30;
+        transition: opacity 0.3s;
+        pointer-events: none;
+        box-shadow: none;
+        border: none;
+        cursor: default;
+        user-select: none;
+        opacity: 1;
     }
 
     .scroll-indicator.bottom {
-        bottom: 15px;
+        bottom: 12px;
     }
 
     .scroll-indicator.hidden {
@@ -61,6 +63,14 @@
 
     .scroll-indicator.visible {
         opacity: 1;
+    }
+
+    .scroll-indicator span {
+        margin-left: 14px;
+        font-size: 22px;
+        font-weight: 700;
+        color: #fff;
+        letter-spacing: 0.5px;
     }
 
     /* Gradient overlays for better scroll indication */
@@ -365,9 +375,8 @@
 
 {% block content %}
 <div class="event-detail-container" id="event-detail-container">
-    <!-- Scroll Indicators -->
-    <div class="scroll-indicator top hidden" id="scroll-up">↑</div>
-    <div class="scroll-indicator bottom visible" id="scroll-down">↓</div>
+    <!-- Only bottom indicator -->
+    <div class="scroll-indicator bottom visible" id="scroll-down">↓<span>Scroll</span></div>
     
     <!-- Fade overlays for better visual indication -->
     <div class="scroll-fade top" id="fade-top"></div>
@@ -454,7 +463,6 @@
     document.addEventListener('DOMContentLoaded', function() {
         // Scroll indicator functionality
         var container = document.getElementById('event-detail-container');
-        var scrollUp = document.getElementById('scroll-up');
         var scrollDown = document.getElementById('scroll-down');
         var fadeTop = document.getElementById('fade-top');
         var fadeBottom = document.getElementById('fade-bottom');
@@ -466,17 +474,6 @@
             var scrollHeight = container.scrollHeight;
             var clientHeight = container.clientHeight;
             var maxScroll = scrollHeight - clientHeight;
-            
-            // Show/hide up indicator
-            if (scrollTop > 10) {
-                scrollUp.classList.remove('hidden');
-                scrollUp.classList.add('visible');
-                fadeTop.style.opacity = '1';
-            } else {
-                scrollUp.classList.add('hidden');
-                scrollUp.classList.remove('visible');
-                fadeTop.style.opacity = '0';
-            }
             
             // Show/hide down indicator
             if (scrollTop < maxScroll - 10) {
