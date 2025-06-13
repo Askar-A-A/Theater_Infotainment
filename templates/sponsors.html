@@ -51,31 +51,33 @@
     /* Title area - Fixed for 1024x600 */
     .sponsors-title {
         font-family: Georgia, serif;
-        font-size: 2.8rem;
+        font-size: 3.2rem;
         color: #d4af37;
-        margin-bottom: 0.4rem;
-        margin-top: 0.4rem;
+        margin-bottom: 0.5rem;
+        margin-top: 0.5rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     }
     
-    /* Divider - Fixed for 1024x600 */
+    /* Divider - removed to save vertical space */
     .divider {
-        width: 220px;
-        height: 1.5px;
-        background: #d4af37;
-        margin: 0 auto 0.6rem;
-        opacity: 0.7;
+        display: none;
     }
     
     /* Sponsors info - Fixed for 1024x600 */
     .sponsors-intro {
         text-align: center;
-        max-width: 80%;
+        max-width: 99%;
         margin: 0 auto 0.8rem;
-        color: rgba(255, 255, 255, 0.9);
+        color: #ffffff;
         font-size: 1.1rem;
-        line-height: 1.4;
+        line-height: 1.5;
         font-family: Arial, sans-serif;
         font-weight: 300;
+        background-color: rgba(0, 0, 0, 0.8);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 10px;
+        padding: 16px 30px;
+        box-sizing: border-box;
     }
     
     /* Sponsors row layout - Fixed for 1024x600 */
@@ -91,8 +93,8 @@
         display: table-cell;
         width: 50%;
         max-width: 450px;
-        background-color: rgba(0, 0, 0, 0.4);
-        border: 1.5px solid rgba(212, 175, 55, 0.3);
+        background-color: rgba(0, 0, 0, 0.8);
+        border: 2px solid rgba(255, 255, 255, 0.3);
         border-radius: 10px;
         padding: 12px;
         position: relative;
@@ -170,35 +172,42 @@
         display: none;
     }
     
-    /* Home button styles - Fixed for 1024x600 */
-    .arrow-button {
+    /* Navigation buttons - consistent with base template */
+    .forward-nav {
         position: absolute;
-        top: 15px;
         right: 15px;
-        width: 50px;
-        height: 50px;
-        background-color: rgba(0, 0, 0, 0.5);
-        border: 2px solid #d4af37;
+        top: 15px;
+        z-index: 100;
+        text-decoration: none !important;
+        color: #ffffff !important;
+    }
+
+    .forward-nav:visited,
+    .forward-nav:link,
+    .forward-nav:hover,
+    .forward-nav:active {
+        text-decoration: none !important;
+        color: #ffffff !important;
+    }
+
+    .forward-icon {
+        width: 80px;
+        height: 80px;
+        background: rgba(0,0,0,0.7);
         border-radius: 50%;
         display: table-cell;
-        text-align: center;
         vertical-align: middle;
+        text-align: center;
         cursor: pointer;
         transition: background-color 0.3s;
-        z-index: 10;
-        text-decoration: none;
-        font-size: 1.5rem;
-        line-height: 50px;
-        color: #d4af37;
+        font-size: 50px;
+        font-weight: bold;
+        line-height: 80px;
+        color: #ffffff;
     }
 
-    .arrow-button:hover {
-        background-color: rgba(212, 175, 55, 0.2);
-        color: #fff;
-    }
-
-    .arrow-button i {
-        display: none;
+    .forward-icon:hover {
+        background: rgba(108, 117, 125, 0.73);
     }
 </style>
 {% render_block "js" %}
@@ -228,10 +237,7 @@
 <body>
     {% cms_toolbar %}
     <div class="content-wrapper">
-        <!-- Home button for navigation -->
-        <a href="/home/" class="arrow-button">
-            🏠
-        </a>
+
         
         <div class="sponsors-container">
             <h1 class="sponsors-title">{% placeholder "sponsors_title" or %}Our Esteemed Sponsors{% endplaceholder %}</h1>
@@ -276,7 +282,7 @@
                 <div class="sponsor-box">
                     <div class="sponsor-box-title">
                         <i class="fas fa-theater-masks"></i>
-                        <span>Sponsors for "{{ event.title }}"</span>
+                        <span>Sponsors for {{ event.title }}</span>
                     </div>
                     <div class="sponsors-grid">
                         {% for sponsor in event_sponsors %}
@@ -300,6 +306,13 @@
                 {% placeholder "enter_button_text" or %}ENTER SITE{% endplaceholder %}
             </a>
         </div>
+        
+        <!-- Forward Navigation Icon -->
+        <a href="/home/" class="forward-nav">
+            <div class="forward-icon">
+                &#x27A1;
+            </div>
+        </a>
     </div>
 </body>
 </html>
