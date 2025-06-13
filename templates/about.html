@@ -290,7 +290,7 @@
 <div class="theater-container">
     <div class="main-content" id="main-content">
         <!-- Only bottom indicator -->
-        <div class="scroll-indicator bottom visible" id="scroll-down">↓<span>Scroll</span></div>
+        <div class="scroll-indicator bottom visible" id="scroll-down">↕<span>Scroll</span></div>
         
         <!-- Fade overlays for better visual indication -->
         <div class="scroll-fade top" id="fade-top"></div>
@@ -392,17 +392,7 @@
             var clientHeight = container.clientHeight;
             var maxScroll = scrollHeight - clientHeight;
             
-            // Smart visibility logic with 10px threshold
-            if (scrollTop > 10) {
-                scrollDown.classList.remove('hidden');
-                scrollDown.classList.add('visible');
-                fadeTop.style.opacity = '1';
-            } else {
-                scrollDown.classList.add('hidden');
-                scrollDown.classList.remove('visible');
-                fadeTop.style.opacity = '0';
-            }
-            
+            // Show/hide down indicator
             if (scrollTop < maxScroll - 10) {
                 scrollDown.classList.remove('hidden');
                 scrollDown.classList.add('visible');
