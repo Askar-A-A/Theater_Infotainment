@@ -1,9 +1,9 @@
-{% extends "base.html" %}
+{% extends "base_zh.html" %}
 {% load cms_tags %}
 {% load static %}
 
 {% block title %}
-    {% placeholder "qa_page_title" or %}Frequently Asked Questions - {% placeholder "theater_name" or %}Opera House{% endplaceholder %}{% endplaceholder %}
+    {% placeholder "qa_page_title" or %}常见问题 - {% placeholder "theater_name" or %}歌剧院{% endplaceholder %}{% endplaceholder %}
 {% endblock %}
 
 {% block extra_css %}
@@ -203,68 +203,68 @@
 {% block content %}
 <div class="qa-container" id="qa-container">
     <!-- Scroll Indicators -->
-    <div class="scroll-indicator bottom visible" id="scroll-down">↕<span>Scroll</span></div>
+    <div class="scroll-indicator bottom visible" id="scroll-down">↕<span>滚动</span></div>
     
     <!-- Fade overlays for better visual indication -->
     <div class="scroll-fade top" id="fade-top"></div>
     <div class="scroll-fade bottom" id="fade-bottom"></div>
     
-    <h1 class="page-title">{% placeholder "faq_heading" or %}Frequently Asked Questions{% endplaceholder %}</h1>
+    <h1 class="page-title">{% placeholder "faq_heading" or %}常见问题{% endplaceholder %}</h1>
     <div class="qa-list">
         <!-- Core QA Items -->
         <!-- QA Item 1 -->
         <div class="qa-item">
             <div class="question">
-                <span>{% placeholder "question_1" or %}Where can I rent opera glasses?{% endplaceholder %}</span>
+                <span>{% placeholder "question_1" or %}在哪里可以租用望opera镜？{% endplaceholder %}</span>
                 <i class="fas fa-chevron-down"></i>
             </div>
             <div class="answer">
-                {% placeholder "answer_1" or %}Opera glasses can be rented at the cloakroom for a small fee. A deposit may be required.{% endplaceholder %}
+                {% placeholder "answer_1" or %}可以在衣帽间租用望opera镜，费用很少。可能需要押金。{% endplaceholder %}
             </div>
         </div>
 
         <!-- QA Item 2 -->
         <div class="qa-item">
             <div class="question">
-                <span>{% placeholder "question_2" or %}I lost something during the performance, who should I contact?{% endplaceholder %}</span>
+                <span>{% placeholder "question_2" or %}在观看演出时丢失了物品，应该找谁？{% endplaceholder %}</span>
                 <i class="fas fa-chevron-down"></i>
             </div>
             <div class="answer">
-                {% placeholder "answer_2" or %}Please contact the supervisory staff in the salon located to the right of the grand staircase during intermission or after the performance.<br><br>
-                If you discover the loss later, please contact customer service (internal security) at +XX-XXX-XXXXXX or customerservice@theater.com.{% endplaceholder %}
+                {% placeholder "answer_2" or %}请在休息时间或演出结束后，联系位于大楼梯右侧休息室的监督工作人员。<br><br>
+                如果您稍后才发现丢失物品，请联系客户服务（内部安保）电话 +XX-XXX-XXXXXX 或 customerservice@theater.com。{% endplaceholder %}
             </div>
         </div>
 
         <!-- QA Item 3 -->
         <div class="qa-item">
             <div class="question">
-                <span>{% placeholder "question_3" or %}Can I watch live performances at home?{% endplaceholder %}</span>
+                <span>{% placeholder "question_3" or %}我可以在家观看现场演出吗？{% endplaceholder %}</span>
                 <i class="fas fa-chevron-down"></i>
             </div>
             <div class="answer">
-                {% placeholder "answer_3" or %}Yes, selected performances are available for live streaming through our digital platform. Please visit our streaming service website for more information.{% endplaceholder %}
+                {% placeholder "answer_3" or %}是的，精选演出可通过我们的数字平台进行直播观看。请访问我们的流媒体服务网站了解更多信息。{% endplaceholder %}
             </div>
         </div>
 
         <!-- QA Item 4 -->
         <div class="qa-item">
             <div class="question">
-                <span>{% placeholder "question_4" or %}What benefits do I enjoy as a partner of the opera house?{% endplaceholder %}</span>
+                <span>{% placeholder "question_4" or %}作为歌剧院的合作伙伴，我可以享受哪些福利？{% endplaceholder %}</span>
                 <i class="fas fa-chevron-down"></i>
             </div>
             <div class="answer">
-                {% placeholder "answer_4" or %}Partners enjoy various benefits including priority booking, exclusive events, backstage tours, and special discounts. Please contact our partnership office for detailed information.{% endplaceholder %}
+                {% placeholder "answer_4" or %}合作伙伴可享受各种福利，包括优先订票、专属活动、后台参观和特别折扣。请联系我们的合作办公室了解详细信息。{% endplaceholder %}
             </div>
         </div>
 
         <!-- QA Item 5 -->
         <div class="qa-item">
             <div class="question">
-                <span>{% placeholder "question_5" or %}What is the dress code for attending performances?{% endplaceholder %}</span>
+                <span>{% placeholder "question_5" or %}观看演出的着装要求是什么？{% endplaceholder %}</span>
                 <i class="fas fa-chevron-down"></i>
             </div>
             <div class="answer">
-                {% placeholder "answer_5" or %}While there is no strict dress code, evening attire is typically recommended. Many guests choose formal dress: men in suits or tuxedos, women in evening gowns or elegant outfits. We suggest avoiding overly casual clothing out of respect for the performers and other guests.{% endplaceholder %}
+                {% placeholder "answer_5" or %}虽然没有严格的着装要求，但通常建议穿着晚礼服。许多客人选择正式着装：男士穿西装或燕尾服，女士穿晚礼服或优雅的套装。我们建议避免过于休闲的服装，以示对演员和其他客人的尊重。{% endplaceholder %}
             </div>
         </div>
 

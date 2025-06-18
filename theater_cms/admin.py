@@ -5,7 +5,6 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.utils.html import format_html
 from .models import Event, Performance, UserFeedback, EmailSubscription, SeasonalSponsor, EventSponsorImage
-from django.utils.translation import gettext_lazy as _
 from django.db import models
 from django.contrib.auth.models import Group, Permission
 from django.db.models import Q
@@ -50,13 +49,13 @@ class PerformanceInline(admin.TabularInline):
         if obj and obj.start_time:
             return obj.start_time.date()
         return None
-    performance_date.short_description = _("Date")
+    performance_date.short_description = "Date"
     
     def performance_time(self, obj):
         if obj and obj.start_time:
             return obj.start_time.time()
         return None
-    performance_time.short_description = _("Time")
+    performance_time.short_description = "Time"
     
     # We need to provide a custom formset to handle the date/time split
     def get_formset(self, request, obj=None, **kwargs):
@@ -67,12 +66,12 @@ class PerformanceInline(admin.TabularInline):
         class PerformanceForm(forms.ModelForm):
             # Add separate date and time fields
             performance_date = forms.DateField(
-                label=_("Date"),
+                label="Date",
                 widget=forms.DateInput(attrs={'type': 'date'}),
                 required=False,  # Make it not required for existing performances
             )
             performance_time = forms.TimeField(
-                label=_("Time"),
+                label="Time",
                 widget=forms.TimeInput(attrs={'type': 'time'}),
                 initial='19:30',
                 required=False,  # Make it not required for existing performances
@@ -106,7 +105,7 @@ class PerformanceInline(admin.TabularInline):
                 
                 # Ensure both date and time are provided for new entries
                 if not self.instance.pk and (not cleaned_data.get('performance_date') or not cleaned_data.get('performance_time')):
-                    raise forms.ValidationError(_("Both date and time are required for new performances"))
+                    raise forms.ValidationError("Both date and time are required for new performances")
                 
                 return cleaned_data
             
@@ -166,11 +165,11 @@ class EventAdmin(admin.ModelAdmin):
         (None, {
             'fields': ('title', 'slug', 'composer', 'image', 'is_active', 'sort_order')
         }),
-        (_('Duration Information'), {
+        ('Duration Information', {
             'fields': ('standard_duration', 'duration'),
-            'description': _('Standard duration is used to automatically calculate end times when scheduling performances.')
+            'description': 'Standard duration is used to automatically calculate end times when scheduling performances.'
         }),
-        (_('Content Details'), {
+        ('Content Details', {
             'fields': ('about_content', 'language', 'conductor', 'director', 'cast_content', 'additional_details'),
             'classes': ('collapse',),
         }),
@@ -182,7 +181,7 @@ class EventAdmin(admin.ModelAdmin):
         extra_context = extra_context or {}
         
         # Add more descriptive help text with formatting
-        extra_context['performance_help_text'] = _(
+        extra_context['performance_help_text'] = (
             "Use 'Schedule Performances' for adding multiple performances more easily. "
             "The section below is for manual adjustments to individual performances."
         )
@@ -349,51 +348,51 @@ class EventAdmin(admin.ModelAdmin):
                 choices=REPEAT_CHOICES, 
                 widget=forms.RadioSelect,
                 initial='single',
-                label=_("Scheduling Type")
+                label="Scheduling Type"
             )
 
             # Single Performance Fields
             single_date = forms.DateField(
                 widget=forms.DateInput(attrs={'type': 'date'}),
-                label=_("Performance Date"),
-                help_text=_("Date for this performance"),
+                label="Performance Date",
+                help_text="Date for this performance",
                 required=False
             )
             single_time = forms.TimeField(
                 widget=forms.TimeInput(attrs={'type': 'time'}),
                 initial='19:30',
-                label=_("Performance Time"),
-                help_text=_("Start time (e.g., 19:30)"),
+                label="Performance Time",
+                help_text="Start time (e.g., 19:30)",
                 required=False
             )
 
             # New Weekly Performance Fields
             weekly_start_date = forms.DateField(
                 widget=forms.DateInput(attrs={'type': 'date'}),
-                label=_("Start Date"),
-                help_text=_("Date to start scheduling performances"),
+                label="Start Date",
+                help_text="Date to start scheduling performances",
                 required=False
             )
             weekly_time = forms.TimeField(
                 widget=forms.TimeInput(attrs={'type': 'time'}),
                 initial='19:30',
-                label=_("Performance Time"),
-                help_text=_("Start time for all performances"),
+                label="Performance Time",
+                help_text="Start time for all performances",
                 required=False
             )
             weekly_weekdays = forms.MultipleChoiceField(
                 choices=WEEKDAYS,
                 widget=forms.CheckboxSelectMultiple,
-                label=_("Days of the Week"),
+                label="Days of the Week",
                 required=False,
-                help_text=_("Select one or more days for weekly performances"),
+                help_text="Select one or more days for weekly performances",
             )
             weekly_num_weeks = forms.IntegerField(
-                label=_("Number of Weeks"),
+                label="Number of Weeks",
                 min_value=1,
                 initial=4,
                 required=False,
-                help_text=_("How many weeks to repeat the schedule")
+                help_text="How many weeks to repeat the schedule"
             )
 
             # Custom Dates Field
@@ -402,16 +401,16 @@ class EventAdmin(admin.ModelAdmin):
                     'rows': 5,
                     'placeholder': '2025-04-26 19:30\n2025-04-29 20:00\n2025-04-31 14:00'
                 }),
-                label=_("Performance Dates and Times. Copy the Example 2025-01-05 19:30"),
-                help_text=_("Enter each performance on a new line as: YYYY-MM-DD HH:MM"),
+                label="Performance Dates and Times. Copy the Example 2025-01-05 19:30",
+                help_text="Enter each performance on a new line as: YYYY-MM-DD HH:MM",
                 required=False
             )
 
             # Common Fields
             duration = forms.DurationField(
                 required=False,
-                label=_("Performance Duration"),
-                help_text=_("Duration in hours:minutes (e.g., 2:30). Leave blank to use event's standard duration.")
+                label="Performance Duration",
+                help_text="Duration in hours:minutes (e.g., 2:30). Leave blank to use event's standard duration."
             )
 
             def clean(self):
@@ -420,23 +419,23 @@ class EventAdmin(admin.ModelAdmin):
 
                 if repeat_type == 'single':
                     if not cleaned_data.get('single_date'):
-                        self.add_error('single_date', _("Required for single performance"))
+                        self.add_error('single_date', "Required for single performance")
                     if not cleaned_data.get('single_time'):
-                        self.add_error('single_time', _("Required for single performance"))
+                        self.add_error('single_time', "Required for single performance")
 
                 elif repeat_type == 'weekly':
                     if not cleaned_data.get('weekly_start_date'):
-                        self.add_error('weekly_start_date', _("Required for weekly performances"))
+                        self.add_error('weekly_start_date', "Required for weekly performances")
                     if not cleaned_data.get('weekly_time'):
-                        self.add_error('weekly_time', _("Required for weekly performances"))
+                        self.add_error('weekly_time', "Required for weekly performances")
                     if not cleaned_data.get('weekly_weekdays'):
-                        self.add_error('weekly_weekdays', _("Select at least one weekday"))
+                        self.add_error('weekly_weekdays', "Select at least one weekday")
                     if not cleaned_data.get('weekly_num_weeks'):
-                        self.add_error('weekly_num_weeks', _("Specify how many weeks to repeat"))
+                        self.add_error('weekly_num_weeks', "Specify how many weeks to repeat")
 
                 elif repeat_type == 'custom':
                     if not cleaned_data.get('custom_dates'):
-                        self.add_error('custom_dates', _("Please enter at least one date"))
+                        self.add_error('custom_dates', "Please enter at least one date")
 
                 return cleaned_data
 

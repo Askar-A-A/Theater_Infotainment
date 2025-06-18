@@ -1,9 +1,9 @@
-{% extends "base.html" %}
+{% extends "base_zh.html" %}
 {% load cms_tags %}
 {% load static %}
 
 {% block title %}
-    {% placeholder "subscribe_page_title" or %}Subscribe - Opera House{% endplaceholder %}
+    {% placeholder "subscribe_page_title" or %}订阅 - 歌剧院{% endplaceholder %}
 {% endblock %}
 
 {% block wrapper_style %}
@@ -272,15 +272,15 @@
 <div class="subscribe-container">
     <div class="subscribe-content-box">
         <h1 class="subscribe-title">
-            {% placeholder "subscribe_title" or %}Stay Connected{% endplaceholder %}
+            {% placeholder "subscribe_title" or %}保持联系{% endplaceholder %}
         </h1>
         
         <div class="divider"></div>
         
         <div class="subscribe-intro">
             {% placeholder "subscribe_intro" or %}
-                Subscribe to our newsletter to be the first to know about upcoming performances,
-                special events, and exclusive offers from the opera house.
+                订阅我们的新闻通讯，率先了解即将到来的演出、
+                特别活动和歌剧院的独家优惠。
             {% endplaceholder %}
         </div>
         
@@ -289,9 +289,9 @@
             
             <!-- Email field -->
             <div class="form-group">
-                <label for="email">Email Address</label>
+                <label for="email">电子邮箱地址</label>
                 <input type="email" id="email" name="email" class="form-control" 
-                       placeholder="Your email address" required
+                       placeholder="您的电子邮箱地址" required
                        value="{{ request.session.subscription_data.email|default:'' }}">
                 {% if request.session.subscription_errors.email %}
                     <div class="error-message">
@@ -302,9 +302,9 @@
             
             <!-- Name field -->
             <div class="form-group">
-                <label for="name">Name (Optional)</label>
+                <label for="name">姓名（可选）</label>
                 <input type="text" id="name" name="name" class="form-control" 
-                       placeholder="Your name"
+                       placeholder="您的姓名"
                        value="{{ request.session.subscription_data.name|default:'' }}">
             </div>
             
@@ -313,13 +313,13 @@
                 <input type="checkbox" id="preferences" name="preferences" 
                        {% if request.session.subscription_data.preferences %}checked{% endif %}>
                 <label for="preferences">
-                    I would like to receive information about special events, premieres, and exclusive offers.
+                    我希望接收关于特别活动、首演和独家优惠的信息。
                 </label>
             </div>
             
             <!-- Submit button -->
             <button type="submit" class="btn-subscribe">
-                {% placeholder "subscribe_button_text" or %}Subscribe{% endplaceholder %}
+                {% placeholder "subscribe_button_text" or %}订阅{% endplaceholder %}
             </button>
         </form>
         
@@ -329,7 +329,7 @@
                 <p>{{ request.session.subscription_message }}</p>
             {% else %}
                 {% placeholder "subscribe_success" or %}
-                    <p>Thank you for subscribing to our newsletter. You will receive updates about our upcoming events and performances.</p>
+                    <p>感谢您订阅我们的新闻通讯。您将收到关于我们即将到来的活动和演出的更新。</p>
                 {% endplaceholder %}
             {% endif %}
         </div>

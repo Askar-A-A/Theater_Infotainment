@@ -53,13 +53,16 @@ def process_feedback(request):
     if 'feedback_data' in request.session:
         del request.session['feedback_data']
     
-    # Redirect to thank you page
-    return HttpResponseRedirect(reverse('user_interactions:thank_you'))
+    # Redirect to appropriate thank you page based on language
+    user_language = request.session.get('user_language', 'en')
+    if user_language == 'zh':
+        return redirect('/thank-you_zh/')
+    else:
+        return redirect('/thank-you/')
 
 def thank_you_page(request):
     """
-    Render the thank you page.
-    This does render a template because it's a dedicated view, not a CMS page.
+    English thank you page - uses the regular template
     """
     return render(request, 'feedback_thank_you.html')
 
@@ -195,15 +198,158 @@ def home_with_current_event(request):
     return {'current_event': event}
 
 def sponsors_page(request):
-    from .models import SeasonalSponsor
+    """English version"""
+    request.session['user_language'] = 'en'
     seasonal_sponsors = SeasonalSponsor.objects.all()
     event = determine_current_event()
     event_sponsors = []
     if event:
-        event_sponsors = event.sponsor_images.all()  # Use the related_name from the ForeignKey
+        event_sponsors = event.sponsor_images.all()
 
     return render(request, 'sponsors.html', {
         'seasonal_sponsors': seasonal_sponsors,
         'event_sponsors': event_sponsors,
         'event': event,
     })
+
+def switch_language(request):
+    """Simple language switching without complex i18n"""
+    if request.method != 'POST':
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+        
+    language = request.POST.get('language', 'en')
+    next_page = request.POST.get('next', '/')
+    
+    # Store language choice in session
+    request.session['user_language'] = language
+    
+    # Simple redirect logic based on current page and target language
+    if language == 'zh':
+        # Redirect to Chinese version
+        if '/sponsors/' in next_page:
+            return redirect('/sponsors_zh/')
+        elif '/events/' in next_page:
+            return redirect('/events_zh/')
+        elif '/feedback/' in next_page:
+            return redirect('/feedback_zh/')
+        elif '/about/' in next_page:
+            return redirect('/about_zh/')
+        elif '/email/' in next_page:
+            return redirect('/email-subscribe_zh/')
+        elif '/qa/' in next_page or '/q&a/' in next_page:
+            return redirect('/qa_zh/')
+        elif '/home/' in next_page:
+            return redirect('/home_zh/')
+        else:
+            # Default to Chinese greeting page
+            return redirect('/greeting_zh/')
+    else:
+        # Redirect to English version (remove _zh suffix)
+        if '_zh/' in next_page:
+            clean_path = next_page.replace('_zh/', '/', 1)
+            if clean_path == '/qa/':
+                clean_path = '/q&a/'
+            elif clean_path == '/email-subscribe/':
+                clean_path = '/email/'
+            return redirect(clean_path)
+        else:
+            return redirect(next_page)
+
+# Language-specific view functions for Chinese versions
+def greeting_view_zh(request):
+    """Chinese version of greeting page"""
+    request.session['user_language'] = 'zh'
+    return render(request, 'greeting_zh.html')
+
+def sponsors_view_zh(request):
+    """Chinese version of sponsors page"""
+    request.session['user_language'] = 'zh'
+    seasonal_sponsors = SeasonalSponsor.objects.all()
+    event = determine_current_event()
+    event_sponsors = []
+    if event:
+        event_sponsors = event.sponsor_images.all()
+
+    return render(request, 'sponsors_zh.html', {
+        'seasonal_sponsors': seasonal_sponsors,
+        'event_sponsors': event_sponsors,
+        'event': event,
+    })
+
+def events_view_zh(request):
+    """Chinese version of events page"""
+    request.session['user_language'] = 'zh'
+    events = Event.objects.filter(is_active=True).order_by('sort_order', 'start_datetime')
+    return render(request, 'events_zh.html', {'events': events})
+
+def event_detail_zh(request, slug):
+    """Chinese version of event detail page"""
+    request.session['user_language'] = 'zh'
+    event = get_object_or_404(Event, slug=slug, is_active=True)
+    
+    now = timezone.now()
+    upcoming_performances = event.performances.filter(start_time__gt=now).order_by('start_time')
+    performance_dates = event.performances.dates('start_time', 'day')
+    
+    return render(request, 'event_detail_zh.html', {
+        'event': event,
+        'upcoming_performances': upcoming_performances,
+        'performance_dates': performance_dates,
+    })
+
+def feedback_view_zh(request):
+    """Chinese version of feedback page"""
+    request.session['user_language'] = 'zh'
+    return render(request, 'feedback_zh.html')
+
+def about_view_zh(request):
+    """Chinese version of about page"""
+    request.session['user_language'] = 'zh'
+    return render(request, 'about_zh.html')
+
+def email_subscribe_zh(request):
+    """Chinese version of email subscribe page"""
+    request.session['user_language'] = 'zh'
+    return render(request, 'email_subscribe_zh.html')
+
+def qa_view_zh(request):
+    """Chinese version of Q&A page"""
+    request.session['user_language'] = 'zh'
+    return render(request, 'q&a_zh.html')
+
+def thank_you_zh(request):
+    """Chinese version of thank you page"""
+    request.session['user_language'] = 'zh'
+    return render(request, 'feedback_thank_you_zh.html')
+
+def home_view_zh(request):
+    """Chinese version of home page"""
+    request.session['user_language'] = 'zh'
+    event = determine_current_event()
+    return render(request, 'home_zh.html', {'current_event': event})
+
+def home_view(request):
+    """English version of home page"""
+    request.session['user_language'] = 'en'
+    event = determine_current_event()
+    return render(request, 'home.html', {'current_event': event})
+
+def feedback_view(request):
+    """English version of feedback page"""
+    request.session['user_language'] = 'en'
+    return render(request, 'feedback.html')
+
+def about_view(request):
+    """English version of about page"""
+    request.session['user_language'] = 'en'
+    return render(request, 'about.html')
+
+def email_subscribe(request):
+    """English version of email subscribe page"""
+    request.session['user_language'] = 'en'
+    return render(request, 'email_subscribe.html')
+
+def qa_view(request):
+    """English version of Q&A page"""
+    request.session['user_language'] = 'en'
+    return render(request, 'q&a.html')

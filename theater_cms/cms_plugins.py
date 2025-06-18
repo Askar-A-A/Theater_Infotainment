@@ -1,16 +1,15 @@
 from cms.plugin_base import CMSPluginBase
 from cms.plugin_pool import plugin_pool
-from django.utils.translation import gettext_lazy as _
 from .models import TheaterLogo, SponsorLogo, EventCard
 from theater_cms.models import QAItemPlugin
 
 @plugin_pool.register_plugin
 class TheaterLogoPlugin(CMSPluginBase):
     model = TheaterLogo
-    name = _("Theater Logo")
+    name = "Theater Logo"
     render_template = "theater_cms/theater_logo.html"
     text_enabled = False
-    module = _("Theater")
+    module = "Theater"
 
     def render(self, context, instance, placeholder):
         context.update({
@@ -22,10 +21,10 @@ class TheaterLogoPlugin(CMSPluginBase):
 @plugin_pool.register_plugin
 class SponsorLogoPlugin(CMSPluginBase):
     model = SponsorLogo
-    name = _("Sponsor Logo")
+    name = "Sponsor Logo"
     render_template = "theater_cms/sponsor_logo.html"
     text_enabled = False
-    module = _("Theater")
+    module = "Theater"
 
     def render(self, context, instance, placeholder):
         context.update({
@@ -37,10 +36,10 @@ class SponsorLogoPlugin(CMSPluginBase):
 @plugin_pool.register_plugin
 class EventCardPlugin(CMSPluginBase):
     model = EventCard
-    name = _("Event Card")
+    name = "Event Card"
     render_template = "theater_cms/event_card.html"
     text_enabled = False
-    module = _("Theater")
+    module = "Theater"
 
     def render(self, context, instance, placeholder):
         context.update({
@@ -52,7 +51,7 @@ class EventCardPlugin(CMSPluginBase):
 @plugin_pool.register_plugin
 class QAItemPluginPublisher(CMSPluginBase):
     model = QAItemPlugin
-    name = _("Q&A Item")
+    name = "Q&A Item"
     render_template = "theater_cms/qa_item.html"
     cache = False
     

@@ -1,6 +1,5 @@
 from pathlib import Path
 import os
-from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -50,11 +49,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
     'cms.middleware.user.CurrentUserMiddleware',
     'cms.middleware.page.CurrentPageMiddleware',
     'cms.middleware.toolbar.ToolbarMiddleware',
-    'cms.middleware.language.LanguageCookieMiddleware',
 ]
 
 ROOT_URLCONF = 'theater_config.urls'
@@ -62,7 +59,9 @@ ROOT_URLCONF = 'theater_config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),  # Single template directory
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -123,7 +122,7 @@ LANGUAGE_CODE = 'en'
 
 TIME_ZONE = 'UTC'
 
-USE_I18N = True
+USE_I18N = False
 
 USE_TZ = True
 
@@ -150,35 +149,34 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # CMS settings
 CMS_TEMPLATES = [
+    # English templates
     ('greeting.html', 'Greeting Template'),
     ('base.html', 'Base Template'),
     ('home.html', 'Home Template'),
     ('about.html', 'About Us Template'),
-    ('today.html', 'Today Template'),
     ('events.html', 'Events Template'),
     ('event_detail.html', 'Event Detail Template'),
     ('q&a.html', 'Questions and Answers Template'),
     ('sponsors.html', 'Sponsors Template'),
     ('feedback.html', 'Feedback Template'),
+    ('feedback_thank_you.html', 'Feedback Thank You Template'),
     ('email_subscribe.html', 'Email Subscribe Template'),
+    
+    # Chinese templates (all with _zh suffix)
+    ('greeting_zh.html', 'Greeting Template (Chinese)'),
+    ('base_zh.html', 'Base Template (Chinese)'),
+    ('home_zh.html', 'Home Template (Chinese)'),
+    ('about_zh.html', 'About Us Template (Chinese)'),
+    ('events_zh.html', 'Events Template (Chinese)'),
+    ('event_detail_zh.html', 'Event Detail Template (Chinese)'),
+    ('q&a_zh.html', 'Questions and Answers Template (Chinese)'),
+    ('sponsors_zh.html', 'Sponsors Template (Chinese)'),
+    ('feedback_zh.html', 'Feedback Template (Chinese)'),
+    ('feedback_thank_you_zh.html', 'Feedback Thank You Template (Chinese)'),
+    ('email_subscribe_zh.html', 'Email Subscribe Template (Chinese)'),
 ]
 
 SITE_ID = 1
-LANGUAGES = [
-    ('en', 'English'),
-    ('de', 'German'),
-    ('fr', 'French'),
-    ('zh-hans', 'Chinese'),
-    ('hi', 'Hindi'),
-    ('es', 'Spanish'),
-    ('ar', 'Arabic'),
-    ('pt', 'Portuguese'),
-    ('ru', 'Russian'),
-    ('ja', 'Japanese'),
-    ('tr', 'Turkish'),
-    ('it', 'Italian'),
-    ('bn', 'Bengali'),
-]
 
 CMS_CONFIRM_VERSION4 = True
 
@@ -199,33 +197,28 @@ THUMBNAIL_HIGH_RESOLUTION = True
 
 CMS_PLACEHOLDER_CONF = {
     'theater_logo': {
-        'name': _('Theater Logo'),
+        'name': 'Theater Logo',
         'plugins': ['TheaterLogoPlugin'],
         'default_plugins': [],
     },
     'theater_name': {
-        'name': _('Theater Name'),
+        'name': 'Theater Name',
         'plugins': ['TextPlugin'],
         'default_plugins': [],
     },
     'sponsors_intro': {
-        'name': _('Sponsors Introduction'),
+        'name': 'Sponsors Introduction',
         'plugins': ['TextPlugin'],
         'default_plugins': [],
     },
     'sponsors_logos': {
-        'name': _('Sponsor Logos'),
+        'name': 'Sponsor Logos',
         'plugins': ['SponsorLogoPlugin'],
         'default_plugins': [],
     },
     'copyright_text': {
-        'name': _('Copyright Text'),
+        'name': 'Copyright Text',
         'plugins': ['TextPlugin'],
         'default_plugins': [],
     },
-              
-}
-
-LOCALE_PATHS = [
-    os.path.join(BASE_DIR, 'locale'),
-] 
+} 

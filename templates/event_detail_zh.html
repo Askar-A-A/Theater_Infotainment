@@ -1,9 +1,9 @@
-{% extends "base.html" %}
+{% extends "base_zh.html" %}
 {% load cms_tags %}
 {% load static %}
 
 {% block title %}
-    {% placeholder "event_detail_title" or %}Salome - {% placeholder "theater_name" or %}Opera House{% endplaceholder %}{% endplaceholder %}
+    {% placeholder "event_detail_title" or %}萨洛美 - {% placeholder "theater_name" or %}歌剧院{% endplaceholder %}{% endplaceholder %}
 {% endblock %}
 
 {% block wrapper_style %}
@@ -375,10 +375,10 @@
 
 {% block content %}
 <div class="event-detail-container" id="event-detail-container">
-    <!-- Scroll indicator -->
-    <div class="scroll-indicator bottom visible" id="scroll-down">↕<span>Scroll</span></div>
+    <!-- Only bottom indicator -->
+    <div class="scroll-indicator bottom visible" id="scroll-down">↕<span>滚动</span></div>
     
-    <!-- Fade overlays -->
+    <!-- Fade overlays for better visual indication -->
     <div class="scroll-fade top" id="fade-top"></div>
     <div class="scroll-fade bottom" id="fade-bottom"></div>
     
@@ -407,39 +407,39 @@
     <!-- Event Content -->
     <div class="event-content">
         <div class="event-description-section">
-            <h2>About the Performance</h2>
+            <h2>关于演出</h2>
             <div class="event-description">
                 {{ event.about_content|safe }}
                 
                 {% placeholder "event_additional_description" or %}{% endplaceholder %}
             </div>
             
-            <a href="/events/" class="back-button">← Back to Events</a>
+            <a href="/events_zh/" class="back-button">← 返回演出列表</a>
         </div>
         
         <div class="event-sidebar">
             <div class="event-info-item">
-                <div class="info-label">Duration</div>
+                <div class="info-label">时长</div>
                 <div class="info-value">{{ event.duration }}</div>
             </div>
             
             <div class="event-info-item">
-                <div class="info-label">Language</div>
+                <div class="info-label">语言</div>
                 <div class="info-value">{{ event.language }}</div>
             </div>
             
             <div class="event-info-item">
-                <div class="info-label">Conductor</div>
+                <div class="info-label">指挥</div>
                 <div class="info-value">{{ event.conductor }}</div>
             </div>
             
             <div class="event-info-item">
-                <div class="info-label">Director</div>
+                <div class="info-label">导演</div>
                 <div class="info-value">{{ event.director }}</div>
             </div>
             
             <div class="event-info-item">
-                <div class="info-label">Cast</div>
+                <div class="info-label">演员阵容</div>
                 <div class="cast-content">
                     {% if event.cast_content %}
                         {{ event.cast_content|safe }}

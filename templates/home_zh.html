@@ -1,10 +1,10 @@
-{% extends "base.html" %}
+{% extends "base_zh.html" %}
 {% load cms_tags %}
 {% load static %}
 {% load menu_tags %}
 
 {% block title %}
-    {% placeholder "home_page_title" or %}Opera House{% endplaceholder %}
+    {% placeholder "home_page_title" or %}歌剧院{% endplaceholder %}
 {% endblock %}
 
 {% block wrapper_style %}
@@ -264,17 +264,17 @@
 <div class="logo-section">
     <div class="logo-container">
         {% placeholder "theater_logo" or %}
-            <img src="{% static 'images/theater-logo.png' %}" alt="Theater Logo" class="theater-logo">
+            <img src="{% static 'images/theater-logo.png' %}" alt="剧院标志" class="theater-logo">
         {% endplaceholder %}
     </div>
     <h1 class="theater-title">
-        {% placeholder "theater_name" default "Opera House" %}
+        {% placeholder "theater_name" default "歌剧院" %}
     </h1>
 </div>
 
 <div class="theater-container" id="theater-container">
     <!-- Scroll Indicators -->
-    <div class="scroll-indicator bottom visible" id="scroll-down">↕<span>Scroll</span></div>
+    <div class="scroll-indicator bottom visible" id="scroll-down">↕<span>滚动</span></div>
     
     <!-- Fade overlays for better visual indication -->
     <div class="scroll-fade top" id="fade-top"></div>
@@ -305,29 +305,29 @@
                     </div>
                 {% else %}
                     <div class="menu-icon">🎟️</div>
-                    <div class="menu-title">Today's Performance</div>
+                    <div class="menu-title">今日演出</div>
                 {% endif %}
             </a>
             
-            <a href="/events/" class="menu-item" style="text-decoration: none;">
+            <a href="/events_zh/" class="menu-item">
                 <div class="menu-icon">📅</div>
-                <h2 class="menu-title">Events & Performances</h2>
+                <h2 class="menu-title">演出活动</h2>
             </a>
-            <a href="/about/" class="menu-item" style="text-decoration: none;">
+            <a href="/about_zh/" class="menu-item">
                 <div class="menu-icon">🎭</div>
-                <h2 class="menu-title">About Us</h2>
+                <h2 class="menu-title">关于我们</h2>
             </a>
-            <a href="/qa/" class="menu-item" style="text-decoration: none;">
+            <a href="/qa_zh/" class="menu-item">
                 <div class="menu-icon">❓</div>
-                <h2 class="menu-title">Questions & Answers</h2>
+                <h2 class="menu-title">问题与答案</h2>
             </a>
-            <a href="/email_subscribe/" class="menu-item" style="text-decoration: none;">
+            <a href="/email-subscribe_zh/" class="menu-item">
                 <div class="menu-icon">✉️</div>
-                <h2 class="menu-title">Subscribe to Newsletter</h2>
+                <h2 class="menu-title">订阅邮件</h2>
             </a>
-            <a href="/feedback/" class="menu-item" style="text-decoration: none;">
+            <a href="/feedback_zh/" class="menu-item">
                 <div class="menu-icon">💬</div>
-                <h2 class="menu-title">Leave Your Feedback</h2>
+                <h2 class="menu-title">留下您的反馈</h2>
             </a>
         </div>
     </div>

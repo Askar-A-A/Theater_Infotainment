@@ -1,9 +1,9 @@
-{% extends "base.html" %}
+{% extends "base_zh.html" %}
 {% load cms_tags %}
 {% load static %}
 
 {% block title %}
-    {% placeholder "about_page_title" or %}About Us - {% placeholder "theater_name" or %}Opera House{% endplaceholder %}{% endplaceholder %}
+    {% placeholder "about_page_title" or %}关于我们 - {% placeholder "theater_name" or %}歌剧院{% endplaceholder %}{% endplaceholder %}
 {% endblock %}
 
 {% block wrapper_style %}
@@ -290,7 +290,7 @@
 <div class="theater-container">
     <div class="main-content" id="main-content">
         <!-- Only bottom indicator -->
-        <div class="scroll-indicator bottom visible" id="scroll-down">↕<span>Scroll</span></div>
+        <div class="scroll-indicator bottom visible" id="scroll-down">↕<span>滚动</span></div>
         
         <!-- Fade overlays for better visual indication -->
         <div class="scroll-fade top" id="fade-top"></div>
@@ -301,22 +301,22 @@
             <div class="section-bg intro-bg"></div>
             <div class="content-box">
                 <div class="section-icon">🏛️</div>
-                <h2 class="section-title">{% placeholder "overview_title" or %}Welcome to Our Theater{% endplaceholder %}</h2>
+                <h2 class="section-title">{% placeholder "overview_title" or %}欢迎来到我们的剧院{% endplaceholder %}</h2>
                 <div class="section-content">
                     {% placeholder "overview_content" or %}
                     <p>
-                        Welcome to our theater, one of the world's leading opera houses and a bastion of cultural excellence.
-                        For generations, we have been dedicated to presenting world-class opera and ballet performances,
-                        inspiring, challenging, and moving our audiences.
+                        欢迎来到我们的剧院，这里是世界领先的歌剧院之一，也是文化卓越的堡垒。
+                        几代人以来，我们致力于呈现世界级的歌剧和芭蕾舞演出，
+                        激励、挑战并感动我们的观众。
                     </p>
                     <p>
-                        Our commitment to artistic innovation while preserving classical traditions has made us a
-                        cultural beacon in the international performing arts community. Each season, we bring together
-                        the finest singers, musicians, and creative artists from around the globe to create unforgettable experiences.
+                        我们致力于艺术创新，同时保持古典传统，这使我们成为
+                        国际表演艺术界的文化灯塔。每个演出季，我们汇聚来自全球的顶尖歌手、
+                        音乐家和创意艺术家，创造难忘的体验。
                     </p>
                     <p>
-                        We invite you to explore our rich history, award-winning productions, and the
-                        exceptional talents that make our theater a treasured cultural institution.
+                        我们邀请您探索我们丰富的历史、获奖的作品，以及
+                        使我们剧院成为珍贵文化机构的卓越才华。
                     </p>
                     {% endplaceholder %}
                 </div>
@@ -328,23 +328,23 @@
             <div class="section-bg history-bg"></div>
             <div class="content-box">
                 <div class="section-icon">📜</div>
-                <h2 class="section-title">{% placeholder "history_title" or %}Our Rich History{% endplaceholder %}</h2>
+                <h2 class="section-title">{% placeholder "history_title" or %}我们的悠久历史{% endplaceholder %}</h2>
                 <div class="section-content">
                     {% placeholder "history_content" or %}
                     <p>
-                        Our theater has a distinguished history dating back to its grand opening in 1869, when it was
-                        one of Europe's most architecturally significant opera houses. Designed by renowned architects,
-                        this neo-Renaissance building quickly became a symbol of cultural excellence and artistic achievement.
+                        我们的剧院有着辉煌的历史，始于1869年的盛大开业，当时它是欧洲最具
+                        建筑意义的歌剧院之一。由知名建筑师设计，这座新文艺复兴风格的
+                        建筑很快成为文化卓越和艺术成就的象征。
                     </p>
                     <p>
-                        During the Belle Époque and early 20th century, legendary conductors and composers including
-                        Gustav Mahler and Richard Strauss helped establish our reputation for musical excellence and innovation.
-                        Many important works had their premieres on our stage, cementing our place in musical history.
+                        在美好年代和20世纪初期，包括古斯塔夫·马勒
+                        和理查德·施特劳斯在内的传奇指挥家和作曲家帮助确立了我们在音乐卓越和创新方面的声誉。许多重要
+                        作品在我们的舞台上首演，巩固了我们在音乐史上的地位。
                     </p>
                     <p>
-                        Despite facing challenges including post-war reconstruction, our theater has continued to thrive.
-                        In 2019, we celebrated 150 years of artistic achievement, reaffirming our commitment to preserving our
-                        rich heritage while embracing future innovations.
+                        尽管面临挑战，包括二战后的重建，我们的剧院继续蓬勃发展。
+                        2019年，我们庆祝了150年的艺术成就，重新承诺保护我们的
+                        丰富遗产，同时拥抱未来的创新。
                     </p>
                     {% endplaceholder %}
                 </div>
@@ -356,18 +356,18 @@
             <div class="section-bg awards-bg"></div>
             <div class="content-box">
                 <div class="section-icon">🏆</div>
-                <h2 class="section-title">{% placeholder "awards_title" or %}Awards & Recognition{% endplaceholder %}</h2>
+                <h2 class="section-title">{% placeholder "awards_title" or %}奖项与认可{% endplaceholder %}</h2>
                 <div class="section-content">
                     {% placeholder "awards_intro" or %}
                     <p>
-                        Our commitment to artistic excellence has been recognized with numerous international awards
-                        and honors. These accolades highlight our theater's significant contributions to the
-                        performing arts and our dedication to the highest standards of musical and theatrical presentation.
+                        我们对艺术卓越的承诺得到了众多国际奖项
+                        和荣誉的认可。这些赞誉突出了我们剧院对
+                        表演艺术的重大贡献，以及我们对音乐和戏剧演出最高标准的奉献。
                     </p>
                     <p>
-                        Our productions have received critical acclaim worldwide, particularly for our
-                        innovative stagings of classical works, outstanding orchestral performances, and our ability to attract and nurture
-                        the finest vocal talents from around the globe.
+                        我们的作品在全世界受到好评，特别是在
+                        古典作品的创新舞台呈现、卓越的管弦乐演出，以及我们吸引和培养
+                        来自全球顶尖声乐人才的能力方面得到认可。
                     </p>
                     {% endplaceholder %}
                 </div>

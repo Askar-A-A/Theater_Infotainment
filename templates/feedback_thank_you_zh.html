@@ -1,9 +1,9 @@
-{% extends "base.html" %}
+{% extends "base_zh.html" %}
 {% load cms_tags %}
 {% load static %}
 
 {% block title %}
-    Thank You - {% placeholder "theater_name" or %}Opera House{% endplaceholder %}
+    谢谢 - {% placeholder "theater_name" or %}歌剧院{% endplaceholder %}
 {% endblock %}
 
 {% block wrapper_style %}
@@ -140,13 +140,13 @@
 {% block content %}
 <div class="feedback-container">
     <div class="feedback-content-box">
-        <h1 class="feedback-title">Thank You!</h1>
+        <h1 class="feedback-title">谢谢！</h1>
         
         <div class="divider"></div>
         
-        <p class="feedback-message">We greatly appreciate your feedback. Your comments help us improve the opera experience for everyone.</p>
+        <p class="feedback-message">我们非常感谢您的反馈。您的意见帮助我们为每个人改善歌剧体验。</p>
         
-        <a href="/home/" class="home-button">Return to Home</a>
+        <a href="/home_zh/" class="home-button">返回主页</a>
     </div>
 </div>
 {% endblock %}

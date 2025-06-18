@@ -1,9 +1,9 @@
-{% extends "base.html" %}
+{% extends "base_zh.html" %}
 {% load cms_tags %}
 {% load static %}
 
 {% block title %}
-    Feedback - {% placeholder "theater_name" or %}Opera House{% endplaceholder %}
+    反馈 - {% placeholder "theater_name" or %}歌剧院{% endplaceholder %}
 {% endblock %}
 
 {% block wrapper_style %}
@@ -291,15 +291,15 @@
 <div class="feedback-container">
     <div class="feedback-content-box">
         <h1 class="feedback-title">
-            {% placeholder "feedback_page_title" or %}Share Your Feedback{% endplaceholder %}
+            {% placeholder "feedback_page_title" or %}分享您的反馈{% endplaceholder %}
         </h1>
         
         <div class="divider"></div>
         
         <div class="feedback-intro">
             {% placeholder "feedback_page_subtitle" or %}
-                We value your opinion and are committed to providing the best opera experience.
-                Please share your thoughts with us.
+                我们重视您的意见，致力于提供最佳的歌剧体验。
+                请与我们分享您的想法。
             {% endplaceholder %}
         </div>
         
@@ -309,9 +309,9 @@
             
             <!-- Name field -->
             <div class="form-group">
-                <label for="name" class="form-label">Name</label>
+                <label for="name" class="form-label">姓名</label>
                 <input type="text" id="name" name="name" class="form-control" 
-                       placeholder="Optional" 
+                       placeholder="可选" 
                        value="{{ request.session.feedback_data.name|default:'' }}">
                 {% if request.session.feedback_errors.name %}
                     <div class="error-message" style="color: #ff6b6b; font-size: 0.8rem; margin-top: 5px;">
@@ -322,7 +322,7 @@
             
             <!-- Rating field -->
             <div class="form-group">
-                <label class="form-label">Your Rating</label>
+                <label class="form-label">您的评分</label>
                 <div class="rating-container">
                     <span class="star" data-rating="1">⭐</span>
                     <span class="star" data-rating="2">⭐</span>
@@ -340,9 +340,9 @@
             
             <!-- Comments field -->
             <div class="form-group">
-                <label for="comments" class="form-label">Your Feedback</label>
+                <label for="comments" class="form-label">您的反馈</label>
                 <textarea id="comments" name="comments" class="form-control" 
-                          placeholder="Please share your thoughts, suggestions, or experience...">{{ request.session.feedback_data.comments|default:'' }}</textarea>
+                          placeholder="请分享您的想法、建议或体验...">{{ request.session.feedback_data.comments|default:'' }}</textarea>
                 {% if request.session.feedback_errors.comments %}
                     <div class="error-message" style="color: #ff6b6b; font-size: 0.8rem; margin-top: 5px;">
                         {{ request.session.feedback_errors.comments }}
@@ -351,7 +351,7 @@
             </div>
             
             <!-- Submit button -->
-            <button type="submit" class="submit-button">Submit Feedback</button>
+            <button type="submit" class="submit-button">提交反馈</button>
         </form>
     </div>
 </div>
