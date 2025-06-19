@@ -444,22 +444,22 @@
     </div>
 
     <div class="main-content">
-        {% if events %}
-            {% for event in events %}
+        {% if events_with_zh %}
+            {% for event_data in events_with_zh %}
                 <div class="content-section">
                     <div class="events-container">
-                        <a href="{% url 'user_interactions:event_detail_zh' slug=event.slug %}" class="event-card">
+                        <a href="{% url 'user_interactions:event_detail_zh' slug=event_data.event.slug %}" class="event-card">
                             <div class="event-image">
-                                {% if event.image %}
-                                    <img src="{{ event.image.url }}" alt="{{ event.title }}">
+                                {% if event_data.event.image %}
+                                    <img src="{{ event_data.event.image.url }}" alt="{{ event_data.title_zh }}">
                                 {% endif %}
                             </div>
                             <div class="event-content">
-                                <h2 class="event-title">{{ event.title }}</h2>
-                                <div class="event-composer">{{ event.composer }}</div>
+                                <h2 class="event-title">{{ event_data.title_zh }}</h2>
+                                <div class="event-composer">{{ event_data.composer_zh }}</div>
                             </div>
                             <div class="event-date-section">
-                                <div class="event-date">{{ event.date_range_display }}</div>
+                                <div class="event-date">{{ event_data.event.date_range_display }}</div>
                             </div>
                         </a>
                     </div>

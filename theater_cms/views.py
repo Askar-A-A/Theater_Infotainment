@@ -280,7 +280,18 @@ def events_view_zh(request):
     """Chinese version of events page"""
     request.session['user_language'] = 'zh'
     events = Event.objects.filter(is_active=True).order_by('sort_order', 'start_datetime')
-    return render(request, 'events_zh.html', {'events': events})
+    
+    # Add Chinese content for each event
+    events_with_zh = []
+    for event in events:
+        event_dict = {
+            'event': event,
+            'title_zh': event.get_title('zh'),
+            'composer_zh': event.get_composer('zh'),
+        }
+        events_with_zh.append(event_dict)
+    
+    return render(request, 'events_zh.html', {'events_with_zh': events_with_zh})
 
 def event_detail_zh(request, slug):
     """Chinese version of event detail page"""
@@ -291,11 +302,22 @@ def event_detail_zh(request, slug):
     upcoming_performances = event.performances.filter(start_time__gt=now).order_by('start_time')
     performance_dates = event.performances.dates('start_time', 'day')
     
-    return render(request, 'event_detail_zh.html', {
+    # Pre-process Chinese content
+    context = {
         'event': event,
         'upcoming_performances': upcoming_performances,
         'performance_dates': performance_dates,
-    })
+        'event_title_zh': event.get_title('zh'),
+        'event_composer_zh': event.get_composer('zh'),
+        'event_about_zh': event.get_about_content('zh'),
+        'event_language_zh': event.get_language('zh'),
+        'event_conductor_zh': event.get_conductor('zh'),
+        'event_director_zh': event.get_director('zh'),
+        'event_cast_zh': event.get_cast_content('zh'),
+        'event_duration_zh': event.get_duration('zh'),
+    }
+    
+    return render(request, 'event_detail_zh.html', context)
 
 def feedback_view_zh(request):
     """Chinese version of feedback page"""
@@ -353,3 +375,12 @@ def qa_view(request):
     """English version of Q&A page"""
     request.session['user_language'] = 'en'
     return render(request, 'q&a.html')
+
+def current_event_zh(request):
+    """Redirect to the current event's Chinese detail page"""
+    event = determine_current_event()
+    if event:
+        return redirect('user_interactions:event_detail_zh', slug=event.slug)
+    else:
+        # If no events found, redirect to Chinese events list
+        return redirect('/events_zh/')

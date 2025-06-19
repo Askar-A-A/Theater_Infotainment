@@ -157,24 +157,41 @@ class EventSponsorImageInline(admin.TabularInline):
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
-    list_display = ('title', 'composer', 'date_range_display', 'performance_count', 'is_active', 'schedule_button')
+    list_display = ('title', 'title_zh_short', 'composer', 'date_range_display', 'performance_count', 'is_active', 'schedule_button')
     prepopulated_fields = {'slug': ('title',)}
     list_filter = ('is_active',)
-    search_fields = ('title', 'composer')
+    search_fields = ('title', 'composer', 'title_zh', 'composer_zh')
     fieldsets = (
-        (None, {
+        ('Basic Information', {
             'fields': ('title', 'slug', 'composer', 'image', 'is_active', 'sort_order')
         }),
+        ('Chinese Translation', {
+            'fields': ('title_zh', 'composer_zh'),
+            'classes': ('collapse',),
+            'description': 'Chinese translations for basic information'
+        }),
         ('Duration Information', {
-            'fields': ('standard_duration', 'duration'),
+            'fields': ('standard_duration', 'duration', 'duration_zh'),
             'description': 'Standard duration is used to automatically calculate end times when scheduling performances.'
         }),
-        ('Content Details', {
+        ('Content Details (English)', {
             'fields': ('about_content', 'language', 'conductor', 'director', 'cast_content', 'additional_details'),
             'classes': ('collapse',),
         }),
+        ('Content Details (Chinese)', {
+            'fields': ('about_content_zh', 'language_zh', 'conductor_zh', 'director_zh', 'cast_content_zh'),
+            'classes': ('collapse',),
+            'description': 'Chinese translations for detailed content'
+        }),
     )
     inlines = [PerformanceInline, EventSponsorImageInline]
+    
+    def title_zh_short(self, obj):
+        """Show shortened Chinese title in list view"""
+        if obj.title_zh:
+            return obj.title_zh[:30] + "..." if len(obj.title_zh) > 30 else obj.title_zh
+        return "-"
+    title_zh_short.short_description = 'Chinese Title'
     
     # Add a field for the help text above the inline
     def change_view(self, request, object_id, form_url='', extra_context=None):

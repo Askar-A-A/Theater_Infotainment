@@ -117,34 +117,84 @@ class QAItemPlugin(CMSPlugin):
     
 
 class Event(models.Model):
-    title = models.CharField("Title", max_length=200)
-    slug = models.SlugField(unique=True, blank=True)
-    composer = models.CharField("Composer", max_length=200)
-    image = models.ImageField("Event Image", upload_to='events/', blank=True, null=True)  
+    title = models.CharField(max_length=200)
+    slug = models.SlugField(unique=True)
+    composer = models.CharField(max_length=100, blank=True)
+    about_content = models.TextField(blank=True)
+    language = models.CharField(max_length=100, blank=True)
+    conductor = models.CharField(max_length=100, blank=True)
+    director = models.CharField(max_length=100, blank=True)
+    cast_content = models.TextField(blank=True)
+    duration = models.CharField(max_length=50, blank=True)
     
-    # These will be calculated automatically based on performances
-    start_datetime = models.DateTimeField("First Performance", blank=True, null=True, editable=False)
-    end_datetime = models.DateTimeField("Last Performance", blank=True, null=True, editable=False)
-    date_range_display = models.CharField("Date Range", max_length=200, blank=True, editable=False)
-
-    # Standard show duration (for scheduling help)
-    standard_duration = models.DurationField(
-        "Standard Duration",
-        blank=True, null=True,
-        help_text="Standard duration of a performance (e.g., '02:30:00' for 2.5 hours)"
-    )
-
-    about_content = models.TextField("About", blank=True)
-    duration = models.CharField("Duration Display Text", max_length=200, blank=True)
-    language = models.CharField("Language", max_length=200, blank=True)
-    conductor = models.CharField("Conductor", max_length=200, blank=True)
-    director = models.CharField("Director", max_length=200, blank=True)
-    cast_content = models.TextField("Cast", blank=True)
-    additional_details = models.TextField("Additional Details", blank=True)
-
-    is_active = models.BooleanField("Active", default=True)
-    sort_order = models.IntegerField("Sort Order", default=0)
-
+    # Chinese translation fields (new)
+    title_zh = models.CharField(max_length=200, blank=True, verbose_name="Title (Chinese)", 
+                               help_text="Chinese translation of the event title")
+    composer_zh = models.CharField(max_length=100, blank=True, verbose_name="Composer (Chinese)",
+                                  help_text="Chinese translation of composer name")
+    about_content_zh = models.TextField(blank=True, verbose_name="About Content (Chinese)",
+                                       help_text="Chinese translation of the about content")
+    language_zh = models.CharField(max_length=100, blank=True, verbose_name="Language (Chinese)",
+                                  help_text="e.g., '意大利语配中文字幕'")
+    conductor_zh = models.CharField(max_length=100, blank=True, verbose_name="Conductor (Chinese)",
+                                   help_text="Chinese translation of conductor name")
+    director_zh = models.CharField(max_length=100, blank=True, verbose_name="Director (Chinese)",
+                                  help_text="Chinese translation of director name")
+    cast_content_zh = models.TextField(blank=True, verbose_name="Cast Content (Chinese)",
+                                      help_text="Chinese translation of cast information")
+    duration_zh = models.CharField(max_length=50, blank=True, verbose_name="Duration (Chinese)",
+                                  help_text="e.g., '约3小时（含休息时间）'")
+    
+    image = models.ImageField(upload_to='events/', blank=True, null=True)
+    is_active = models.BooleanField(default=True)
+    sort_order = models.IntegerField(default=0)
+    standard_duration = models.DurationField(blank=True, null=True)
+    additional_details = models.TextField(blank=True)
+    start_datetime = models.DateTimeField(blank=True, null=True)
+    end_datetime = models.DateTimeField(blank=True, null=True)
+    date_range_display = models.CharField(max_length=200, blank=True)
+    
+    # Helper methods for language-aware content
+    def get_title(self, language='en'):
+        if language == 'zh' and self.title_zh:
+            return self.title_zh
+        return self.title
+    
+    def get_composer(self, language='en'):
+        if language == 'zh' and self.composer_zh:
+            return self.composer_zh
+        return self.composer
+    
+    def get_about_content(self, language='en'):
+        if language == 'zh' and self.about_content_zh:
+            return self.about_content_zh
+        return self.about_content
+    
+    def get_language(self, language='en'):
+        if language == 'zh' and self.language_zh:
+            return self.language_zh
+        return self.language
+    
+    def get_conductor(self, language='en'):
+        if language == 'zh' and self.conductor_zh:
+            return self.conductor_zh
+        return self.conductor
+    
+    def get_director(self, language='en'):
+        if language == 'zh' and self.director_zh:
+            return self.director_zh
+        return self.director
+    
+    def get_cast_content(self, language='en'):
+        if language == 'zh' and self.cast_content_zh:
+            return self.cast_content_zh
+        return self.cast_content
+    
+    def get_duration(self, language='en'):
+        if language == 'zh' and self.duration_zh:
+            return self.duration_zh
+        return self.duration
+    
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title)

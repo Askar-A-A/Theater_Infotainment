@@ -284,7 +284,7 @@
         <!-- Menu Items - Now including Today's Performance as first item -->
         <div class="menu-grid">
             <!-- Today's Performance as a menu item -->
-            <a href="{% url 'user_interactions:current_event' %}" class="menu-item today-performance" style="text-decoration: none;">
+            <a href="{% url 'user_interactions:current_event_zh' %}" class="menu-item today-performance" style="text-decoration: none;">
                 {% if current_event and current_event.image %}
                     <div class="today-event-image">
                         <img src="{{ current_event.image.url }}" alt="{{ current_event.title }}">

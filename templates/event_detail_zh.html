@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block title %}
-    {% placeholder "event_detail_title" or %}萨洛美 - {% placeholder "theater_name" or %}歌剧院{% endplaceholder %}{% endplaceholder %}
+    {% placeholder "event_detail_title" or %}{{ event_title_zh }} - {% placeholder "theater_name" or %}歌剧院{% endplaceholder %}{% endplaceholder %}
 {% endblock %}
 
 {% block wrapper_style %}
@@ -386,10 +386,10 @@
     <div class="event-header">
         <div class="event-title-section">
             <h1 class="event-title">
-                {{ event.title }}
+                {{ event_title_zh }}
             </h1>
             <div class="event-composer">
-                {{ event.composer }}
+                {{ event_composer_zh }}
             </div>
             <div class="event-dates">
                 {{ event.date_range_display }}
@@ -398,7 +398,7 @@
         <div class="event-image-section">
             <div class="event-image-container">
                 {% if event.image %}
-                    <img src="{{ event.image.url }}" alt="{{ event.title }}">
+                    <img src="{{ event.image.url }}" alt="{{ event_title_zh }}">
                 {% endif %}
             </div>
         </div>
@@ -409,7 +409,7 @@
         <div class="event-description-section">
             <h2>关于演出</h2>
             <div class="event-description">
-                {{ event.about_content|safe }}
+                {{ event_about_zh|safe }}
                 
                 {% placeholder "event_additional_description" or %}{% endplaceholder %}
             </div>
@@ -419,42 +419,42 @@
         
         <div class="event-sidebar">
             <div class="event-info-item">
-                <div class="info-label">时长</div>
-                <div class="info-value">{{ event.duration }}</div>
+                <div class="info-label">演出时长</div>
+                <div class="info-value">{{ event_duration_zh|default:"约3小时（含休息时间）" }}</div>
             </div>
             
             <div class="event-info-item">
-                <div class="info-label">语言</div>
-                <div class="info-value">{{ event.language }}</div>
+                <div class="info-label">演出语言</div>
+                <div class="info-value">{{ event_language_zh|default:"原语言演出，配中文字幕" }}</div>
             </div>
             
             <div class="event-info-item">
                 <div class="info-label">指挥</div>
-                <div class="info-value">{{ event.conductor }}</div>
+                <div class="info-value">{{ event_conductor_zh|default:"待公布" }}</div>
             </div>
             
             <div class="event-info-item">
                 <div class="info-label">导演</div>
-                <div class="info-value">{{ event.director }}</div>
+                <div class="info-value">{{ event_director_zh|default:"待公布" }}</div>
             </div>
             
             <div class="event-info-item">
-                <div class="info-label">演员阵容</div>
+                <div class="info-label">主要演员</div>
                 <div class="cast-content">
-                    {% if event.cast_content %}
-                        {{ event.cast_content|safe }}
+                    {% if event_cast_zh %}
+                        {{ event_cast_zh|safe }}
                     {% else %}
-                        {% for role in cast_roles %}
                         <div class="cast-member">
-                            <div class="character-name">{{ role.character }}</div>
-                            <div class="actor-name">{{ role.actor }}</div>
+                            <div class="character-name">主角</div>
+                            <div class="actor-name">待公布</div>
                         </div>
-                        {% endfor %}
                     {% endif %}
                 </div>
             </div>
             
-            {{ event.additional_details|safe }}
+            {% if event.additional_details %}
+                {{ event.additional_details|safe }}
+            {% endif %}
         </div>
     </div>
 </div>
