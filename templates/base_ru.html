@@ -1,9 +1,9 @@
 {% load cms_tags menu_tags sekizai_tags %}
 {% load static %}
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="ru">
 <head>
-    <title>{% block title %}剧院显示系统{% endblock title %}</title>
+    <title>{% block title %}Театральная Информационная Система{% endblock title %}</title>
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="{% static 'css/font-awesome/all.min.css' %}">
     <!-- Removed Google Fonts reference -->
@@ -23,7 +23,7 @@
             width: 1280px;
             height: 400px; 
             color: #fff;
-            font-family: "Microsoft YaHei", "SimHei", Arial, sans-serif;
+            font-family: "Times New Roman", "Arial", sans-serif;
             line-height: 1.6;
             overflow: hidden;
         }
@@ -125,12 +125,12 @@
         {% block content %}{% endblock content %}
         
         <!-- Back Navigation Icon -->
-        <a href="/home_zh/" class="home-nav">
+        <a href="/home_ru/" class="home-nav">
             <div class="back-icon">
                 &#x2B05;
             </div>
         </a>
-        <a href="/greeting_zh/" class="greetings-nav">
+        <a href="/greeting_ru/" class="greetings-nav">
             <div class="greetings-icon">
                 🏠
             </div>    

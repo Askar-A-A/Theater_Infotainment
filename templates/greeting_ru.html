@@ -2,11 +2,11 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>{% placeholder "greeting_page_title" or %}欢迎 - 歌剧院{% endplaceholder %}</title>
+    <title>{% placeholder "greeting_page_title" or %}Добро пожаловать - Оперный театр{% endplaceholder %}</title>
     <link rel="stylesheet" href="{% static 'css/font-awesome/all.min.css' %}">
     {% render_block "css" %}
     <style>
@@ -24,7 +24,7 @@
             height: 400px; 
             max-height: 100%;
             color: #fff;
-            font-family: "Microsoft YaHei", "SimHei", Arial, sans-serif;
+            font-family: "Times New Roman", "Arial", sans-serif;
             line-height: 1.6;
             overflow: hidden;
         }
@@ -215,7 +215,7 @@
             line-height: 1.5;
             color: #ffffff;
             margin: 0;
-            font-family: "Microsoft YaHei", "SimHei", Arial, sans-serif;
+            font-family: "Times New Roman", "Arial", sans-serif;
             font-weight: 300;
             text-align: left;
         }
@@ -264,7 +264,7 @@
             var languageDropdown = document.getElementById('languageDropdown');
             var selectedLanguageText = document.getElementById('selectedLanguage');
             
-            var activeLanguageName = "中文";
+            var activeLanguageName = "Русский";
             
             if (selectedLanguageText) {
                 selectedLanguageText.textContent = activeLanguageName;
@@ -311,12 +311,12 @@
             <div class="language-selector">
                 <div class="language-dropdown" id="languageDropdown">
                     <div class="language-selected">
-                        <span id="selectedLanguage">中文</span>
+                        <span id="selectedLanguage">Русский</span>
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="language-options">
                         <a href="/" class="language-option" data-lang="English">English</a>
-                        <a href="/greeting_zh/" class="language-option active" data-lang="中文">中文</a>
+                        <a href="/greeting_ru/" class="language-option active" data-lang="Русский">Русский</a>
                     </div>
                 </div>
             </div>
@@ -332,11 +332,11 @@
                     
                     <div class="welcome-titles-container">
                         <h1 class="welcome-title">
-                            {% placeholder "greeting_title" or %}欢迎来到{% endplaceholder %}
+                            {% placeholder "greeting_title" or %}Добро пожаловать в{% endplaceholder %}
                         </h1>
                         
                         <h2 class="welcome-subtitle">
-                            {% placeholder "theater_name" or %}剧院名称{% endplaceholder %}
+                            {% placeholder "theater_name" or %}Название театра{% endplaceholder %}
                         </h2>
                     </div>
                 </div>
@@ -347,9 +347,10 @@
                         <div class="welcome-text">
                             {% placeholder "greeting_text" or %}
                             <p>
-                                在世界上最美丽的歌剧院之一体验非凡的演出。
-                                我们的数字信息娱乐系统提供今日演出、即将举行的活动
-                                以及我们著名机构丰富历史的相关信息。
+                                Откройте для себя исключительные представления в одном из самых 
+                                красивых оперных театров мира. Наша цифровая информационно-развлекательная 
+                                система предоставляет информацию о сегодняшних спектаклях, предстоящих 
+                                мероприятиях и богатой истории нашего знаменитого учреждения.
                             </p>
                             {% endplaceholder %}
                         </div>
@@ -359,7 +360,7 @@
         </div>
         
         <!-- Forward Navigation Icon -->
-        <a href="/sponsors_zh/" class="forward-nav">
+        <a href="/sponsors_ru/" class="forward-nav">
             <div class="forward-icon">
                 &#x27A1;
             </div>

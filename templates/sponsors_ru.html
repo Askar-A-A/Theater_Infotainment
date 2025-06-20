@@ -2,11 +2,11 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>{% placeholder "sponsors_page_title" or %}我们的赞助商 - 歌剧院{% endplaceholder %}</title>
+    <title>{% placeholder "sponsors_page_title" or %}Наши спонсоры - Оперный театр{% endplaceholder %}</title>
     <link rel="stylesheet" href="{% static 'css/font-awesome/all.min.css' %}">
     {% render_block "css" %}
 <style>
@@ -287,15 +287,15 @@
     {% cms_toolbar %}
     <div class="content-wrapper">
         <div class="sponsors-container">
-            <h1 class="sponsors-title">{% placeholder "sponsors_title" or %}我们尊贵的赞助商{% endplaceholder %}</h1>
+            <h1 class="sponsors-title">{% placeholder "sponsors_title" or %}Наши уважаемые спонсоры{% endplaceholder %}</h1>
             
             <div class="divider"></div>
             
             <div class="sponsors-intro">
                 {% placeholder "sponsors_intro" or %}
-                    我们剧院自豪地感谢赞助商的慷慨支持。
-                    他们对艺术的承诺使我们能够延续卓越传统，
-                    并与来自世界各地的观众分享歌剧的魅力。
+                    Наш театр с гордостью благодарит спонсоров за их щедрую поддержку.
+                    Их приверженность искусству позволяет нам продолжать традиции совершенства
+                    и делиться магией оперы с аудиторией со всего мира.
                 {% endplaceholder %}
             </div>
             
@@ -306,7 +306,7 @@
                 <div class="sponsor-box">
                     <div class="sponsor-box-title">
                         <i class="fas fa-calendar-alt"></i>
-                        <span>季度赞助商</span>
+                        <span>Сезонные спонсоры</span>
                     </div>
                     <div class="sponsors-grid">
                         {% for sponsor in seasonal_sponsors %}
@@ -329,7 +329,7 @@
                 <div class="sponsor-box">
                     <div class="sponsor-box-title">
                         <i class="fas fa-theater-masks"></i>
-                        <span>{{ event.title }} 的赞助商</span>
+                        <span>Спонсоры {{ event_title_ru }}</span>
                     </div>
                     <div class="sponsors-grid">
                         {% for sponsor in event_sponsors %}
@@ -349,13 +349,13 @@
             </div>
             
             <!-- Original enter button - hidden via CSS -->
-            <a href="/home_zh/" class="enter-button">
-                {% placeholder "enter_button_text" or %}进入网站{% endplaceholder %}
+            <a href="/home_ru/" class="enter-button">
+                {% placeholder "enter_button_text" or %}Войти на сайт{% endplaceholder %}
             </a>
         </div>
         
         <!-- Forward Navigation Icon -->
-        <a href="/home_zh/" class="forward-nav">
+        <a href="/home_ru/" class="forward-nav">
             <div class="forward-icon">
                 &#x27A1;
             </div>

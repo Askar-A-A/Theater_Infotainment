@@ -1,9 +1,9 @@
-{% extends "base_zh.html" %}
+{% extends "base_ru.html" %}
 {% load cms_tags %}
 {% load static %}
 
 {% block title %}
-    谢谢 - {% placeholder "theater_name" or %}歌剧院{% endplaceholder %}
+    Спасибо - {% placeholder "theater_name" or %}Оперный театр{% endplaceholder %}
 {% endblock %}
 
 {% block wrapper_style %}
@@ -123,13 +123,13 @@
 {% block content %}
 <div class="feedback-container">
     <div class="feedback-content-box">
-        <h1 class="feedback-title">谢谢！</h1>
+        <h1 class="feedback-title">Спасибо!</h1>
         
         <div class="divider"></div>
         
-        <p class="feedback-message">我们非常感谢您的反馈。您的意见帮助我们为每个人改善歌剧体验。</p>
+        <p class="feedback-message">Мы очень благодарны за ваш отзыв. Ваше мнение помогает нам улучшать оперный опыт для всех.</p>
         
-        <a href="/home_zh/" class="home-button">返回主页</a>
+        <a href="/home_ru/" class="home-button">Вернуться на главную</a>
     </div>
 </div>
 {% endblock %}

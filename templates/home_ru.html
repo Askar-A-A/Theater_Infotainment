@@ -1,10 +1,10 @@
-{% extends "base_zh.html" %}
+{% extends "base_ru.html" %}
 {% load cms_tags %}
 {% load static %}
 {% load menu_tags %}
 
 {% block title %}
-    {% placeholder "home_page_title" or %}歌剧院{% endplaceholder %}
+    {% placeholder "home_page_title" or %}Оперный театр{% endplaceholder %}
 {% endblock %}
 
 {% block wrapper_style %}
@@ -266,17 +266,17 @@
 <div class="logo-section">
     <div class="logo-container">
         {% placeholder "theater_logo" or %}
-            <img src="{% static 'images/theater-logo.png' %}" alt="剧院标志" class="theater-logo">
+            <img src="{% static 'images/theater-logo.png' %}" alt="Логотип театра" class="theater-logo">
         {% endplaceholder %}
     </div>
     <h1 class="theater-title">
-        {% placeholder "theater_name" default "歌剧院" %}
+        {% placeholder "theater_name" default "Оперный театр" %}
     </h1>
 </div>
 
 <div class="theater-container" id="theater-container">
     <!-- Scroll Indicators -->
-    <div class="scroll-indicator bottom visible" id="scroll-down">↕<span>滚动</span></div>
+    <div class="scroll-indicator bottom visible" id="scroll-down">↕<span>Прокрутка</span></div>
     
     <!-- Fade overlays for better visual indication -->
     <div class="scroll-fade top" id="fade-top"></div>
@@ -286,50 +286,50 @@
         <!-- Menu Items - Now including Today's Performance as first item -->
         <div class="menu-grid">
             <!-- Today's Performance as a menu item -->
-            <a href="{% url 'user_interactions:current_event_zh' %}" class="menu-item today-performance" style="text-decoration: none;">
+            <a href="{% url 'user_interactions:current_event_ru' %}" class="menu-item today-performance" style="text-decoration: none;">
                 {% if current_event and current_event.image %}
                     <div class="today-event-image">
                         <img src="{{ current_event.image.url }}" alt="{{ current_event.title }}">
                     </div>
                     <div class="menu-title">
-                        {{ current_event.title }}
-                        {% if current_event.composer %}
-                            <span class="event-composer">{{ current_event.composer }}</span>
+                        {{ current_event_title_ru }}
+                        {% if current_event_composer_ru %}
+                            <span class="event-composer">{{ current_event_composer_ru }}</span>
                         {% endif %}
                     </div>
                 {% elif current_event %}
                     <div class="today-fallback">🎭</div>
                     <div class="menu-title">
-                        {{ current_event.title }}
-                        {% if current_event.composer %}
-                            <span class="event-composer">{{ current_event.composer }}</span>
+                        {{ current_event_title_ru }}
+                        {% if current_event_composer_ru %}
+                            <span class="event-composer">{{ current_event_composer_ru }}</span>
                         {% endif %}
                     </div>
                 {% else %}
                     <div class="menu-icon">🎟️</div>
-                    <div class="menu-title">今日演出</div>
+                    <div class="menu-title">Сегодняшний спектакль</div>
                 {% endif %}
             </a>
             
-            <a href="/events_zh/" class="menu-item">
+            <a href="/events_ru/" class="menu-item">
                 <div class="menu-icon">📅</div>
-                <h2 class="menu-title">演出活动</h2>
+                <h2 class="menu-title">Спектакли и события</h2>
             </a>
-            <a href="/about_zh/" class="menu-item">
+            <a href="/about_ru/" class="menu-item">
                 <div class="menu-icon">🎭</div>
-                <h2 class="menu-title">关于我们</h2>
+                <h2 class="menu-title">О нас</h2>
             </a>
-            <a href="/qa_zh/" class="menu-item">
+            <a href="/qa_ru/" class="menu-item">
                 <div class="menu-icon">❓</div>
-                <h2 class="menu-title">问题与答案</h2>
+                <h2 class="menu-title">Вопросы и ответы</h2>
             </a>
-            <a href="/email-subscribe_zh/" class="menu-item">
+            <a href="/email-subscribe_ru/" class="menu-item">
                 <div class="menu-icon">✉️</div>
-                <h2 class="menu-title">订阅邮件</h2>
+                <h2 class="menu-title">Подписка на рассылку</h2>
             </a>
-            <a href="/feedback_zh/" class="menu-item">
+            <a href="/feedback_ru/" class="menu-item">
                 <div class="menu-icon">💬</div>
-                <h2 class="menu-title">留下您的反馈</h2>
+                <h2 class="menu-title">Оставить отзыв</h2>
             </a>
         </div>
     </div>

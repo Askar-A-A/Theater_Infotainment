@@ -162,18 +162,18 @@ CMS_TEMPLATES = [
     ('feedback_thank_you.html', 'Feedback Thank You Template'),
     ('email_subscribe.html', 'Email Subscribe Template'),
     
-    # Chinese templates (all with _zh suffix)
-    ('greeting_zh.html', 'Greeting Template (Chinese)'),
-    ('base_zh.html', 'Base Template (Chinese)'),
-    ('home_zh.html', 'Home Template (Chinese)'),
-    ('about_zh.html', 'About Us Template (Chinese)'),
-    ('events_zh.html', 'Events Template (Chinese)'),
-    ('event_detail_zh.html', 'Event Detail Template (Chinese)'),
-    ('q&a_zh.html', 'Questions and Answers Template (Chinese)'),
-    ('sponsors_zh.html', 'Sponsors Template (Chinese)'),
-    ('feedback_zh.html', 'Feedback Template (Chinese)'),
-    ('feedback_thank_you_zh.html', 'Feedback Thank You Template (Chinese)'),
-    ('email_subscribe_zh.html', 'Email Subscribe Template (Chinese)'),
+    # Russian templates (all with _ru suffix)
+    ('greeting_ru.html', 'Greeting Template (Russian)'),
+    ('base_ru.html', 'Base Template (Russian)'),
+    ('home_ru.html', 'Home Template (Russian)'),
+    ('about_ru.html', 'About Us Template (Russian)'),
+    ('events_ru.html', 'Events Template (Russian)'),
+    ('event_detail_ru.html', 'Event Detail Template (Russian)'),
+    ('q&a_ru.html', 'Questions and Answers Template (Russian)'),
+    ('sponsors_ru.html', 'Sponsors Template (Russian)'),
+    ('feedback_ru.html', 'Feedback Template (Russian)'),
+    ('feedback_thank_you_ru.html', 'Feedback Thank You Template (Russian)'),
+    ('email_subscribe_ru.html', 'Email Subscribe Template (Russian)'),
 ]
 
 SITE_ID = 1

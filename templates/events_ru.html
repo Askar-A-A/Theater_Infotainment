@@ -1,9 +1,9 @@
-{% extends "base_zh.html" %}
+{% extends "base_ru.html" %}
 {% load cms_tags %}
 {% load static %}
 
 {% block title %}
-    演出与剧目 - {% placeholder "theater_name" or %}剧院名称{% endplaceholder %}
+    Спектакли и программы - {% placeholder "theater_name" or %}Название театра{% endplaceholder %}
 {% endblock %}
 
 {% block wrapper_style %}
@@ -318,7 +318,7 @@
 {% block content %}
 <div class="theater-container" id="theater-container">
     <!-- Only bottom indicator -->
-    <div class="scroll-indicator bottom visible" id="scroll-down">↕<span>滚动</span></div>
+    <div class="scroll-indicator bottom visible" id="scroll-down">↕<span>Прокрутка</span></div>
     
     <!-- Fade overlays for better visual indication -->
     <div class="scroll-fade top" id="fade-top"></div>
@@ -326,24 +326,24 @@
     
     <div class="page-header">
         <h1 class="page-title">
-            {% placeholder "events_page_title" or %}演出与剧目{% endplaceholder %}
+            {% placeholder "events_page_title" or %}Спектакли и программы{% endplaceholder %}
         </h1>
     </div>
 
     <div class="main-content">
-        {% if events_with_zh %}
-            {% for event_data in events_with_zh %}
+        {% if events_with_ru %}
+            {% for event_data in events_with_ru %}
                 <div class="content-section">
                     <div class="events-container">
-                        <a href="{% url 'user_interactions:event_detail_zh' slug=event_data.event.slug %}" class="event-card">
+                        <a href="{% url 'user_interactions:event_detail_ru' slug=event_data.event.slug %}" class="event-card">
                             <div class="event-image">
                                 {% if event_data.event.image %}
-                                    <img src="{{ event_data.event.image.url }}" alt="{{ event_data.title_zh }}">
+                                    <img src="{{ event_data.event.image.url }}" alt="{{ event_data.title_ru }}">
                                 {% endif %}
                             </div>
                             <div class="event-content">
-                                <h2 class="event-title">{{ event_data.title_zh }}</h2>
-                                <div class="event-composer">{{ event_data.composer_zh }}</div>
+                                <h2 class="event-title">{{ event_data.title_ru }}</h2>
+                                <div class="event-composer">{{ event_data.composer_ru }}</div>
                             </div>
                             <div class="event-date-section">
                                 <div class="event-date">{{ event_data.event.date_range_display }}</div>
@@ -355,23 +355,23 @@
                 <!-- Fallback static content -->
                 <div class="content-section">
                     <div class="events-container">
-                        <a href="/event_aida_zh/" class="event-card">
+                        <a href="/event_aida_ru/" class="event-card">
                             <div class="event-image">
                                 {% placeholder "event_1_image" or %}
-                                    <img src="{% static 'images/events/aida.jpg' %}" alt="阿依达">
+                                    <img src="{% static 'images/events/aida.jpg' %}" alt="Аида">
                                 {% endplaceholder %}
                             </div>
                             <div class="event-content">
                                 <h2 class="event-title">
-                                    {% placeholder "event_1_title" or %}阿依达{% endplaceholder %}
+                                    {% placeholder "event_1_title" or %}Аида{% endplaceholder %}
                                 </h2>
                                 <div class="event-composer">
-                                    {% placeholder "event_1_composer" or %}朱塞佩·威尔第{% endplaceholder %}
+                                    {% placeholder "event_1_composer" or %}Джузеппе Верди{% endplaceholder %}
                                 </div>
                             </div>
                             <div class="event-date-section">
                                 <div class="event-date">
-                                    {% placeholder "event_1_date" or %}2024年1月15日 - 3月20日{% endplaceholder %}
+                                    {% placeholder "event_1_date" or %}15 января - 20 марта 2024{% endplaceholder %}
                                 </div>
                             </div>
                         </a>
@@ -379,26 +379,26 @@
                 </div>
             {% endfor %}
         {% else %}
-            <!-- Default fallback content with Chinese translations -->
+            <!-- Default fallback content with Russian translations -->
             <div class="content-section">
                 <div class="events-container">
-                    <a href="/event_aida_zh/" class="event-card">
+                    <a href="/event_aida_ru/" class="event-card">
                         <div class="event-image">
                             {% placeholder "event_1_image" or %}
-                                <img src="{% static 'images/events/aida.jpg' %}" alt="阿依达">
+                                <img src="{% static 'images/events/aida.jpg' %}" alt="Аида">
                             {% endplaceholder %}
                         </div>
                         <div class="event-content">
                             <h2 class="event-title">
-                                {% placeholder "event_1_title" or %}阿依达{% endplaceholder %}
+                                {% placeholder "event_1_title" or %}Аида{% endplaceholder %}
                             </h2>
                             <div class="event-composer">
-                                {% placeholder "event_1_composer" or %}朱塞佩·威尔第{% endplaceholder %}
+                                {% placeholder "event_1_composer" or %}Джузеппе Верди{% endplaceholder %}
                             </div>
                         </div>
                         <div class="event-date-section">
                             <div class="event-date">
-                                {% placeholder "event_1_date" or %}2024年1月15日 - 3月20日{% endplaceholder %}
+                                {% placeholder "event_1_date" or %}15 января - 20 марта 2024{% endplaceholder %}
                             </div>
                         </div>
                     </a>
