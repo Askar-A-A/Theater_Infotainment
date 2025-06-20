@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import UserFeedback, EmailSubscription, Event, Performance, SeasonalSponsor, EventSponsorImage
+from .models import UserFeedback, EmailSubscription, Event, Performance, SeasonalSponsor, EventSponsorImage, SponsorsPageContent
 from cms.utils import get_current_site
 from django.views.decorators.http import require_POST
 from django.utils import timezone
@@ -205,11 +205,15 @@ def sponsors_page(request):
     event_sponsors = []
     if event:
         event_sponsors = event.sponsor_images.all()
+    
+    # Get sponsors page content
+    sponsors_content = SponsorsPageContent.get_content()
 
     return render(request, 'sponsors.html', {
         'seasonal_sponsors': seasonal_sponsors,
         'event_sponsors': event_sponsors,
         'event': event,
+        'sponsors_content': sponsors_content,
     })
 
 def switch_language(request):
@@ -269,11 +273,15 @@ def sponsors_view_zh(request):
     event_sponsors = []
     if event:
         event_sponsors = event.sponsor_images.all()
+    
+    # Get sponsors page content
+    sponsors_content = SponsorsPageContent.get_content()
 
     return render(request, 'sponsors_zh.html', {
         'seasonal_sponsors': seasonal_sponsors,
         'event_sponsors': event_sponsors,
         'event': event,
+        'sponsors_content': sponsors_content,
     })
 
 def events_view_zh(request):

@@ -289,16 +289,12 @@
 
         
         <div class="sponsors-container">
-            <h1 class="sponsors-title">{% placeholder "sponsors_title" or %}Our Esteemed Sponsors{% endplaceholder %}</h1>
+            <h1 class="sponsors-title">{{ sponsors_content.sponsors_title_en }}</h1>
             
             <div class="divider"></div>
             
             <div class="sponsors-intro">
-                {% placeholder "sponsors_intro" or %}
-                    Our theater is proud to acknowledge the generous support of our sponsors.
-                    Their commitment to the arts enables us to continue our tradition of excellence
-                    and share the magic of opera with audiences from around the world.
-                {% endplaceholder %}
+                {{ sponsors_content.sponsors_intro_en }}
             </div>
             
             <!-- Side-by-side sponsor sections -->

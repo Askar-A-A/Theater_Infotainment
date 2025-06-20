@@ -4,7 +4,7 @@ from django.urls import path, reverse
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.utils.html import format_html
-from .models import Event, Performance, UserFeedback, EmailSubscription, SeasonalSponsor, EventSponsorImage
+from .models import Event, Performance, UserFeedback, EmailSubscription, SeasonalSponsor, EventSponsorImage, SponsorsPageContent
 from django.db import models
 from django.contrib.auth.models import Group, Permission
 from django.db.models import Q
@@ -551,7 +551,66 @@ class PerformanceAdmin(admin.ModelAdmin):
 
 @admin.register(SeasonalSponsor)
 class SeasonalSponsorAdmin(admin.ModelAdmin):
-    list_display = ('name',)  
+    list_display = ('name', 'image')
+    
+    def changeform_view(self, request, object_id=None, form_url='', extra_context=None):
+        extra_context = extra_context or {}
+        
+        # Add a link to edit sponsors page content
+        extra_context['sponsors_content_url'] = reverse('admin:theater_cms_sponsorspagecontent_change', args=[1])
+        extra_context['sponsors_content_exists'] = SponsorsPageContent.objects.filter(pk=1).exists()
+        
+        extra_context['extra_info'] = """
+        <div style="margin: 20px 0; padding: 15px; background-color: #e7f3ff; border-left: 4px solid #2196F3; border-radius: 4px;">
+            <h3 style="margin-top: 0; color: #1976D2;">💡 Sponsors Page Content</h3>
+            <p>To edit the sponsors page title and introduction text for both English and Chinese:</p>
+            <a href="{}" class="button" style="margin-top: 10px;">Edit Sponsors Page Content</a>
+        </div>
+        """.format(reverse('admin:theater_cms_sponsorspagecontent_change', args=[1]))
+        
+        return super().changeform_view(request, object_id, form_url, extra_context)
+
+@admin.register(SponsorsPageContent)
+class SponsorsPageContentAdmin(admin.ModelAdmin):
+    fieldsets = (
+        ('English Content', {
+            'fields': ('sponsors_title_en', 'sponsors_intro_en'),
+            'description': 'Content for the English sponsors page'
+        }),
+        ('Chinese Content', {
+            'fields': ('sponsors_title_zh', 'sponsors_intro_zh'),
+            'description': 'Content for the Chinese sponsors page'
+        }),
+        ('Last Updated', {
+            'fields': ('updated_at',),
+            'classes': ('collapse',)
+        }),
+    )
+    readonly_fields = ('updated_at',)
+    
+    def has_add_permission(self, request):
+        # Only allow one instance
+        return not SponsorsPageContent.objects.exists()
+    
+    def has_delete_permission(self, request, obj=None):
+        # Don't allow deletion
+        return False
+    
+    def get_object(self, request, object_id, from_field=None):
+        # Always ensure we have content
+        return SponsorsPageContent.get_content()
+    
+    def changeform_view(self, request, object_id=None, form_url='', extra_context=None):
+        # Always use object_id=1 to ensure we're editing the singleton
+        if object_id is None:
+            # Create the content if it doesn't exist
+            SponsorsPageContent.get_content()
+            object_id = '1'
+        
+        extra_context = extra_context or {}
+        extra_context['title'] = 'Edit Sponsors Page Content'
+        
+        return super().changeform_view(request, object_id, form_url, extra_context)  
 
 # Register other models
 @admin.register(UserFeedback)

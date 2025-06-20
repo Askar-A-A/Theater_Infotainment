@@ -292,3 +292,60 @@ class EventSponsorImage(models.Model):
 
     def __str__(self):
         return self.name
+
+class SponsorsPageContent(models.Model):
+    """Content for sponsors page that can be managed through admin"""
+    # English content
+    sponsors_title_en = models.CharField(
+        max_length=200, 
+        default="Our Esteemed Sponsors",
+        verbose_name="Sponsors Title (English)",
+        help_text="Main title displayed at the top of the sponsors page"
+    )
+    sponsors_intro_en = models.TextField(
+        default="Our theater is proud to acknowledge the generous support of our sponsors. Their commitment to the arts enables us to continue our tradition of excellence and share the magic of opera with audiences from around the world.",
+        verbose_name="Sponsors Introduction (English)",
+        help_text="Introduction text explaining the theater's relationship with sponsors"
+    )
+    
+    # Chinese content
+    sponsors_title_zh = models.CharField(
+        max_length=200, 
+        default="我们尊贵的赞助商",
+        verbose_name="Sponsors Title (Chinese)",
+        help_text="Main title displayed at the top of the Chinese sponsors page"
+    )
+    sponsors_intro_zh = models.TextField(
+        default="我们剧院自豪地感谢赞助商的慷慨支持。他们对艺术的承诺使我们能够延续卓越传统，并与来自世界各地的观众分享歌剧的魅力。",
+        verbose_name="Sponsors Introduction (Chinese)",
+        help_text="Introduction text for Chinese sponsors page"
+    )
+    
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        verbose_name = "Sponsors Page Content"
+        verbose_name_plural = "Sponsors Page Content"
+    
+    def __str__(self):
+        return "Sponsors Page Content"
+    
+    def save(self, *args, **kwargs):
+        # Ensure only one instance exists
+        if not self.pk and SponsorsPageContent.objects.exists():
+            raise ValueError("Only one SponsorsPageContent instance is allowed")
+        super().save(*args, **kwargs)
+    
+    @classmethod
+    def get_content(cls):
+        """Get or create the content instance"""
+        content, created = cls.objects.get_or_create(
+            pk=1,
+            defaults={
+                'sponsors_title_en': 'Our Esteemed Sponsors',
+                'sponsors_intro_en': 'Our theater is proud to acknowledge the generous support of our sponsors. Their commitment to the arts enables us to continue our tradition of excellence and share the magic of opera with audiences from around the world.',
+                'sponsors_title_zh': '我们尊贵的赞助商',
+                'sponsors_intro_zh': '我们剧院自豪地感谢赞助商的慷慨支持。他们对艺术的承诺使我们能够延续卓越传统，并与来自世界各地的观众分享歌剧的魅力。'
+            }
+        )
+        return content
