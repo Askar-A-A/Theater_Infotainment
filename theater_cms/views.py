@@ -384,3 +384,4 @@ def current_event_zh(request):
     else:
         # If no events found, redirect to Chinese events list
         return redirect('/events_zh/')
+    

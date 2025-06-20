@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{% static 'css/font-awesome/all.min.css' %}">
     {% render_block "css" %}
     <style>
-        /* Reset and base styles - Optimized for 1024x600 */
+        /* Reset and base styles - Optimized for 1280x400 */
         * {
             margin: 0;
             padding: 0;
@@ -20,8 +20,8 @@
         html, body {
             margin: 0;
             padding: 0;
-            width: 1024px;
-            height: 600px; 
+            width: 1280px;
+            height: 400px; 
             max-height: 100%;
             color: #fff;
             font-family: Arial, sans-serif;
@@ -29,48 +29,58 @@
             overflow: hidden;
         }
 
-        /* Content wrapper - Fixed for 1024x600 */
+        /* Content wrapper - Fixed for 1280x400 */
         .content-wrapper {
-            width: 1024px;
-            height: 600px;
+            width: 1280px;
+            height: 400px;
             position: relative;
             background: rgb(59, 57, 57);
             overflow: hidden;
         }
         
-        /* Background elements */
-        .bg-pattern {
-            display: none;
-        }
-        
-        /* Greeting container - Optimized for 1024x600 */
+        /* Greeting container - Optimized for 1280x400 */
         .greeting-container {
             width: 100%;
             height: 100%;
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-align: center;
-            padding: 0 1.5rem 1rem;
-            padding-top: 30px;
+            padding: 0 2rem;
             position: relative;
             z-index: 10;
-            opacity: 1;
         }
         
-        /* Center content using older-compatible approach */
+        /* Main content - horizontal layout for wider screen */
         .greeting-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 95%;
-            margin-left: -47.5%; /* Half of width */
-            margin-top: -25%; /* Approximate vertical centering */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1200px;
+            gap: 40px;
         }
         
-        /* Language selector - simplified to just switch to Chinese */
+        /* Left side - Logo and titles */
+        .greeting-left {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        /* Right side - Welcome text */
+        .greeting-right {
+            flex: 1;
+            padding-left: 20px;
+        }
+        
+        /* Language selector - Fixed for 1280x400 */
         .language-selector {
             position: absolute;
-            top: 0.75rem;
-            left: 1.5rem;
+            top: 10px;
+            left: 20px;
             z-index: 10;
         }
         
@@ -83,11 +93,11 @@
             color: #d4af37;
             background-color: rgba(0, 0, 0, 0.8);
             border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 10px 16px;
-            font-size: 16px;
+            padding: 8px 14px;
+            font-size: 14px;
             cursor: pointer;
             display: block;
-            min-width: 160px;
+            min-width: 140px;
             border-radius: 6px;
             position: relative;
             z-index: 11;
@@ -95,7 +105,7 @@
         }
         
         .language-selected i {
-            margin-left: 10px;
+            margin-left: 8px;
             float: right;
         }
         
@@ -112,12 +122,10 @@
             z-index: 10;
         }
         
-        /* Show options when dropdown is open */
         .language-dropdown.open .language-options {
             display: block;
         }
         
-        /* When dropdown is open, adjust the selected button's radius */
         .language-dropdown.open .language-selected {
             border-radius: 6px 6px 0 0;
         }
@@ -125,8 +133,8 @@
         .language-option {
             color: #cccccc;
             text-decoration: none;
-            font-size: 16px;
-            padding: 8px 15px;
+            font-size: 14px;
+            padding: 6px 12px;
             display: block;
             border-bottom: 1px solid #333;
         }
@@ -140,17 +148,16 @@
             background-color: #111;
         }
         
-        /* Logo container - Universal frame for all logo shapes - WebView compatible */
+        /* Logo container - smaller for horizontal layout */
         .opera-logo {
-            width: 220px;
-            height: 180px;
-            margin: 0 auto 1rem;
+            width: 160px;
+            height: 120px;
+            margin: 0 auto 15px;
             position: relative;
             background-color: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            padding: 12px;
+            border-radius: 12px;
+            padding: 10px;
             text-align: center;
-            /* WebView compatible centering using block display */
             display: block;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             border: 2px solid rgba(212, 175, 55, 0.3);
@@ -161,7 +168,6 @@
             max-height: 100%;
             width: auto;
             height: auto;
-            /* WebView compatible centering */
             display: block;
             margin: 0 auto;
             position: relative;
@@ -169,79 +175,56 @@
             transform: translateY(-50%);
         }
         
-        /* Titles container - Fixed for 1024x600 */
+        /* Titles - more compact for 400px height */
         .welcome-titles-container {
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             text-align: center;
         }
         
-        /* Content styling - Fixed for 1024x600 */
         .welcome-title {
             font-family: Georgia, serif;
-            font-size: 3.2rem;
-            margin-top: 0;
-            margin-right: 12px;
-            margin-bottom: 0;
-            line-height: 1.3;
+            font-size: 2.2rem;
+            margin: 0;
+            line-height: 1.2;
             color: #d4af37;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            font-style: normal;
             font-weight: 700;
-            display: inline;
-            vertical-align: top;
         }
         
         .welcome-subtitle {
             font-family: Georgia, serif;
-            font-size: 3.2rem;
-            margin-top: 0;
-            margin-bottom: 0;
-            line-height: 1.3;
+            font-size: 2.2rem;
+            margin: 0;
+            line-height: 1.2;
             color: #d4af37;
-            font-style: normal;
             font-weight: 700;
-            display: inline;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            vertical-align: top;
         }
         
-        /* Divider - removed to save vertical space */
-        .divider {
-            display: none;
-        }
-        
-        /* Welcome text frame - Fixed for 1024x600 */
+        /* Welcome text frame - compact for horizontal layout */
         .welcome-text-frame {
             border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 1.2rem;
-            margin-bottom: 20px;
-            width: 98%;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
+            padding: 20px;
             border-radius: 10px;
             background-color: rgba(0, 0, 0, 0.8);
+            width: 100%;
         }
         
         .welcome-text {
-            font-size: 1.4rem;
-            line-height: 1.6;
+            font-size: 1.1rem;
+            line-height: 1.5;
             color: #ffffff;
-            margin-bottom: 0;
-            max-width: 100%;
+            margin: 0;
             font-family: Arial, sans-serif;
             font-weight: 300;
+            text-align: left;
         }
         
-        .welcome-text p {
-            margin: 0;
-        }
-        
-        /* Navigation buttons - consistent with base template */
+        /* Forward Navigation Icon - adjusted position */
         .forward-nav {
             position: absolute;
             right: 15px;
-            top: 15px;
+            top: 10px;
             z-index: 100;
             text-decoration: none !important;
             color: #ffffff !important;
@@ -256,8 +239,8 @@
         }
 
         .forward-icon {
-            width: 80px;
-            height: 80px;
+            width: 60px;
+            height: 60px;
             background: rgba(0,0,0,0.7);
             border-radius: 50%;
             display: table-cell;
@@ -265,19 +248,14 @@
             text-align: center;
             cursor: pointer;
             transition: background-color 0.3s;
-            font-size: 50px;
+            font-size: 40px;
             font-weight: bold;
-            line-height: 80px;
+            line-height: 60px;
             color: #ffffff;
         }
 
         .forward-icon:hover {
             background: rgba(108, 117, 125, 0.73);
-        }
-
-        /* Enter button - removed to save vertical space */
-        .enter-button {
-            display: none;
         }
     </style>
     {% render_block "js" %}
@@ -337,7 +315,7 @@
     {% cms_toolbar %}
     <div class="content-wrapper">
         <div class="greeting-container">
-            <!-- Language selector - simplified to just switch to Chinese -->
+            <!-- Language selector -->
             <div class="language-selector">
                 <div class="language-dropdown" id="languageDropdown">
                     <div class="language-selected">
@@ -345,47 +323,46 @@
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="language-options">
-                        <a href="/greeting/" class="language-option active" data-lang="English">English</a>
+                        <a href="/" class="language-option active" data-lang="English">English</a>
                         <a href="/greeting_zh/" class="language-option" data-lang="中文">中文</a>
                     </div>
                 </div>
             </div>
             
-            <!-- Content container -->
+            <!-- Main content - horizontal layout -->
             <div class="greeting-content">
-                <!-- Opera logo placeholder -->
-                <div class="opera-logo">
-                    {% placeholder "opera_logo" %}
-                </div>
-                
-                <div class="welcome-titles-container">
-                    <h1 class="welcome-title">
-                        {% placeholder "greeting_title" or %}Welcome to{% endplaceholder %}
-                    </h1>
+                <!-- Left side - Logo and titles -->
+                <div class="greeting-left">
+                    <!-- Opera logo placeholder -->
+                    <div class="opera-logo">
+                        {% placeholder "opera_logo" %}
+                    </div>
                     
-                    <h2 class="welcome-subtitle">
-                        {% placeholder "theater_name" or %}Opera House{% endplaceholder %}
-                    </h2>
-                </div>
-                
-                <div class="divider"></div>
-                
-                <!-- Welcome text frame -->
-                <div class="welcome-text-frame">
-                    <div class="welcome-text">
-                        {% placeholder "greeting_text" or %}
-                        <p>
-                            Experience extraordinary performances at one of the world's most beautiful opera houses.
-                            Our digital infotainment system provides information about today's performances, upcoming events,
-                            and the rich history of our renowned institution.
-                        </p>
-                        {% endplaceholder %}
+                    <div class="welcome-titles-container">
+                        <h1 class="welcome-title">
+                            {% placeholder "greeting_title" or %}Welcome to{% endplaceholder %}
+                        </h1>
+                        
+                        <h2 class="welcome-subtitle">
+                            {% placeholder "theater_name" or %}Opera House{% endplaceholder %}
+                        </h2>
                     </div>
                 </div>
                 
-                <a href="/home/" class="enter-button">
-                    {% placeholder "enter_button_text" or %}Enter{% endplaceholder %}
-                </a>
+                <!-- Right side - Welcome text -->
+                <div class="greeting-right">
+                    <div class="welcome-text-frame">
+                        <div class="welcome-text">
+                            {% placeholder "greeting_text" or %}
+                            <p>
+                                Experience extraordinary performances in one of the world's most beautiful opera houses.
+                                Our digital infotainment system provides information about today's performances, upcoming events,
+                                and the rich history of our renowned institution.
+                            </p>
+                            {% endplaceholder %}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         

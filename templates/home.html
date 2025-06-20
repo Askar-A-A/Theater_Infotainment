@@ -12,21 +12,23 @@
     /* Ensure home page has no scrolling */
     .content-wrapper {
         overflow: hidden;
+        height: 400px;
+        width: 1280px;
     }
 </style>
 {% endblock %}
 
 {% block extra_css %}
 <style>
-    /* Simplified styles for Android 6.0 WebView compatibility */
+    /* Simplified styles for Android 6.0 WebView compatibility - Optimized for 1280x400 */
 
-    /* Logo section styles - Compact for 1024x600 */
+    /* Logo section styles - Compact for 1280x400 */
     .logo-section {
         position: absolute;
         left: 0;
         width: 100%;
-        top: 10px;
-        height: 100px;
+        top: 8px;
+        height: 80px;
         display: block;
         text-align: center;
         z-index: 20;
@@ -39,7 +41,7 @@
     }
 
     .theater-logo {
-        max-height: 70px;
+        max-height: 55px;
         max-width: 100%;
         width: auto;
         height: auto;
@@ -50,18 +52,18 @@
         color: #d4af37;
         text-align: center;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        margin-top: 8px;
-        font-size: 2rem;
+        margin-top: 6px;
+        font-size: 1.6rem;
         font-weight: bold;
         margin-bottom: 0;
     }
 
-    /* Theater container - Compact layout */
+    /* Theater container - Compact layout for 1280x400 */
     .theater-container {
         width: 100%;
-        height: calc(100% - 110px);
-        margin-top: 110px;
-        padding: 10px;
+        height: calc(100% - 90px);
+        margin-top: 90px;
+        padding: 8px;
         overflow-y: auto;
         overflow-x: hidden;
         box-sizing: border-box;
@@ -72,15 +74,15 @@
     .scroll-indicator {
         position: absolute;
         right: 8px;
-        min-width: 120px;
-        height: 56px;
+        min-width: 100px;
+        height: 45px;
         background: #000;
-        border-radius: 28px;
+        border-radius: 22px;
         display: flex;
         align-items: center;
         justify-content: center;
         color: #fff;
-        font-size: 40px;
+        font-size: 32px;
         font-weight: 900;
         z-index: 30;
         transition: opacity 0.3s;
@@ -93,7 +95,7 @@
     }
 
     .scroll-indicator.bottom {
-        bottom: 12px;
+        bottom: 10px;
     }
 
     .scroll-indicator.hidden {
@@ -105,8 +107,8 @@
     }
 
     .scroll-indicator span {
-        margin-left: 14px;
-        font-size: 22px;
+        margin-left: 12px;
+        font-size: 18px;
         font-weight: 700;
         color: #fff;
         letter-spacing: 0.5px;
@@ -116,8 +118,8 @@
     .scroll-fade {
         position: absolute;
         left: 0;
-        right: 75px;
-        height: 25px;
+        right: 65px;
+        height: 20px;
         pointer-events: none;
         z-index: 25;
     }
@@ -135,7 +137,7 @@
     /* Main content - Single column layout */
     .main-content {
         width: 100%;
-        max-width: 750px;
+        max-width: 900px;
         margin: 0 auto;
     }
 
@@ -148,12 +150,12 @@
         background-color: rgba(0, 0, 0, 0.8);
         border: 2px solid rgba(255, 255, 255, 0.3);
         border-radius: 10px;
-        padding: 15px 20px;
-        margin-bottom: 12px;
+        padding: 12px 18px;
+        margin-bottom: 10px;
         cursor: pointer;
         display: table;
         width: 100%;
-        min-height: 50px;
+        min-height: 40px;
         box-sizing: border-box;
         text-decoration: none !important;
     }
@@ -165,9 +167,9 @@
 
     .menu-icon {
         display: table-cell;
-        width: 50px;
+        width: 45px;
         color: #d4af37;
-        font-size: 1.8rem;
+        font-size: 1.5rem;
         vertical-align: middle;
         text-align: center;
     }
@@ -176,33 +178,33 @@
         display: table-cell;
         color: #ffffff;
         margin: 0;
-        font-size: 1.3rem;
+        font-size: 1.1rem;
         font-weight: bold;
         vertical-align: middle;
-        padding-left: 15px;
+        padding-left: 12px;
     }
 
     /* Special styling for today's performance */
     .menu-item.today-performance {
-        min-height: 140px;
-        padding: 20px;
+        min-height: 110px;
+        padding: 15px;
         border: 3px solid #d4af37;
     }
 
     /* Image for today's performance */
     .menu-item.today-performance .today-event-image {
         display: table-cell;
-        width: 160px;
-        height: 120px;
+        width: 140px;
+        height: 100px;
         vertical-align: middle;
         text-align: center;
     }
 
     .menu-item.today-performance .today-event-image img {
-        width: 140px;
-        height: 105px;
+        width: 120px;
+        height: 85px;
         object-fit: contain;
-        border-radius: 10px;
+        border-radius: 8px;
         background-color: rgba(0,0,0,0.1);
     }
 
@@ -211,10 +213,10 @@
         display: table-cell;
         color: #ffffff;
         margin: 0;
-        font-size: 1.8rem;
+        font-size: 1.5rem;
         font-weight: bold;
         vertical-align: middle;
-        padding-left: 20px;
+        padding-left: 15px;
         line-height: 1.2;
     }
 
@@ -222,27 +224,27 @@
     .menu-item.today-performance .event-composer {
         color: rgba(255,255,255,0.8);
         font-style: italic;
-        font-size: 1.3rem;
+        font-size: 1.1rem;
         font-weight: normal;
-        margin-top: 6px;
+        margin-top: 5px;
         display: block;
     }
 
     /* Fallback icons */
     .menu-item.today-performance .today-fallback {
         display: table-cell;
-        width: 160px;
+        width: 140px;
         color: #d4af37;
-        font-size: 4rem;
+        font-size: 3.5rem;
         vertical-align: middle;
         text-align: center;
     }
 
     .menu-item.today-performance .menu-icon {
         display: table-cell;
-        width: 160px;
+        width: 140px;
         color: #d4af37;
-        font-size: 4.5rem;
+        font-size: 4rem;
         vertical-align: middle;
         text-align: center;
     }

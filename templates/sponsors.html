@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{% static 'css/font-awesome/all.min.css' %}">
     {% render_block "css" %}
 <style>
-    /* Reset and base styles - Fixed for 1024x600 */
+    /* Reset and base styles - Optimized for 1280x400 */
     * {
         margin: 0;
         padding: 0;
@@ -20,8 +20,8 @@
     html, body {
         margin: 0;
         padding: 0;
-        width: 1024px;
-        height: 600px; 
+        width: 1280px;
+        height: 400px; 
         max-height: 100%;
         color: #fff;
         font-family: Arial, sans-serif;
@@ -29,32 +29,32 @@
         overflow: hidden;
     }
 
-    /* Content wrapper - Fixed for 1024x600 */
+    /* Content wrapper - Optimized for 1280x400 */
     .content-wrapper {
-        width: 1024px;
-        height: 600px;
+        width: 1280px;
+        height: 400px;
         position: relative;
         background: rgb(59, 57, 57);
         overflow: hidden;
     }
     
-    /* Main container - Fixed for 1024x600 */
+    /* Main container - Optimized for 1280x400 */
     .sponsors-container {
         width: 100%;
         height: 100%;
         position: relative;
-        padding: 10px;
+        padding: 8px;
         text-align: center;
         display: block;
     }
     
-    /* Title area - Fixed for 1024x600 */
+    /* Title area - Optimized for 1280x400 */
     .sponsors-title {
         font-family: Georgia, serif;
-        font-size: 3.2rem;
+        font-size: 2.8rem;
         color: #d4af37;
-        margin-bottom: 0.5rem;
-        margin-top: 0.5rem;
+        margin-bottom: 0.4rem;
+        margin-top: 0.3rem;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     }
     
@@ -63,77 +63,77 @@
         display: none;
     }
     
-    /* Sponsors info - Fixed for 1024x600 */
+    /* Sponsors info - Optimized for 1280x400 */
     .sponsors-intro {
         text-align: center;
         max-width: 99%;
-        margin: 0 auto 0.8rem;
+        margin: 0 auto 0.6rem;
         color: #ffffff;
-        font-size: 1.1rem;
-        line-height: 1.5;
+        font-size: 1rem;
+        line-height: 1.4;
         font-family: Arial, sans-serif;
         font-weight: 300;
         background-color: rgba(0, 0, 0, 0.8);
         border: 2px solid rgba(255, 255, 255, 0.3);
-        border-radius: 10px;
-        padding: 16px 30px;
+        border-radius: 8px;
+        padding: 12px 25px;
         box-sizing: border-box;
     }
     
-    /* Sponsors row layout - Fixed for 1024x600 */
+    /* Sponsors row layout - Optimized for 1280x400 */
     .sponsors-row {
         width: 100%;
-        margin-bottom: 12px;
+        margin-bottom: 10px;
         display: table;
         table-layout: fixed;
     }
     
-    /* Sponsor category boxes - Fixed for 1024x600 */
+    /* Sponsor category boxes - Optimized for 1280x400 */
     .sponsor-box {
         display: table-cell;
         width: 50%;
-        max-width: 450px;
+        max-width: 600px;
         background-color: rgba(0, 0, 0, 0.8);
         border: 2px solid rgba(255, 255, 255, 0.3);
-        border-radius: 10px;
-        padding: 12px;
+        border-radius: 8px;
+        padding: 10px;
         position: relative;
         vertical-align: top;
     }
     
-    /* Add spacing between boxes - Fixed for 1024x600 */
+    /* Add spacing between boxes - Optimized for 1280x400 */
     .sponsor-box:first-child {
-        padding-right: 6px;
+        padding-right: 5px;
     }
     
     .sponsor-box:last-child {
-        padding-left: 6px;
+        padding-left: 5px;
     }
     
-    /* Category headers - Fixed for 1024x600 */
+    /* Category headers - Optimized for 1280x400 */
     .sponsor-box-title {
         position: relative;
         text-align: center;
-        margin-bottom: 10px;
-        padding-bottom: 5px;
+        margin-bottom: 8px;
+        padding-bottom: 4px;
         border-bottom: 1px solid rgba(212, 175, 55, 0.4);
     }
     
     .sponsor-box-title i {
         color: #d4af37;
-        font-size: 1.5rem;
-        margin-right: 0.6rem;
+        font-size: 1.3rem;
+        margin-right: 0.5rem;
         vertical-align: middle;
     }
     
     .sponsor-box-title span {
         color: #d4af37;
-        font-size: 1.5rem;
+        font-size: 1.3rem;
         font-weight: bold;
         vertical-align: middle;
     }
     
-    /* Sponsors grid - Fixed for 1024x600 */
+    /* Sponsors grid - Optimized for 1280x400 */
     .sponsors-grid {
         text-align: center;
         margin: 0 auto;
@@ -142,55 +142,55 @@
     /* Sponsor items - Dynamic sizing based on count */
     .sponsor-item {
         background-color: rgba(255, 255, 255, 0.95);
-        border-radius: 8px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        border-radius: 6px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         transition: transform 0.3s;
         display: inline-block;
-        margin: 5px;
+        margin: 4px;
         position: relative;
         vertical-align: middle;
     }
 
-    /* Default size for multiple sponsors */
+    /* Default size for multiple sponsors - Optimized for 1280x400 */
     .sponsors-grid .sponsor-item {
-        width: 190px;
-        height: 130px;
+        width: 170px;
+        height: 110px;
     }
 
     /* Single sponsor - fills most of the box */
     .sponsors-grid.count-1 .sponsor-item {
-        width: 360px;
-        height: 240px;
-        margin: 10px auto;
+        width: 450px;
+        height: 200px;
+        margin: 8px auto;
         display: block;
     }
 
     /* Two sponsors - narrower for better proportions */
     .sponsors-grid.count-2 .sponsor-item {
-        width: 200px;
-        height: 160px;
-        margin: 8px;
-    }
-
-    /* Three sponsors - slightly larger than default */
-    .sponsors-grid.count-3 .sponsor-item {
-        width: 210px;
+        width: 220px;
         height: 140px;
         margin: 6px;
     }
 
-    /* Four or more sponsors - default size */
+    /* Three sponsors - slightly larger than default */
+    .sponsors-grid.count-3 .sponsor-item {
+        width: 190px;
+        height: 120px;
+        margin: 5px;
+    }
+
+    /* Four or more sponsors - optimized size */
     .sponsors-grid.count-4 .sponsor-item,
     .sponsors-grid.count-5 .sponsor-item,
     .sponsors-grid.count-6 .sponsor-item {
-        width: 190px;
-        height: 130px;
-        margin: 5px;
+        width: 170px;
+        height: 110px;
+        margin: 4px;
     }
     
     .sponsor-item:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
     }
     
     .sponsor-logo {
@@ -199,7 +199,7 @@
         height: 100%;
         max-width: 100%;
         max-height: 100%;
-        padding: 8px;
+        padding: 6px;
     }
     
     /* Enter button - hidden since we're using the arrow button */
@@ -210,8 +210,8 @@
     /* Navigation buttons - consistent with base template */
     .forward-nav {
         position: absolute;
-        right: 15px;
-        top: 15px;
+        right: 12px;
+        top: 12px;
         z-index: 100;
         text-decoration: none !important;
         color: #ffffff !important;
@@ -226,8 +226,8 @@
     }
 
     .forward-icon {
-        width: 80px;
-        height: 80px;
+        width: 65px;
+        height: 65px;
         background: rgba(0,0,0,0.7);
         border-radius: 50%;
         display: table-cell;
@@ -235,9 +235,9 @@
         text-align: center;
         cursor: pointer;
         transition: background-color 0.3s;
-        font-size: 50px;
+        font-size: 40px;
         font-weight: bold;
-        line-height: 80px;
+        line-height: 65px;
         color: #ffffff;
     }
 
@@ -286,8 +286,6 @@
 <body>
     {% cms_toolbar %}
     <div class="content-wrapper">
-
-        
         <div class="sponsors-container">
             <h1 class="sponsors-title">{% placeholder "sponsors_title" or %}Our Esteemed Sponsors{% endplaceholder %}</h1>
             

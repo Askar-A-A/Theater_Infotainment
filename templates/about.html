@@ -8,10 +8,10 @@
 
 {% block wrapper_style %}
 <style>
-    /* Fixed height for 1024x600 resolution */
+    /* Fixed height for 1280x400 resolution */
     .content-wrapper {
-        height: 600px;
-        width: 1024px;
+        height: 400px;
+        width: 1280px;
         overflow: hidden;
     }
 </style>
@@ -26,7 +26,7 @@
         position: relative;
         box-sizing: border-box;
         overflow: hidden;
-        padding: 10px;
+        padding: 8px;
     }
 
     /* Main content area with scrolling */
@@ -39,32 +39,28 @@
         position: relative;
     }
 
-    /* Scroll Indicators */
+    /* Scroll Indicators - smaller for 400px height */
     .scroll-indicator {
         position: absolute;
         right: 8px;
-        min-width: 120px;
-        height: 56px;
+        min-width: 100px;
+        height: 40px;
         background: #000;
-        border-radius: 28px;
+        border-radius: 20px;
         display: flex;
         align-items: center;
         justify-content: center;
         color: #fff;
-        font-size: 40px;
+        font-size: 28px;
         font-weight: 900;
         z-index: 30;
         transition: opacity 0.3s;
         pointer-events: none;
-        box-shadow: none;
-        border: none;
-        cursor: default;
-        user-select: none;
         opacity: 1;
     }
 
     .scroll-indicator.bottom {
-        bottom: 12px;
+        bottom: 10px;
     }
 
     .scroll-indicator.hidden {
@@ -76,8 +72,8 @@
     }
 
     .scroll-indicator span {
-        margin-left: 14px;
-        font-size: 22px;
+        margin-left: 10px;
+        font-size: 16px;
         font-weight: 700;
         color: #fff;
         letter-spacing: 0.5px;
@@ -87,8 +83,8 @@
     .scroll-fade {
         position: absolute;
         left: 0;
-        right: 75px;
-        height: 25px;
+        right: 60px;
+        height: 20px;
         pointer-events: none;
         z-index: 25;
     }
@@ -103,22 +99,23 @@
         background: linear-gradient(to top, rgba(59, 57, 57, 1), rgba(59, 57, 57, 0));
     }
 
-    /* Section styling - simplified */
+    /* Section styling - horizontal layout for 1280x400 */
     .content-section {
         width: 100%;
-        min-height: 580px;
+        min-height: 380px;
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
         justify-content: center;
         position: relative;
         overflow: hidden;
-        margin-bottom: 15px;
-        padding: 15px;
+        margin-bottom: 10px;
+        padding: 10px;
         box-sizing: border-box;
+        gap: 20px;
     }
 
-    /* Background overlay for sections - simplified */
+    /* Background overlay for sections */
     .section-bg {
         position: absolute;
         top: 0;
@@ -131,7 +128,7 @@
         z-index: -1;
     }
 
-    /* Section backgrounds - removed complex animations */
+    /* Section backgrounds */
     .intro-bg {
         background-image: url('{% static "images/theater-interior.jpg" %}');
         background-color: rgba(0, 0, 0, 0.8);
@@ -147,14 +144,14 @@
         background-color: rgba(0, 0, 0, 0.8);
     }
 
-    /* Content box styling */
+    /* Content box styling - wider for horizontal layout */
     .content-box {
         background-color: rgba(0, 0, 0, 0.8);
         border: 3px solid rgba(255, 255, 255, 0.3);
         border-radius: 15px;
-        width: 95%;
-        max-width: 800px;
-        padding: 25px;
+        width: 100%;
+        max-width: 1200px;
+        padding: 20px;
         max-height: 90%;
         display: flex;
         flex-direction: column;
@@ -162,108 +159,68 @@
         overflow-y: auto;
         overflow-x: hidden;
         box-sizing: border-box;
-        /* Enhanced spacing for WebView */
-        margin: 10px;
-        padding-left: 30px;
-        padding-right: 30px;
+        margin: 8px;
     }
     
-    /* Icon styling */
+    /* Icon styling - smaller */
     .section-icon {
         color: #d4af37;
-        font-size: 2.5rem;
-        margin-bottom: 12px;
+        font-size: 2rem;
+        margin-bottom: 8px;
     }
 
-    /* Title styling */
+    /* Title styling - more compact */
     .section-title {
         color: #d4af37;
-        font-size: 2rem;
+        font-size: 1.6rem;
         font-weight: bold;
         text-align: center;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         max-width: 100%;
-        margin-bottom: 20px;
+        margin-bottom: 15px;
         margin-top: 0;
         line-height: 1.2;
     }
 
-    /* Content styling */
+    /* Content styling - more compact */
     .section-content {
         color: #ffffff;
-        line-height: 1.6;
+        line-height: 1.5;
         text-align: center;
         width: 100%;
-        font-size: 1rem;
+        font-size: 0.9rem;
         word-wrap: break-word;
         overflow-wrap: break-word;
     }
 
-    /* Paragraph spacing */
+    /* Paragraph spacing - more compact */
     .section-content p {
-        margin-bottom: 15px;
+        margin-bottom: 10px;
         margin-top: 0;
-        padding-left: 10px;
-        padding-right: 10px;
+        padding-left: 8px;
+        padding-right: 8px;
     }
 
     .section-content p:last-child {
         margin-bottom: 0;
     }
 
-    /* Mobile responsive */
-    @media screen and (max-width: 768px) {
-        .theater-container {
-            padding: 8px;
-        }
-        
-        .content-section {
-            min-height: 500px;
-            padding: 12px;
-        }
-        
-        .content-box {
-            width: 98%;
-            padding: 20px;
-            margin: 5px;
-            padding-left: 25px;
-            padding-right: 25px;
-        }
-        
-        .section-icon {
-            font-size: 2rem;
-        }
-        
-        .section-title {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-        }
-        
-        .section-content {
-            font-size: 0.95rem;
-        }
-        
-        .section-content p {
-            padding-left: 5px;
-            padding-right: 5px;
-            margin-bottom: 12px;
-        }
-    }
-    
-    @media screen and (max-width: 480px) {
+    /* Mobile responsive - adjusted for wider aspect ratio */
+    @media screen and (max-width: 1280px) {
         .theater-container {
             padding: 6px;
         }
         
         .content-section {
-            min-height: 450px;
-            padding: 10px;
+            min-height: 350px;
+            padding: 8px;
+            flex-direction: column;
         }
         
         .content-box {
+            width: 98%;
             padding: 15px;
-            padding-left: 20px;
-            padding-right: 20px;
+            margin: 5px;
         }
         
         .section-icon {
@@ -271,16 +228,18 @@
         }
         
         .section-title {
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             margin-bottom: 12px;
         }
         
         .section-content {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
         
         .section-content p {
-            margin-bottom: 10px;
+            padding-left: 5px;
+            padding-right: 5px;
+            margin-bottom: 8px;
         }
     }
 </style>
@@ -412,18 +371,8 @@
             container.addEventListener('scroll', updateScrollIndicators);
         }
         
-        // Check again after page load (in case content loaded dynamically)
+        // Check again after page load
         setTimeout(updateScrollIndicators, 500);
-        
-        // Simplified JavaScript for WebView compatibility
-        var mainContent = document.querySelector('.main-content');
-        var sections = document.querySelectorAll('.content-section');
-        
-        // Basic functionality only - no complex animations or features
-        if (mainContent && sections.length > 0) {
-            // Simple scroll behavior is handled by CSS
-            // No additional JavaScript required for WebView compatibility
-        }
     });
 </script>
 {% endblock %}

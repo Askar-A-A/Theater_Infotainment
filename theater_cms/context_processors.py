@@ -15,8 +15,8 @@ def user_interaction_session_data(request):
     }
 
 def display_settings(request):
-    """Add fixed display height and width to the template context for 1024x600 resolution."""
+    """Add fixed display height and width to the template context for 1280x400 resolution."""
     return {
-        'display_height': 600,
-        'display_width': 1024,
+        'display_height': 400,
+        'display_width': 1280,
     }

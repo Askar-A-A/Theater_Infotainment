@@ -11,6 +11,8 @@
     /* Disable scrolling for thank you page */
     .content-wrapper {
         overflow: hidden;
+        height: 400px;
+        width: 1280px;
     }
 </style>
 {% endblock %}
@@ -24,14 +26,14 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 20px;
+        padding: 15px;
         box-sizing: border-box;
     }
 
     .feedback-content-box {
         width: 100%;
-        max-width: 600px;
-        padding: 40px 30px;
+        max-width: 700px;
+        padding: 30px 25px;
         background-color: rgba(0, 0, 0, 0.8);
         border: 3px solid #d4af37;
         border-radius: 15px;
@@ -42,42 +44,42 @@
     /* Simplified title styles */
     .feedback-title {
         color: #d4af37;
-        font-size: 2.5rem;
+        font-size: 2rem;
         font-weight: bold;
-        margin-bottom: 20px;
+        margin-bottom: 15px;
         margin-top: 0;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     }
 
     /* Simple divider line */
     .divider {
-        width: 200px;
+        width: 150px;
         height: 2px;
         background-color: #d4af37;
-        margin: 0 auto 25px auto;
+        margin: 0 auto 20px auto;
     }
 
     /* Message text */
     .feedback-message {
         color: #ffffff;
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         line-height: 1.6;
-        margin-bottom: 30px;
+        margin-bottom: 25px;
         margin-top: 0;
     }
     
     /* Simple button styles */
     .home-button {
         display: inline-block;
-        padding: 12px 30px;
-        font-size: 1.1rem;
+        padding: 10px 25px;
+        font-size: 1rem;
         color: #d4af37;
         background-color: transparent;
         border: 2px solid #d4af37;
         border-radius: 8px;
         text-decoration: none;
         font-weight: bold;
-        margin-top: 10px;
+        margin-top: 8px;
     }
 
     .home-button:hover {
@@ -86,51 +88,32 @@
     }
 
     /* Mobile responsive */
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 1280px) {
         .feedback-container {
-            padding: 15px;
+            padding: 12px;
         }
         
         .feedback-content-box {
-            padding: 30px 20px;
-        }
-        
-        .feedback-title {
-            font-size: 2rem;
-            margin-bottom: 15px;
-        }
-        
-        .divider {
-            width: 150px;
-            margin-bottom: 20px;
-        }
-        
-        .feedback-message {
-            font-size: 1.1rem;
-            margin-bottom: 25px;
-        }
-        
-        .home-button {
-            padding: 10px 25px;
-            font-size: 1rem;
-        }
-    }
-
-    @media screen and (max-width: 480px) {
-        .feedback-content-box {
-            padding: 25px 15px;
+            padding: 25px 20px;
         }
         
         .feedback-title {
             font-size: 1.8rem;
+            margin-bottom: 12px;
+        }
+        
+        .divider {
+            width: 120px;
+            margin-bottom: 15px;
         }
         
         .feedback-message {
             font-size: 1rem;
+            margin-bottom: 20px;
         }
         
         .home-button {
-            padding: 10px 20px;
+            padding: 8px 20px;
             font-size: 0.95rem;
         }
     }

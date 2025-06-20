@@ -16,12 +16,12 @@
             box-sizing: border-box;
         }
 
-        /* Fixed 1024x600 configuration */
+        /* Fixed 1280x400 configuration */
         html, body {
             margin: 0;
             padding: 0;
-            width: 1024px;
-            height: 600px; 
+            width: 1280px;
+            height: 400px; 
             color: #fff;
             font-family: "Microsoft YaHei", "SimHei", Arial, sans-serif;
             line-height: 1.6;
@@ -30,19 +30,19 @@
 
         /* Define standard content wrapper */
         .content-wrapper {
-            width: 1024px;
-            height: 600px;
+            width: 1280px;
+            height: 400px;
             position: relative;
             /* COMPATIBILITY: Replaced gradient with dark gray color for better compatibility */
             background:rgb(59, 57, 57);
             overflow: hidden;
         }
 
-        /* Navigation Icons */
+        /* Navigation Icons - adjusted for 1280x400 */
         .home-nav {
             position: absolute;
             right: 15px;
-            top: 15px;
+            top: 10px;
             z-index: 100;
             text-decoration: none !important;
             color: #ffffff !important;
@@ -59,7 +59,7 @@
         .greetings-nav {
             position: absolute;
             left: 15px;
-            top: 15px;
+            top: 10px;
             z-index: 100;
             text-decoration: none !important;
             color: #ffffff !important;
@@ -74,8 +74,8 @@
         }
 
         .back-icon {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             background: rgba(0,0,0,0.7);
             border-radius: 50%;
             display: table-cell;
@@ -83,9 +83,9 @@
             text-align: center;
             cursor: pointer;
             transition: background-color 0.3s;
-            font-size: 42px;
+            font-size: 35px;
             font-weight: bold;
-            line-height: 60px;
+            line-height: 50px;
             color: #ffffff;
         }
 
@@ -94,8 +94,8 @@
         }
 
         .greetings-icon {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             background: rgba(0,0,0,0.7);
             border-radius: 50%;
             /* COMPATIBILITY: Use table-cell layout */
@@ -106,8 +106,8 @@
             /* COMPATIBILITY: Simplified transition */
             transition: background-color 0.3s;
             /* Add font size for emoji */
-            font-size: 2rem;
-            line-height: 60px;
+            font-size: 1.6rem;
+            line-height: 50px;
         }
 
         .greetings-icon:hover {

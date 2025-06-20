@@ -206,7 +206,7 @@ class EventAdmin(admin.ModelAdmin):
         # Add custom CSS for the performances section
         extra_context['extra_style'] = """
         <style>
-            /* Improved performance section */
+            /* Improved performance section - Optimized for 1280x400 displays */
             #performance-section {
                 margin-top: 20px;
                 padding: 15px 20px;
@@ -244,13 +244,14 @@ class EventAdmin(admin.ModelAdmin):
                 background-color: #295a70;
             }
             
-            /* Improve the inline formset appearance */
+            /* Improve the inline formset appearance for wider displays */
             .tabular.inline-related {
                 margin-top: 0;
                 border: 1px solid #e0e0e0;
                 border-radius: 4px;
                 overflow: hidden;
                 background-color: #fff;
+                max-width: 1200px; /* Optimized for wider displays */
             }
             
             /* Remove the rectangular border around "Performances" */
@@ -262,7 +263,7 @@ class EventAdmin(admin.ModelAdmin):
                 border: none !important;
             }
             
-            /* Make the inline headers more pleasant */
+            /* Make the inline headers more pleasant for wider screens */
             .tabular.inline-related .module h3 {
                 background-color: #f1f1f1;
                 padding: 10px 15px;
@@ -271,25 +272,28 @@ class EventAdmin(admin.ModelAdmin):
                 font-size: 14px;
             }
             
-            /* Better styling for the form rows */
+            /* Better styling for the form rows on wider displays */
             .tabular.inline-related .form-row {
                 padding: 12px 10px;
                 border-bottom: 1px solid #f0f0f0;
+                display: flex;
+                align-items: center;
+                gap: 20px; /* Better spacing for wider screens */
             }
             
             .tabular.inline-related .form-row:last-child {
                 border-bottom: none;
             }
             
-            /* Improve field styling */
+            /* Improve field styling for wider displays */
             .performance-field {
                 display: inline-block;
-                margin-right: 15px;
+                margin-right: 20px; /* Increased spacing for wider displays */
             }
             
-            /* Make the notes field bigger */
+            /* Make the notes field bigger for wider displays */
             .field-notes input {
-                width: 300px !important;
+                width: 400px !important; /* Increased from 300px */
             }
             
             /* Fix spacing for the add another row */
@@ -298,10 +302,32 @@ class EventAdmin(admin.ModelAdmin):
                 background-color: #f8f8f8 !important;
             }
             
-            /* Table headers for the performances */
+            /* Table headers for the performances - optimized for wider displays */
             .tabular.inline-related .module thead th {
                 background-color: #eaeaea;
-                padding: 8px 15px;
+                padding: 8px 20px; /* Increased horizontal padding */
+                min-width: 120px; /* Ensure adequate column width */
+            }
+            
+            /* Better form layout for bulk scheduling on wider displays */
+            .bulk-schedule-form {
+                max-width: 1000px;
+                margin: 0 auto;
+            }
+            
+            .bulk-schedule-form .form-row {
+                display: grid;
+                grid-template-columns: 200px 1fr;
+                gap: 20px;
+                align-items: center;
+                margin-bottom: 15px;
+            }
+            
+            @media (min-width: 1280px) {
+                .bulk-schedule-form .form-row {
+                    grid-template-columns: 250px 1fr;
+                    gap: 30px;
+                }
             }
         </style>
         """

@@ -8,11 +8,11 @@
 
 {% block extra_css %}
 <style>
-    /* Container styles - Fixed for 1024x600 */
+    /* Container styles - Optimized for 1280x400 */
     .qa-container {
         width: 100%;
-        height: 600px;
-        padding-bottom: 40px;
+        height: 400px;
+        padding-bottom: 30px;
         position: relative;
         overflow-y: auto;
     }
@@ -21,15 +21,15 @@
     .scroll-indicator {
         position: absolute;
         right: 8px;
-        min-width: 120px;
-        height: 56px;
+        min-width: 100px;
+        height: 45px;
         background: #000;
-        border-radius: 28px;
+        border-radius: 22px;
         display: flex;
         align-items: center;
         justify-content: center;
         color: #fff;
-        font-size: 40px;
+        font-size: 32px;
         font-weight: 900;
         z-index: 30;
         transition: opacity 0.3s;
@@ -42,7 +42,7 @@
     }
 
     .scroll-indicator.bottom {
-        bottom: 12px;
+        bottom: 10px;
     }
 
     .scroll-indicator.hidden {
@@ -54,8 +54,8 @@
     }
 
     .scroll-indicator span {
-        margin-left: 14px;
-        font-size: 22px;
+        margin-left: 12px;
+        font-size: 18px;
         font-weight: 700;
         color: #fff;
         letter-spacing: 0.5px;
@@ -65,8 +65,8 @@
     .scroll-fade {
         position: absolute;
         left: 0;
-        right: 75px;
-        height: 25px;
+        right: 65px;
+        height: 20px;
         pointer-events: none;
         z-index: 25;
     }
@@ -81,37 +81,37 @@
         background: linear-gradient(to top, rgba(59, 57, 57, 1), rgba(59, 57, 57, 0));
     }
 
-    /* Page title - Fixed for 1024x600 */
+    /* Page title - Optimized for 1280x400 */
     .page-title {
         color: #d4af37;
         font-family: 'Playfair Display', serif;
         text-align: center;
-        font-size: 38px;
-        margin-bottom: 30px;
-        padding: 35px 0 0 0;
+        font-size: 32px;
+        margin-bottom: 20px;
+        padding: 25px 0 0 0;
     }
 
-    /* QA list container - Fixed for 1024x600 */
+    /* QA list container - Optimized for 1280x400 */
     .qa-list {
-        max-width: 1000px;
+        max-width: 1200px;
         margin: 0 auto;
-        padding: 15px 20px;
+        padding: 12px 18px;
         overflow-y: visible;
     }
 
-    /* Q&A item styling - Fixed for 1024x600 */
+    /* Q&A item styling - Optimized for 1280x400 */
     .qa-item {
         background: rgba(0,0,0,0.7);
         border: 1px solid rgba(255,255,255,0.1);
-        border-radius: 10px;
-        margin-bottom: 16px;
+        border-radius: 8px;
+        margin-bottom: 12px;
         overflow: hidden;
     }
 
-    /* Question styling - Fixed for 1024x600 */
+    /* Question styling - Optimized for 1280x400 */
     .question {
-        padding: 16px 18px;
-        font-size: 22px;
+        padding: 12px 15px;
+        font-size: 18px;
         cursor: pointer;
         display: table;
         width: 100%;
@@ -123,7 +123,7 @@
     .question span {
         display: table-cell;
         width: 95%;
-        padding-right: 20px;
+        padding-right: 15px;
     }
 
     .question i {
@@ -138,13 +138,13 @@
         transform: rotate(180deg);
     }
 
-    /* Answer styling - Fixed for 1024x600 */
+    /* Answer styling - Optimized for 1280x400 */
     .answer {
         height: 0;
         overflow: hidden;
         padding: 0;
         color: #fff;
-        line-height: 1.6;
+        line-height: 1.5;
         box-sizing: border-box;
         text-align: left;
         visibility: hidden;
@@ -153,9 +153,9 @@
     .answer.active {
         height: auto;
         visibility: visible;
-        padding: 16px 18px;
-        font-size: 18px;
-        line-height: 1.6;
+        padding: 12px 15px;
+        font-size: 15px;
+        line-height: 1.5;
     }
 
     .answer a {
@@ -167,25 +167,25 @@
         text-decoration: underline;
     }
     
-    /* Responsive adjustments for smaller screens */
-    @media screen and (max-width: 768px) {
+    /* Responsive adjustments for smaller content */
+    @media screen and (max-width: 1280px) {
         .page-title {
-            font-size: 28px;
-            padding: 25px 0 0 0;
+            font-size: 24px;
+            padding: 20px 0 0 0;
         }
         
         .qa-list {
-            padding: 9px 18px;
+            padding: 8px 15px;
         }
         
         .question {
-            padding: 12px;
-            font-size: 20px;
+            padding: 10px 12px;
+            font-size: 16px;
         }
         
         .answer.active {
-            padding: 12px;
-            font-size: 17px;
+            padding: 10px 12px;
+            font-size: 14px;
         }
     }
 </style>
@@ -196,6 +196,8 @@
     /* Override base template styles to ensure proper scrolling */
     .content-wrapper {
         overflow: hidden;
+        height: 400px;
+        width: 1280px;
     }
 </style>
 {% endblock %}
@@ -362,7 +364,7 @@ addLoadEvent(function() {
                 answer.classList.add('active');
                 answer.style.visibility = 'visible';
                 answer.style.height = 'auto';
-                answer.style.padding = '16px 18px';
+                answer.style.padding = '12px 15px';
             } else {
                 answer.classList.remove('active');
                 answer.style.height = '0';

@@ -8,10 +8,10 @@
 
 {% block wrapper_style %}
 <style>
-    /* Fixed height for 1024x600 resolution */
+    /* Fixed height for 1280x400 resolution */
     .content-wrapper {
-        height: 600px;
-        width: 1024px;
+        height: 400px;
+        width: 1280px;
         overflow: hidden;
     }
 </style>
@@ -26,15 +26,15 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 10px;
+        padding: 8px;
         box-sizing: border-box;
         overflow-y: auto;
     }
 
     .subscribe-content-box {
         width: 100%;
-        max-width: 650px;
-        padding: 20px;
+        max-width: 800px;
+        padding: 18px;
         background-color: rgba(0, 0, 0, 0.8);
         border: 3px solid #d4af37;
         border-radius: 15px;
@@ -45,54 +45,64 @@
     /* Compact title styles */
     .subscribe-title {
         color: #d4af37;
-        font-size: 1.8rem;
+        font-size: 1.5rem;
         font-weight: bold;
-        margin-bottom: 8px;
+        margin-bottom: 6px;
         margin-top: 0;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     }
 
     /* Simple divider line */
     .divider {
-        width: 120px;
+        width: 100px;
         height: 2px;
         background-color: #d4af37;
-        margin: 0 auto 12px auto;
+        margin: 0 auto 10px auto;
     }
 
     /* Compact intro text */
     .subscribe-intro {
         color: #ffffff;
-        font-size: 0.95rem;
+        font-size: 0.85rem;
         line-height: 1.3;
-        margin-bottom: 15px;
+        margin-bottom: 12px;
         margin-top: 0;
         max-width: 90%;
         margin-left: auto;
         margin-right: auto;
     }
     
-    /* Compact form container */
+    /* Horizontal form layout for wider screen */
     .subscribe-form {
         width: 100%;
-        max-width: 450px;
+        max-width: 650px;
         margin: 0 auto;
         text-align: left;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        align-items: flex-end;
     }
 
     /* Compact form groups */
     .form-group {
-        margin-bottom: 12px;
+        margin-bottom: 8px;
         text-align: left;
+        flex: 1;
+        min-width: 180px;
+    }
+
+    .form-group.full-width {
+        flex: 100%;
     }
 
     /* Compact form labels */
     .form-group label {
         display: block;
         color: #ffffff;
-        font-size: 1rem;
+        font-size: 0.9rem;
         font-weight: bold;
-        margin-bottom: 4px;
+        margin-bottom: 3px;
         text-align: left;
     }
 
@@ -103,10 +113,10 @@
         border: 2px solid rgba(255, 255, 255, 0.3);
         border-radius: 6px;
         color: #ffffff;
-        padding: 8px 10px;
-        font-size: 0.95rem;
+        padding: 6px 8px;
+        font-size: 0.85rem;
         box-sizing: border-box;
-        min-height: 35px;
+        min-height: 30px;
     }
 
     .form-control:focus {
@@ -124,19 +134,20 @@
     .checkbox-container {
         display: flex;
         align-items: flex-start;
-        margin-bottom: 12px;
-        margin-top: 8px;
+        margin-bottom: 8px;
+        margin-top: 6px;
         text-align: left;
+        flex: 100%;
     }
     
     .checkbox-container input[type="checkbox"] {
-        margin-right: 8px;
+        margin-right: 6px;
         margin-top: 2px;
     }
     
     .checkbox-container label {
         color: #ffffff;
-        font-size: 0.9rem;
+        font-size: 0.8rem;
         line-height: 1.3;
         font-weight: normal;
     }
@@ -144,18 +155,19 @@
     /* Compact subscribe button */
     .btn-subscribe {
         display: inline-block;
-        padding: 8px 24px;
-        font-size: 1rem;
+        padding: 6px 20px;
+        font-size: 0.9rem;
         color: #d4af37;
         background-color: transparent;
         border: 2px solid #d4af37;
         border-radius: 6px;
         text-decoration: none;
         font-weight: bold;
-        margin-top: 12px;
+        margin-top: 8px;
         cursor: pointer;
         width: auto;
-        min-width: 150px;
+        min-width: 120px;
+        flex-shrink: 0;
     }
 
     .btn-subscribe:hover {
@@ -166,103 +178,41 @@
     /* Error messages */
     .error-message {
         color: #ff6b6b;
-        font-size: 0.9rem;
-        margin-top: 5px;
+        font-size: 0.8rem;
+        margin-top: 3px;
         text-align: left;
     }
 
     /* Success message */
     .success-message {
         display: none;
-        padding: 15px;
+        padding: 12px;
         background-color: rgba(0, 150, 0, 0.2);
         border: 2px solid rgba(0, 150, 0, 0.5);
         border-radius: 8px;
         color: #ffffff;
-        margin-top: 20px;
+        margin-top: 15px;
         text-align: center;
     }
 
-    /* Mobile responsive - more compact */
-    @media screen and (max-width: 768px) {
+    /* Mobile responsive */
+    @media screen and (max-width: 1280px) {
         .subscribe-container {
-            padding: 8px;
+            padding: 6px;
         }
         
         .subscribe-content-box {
             padding: 15px;
         }
         
-        .subscribe-title {
-            font-size: 1.6rem;
-            margin-bottom: 6px;
-        }
-        
-        .divider {
-            width: 100px;
-            margin-bottom: 10px;
-        }
-        
-        .subscribe-intro {
-            font-size: 0.9rem;
-            margin-bottom: 12px;
+        .subscribe-form {
+            flex-direction: column;
+            gap: 10px;
         }
         
         .form-group {
-            margin-bottom: 10px;
-        }
-        
-        .form-group label {
-            font-size: 0.95rem;
-            margin-bottom: 3px;
-        }
-        
-        .form-control {
-            padding: 6px 8px;
-            font-size: 0.9rem;
-            min-height: 32px;
-        }
-        
-        .checkbox-container {
-            margin-bottom: 10px;
-            margin-top: 6px;
-        }
-        
-        .checkbox-container label {
-            font-size: 0.85rem;
-        }
-        
-        .btn-subscribe {
-            padding: 8px 20px;
-            font-size: 0.95rem;
-            margin-top: 10px;
-        }
-    }
-
-    @media screen and (max-width: 480px) {
-        .subscribe-content-box {
-            padding: 12px;
-        }
-        
-        .subscribe-title {
-            font-size: 1.5rem;
-        }
-        
-        .subscribe-intro {
-            font-size: 0.85rem;
-        }
-        
-        .form-control {
-            padding: 6px;
-        }
-        
-        .checkbox-container label {
-            font-size: 0.8rem;
-        }
-        
-        .btn-subscribe {
-            padding: 8px 18px;
-            font-size: 0.9rem;
+            flex: none;
+            min-width: auto;
         }
     }
 </style>
@@ -308,6 +258,11 @@
                        value="{{ request.session.subscription_data.name|default:'' }}">
             </div>
             
+            <!-- Submit button -->
+            <button type="submit" class="btn-subscribe">
+                {% placeholder "subscribe_button_text" or %}订阅{% endplaceholder %}
+            </button>
+            
             <!-- Checkbox -->
             <div class="checkbox-container">
                 <input type="checkbox" id="preferences" name="preferences" 
@@ -316,11 +271,6 @@
                     我希望接收关于特别活动、首演和独家优惠的信息。
                 </label>
             </div>
-            
-            <!-- Submit button -->
-            <button type="submit" class="btn-subscribe">
-                {% placeholder "subscribe_button_text" or %}订阅{% endplaceholder %}
-            </button>
         </form>
         
         <!-- Success message -->
