@@ -195,6 +195,9 @@ THUMBNAIL_PROCESSORS = (
 
 THUMBNAIL_HIGH_RESOLUTION = True
 
+# Authentication settings - redirect after logout to greeting page
+LOGOUT_REDIRECT_URL = '/'
+
 CMS_PLACEHOLDER_CONF = {
     'theater_logo': {
         'name': 'Theater Logo',
