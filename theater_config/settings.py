@@ -228,4 +228,10 @@ CMS_PLACEHOLDER_CONF = {
         'plugins': ['TextPlugin'],
         'default_plugins': [],
     },
-} 
+}
+
+# Hide CMS toolbar for anonymous users
+CMS_TOOLBAR_ANONYMOUS_ON = False
+
+# Only show toolbar to staff users
+CMS_TOOLBAR_HIDE = False 
