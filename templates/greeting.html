@@ -283,7 +283,7 @@
         /* User status display - matches greeting page styling */
         .user-status-display {
             position: absolute;
-            top: 1rem;
+            top: 120px; /* Moved down below the forward arrow */
             right: 1.5rem;
             z-index: 20;
             max-width: 320px;
@@ -309,7 +309,7 @@
 
         .user-details {
             display: block;
-            margin-bottom: 1rem;
+            margin-bottom: 0; /* Removed bottom margin since no logout button */
         }
 
         .user-field {
@@ -321,6 +321,10 @@
             line-height: 1.4;
         }
 
+        .user-field:last-child {
+            margin-bottom: 0; /* No margin on last field */
+        }
+
         .user-field i {
             color: #d4af37;
             width: 18px;
@@ -330,33 +334,6 @@
 
         .user-field strong {
             color: #cccccc;
-            margin-right: 6px;
-        }
-
-        .elegant-logout-btn {
-            display: block;
-            width: 100%;
-            text-align: center;
-            padding: 8px 16px;
-            background-color: rgba(212, 175, 55, 0.2);
-            border: 1px solid rgba(212, 175, 55, 0.5);
-            border-radius: 6px;
-            color: #d4af37;
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-family: Arial, sans-serif;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .elegant-logout-btn:hover {
-            background-color: rgba(212, 175, 55, 0.3);
-            border-color: #d4af37;
-            color: #ffffff;
-            text-decoration: none;
-        }
-
-        .elegant-logout-btn i {
             margin-right: 6px;
         }
 
