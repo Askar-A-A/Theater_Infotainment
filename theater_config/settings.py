@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'theater_cms.middleware.DisableCOOPMiddleware',
     'cms.middleware.utils.ApphookReloadMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -180,7 +181,7 @@ SITE_ID = 1
 
 CMS_CONFIRM_VERSION4 = True
 
-X_FRAME_OPTIONS = 'SAMEORIGIN'
+X_FRAME_OPTIONS = 'ALLOWALL'
 CMS_PERMISSION = True
 
 # This might be causing the issue if it exists in your settings
