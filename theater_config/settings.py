@@ -182,7 +182,7 @@ SITE_ID = 1
 CMS_CONFIRM_VERSION4 = True
 
 X_FRAME_OPTIONS = 'ALLOWALL'
-CMS_PERMISSION = True
+CMS_PERMISSION = False
 
 # This might be causing the issue if it exists in your settings
 CMS_TEMPLATE_INHERITANCE = False
@@ -225,4 +225,8 @@ CMS_PLACEHOLDER_CONF = {
         'plugins': ['TextPlugin'],
         'default_plugins': [],
     },
-} 
+}
+
+# Also add these settings to prevent authentication redirects
+CMS_TOOLBAR_ANONYMOUS_ON = True
+CMS_TOOLBAR_HIDE = False 
