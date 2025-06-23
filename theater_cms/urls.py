@@ -13,7 +13,6 @@ urlpatterns = [
     path('clear_subscription_messages/', views.clear_subscription_messages, name='clear_subscription_messages'),
     
     # English routes (default)
-    
     # path('home/', views.home_view, name='home'),
     path('sponsors/', views.sponsors_page, name='sponsors_page'),
     path('events/', views.event_list, name='event_list'),
