@@ -166,6 +166,9 @@
         max-width: 100%;
         max-height: 100%;
         padding: 8px;
+        /* Prevent logo stretching - maintain aspect ratio */
+        object-fit: contain;
+        box-sizing: border-box;
     }
     
     /* Enter button - hidden since we're using the arrow button */
