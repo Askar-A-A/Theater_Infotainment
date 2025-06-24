@@ -139,7 +139,7 @@
         margin: 0 auto;
     }
     
-    /* Sponsor items - Dynamic sizing based on count */
+    /* Sponsor items - Fixed size for all sponsors */
     .sponsor-item {
         background-color: rgba(255, 255, 255, 0.95);
         border-radius: 8px;
@@ -149,43 +149,9 @@
         margin: 5px;
         position: relative;
         vertical-align: middle;
-    }
-
-    /* Default size for multiple sponsors */
-    .sponsors-grid .sponsor-item {
+        /* Fixed size for all sponsors - equal treatment */
         width: 190px;
         height: 130px;
-    }
-
-    /* Single sponsor - fills most of the box */
-    .sponsors-grid.count-1 .sponsor-item {
-        width: 360px;
-        height: 240px;
-        margin: 10px auto;
-        display: block;
-    }
-
-    /* Two sponsors - narrower for better proportions */
-    .sponsors-grid.count-2 .sponsor-item {
-        width: 200px;
-        height: 160px;
-        margin: 8px;
-    }
-
-    /* Three sponsors - slightly larger than default */
-    .sponsors-grid.count-3 .sponsor-item {
-        width: 210px;
-        height: 140px;
-        margin: 6px;
-    }
-
-    /* Four or more sponsors - default size */
-    .sponsors-grid.count-4 .sponsor-item,
-    .sponsors-grid.count-5 .sponsor-item,
-    .sponsors-grid.count-6 .sponsor-item {
-        width: 190px;
-        height: 130px;
-        margin: 5px;
     }
     
     .sponsor-item:hover {
@@ -263,22 +229,9 @@
     }
 
     addLoadEvent(function() {
-        // Dynamic sponsor sizing based on count
-        var sponsorGrids = document.getElementsByClassName('sponsors-grid');
-        
-        for (var i = 0; i < sponsorGrids.length; i++) {
-            var grid = sponsorGrids[i];
-            var sponsors = grid.getElementsByClassName('sponsor-item');
-            var count = sponsors.length;
-            
-            // Remove any existing count classes
-            grid.className = grid.className.replace(/\bcount-\d+\b/g, '');
-            
-            // Add count class for styling
-            if (count >= 1 && count <= 6) {
-                grid.className += ' count-' + count;
-            }
-        }
+        // No dynamic sizing needed - all sponsors are same size for equal treatment
+        // This ensures no sponsor appears more prominent than others
+        console.log('赞助商页面已加载 - 所有赞助商显示相同大小以确保平等待遇');
     });
 </script>
 </head>
