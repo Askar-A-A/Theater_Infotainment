@@ -8,17 +8,11 @@
 
 {% block wrapper_style %}
 <style>
-    /* Optimized scrolling for 1280x400 resolution */
+    /* Ensure content wrapper doesn't scroll - let theater-container handle scrolling */
     .content-wrapper {
-        overflow-y: auto !important;
+        overflow: hidden !important;
         height: 400px !important;
         width: 1280px;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-        position: relative;
-    }
-    .content-wrapper::-webkit-scrollbar {
-        display: none;
     }
     
     /* Hide the default navigation icons from base_ru.html to prevent overlap */
@@ -34,7 +28,7 @@
     /* Event detail styles optimized for 1280x400 */
     .theater-container {
         width: 100%;
-        min-height: 600px; /* Make content definitely taller than viewport to trigger scroll */
+        height: 400px; /* Fixed height to match viewport */
         position: relative;
         padding: 15px 20px 80px 20px; /* Added more bottom padding for nav buttons */
         box-sizing: border-box;
@@ -42,24 +36,49 @@
         background: rgb(59, 57, 57);
         color: white;
         font-family: 'Arial', sans-serif;
+        /* Enable scrolling in this container */
+        overflow-y: auto;
+        overflow-x: hidden;
+        /* Hide scrollbars for cleaner look */
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+    
+    .theater-container::-webkit-scrollbar {
+        display: none;
+    }
+    
+    /* Content inside theater-container - let natural content height determine scrollability */
+    .theater-content {
+        padding-bottom: 20px;
     }
 
+    /* Scroll Indicators - Inside the scrollable container */
     .scroll-indicator {
-        position: absolute; /* Changed from fixed to absolute */
-        bottom: 90px; /* Positioned at bottom for user interaction */
-        right: 15px;
-        background-color: rgba(255, 215, 0, 0.8);
-        color: #1a1a2e;
-        padding: 10px 16px;
-        border-radius: 20px;
-        font-size: 14px;
-        font-weight: bold;
-        z-index: 1000;
-        transition: opacity 0.3s ease;
+        position: absolute;
+        right: 8px;
+        min-width: 100px;
+        height: 45px;
+        background: #000;
+        border-radius: 22px;
         display: flex;
         align-items: center;
-        gap: 8px;
-        cursor: pointer;
+        justify-content: center;
+        color: #fff;
+        font-size: 32px;
+        font-weight: 900;
+        z-index: 30;
+        transition: opacity 0.3s;
+        pointer-events: none;
+        box-shadow: none;
+        border: none;
+        cursor: default;
+        user-select: none;
+        opacity: 1;
+    }
+
+    .scroll-indicator.bottom {
+        bottom: 10px;
     }
 
     .scroll-indicator.hidden {
@@ -68,6 +87,34 @@
 
     .scroll-indicator.visible {
         opacity: 1;
+    }
+
+    .scroll-indicator span {
+        margin-left: 12px;
+        font-size: 18px;
+        font-weight: 700;
+        color: #fff;
+        letter-spacing: 0.5px;
+    }
+
+    /* Gradient overlays for better scroll indication - Inside container */
+    .scroll-fade {
+        position: absolute;
+        left: 0;
+        right: 65px;
+        height: 20px;
+        pointer-events: none;
+        z-index: 25;
+    }
+
+    .scroll-fade.top {
+        top: 0;
+        background: linear-gradient(to bottom, rgba(59, 57, 57, 1), rgba(59, 57, 57, 0));
+    }
+
+    .scroll-fade.bottom {
+        bottom: 0;
+        background: linear-gradient(to top, rgba(59, 57, 57, 1), rgba(59, 57, 57, 0));
     }
 
     .event-header {
@@ -167,14 +214,13 @@
         text-align: justify;
     }
 
+    /* Navigation buttons positioned at bottom of content */
     .nav-buttons {
-        position: absolute;
-        bottom: 15px;
-        left: 50%;
-        transform: translateX(-50%);
         display: flex;
+        justify-content: center;
         gap: 15px;
-        z-index: 1000;
+        margin-top: 30px;
+        padding-bottom: 20px;
     }
 
     .nav-button {
@@ -217,10 +263,15 @@
 {% endblock %}
 
 {% block content %}
-<div class="theater-container">
-    <!-- Single scroll indicator at bottom -->
-    <div class="scroll-indicator visible" id="scroll-indicator">↕<span>Прокрутка</span></div>
+<div class="theater-container" id="theater-container">
+    <!-- Scroll Indicators - Match home page -->
+    <div class="scroll-indicator bottom visible" id="scroll-down">↕<span>Прокрутка</span></div>
     
+    <!-- Fade overlays for better visual indication -->
+    <div class="scroll-fade top" id="fade-top"></div>
+    <div class="scroll-fade bottom" id="fade-bottom"></div>
+    
+    <div class="theater-content">
     <!-- Event Header -->
     <div class="event-header">
         <div class="event-title-section">
@@ -293,77 +344,40 @@
             Главная
         </a>
     </div>
+    </div> <!-- Close theater-content -->
 </div>
 
 <script>
-// Enhanced scroll indicators for 1280x400 resolution
-document.addEventListener('DOMContentLoaded', function() {
-    const contentWrapper = document.querySelector('.content-wrapper');
-    const scrollIndicator = document.getElementById('scroll-indicator');
+(function() {
+    // Scroll indicator functionality - Match home page exactly
+    var container = document.getElementById('theater-container');
+    var scrollDown = document.getElementById('scroll-down');
+    var fadeTop = document.getElementById('fade-top');
+    var fadeBottom = document.getElementById('fade-bottom');
     
-    // Debug: Log scroll container info
-    console.log('Content wrapper height:', contentWrapper.clientHeight);
-    console.log('Content scroll height:', contentWrapper.scrollHeight);
-    console.log('Scroll available:', contentWrapper.scrollHeight > contentWrapper.clientHeight);
-    
-    function updateScrollIndicator() {
-        const scrollTop = contentWrapper.scrollTop;
-        const scrollHeight = contentWrapper.scrollHeight;
-        const clientHeight = contentWrapper.clientHeight;
-        const scrollBottom = scrollHeight - scrollTop - clientHeight;
+    function updateScrollIndicators() {
+        var scrollTop = container.scrollTop;
         
-        // Debug logging
-        console.log('ScrollTop:', scrollTop, 'ScrollBottom:', scrollBottom);
-        
-        // Show/hide indicator based on scroll availability and position
-        if (scrollHeight > clientHeight) {
-            if (scrollBottom > 10) {
-                scrollIndicator.classList.remove('hidden');
-                scrollIndicator.classList.add('visible');
-                scrollIndicator.innerHTML = '↕<span>Прокрутить дальше</span>';
-            } else {
-                scrollIndicator.classList.remove('hidden');
-                scrollIndicator.classList.add('visible');
-                scrollIndicator.innerHTML = '↑<span>К началу</span>';
-            }
+        // Hide indicator immediately when user starts scrolling
+        if (scrollTop > 0) {
+            scrollDown.classList.add('hidden');
+            scrollDown.classList.remove('visible');
+            fadeBottom.style.opacity = '0';
         } else {
-            scrollIndicator.classList.remove('visible');
-            scrollIndicator.classList.add('hidden');
+            scrollDown.classList.remove('hidden');
+            scrollDown.classList.add('visible');
+            fadeBottom.style.opacity = '1';
         }
     }
     
-    // Add manual scroll test
-    contentWrapper.addEventListener('wheel', function(e) {
-        e.preventDefault();
-        contentWrapper.scrollTop += e.deltaY;
-        updateScrollIndicator();
-    }, { passive: false });
+    // Initial check
+    updateScrollIndicators();
     
-    // Click scroll indicator to scroll
-    scrollIndicator.addEventListener('click', function() {
-        const scrollTop = contentWrapper.scrollTop;
-        const scrollHeight = contentWrapper.scrollHeight;
-        const clientHeight = contentWrapper.clientHeight;
-        const scrollBottom = scrollHeight - scrollTop - clientHeight;
-        
-        if (scrollBottom > 10) {
-            // Scroll down
-            contentWrapper.scrollTop += 100;
-        } else {
-            // Scroll to top
-            contentWrapper.scrollTop = 0;
-        }
-        updateScrollIndicator();
-    });
+    // Listen for scroll events
+    container.addEventListener('scroll', updateScrollIndicators);
     
-    contentWrapper.addEventListener('scroll', updateScrollIndicator);
-    updateScrollIndicator(); // Initial check
-    
-    // Force initial scroll test
-    setTimeout(() => {
-        updateScrollIndicator();
-        console.log('Initial scroll check completed');
-    }, 100);
-});
+    // Check again after page load (in case content loaded dynamically)
+    setTimeout(updateScrollIndicators, 500);
+})();
 </script>
 {% endblock %}

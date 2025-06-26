@@ -20,19 +20,23 @@
     html, body {
         margin: 0;
         padding: 0;
-        width: 1280px;
-        height: 400px; 
-        max-height: 100%;
+        width: 100vw;
+        height: 100vh;
+        max-width: 1280px;
+        max-height: 400px;
         color: #fff;
         font-family: Arial, sans-serif;
         line-height: 1.6;
         overflow: hidden;
+        background: rgb(59, 57, 57);
     }
 
-    /* Content wrapper - Optimized for 1280x400 */
+    /* Content wrapper - Full viewport */
     .content-wrapper {
-        width: 1280px;
-        height: 400px;
+        width: 100vw;
+        height: 100vh;
+        max-width: 1280px;
+        max-height: 400px;
         position: relative;
         background: rgb(59, 57, 57);
         overflow: hidden;
@@ -142,7 +146,7 @@
         margin: 0 auto;
     }
     
-    /* Sponsor items - Dynamic sizing based on count */
+    /* Sponsor items - Responsive sizing for equal treatment */
     .sponsor-item {
         background-color: rgba(255, 255, 255, 0.95);
         border-radius: 6px;
@@ -154,41 +158,40 @@
         vertical-align: middle;
     }
 
-    /* Default size for multiple sponsors - Optimized for 1280x400 */
+    /* Default size for multiple sponsors */
     .sponsors-grid .sponsor-item {
         width: 150px;
-        height: 90px;
+        height: 95px;
     }
 
-    /* Single sponsor - fills most of the box */
-    .sponsors-grid.count-1 .sponsor-item {
-        width: 400px;
-        height: 160px;
-        margin: 6px auto;
-        display: block;
+    /* Large size when max sponsors across both boxes is 1 */
+    .sponsors-page.max-sponsors-1 .sponsor-item {
+        width: 280px !important;
+        height: 180px !important;
+        margin: 8px;
     }
 
-    /* Two sponsors - narrower for better proportions */
-    .sponsors-grid.count-2 .sponsor-item {
-        width: 190px;
-        height: 110px;
+    /* Medium size when max sponsors across both boxes is 2 */
+    .sponsors-page.max-sponsors-2 .sponsor-item {
+        width: 200px !important;
+        height: 130px !important;
+        margin: 6px;
+    }
+
+    /* Small-medium size when max sponsors across both boxes is 3 */
+    .sponsors-page.max-sponsors-3 .sponsor-item {
+        width: 170px !important;
+        height: 110px !important;
         margin: 4px;
     }
 
-    /* Three sponsors - slightly larger than default */
-    .sponsors-grid.count-3 .sponsor-item {
-        width: 160px;
-        height: 95px;
-        margin: 3px;
-    }
-
-    /* Four or more sponsors - optimized size */
-    .sponsors-grid.count-4 .sponsor-item,
-    .sponsors-grid.count-5 .sponsor-item,
-    .sponsors-grid.count-6 .sponsor-item {
-        width: 150px;
-        height: 90px;
-        margin: 3px;
+    /* Default size for 4+ sponsors */
+    .sponsors-page.max-sponsors-4 .sponsor-item,
+    .sponsors-page.max-sponsors-5 .sponsor-item,
+    .sponsors-page.max-sponsors-6 .sponsor-item {
+        width: 150px !important;
+        height: 95px !important;
+        margin: 4px;
     }
     
     .sponsor-item:hover {
@@ -203,6 +206,9 @@
         max-width: 100%;
         max-height: 100%;
         padding: 6px;
+        /* Prevent logo stretching - maintain aspect ratio */
+        object-fit: contain;
+        box-sizing: border-box;
     }
     
     /* Enter button - hidden since we're using the arrow button */
@@ -266,20 +272,30 @@
     }
 
     addLoadEvent(function() {
-        // Dynamic sponsor sizing based on count
+        // Smart sponsor sizing based on maximum sponsors across both boxes
         var sponsorGrids = document.getElementsByClassName('sponsors-grid');
+        var maxSponsors = 0;
         
+        // Find the maximum number of sponsors in any box
         for (var i = 0; i < sponsorGrids.length; i++) {
             var grid = sponsorGrids[i];
             var sponsors = grid.getElementsByClassName('sponsor-item');
             var count = sponsors.length;
+            if (count > maxSponsors) {
+                maxSponsors = count;
+            }
+        }
+        
+        // Apply sizing class to the page based on maximum sponsors
+        var sponsorsContainer = document.querySelector('.sponsors-container');
+        if (sponsorsContainer) {
+            // Remove any existing max-sponsors classes
+            sponsorsContainer.className = sponsorsContainer.className.replace(/\bmax-sponsors-\d+\b/g, '');
+            sponsorsContainer.className += ' sponsors-page';
             
-            // Remove any existing count classes
-            grid.className = grid.className.replace(/\bcount-\d+\b/g, '');
-            
-            // Add count class for styling
-            if (count >= 1 && count <= 6) {
-                grid.className += ' count-' + count;
+            // Add max-sponsors class for styling
+            if (maxSponsors >= 1 && maxSponsors <= 6) {
+                sponsorsContainer.className += ' max-sponsors-' + maxSponsors;
             }
         }
     });

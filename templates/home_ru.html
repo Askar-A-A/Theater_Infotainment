@@ -22,47 +22,11 @@
 <style>
     /* Simplified styles for Android 6.0 WebView compatibility - Optimized for 1280x400 */
 
-    /* Logo section styles - Compact for 1280x400 */
-    .logo-section {
-        position: absolute;
-        left: 0;
-        width: 100%;
-        top: 8px;
-        height: 80px;
-        display: block;
-        text-align: center;
-        z-index: 20;
-    }
-
-    .logo-container {
-        display: inline-block;
-        max-width: 90%;
-        margin: 0 auto;
-    }
-
-    .theater-logo {
-        max-height: 55px;
-        max-width: 100%;
-        width: auto;
-        height: auto;
-    }
-
-    /* Theater title styles */
-    .theater-title {
-        color: #d4af37;
-        text-align: center;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        margin-top: 6px;
-        font-size: 1.6rem;
-        font-weight: bold;
-        margin-bottom: 0;
-    }
-
-    /* Theater container - Compact layout for 1280x400 */
+    /* Theater container - Full height for 1280x400 */
     .theater-container {
         width: 100%;
-        height: calc(100% - 90px);
-        margin-top: 90px;
+        height: 100%;
+        margin-top: 0;
         padding: 8px;
         overflow-y: auto;
         overflow-x: hidden;
@@ -262,18 +226,6 @@
 {% endblock %}
 
 {% block content %}
-<!-- Logo section -->
-<div class="logo-section">
-    <div class="logo-container">
-        {% placeholder "theater_logo" or %}
-            <img src="{% static 'images/theater-logo.png' %}" alt="Логотип театра" class="theater-logo">
-        {% endplaceholder %}
-    </div>
-    <h1 class="theater-title">
-        {% placeholder "theater_name" default "Оперный театр" %}
-    </h1>
-</div>
-
 <div class="theater-container" id="theater-container">
     <!-- Scroll Indicators -->
     <div class="scroll-indicator bottom visible" id="scroll-down">↕<span>Прокрутка</span></div>
