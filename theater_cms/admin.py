@@ -184,7 +184,7 @@ class EventAdmin(admin.ModelAdmin):
             'description': 'Chinese translations for detailed content'
         }),
     )
-    inlines = [PerformanceInline, EventSponsorImageInline]
+    inlines = [EventSponsorImageInline]
     
     def title_zh_short(self, obj):
         """Show shortened Chinese title in list view"""
