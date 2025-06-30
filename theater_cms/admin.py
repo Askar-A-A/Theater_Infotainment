@@ -551,66 +551,132 @@ class PerformanceAdmin(admin.ModelAdmin):
 
 @admin.register(SeasonalSponsor)
 class SeasonalSponsorAdmin(admin.ModelAdmin):
-    list_display = ('name', 'image')
+    list_display = ('name',)
     
-    def changeform_view(self, request, object_id=None, form_url='', extra_context=None):
+    def get_urls(self):
+        urls = super().get_urls()
+        custom_urls = [
+            path('page-content/',
+                self.admin_site.admin_view(self.page_content_view),
+                name='theater_cms_seasonalsponsor_page_content'),
+        ]
+        return custom_urls + urls
+    
+    def changelist_view(self, request, extra_context=None):
         extra_context = extra_context or {}
         
-        # Add a link to edit sponsors page content
-        extra_context['sponsors_content_url'] = reverse('admin:theater_cms_sponsorspagecontent_change', args=[1])
-        extra_context['sponsors_content_exists'] = SponsorsPageContent.objects.filter(pk=1).exists()
+        # Add a button to edit page content
+        extra_context['page_content_url'] = reverse('admin:theater_cms_seasonalsponsor_page_content')
         
-        extra_context['extra_info'] = """
-        <div style="margin: 20px 0; padding: 15px; background-color: #e7f3ff; border-left: 4px solid #2196F3; border-radius: 4px;">
-            <h3 style="margin-top: 0; color: #1976D2;">💡 Sponsors Page Content</h3>
-            <p>To edit the sponsors page title and introduction text for both English and Chinese:</p>
-            <a href="{}" class="button" style="margin-top: 10px;">Edit Sponsors Page Content</a>
+        # Add custom styling and the page content button
+        extra_context['extra_content'] = """
+        <div style="margin-bottom: 20px; padding: 15px; background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 4px;">
+            <h3 style="margin-top: 0; color: #417690;">Sponsors Page Settings</h3>
+            <p style="margin-bottom: 15px; color: #666;">Manage the title and introduction text that appears on both English and Chinese sponsors pages.</p>
+            <a href="{}" class="button" style="background-color: #417690; color: white; padding: 8px 15px; text-decoration: none; border-radius: 4px; font-weight: bold;">
+                Edit Page Title & Intro Text
+            </a>
         </div>
-        """.format(reverse('admin:theater_cms_sponsorspagecontent_change', args=[1]))
+        """.format(extra_context['page_content_url'])
         
-        return super().changeform_view(request, object_id, form_url, extra_context)
+        return super().changelist_view(request, extra_context)
+    
+    def page_content_view(self, request):
+        """Custom view for editing sponsors page content"""
+        from django import forms
+        
+        # Get or create the content instance
+        content_instance = SponsorsPageContent.get_content()
+        
+        class SponsorPageContentForm(forms.ModelForm):
+            class Meta:
+                model = SponsorsPageContent
+                fields = ['sponsors_title_en', 'sponsors_intro_en', 'sponsors_title_zh', 'sponsors_intro_zh']
+                widgets = {
+                    'sponsors_title_en': forms.TextInput(attrs={'style': 'width: 100%; font-size: 16px; padding: 8px;'}),
+                    'sponsors_title_zh': forms.TextInput(attrs={'style': 'width: 100%; font-size: 16px; padding: 8px;'}),
+                    'sponsors_intro_en': forms.Textarea(attrs={'style': 'width: 100%; min-height: 120px; resize: vertical;', 'rows': 5}),
+                    'sponsors_intro_zh': forms.Textarea(attrs={'style': 'width: 100%; min-height: 120px; resize: vertical;', 'rows': 5}),
+                }
+        
+        if request.method == 'POST':
+            form = SponsorPageContentForm(request.POST, instance=content_instance)
+            if form.is_valid():
+                form.save()
+                self.message_user(request, "Sponsors page content updated successfully.")
+                return redirect('admin:theater_cms_seasonalsponsor_changelist')
+        else:
+            form = SponsorPageContentForm(instance=content_instance)
+        
+        context = {
+            'form': form,
+            'title': 'Edit Sponsors Page Content',
+            'subtitle': 'Manage the title and introduction text for both English and Chinese sponsors pages',
+            'opts': self.model._meta,
+            'has_change_permission': True,
+            'extra_style': """
+            <style>
+                .form-row {
+                    margin-bottom: 20px;
+                }
+                
+                .form-row label {
+                    display: block;
+                    font-weight: bold;
+                    margin-bottom: 5px;
+                    color: #333;
+                }
+                
+                .fieldset {
+                    margin-bottom: 25px;
+                    border: 1px solid #ddd;
+                    border-radius: 4px;
+                    padding: 0;
+                }
+                
+                .fieldset h2 {
+                    background-color: #417690;
+                    color: white;
+                    padding: 10px 15px;
+                    margin: 0 0 15px 0;
+                    font-size: 14px;
+                    border-radius: 4px 4px 0 0;
+                }
+                
+                .fieldset-content {
+                    padding: 15px;
+                }
+                
+                .help-text {
+                    font-size: 12px;
+                    color: #666;
+                    margin-top: 5px;
+                    font-style: italic;
+                }
+                
+                .submit-row {
+                    padding: 15px 0;
+                    text-align: right;
+                    border-top: 1px solid #ddd;
+                    margin-top: 20px;
+                }
+                
+                .cancel-link {
+                    margin-right: 10px;
+                    color: #666;
+                    text-decoration: none;
+                }
+                
+                .cancel-link:hover {
+                    text-decoration: underline;
+                }
+            </style>
+            """
+        }
+        
+        return render(request, 'admin/theater_cms/sponsor_page_content.html', context)
 
-@admin.register(SponsorsPageContent)
-class SponsorsPageContentAdmin(admin.ModelAdmin):
-    fieldsets = (
-        ('English Content', {
-            'fields': ('sponsors_title_en', 'sponsors_intro_en'),
-            'description': 'Content for the English sponsors page'
-        }),
-        ('Chinese Content', {
-            'fields': ('sponsors_title_zh', 'sponsors_intro_zh'),
-            'description': 'Content for the Chinese sponsors page'
-        }),
-        ('Last Updated', {
-            'fields': ('updated_at',),
-            'classes': ('collapse',)
-        }),
-    )
-    readonly_fields = ('updated_at',)
-    
-    def has_add_permission(self, request):
-        # Only allow one instance
-        return not SponsorsPageContent.objects.exists()
-    
-    def has_delete_permission(self, request, obj=None):
-        # Don't allow deletion
-        return False
-    
-    def get_object(self, request, object_id, from_field=None):
-        # Always ensure we have content
-        return SponsorsPageContent.get_content()
-    
-    def changeform_view(self, request, object_id=None, form_url='', extra_context=None):
-        # Always use object_id=1 to ensure we're editing the singleton
-        if object_id is None:
-            # Create the content if it doesn't exist
-            SponsorsPageContent.get_content()
-            object_id = '1'
-        
-        extra_context = extra_context or {}
-        extra_context['title'] = 'Edit Sponsors Page Content'
-        
-        return super().changeform_view(request, object_id, form_url, extra_context)  
+# Don't register SponsorsPageContent separately since it's integrated into SeasonalSponsorAdmin
 
 # Register other models
 @admin.register(UserFeedback)

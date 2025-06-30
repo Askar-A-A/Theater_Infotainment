@@ -1,0 +1,70 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls static admin_modify %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block extrahead %}
+    {{ block.super }}
+    {{ extra_style|safe }}
+{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'admin:index' %}">Home</a>
+    &rsaquo; <a href="{% url 'admin:app_list' app_label=opts.app_label %}">{{ opts.app_config.verbose_name }}</a>
+    &rsaquo; <a href="{% url 'admin:theater_cms_seasonalsponsor_changelist' %}">Seasonal sponsors</a>
+    &rsaquo; {{ title }}
+</div>
+{% endblock %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+{% if subtitle %}<p class="subtitle">{{ subtitle }}</p>{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    
+    <div class="fieldset">
+        <h2>English Content</h2>
+        <div class="fieldset-content">
+            <div class="form-row">
+                <label for="{{ form.sponsors_title_en.id_for_label }}">{{ form.sponsors_title_en.label }}:</label>
+                {{ form.sponsors_title_en }}
+                {% if form.sponsors_title_en.help_text %}<p class="help-text">{{ form.sponsors_title_en.help_text }}</p>{% endif %}
+                {{ form.sponsors_title_en.errors }}
+            </div>
+            
+            <div class="form-row">
+                <label for="{{ form.sponsors_intro_en.id_for_label }}">{{ form.sponsors_intro_en.label }}:</label>
+                {{ form.sponsors_intro_en }}
+                {% if form.sponsors_intro_en.help_text %}<p class="help-text">{{ form.sponsors_intro_en.help_text }}</p>{% endif %}
+                {{ form.sponsors_intro_en.errors }}
+            </div>
+        </div>
+    </div>
+    
+    <div class="fieldset">
+        <h2>Chinese Content</h2>
+        <div class="fieldset-content">
+            <div class="form-row">
+                <label for="{{ form.sponsors_title_zh.id_for_label }}">{{ form.sponsors_title_zh.label }}:</label>
+                {{ form.sponsors_title_zh }}
+                {% if form.sponsors_title_zh.help_text %}<p class="help-text">{{ form.sponsors_title_zh.help_text }}</p>{% endif %}
+                {{ form.sponsors_title_zh.errors }}
+            </div>
+            
+            <div class="form-row">
+                <label for="{{ form.sponsors_intro_zh.id_for_label }}">{{ form.sponsors_intro_zh.label }}:</label>
+                {{ form.sponsors_intro_zh }}
+                {% if form.sponsors_intro_zh.help_text %}<p class="help-text">{{ form.sponsors_intro_zh.help_text }}</p>{% endif %}
+                {{ form.sponsors_intro_zh.errors }}
+            </div>
+        </div>
+    </div>
+    
+    <div class="submit-row">
+        <a href="{% url 'admin:theater_cms_seasonalsponsor_changelist' %}" class="cancel-link">Cancel</a>
+        <input type="submit" value="Save" class="default" name="_save">
+    </div>
+</form>
+{% endblock %} 
