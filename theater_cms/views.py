@@ -1,10 +1,13 @@
 from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import UserFeedback, EmailSubscription, Event, Performance, SeasonalSponsor, EventSponsorImage
+from .models import UserFeedback, EmailSubscription, Event, Performance, SeasonalSponsor, EventSponsorImage, SponsorPageContent
 from cms.utils import get_current_site
 from django.views.decorators.http import require_POST
 from django.utils import timezone
+from django.contrib import messages
+from django.core.exceptions import ValidationError
+from django.db.models import Q
 
 def process_feedback(request):
     # Only process POST requests
@@ -205,11 +208,15 @@ def sponsors_page(request):
     event_sponsors = []
     if event:
         event_sponsors = event.sponsor_images.all()
+    
+    # Get sponsor page content
+    sponsor_content = SponsorPageContent.get_instance()
 
     return render(request, 'sponsors.html', {
         'seasonal_sponsors': seasonal_sponsors,
         'event_sponsors': event_sponsors,
         'event': event,
+        'sponsor_content': sponsor_content,
     })
 
 def switch_language(request):
@@ -269,11 +276,16 @@ def sponsors_view_ru(request):
     event_sponsors = []
     if event:
         event_sponsors = event.sponsor_images.all()
+    
+    # Get sponsor page content
+    sponsor_content = SponsorPageContent.get_instance()
 
     return render(request, 'sponsors_ru.html', {
         'seasonal_sponsors': seasonal_sponsors,
         'event_sponsors': event_sponsors,
         'event': event,
+        'sponsor_content': sponsor_content,
+        'event_title_ru': event.get_title('ru') if event else None,
     })
 
 def events_view_ru(request):

@@ -292,3 +292,53 @@ class EventSponsorImage(models.Model):
 
     def __str__(self):
         return self.name
+
+class SponsorPageContent(models.Model):
+    """Singleton model for storing sponsors page content"""
+    # English content
+    title = models.CharField(
+        max_length=200, 
+        default="Our Esteemed Sponsors",
+        verbose_name="Page Title (English)",
+        help_text="Main title displayed on the sponsors page"
+    )
+    intro_text = models.TextField(
+        default="Our theater is proud to acknowledge the generous support of our sponsors. Their commitment to the arts enables us to continue our tradition of excellence and share the magic of opera with audiences from around the world.",
+        verbose_name="Introduction Text (English)",
+        help_text="Introduction text displayed below the title"
+    )
+    
+    # Russian content
+    title_ru = models.CharField(
+        max_length=200,
+        default="Наши уважаемые спонсоры", 
+        verbose_name="Page Title (Russian)",
+        help_text="Main title displayed on the Russian sponsors page"
+    )
+    intro_text_ru = models.TextField(
+        default="Наш театр с гордостью благодарит спонсоров за их щедрую поддержку. Их приверженность искусству позволяет нам продолжать традиции совершенства и делиться магией оперы с аудиторией со всего мира.",
+        verbose_name="Introduction Text (Russian)", 
+        help_text="Introduction text displayed below the title on Russian page"
+    )
+    
+    def save(self, *args, **kwargs):
+        # Ensure only one instance exists (singleton pattern)
+        self.pk = 1
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        # Prevent deletion of the singleton instance
+        pass
+
+    @classmethod
+    def get_instance(cls):
+        """Get or create the singleton instance"""
+        obj, created = cls.objects.get_or_create(pk=1)
+        return obj
+    
+    def __str__(self):
+        return "Sponsors Page Content"
+    
+    class Meta:
+        verbose_name = "Sponsor Page Content"
+        verbose_name_plural = "Sponsor Page Content"

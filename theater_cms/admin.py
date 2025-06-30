@@ -4,7 +4,7 @@ from django.urls import path, reverse
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.utils.html import format_html
-from .models import Event, Performance, UserFeedback, EmailSubscription, SeasonalSponsor, EventSponsorImage
+from .models import Event, Performance, UserFeedback, EmailSubscription, SeasonalSponsor, EventSponsorImage, SponsorPageContent
 from django.db import models
 from django.contrib.auth.models import Group, Permission
 from django.db.models import Q
@@ -577,7 +577,132 @@ class PerformanceAdmin(admin.ModelAdmin):
 
 @admin.register(SeasonalSponsor)
 class SeasonalSponsorAdmin(admin.ModelAdmin):
-    list_display = ('name',)  
+    list_display = ('name',)
+    
+    def get_urls(self):
+        urls = super().get_urls()
+        custom_urls = [
+            path('page-content/',
+                self.admin_site.admin_view(self.page_content_view),
+                name='theater_cms_seasonalsponsor_page_content'),
+        ]
+        return custom_urls + urls
+    
+    def changelist_view(self, request, extra_context=None):
+        extra_context = extra_context or {}
+        
+        # Add a button to edit page content
+        extra_context['page_content_url'] = reverse('admin:theater_cms_seasonalsponsor_page_content')
+        
+        # Add custom styling and the page content button
+        extra_context['extra_content'] = """
+        <div style="margin-bottom: 20px; padding: 15px; background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 4px;">
+            <h3 style="margin-top: 0; color: #417690;">Sponsors Page Settings</h3>
+            <p style="margin-bottom: 15px; color: #666;">Manage the title and introduction text that appears on both English and Russian sponsors pages.</p>
+            <a href="{}" class="button" style="background-color: #417690; color: white; padding: 8px 15px; text-decoration: none; border-radius: 4px; font-weight: bold;">
+                Edit Page Title & Intro Text
+            </a>
+        </div>
+        """.format(extra_context['page_content_url'])
+        
+        return super().changelist_view(request, extra_context)
+    
+    def page_content_view(self, request):
+        """Custom view for editing sponsors page content"""
+        from django import forms
+        
+        # Get or create the content instance
+        content_instance = SponsorPageContent.get_instance()
+        
+        class SponsorPageContentForm(forms.ModelForm):
+            class Meta:
+                model = SponsorPageContent
+                fields = ['title', 'intro_text', 'title_ru', 'intro_text_ru']
+                widgets = {
+                    'title': forms.TextInput(attrs={'style': 'width: 100%; font-size: 16px; padding: 8px;'}),
+                    'title_ru': forms.TextInput(attrs={'style': 'width: 100%; font-size: 16px; padding: 8px;'}),
+                    'intro_text': forms.Textarea(attrs={'style': 'width: 100%; min-height: 120px; resize: vertical;', 'rows': 5}),
+                    'intro_text_ru': forms.Textarea(attrs={'style': 'width: 100%; min-height: 120px; resize: vertical;', 'rows': 5}),
+                }
+        
+        if request.method == 'POST':
+            form = SponsorPageContentForm(request.POST, instance=content_instance)
+            if form.is_valid():
+                form.save()
+                self.message_user(request, "Sponsors page content updated successfully.")
+                return redirect('admin:theater_cms_seasonalsponsor_changelist')
+        else:
+            form = SponsorPageContentForm(instance=content_instance)
+        
+        context = {
+            'form': form,
+            'title': 'Edit Sponsors Page Content',
+            'subtitle': 'Manage the title and introduction text for both English and Russian sponsors pages',
+            'opts': self.model._meta,
+            'has_change_permission': True,
+            'extra_style': """
+            <style>
+                .form-row {
+                    margin-bottom: 20px;
+                }
+                
+                .form-row label {
+                    display: block;
+                    font-weight: bold;
+                    margin-bottom: 5px;
+                    color: #333;
+                }
+                
+                .fieldset {
+                    margin-bottom: 25px;
+                    border: 1px solid #ddd;
+                    border-radius: 4px;
+                    padding: 0;
+                }
+                
+                .fieldset h2 {
+                    background-color: #417690;
+                    color: white;
+                    padding: 10px 15px;
+                    margin: 0 0 15px 0;
+                    font-size: 14px;
+                    border-radius: 4px 4px 0 0;
+                }
+                
+                .fieldset-content {
+                    padding: 15px;
+                }
+                
+                .help-text {
+                    font-size: 12px;
+                    color: #666;
+                    margin-top: 5px;
+                    font-style: italic;
+                }
+                
+                .submit-row {
+                    padding: 15px 0;
+                    text-align: right;
+                    border-top: 1px solid #ddd;
+                    margin-top: 20px;
+                }
+                
+                .cancel-link {
+                    margin-right: 10px;
+                    color: #666;
+                    text-decoration: none;
+                }
+                
+                .cancel-link:hover {
+                    text-decoration: underline;
+                }
+            </style>
+            """
+        }
+        
+        return render(request, 'admin/theater_cms/sponsor_page_content.html', context)
+
+# Don't register SponsorPageContent separately since it's integrated into SeasonalSponsorAdmin
 
 # Register other models
 @admin.register(UserFeedback)

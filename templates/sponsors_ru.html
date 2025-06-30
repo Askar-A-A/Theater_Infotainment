@@ -305,16 +305,12 @@
     {% cms_toolbar %}
     <div class="content-wrapper">
         <div class="sponsors-container">
-            <h1 class="sponsors-title">{% placeholder "sponsors_title" or %}Наши уважаемые спонсоры{% endplaceholder %}</h1>
+            <h1 class="sponsors-title">{{ sponsor_content.title_ru }}</h1>
             
             <div class="divider"></div>
             
             <div class="sponsors-intro">
-                {% placeholder "sponsors_intro" or %}
-                    Наш театр с гордостью благодарит спонсоров за их щедрую поддержку.
-                    Их приверженность искусству позволяет нам продолжать традиции совершенства
-                    и делиться магией оперы с аудиторией со всего мира.
-                {% endplaceholder %}
+                {{ sponsor_content.intro_text_ru }}
             </div>
             
             <!-- Side-by-side sponsor sections -->
@@ -347,7 +343,7 @@
                 <div class="sponsor-box">
                     <div class="sponsor-box-title">
                         <i class="fas fa-theater-masks"></i>
-                        <span>Спонсоры {{ event_title_ru }}</span>
+                        <span>Спонсоры {{ event_title_ru|default:event.title }}</span>
                     </div>
                     <div class="sponsors-grid">
                         {% for sponsor in event_sponsors %}
