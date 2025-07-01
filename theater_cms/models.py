@@ -127,23 +127,23 @@ class Event(models.Model):
     cast_content = models.TextField(blank=True)
     duration = models.CharField(max_length=50, blank=True)
     
-    # Chinese translation fields (new)
-    title_zh = models.CharField(max_length=200, blank=True, verbose_name="Title (Chinese)", 
-                               help_text="Chinese translation of the event title")
-    composer_zh = models.CharField(max_length=100, blank=True, verbose_name="Composer (Chinese)",
-                                  help_text="Chinese translation of composer name")
-    about_content_zh = models.TextField(blank=True, verbose_name="About Content (Chinese)",
-                                       help_text="Chinese translation of the about content")
-    language_zh = models.CharField(max_length=100, blank=True, verbose_name="Language (Chinese)",
-                                  help_text="e.g., '意大利语配中文字幕'")
-    conductor_zh = models.CharField(max_length=100, blank=True, verbose_name="Conductor (Chinese)",
-                                   help_text="Chinese translation of conductor name")
-    director_zh = models.CharField(max_length=100, blank=True, verbose_name="Director (Chinese)",
-                                  help_text="Chinese translation of director name")
-    cast_content_zh = models.TextField(blank=True, verbose_name="Cast Content (Chinese)",
-                                      help_text="Chinese translation of cast information")
-    duration_zh = models.CharField(max_length=50, blank=True, verbose_name="Duration (Chinese)",
-                                  help_text="e.g., '约3小时（含休息时间）'")
+    # Russian translation fields
+    title_zh = models.CharField(max_length=200, blank=True, verbose_name="Title (Russian)", 
+                               help_text="Russian translation of the event title")
+    composer_zh = models.CharField(max_length=100, blank=True, verbose_name="Composer (Russian)",
+                                  help_text="Russian translation of composer name")
+    about_content_zh = models.TextField(blank=True, verbose_name="About Content (Russian)",
+                                       help_text="Russian translation of the about content")
+    language_zh = models.CharField(max_length=100, blank=True, verbose_name="Language (Russian)",
+                                  help_text="e.g., 'На итальянском языке с русскими субтитрами'")
+    conductor_zh = models.CharField(max_length=100, blank=True, verbose_name="Conductor (Russian)",
+                                   help_text="Russian translation of conductor name")
+    director_zh = models.CharField(max_length=100, blank=True, verbose_name="Director (Russian)",
+                                  help_text="Russian translation of director name")
+    cast_content_zh = models.TextField(blank=True, verbose_name="Cast Content (Russian)",
+                                      help_text="Russian translation of cast information")
+    duration_zh = models.CharField(max_length=50, blank=True, verbose_name="Duration (Russian)",
+                                  help_text="e.g., 'Около 3 часов (включая антракт)'")
     
     image = models.ImageField(upload_to='events/', blank=True, null=True)
     is_active = models.BooleanField(default=True)
@@ -156,42 +156,42 @@ class Event(models.Model):
     
     # Helper methods for language-aware content
     def get_title(self, language='en'):
-        if language == 'zh' and self.title_zh:
+        if language == 'ru' and self.title_zh:
             return self.title_zh
         return self.title
     
     def get_composer(self, language='en'):
-        if language == 'zh' and self.composer_zh:
+        if language == 'ru' and self.composer_zh:
             return self.composer_zh
         return self.composer
     
     def get_about_content(self, language='en'):
-        if language == 'zh' and self.about_content_zh:
+        if language == 'ru' and self.about_content_zh:
             return self.about_content_zh
         return self.about_content
     
     def get_language(self, language='en'):
-        if language == 'zh' and self.language_zh:
+        if language == 'ru' and self.language_zh:
             return self.language_zh
         return self.language
     
     def get_conductor(self, language='en'):
-        if language == 'zh' and self.conductor_zh:
+        if language == 'ru' and self.conductor_zh:
             return self.conductor_zh
         return self.conductor
     
     def get_director(self, language='en'):
-        if language == 'zh' and self.director_zh:
+        if language == 'ru' and self.director_zh:
             return self.director_zh
         return self.director
     
     def get_cast_content(self, language='en'):
-        if language == 'zh' and self.cast_content_zh:
+        if language == 'ru' and self.cast_content_zh:
             return self.cast_content_zh
         return self.cast_content
     
     def get_duration(self, language='en'):
-        if language == 'zh' and self.duration_zh:
+        if language == 'ru' and self.duration_zh:
             return self.duration_zh
         return self.duration
     
