@@ -62,7 +62,7 @@
             justify-content: space-between;
             width: 100%;
             max-width: 1200px;
-            gap: 40px;
+            gap: 15px;
         }
         
         /* Left side - Logo and titles */
@@ -77,14 +77,14 @@
         /* Right side - Welcome text */
         .greeting-right {
             flex: 1;
-            padding-left: 20px;
+            padding-left: 5px;
         }
         
-        /* Language selector - Fixed for 1280x400 */
+        /* Language selector - Larger for better proportion */
         .language-selector {
             position: absolute;
-            top: 10px;
-            left: 20px;
+            top: 15px;
+            left: 25px;
             z-index: 10;
         }
         
@@ -97,19 +97,19 @@
             color: #d4af37;
             background-color: rgba(0, 0, 0, 0.8);
             border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 8px 14px;
-            font-size: 14px;
+            padding: 12px 18px;
+            font-size: 16px;
             cursor: pointer;
             display: block;
-            min-width: 140px;
-            border-radius: 6px;
+            min-width: 160px;
+            border-radius: 8px;
             position: relative;
             z-index: 11;
             text-align: left;
         }
         
         .language-selected i {
-            margin-left: 8px;
+            margin-left: 10px;
             float: right;
         }
         
@@ -120,7 +120,7 @@
             background-color: rgba(0, 0, 0, 0.8);
             border: 2px solid rgba(255, 255, 255, 0.3);
             border-top: none;
-            border-radius: 0 0 6px 6px;
+            border-radius: 0 0 8px 8px;
             width: 100%;
             display: none;
             z-index: 10;
@@ -131,14 +131,14 @@
         }
         
         .language-dropdown.open .language-selected {
-            border-radius: 6px 6px 0 0;
+            border-radius: 8px 8px 0 0;
         }
         
         .language-option {
             color: #cccccc;
             text-decoration: none;
-            font-size: 14px;
-            padding: 6px 12px;
+            font-size: 16px;
+            padding: 10px 16px;
             display: block;
             border-bottom: 1px solid #333;
         }
@@ -152,19 +152,19 @@
             background-color: #111;
         }
         
-        /* Logo container - smaller for horizontal layout */
+        /* Logo container - much larger */
         .opera-logo {
-            width: 160px;
-            height: 120px;
-            margin: 0 auto 15px;
+            width: 220px;
+            height: 160px;
+            margin: 0 auto 20px;
             position: relative;
             background-color: rgba(255, 255, 255, 0.95);
-            border-radius: 12px;
-            padding: 10px;
+            border-radius: 16px;
+            padding: 15px;
             text-align: center;
             display: block;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            border: 2px solid rgba(212, 175, 55, 0.3);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+            border: 3px solid rgba(212, 175, 55, 0.3);
         }
         
         .opera-logo img {
@@ -179,16 +179,16 @@
             transform: translateY(-50%);
         }
         
-        /* Titles - more compact for 400px height */
+        /* Titles - much larger */
         .welcome-titles-container {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             text-align: center;
         }
         
         .welcome-title {
             font-family: Georgia, serif;
-            font-size: 2.2rem;
-            margin: 0;
+            font-size: 2.8rem;
+            margin: 0 0 8px 0;
             line-height: 1.2;
             color: #d4af37;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
@@ -197,7 +197,7 @@
         
         .welcome-subtitle {
             font-family: Georgia, serif;
-            font-size: 2.2rem;
+            font-size: 2.8rem;
             margin: 0;
             line-height: 1.2;
             color: #d4af37;
@@ -205,18 +205,18 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
         
-        /* Welcome text frame - compact for horizontal layout */
+        /* Welcome text frame - larger */
         .welcome-text-frame {
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 20px;
-            border-radius: 10px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            padding: 30px;
+            border-radius: 15px;
             background-color: rgba(0, 0, 0, 0.8);
             width: 100%;
         }
         
         .welcome-text {
-            font-size: 1.1rem;
-            line-height: 1.5;
+            font-size: 1.3rem;
+            line-height: 1.6;
             color: #ffffff;
             margin: 0;
             font-family: Arial, sans-serif;
@@ -224,11 +224,11 @@
             text-align: left;
         }
         
-        /* Forward Navigation Icon - adjusted position */
+        /* Forward Navigation Icon - larger */
         .forward-nav {
             position: absolute;
-            right: 15px;
-            top: 10px;
+            right: 20px;
+            top: 15px;
             z-index: 100;
             text-decoration: none !important;
             color: #ffffff !important;
@@ -243,19 +243,19 @@
         }
 
         .forward-icon {
-            width: 60px;
-            height: 60px;
+            width: 70px;
+            height: 70px;
             background: rgba(0,0,0,0.7);
             border-radius: 50%;
-            display: table-cell;
-            vertical-align: middle;
-            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
             transition: background-color 0.3s;
-            font-size: 40px;
+            font-size: 42px;
             font-weight: bold;
-            line-height: 60px;
             color: #ffffff;
+            position: relative;
         }
 
         .forward-icon:hover {

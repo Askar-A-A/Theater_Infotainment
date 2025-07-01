@@ -124,13 +124,7 @@
         margin-bottom: 6px;
         padding-bottom: 3px;
         border-bottom: 1px solid rgba(212, 175, 55, 0.4);
-    }
-    
-    .sponsor-box-title i {
-        color: #d4af37;
         font-size: 1.1rem;
-        margin-right: 0.4rem;
-        vertical-align: middle;
     }
     
     .sponsor-box-title span {
@@ -138,6 +132,7 @@
         font-size: 1.1rem;
         font-weight: bold;
         vertical-align: middle;
+        margin-left: 0.4rem;
     }
     
     /* Sponsors grid - Optimized for 1280x400 */
@@ -158,30 +153,30 @@
         vertical-align: middle;
     }
 
-    /* Default size for multiple sponsors */
+    /* Default size for multiple sponsors - made smaller */
     .sponsors-grid .sponsor-item {
-        width: 150px;
-        height: 95px;
+        width: 130px;
+        height: 85px;
     }
 
-    /* Large size when max sponsors across both boxes is 1 */
+    /* Large size when max sponsors across both boxes is 1 - made smaller */
     .sponsors-page.max-sponsors-1 .sponsor-item {
-        width: 280px !important;
-        height: 180px !important;
+        width: 250px !important;
+        height: 160px !important;
         margin: 8px;
     }
 
-    /* Medium size when max sponsors across both boxes is 2 */
+    /* Medium size when max sponsors across both boxes is 2 - made smaller */
     .sponsors-page.max-sponsors-2 .sponsor-item {
-        width: 200px !important;
-        height: 130px !important;
+        width: 180px !important;
+        height: 115px !important;
         margin: 6px;
     }
 
-    /* Small-medium size when max sponsors across both boxes is 3 */
+    /* Small-medium size when max sponsors across both boxes is 3 - made smaller */
     .sponsors-page.max-sponsors-3 .sponsor-item {
-        width: 170px !important;
-        height: 110px !important;
+        width: 145px !important;
+        height: 90px !important;
         margin: 4px;
     }
     
@@ -230,15 +225,15 @@
         height: 65px;
         background: rgba(0,0,0,0.7);
         border-radius: 50%;
-        display: table-cell;
-        vertical-align: middle;
-        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         cursor: pointer;
         transition: background-color 0.3s;
-        font-size: 40px;
+        font-size: 36px;
         font-weight: bold;
-        line-height: 65px;
         color: #ffffff;
+        position: relative;
     }
 
     .forward-icon:hover {
@@ -319,7 +314,7 @@
                 {% if seasonal_sponsors %}
                 <div class="sponsor-box">
                     <div class="sponsor-box-title">
-                        <i class="fas fa-calendar-alt"></i>
+                        📅
                         <span>Сезонные спонсоры</span>
                     </div>
                     <div class="sponsors-grid">
@@ -342,7 +337,7 @@
                 {% if event_sponsors %}
                 <div class="sponsor-box">
                     <div class="sponsor-box-title">
-                        <i class="fas fa-theater-masks"></i>
+                        🎭
                         <span>Спонсоры {{ event_title_ru|default:event.title }}</span>
                     </div>
                     <div class="sponsors-grid">
