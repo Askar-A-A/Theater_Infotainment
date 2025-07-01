@@ -132,11 +132,15 @@
         width: 5%;
         text-align: right;
         vertical-align: middle;
-        font-size: 16px;
+        font-size: 14px;
+        color: #888;
+        opacity: 0.7;
     }
 
     .question.active .arrow-emoji {
         transform: rotate(180deg);
+        color: #d4af37;
+        opacity: 1;
     }
 
     /* Answer styling - Optimized for 1280x400 */
@@ -219,7 +223,7 @@
         <div class="qa-item">
             <div class="question">
                 <span>{% placeholder "question_1" or %}Where can I rent opera glasses?{% endplaceholder %}</span>
-                <span class="arrow-emoji">⬇️</span>
+                <span class="arrow-emoji">▼</span>
             </div>
             <div class="answer">
                 {% placeholder "answer_1" or %}Opera glasses can be rented at the cloakroom for a small fee. A deposit may be required.{% endplaceholder %}
@@ -230,7 +234,7 @@
         <div class="qa-item">
             <div class="question">
                 <span>{% placeholder "question_2" or %}I lost something during the performance, who should I contact?{% endplaceholder %}</span>
-                <span class="arrow-emoji">⬇️</span>
+                <span class="arrow-emoji">▼</span>
             </div>
             <div class="answer">
                 {% placeholder "answer_2" or %}Please contact the supervisory staff in the salon located to the right of the grand staircase during intermission or after the performance.<br><br>
@@ -242,7 +246,7 @@
         <div class="qa-item">
             <div class="question">
                 <span>{% placeholder "question_3" or %}Can I watch live performances at home?{% endplaceholder %}</span>
-                <span class="arrow-emoji">⬇️</span>
+                <span class="arrow-emoji">▼</span>
             </div>
             <div class="answer">
                 {% placeholder "answer_3" or %}Yes, selected performances are available for live streaming through our digital platform. Please visit our streaming service website for more information.{% endplaceholder %}
@@ -253,7 +257,7 @@
         <div class="qa-item">
             <div class="question">
                 <span>{% placeholder "question_4" or %}What benefits do I enjoy as a partner of the opera house?{% endplaceholder %}</span>
-                <span class="arrow-emoji">⬇️</span>
+                <span class="arrow-emoji">▼</span>
             </div>
             <div class="answer">
                 {% placeholder "answer_4" or %}Partners enjoy various benefits including priority booking, exclusive events, backstage tours, and special discounts. Please contact our partnership office for detailed information.{% endplaceholder %}
@@ -264,7 +268,7 @@
         <div class="qa-item">
             <div class="question">
                 <span>{% placeholder "question_5" or %}What is the dress code for attending performances?{% endplaceholder %}</span>
-                <span class="arrow-emoji">⬇️</span>
+                <span class="arrow-emoji">▼</span>
             </div>
             <div class="answer">
                 {% placeholder "answer_5" or %}While there is no strict dress code, evening attire is typically recommended. Many guests choose formal dress: men in suits or tuxedos, women in evening gowns or elegant outfits. We suggest avoiding overly casual clothing out of respect for the performers and other guests.{% endplaceholder %}

@@ -132,11 +132,15 @@
         width: 5%;
         text-align: right;
         vertical-align: middle;
-        font-size: 16px;
+        font-size: 14px;
+        color: #888;
+        opacity: 0.7;
     }
 
     .question.active .arrow-emoji {
         transform: rotate(180deg);
+        color: #d4af37;
+        opacity: 1;
     }
 
     /* Answer styling - Optimized for 1280x400 */
@@ -219,7 +223,7 @@
         <div class="qa-item">
             <div class="question">
                 <span>{% placeholder "question_1" or %}Где можно арендовать бинокль для оперы?{% endplaceholder %}</span>
-                <span class="arrow-emoji">⬇️</span>
+                <span class="arrow-emoji">▼</span>
             </div>
             <div class="answer">
                 {% placeholder "answer_1" or %}Бинокли можно арендовать в гардеробе за небольшую плату. Может потребоваться залог.{% endplaceholder %}
@@ -230,7 +234,7 @@
         <div class="qa-item">
             <div class="question">
                 <span>{% placeholder "question_2" or %}К кому обратиться, если я потерял вещи во время спектакля?{% endplaceholder %}</span>
-                <span class="arrow-emoji">⬇️</span>
+                <span class="arrow-emoji">▼</span>
             </div>
             <div class="answer">
                 {% placeholder "answer_2" or %}Пожалуйста, обратитесь к сотрудникам службы надзора в комнате отдыха справа от главной лестницы во время антракта или после спектакля.<br><br>
@@ -242,7 +246,7 @@
         <div class="qa-item">
             <div class="question">
                 <span>{% placeholder "question_3" or %}Могу ли я смотреть спектакли в прямом эфире дома?{% endplaceholder %}</span>
-                <span class="arrow-emoji">⬇️</span>
+                <span class="arrow-emoji">▼</span>
             </div>
             <div class="answer">
                 {% placeholder "answer_3" or %}Да, избранные спектакли транслируются в прямом эфире через нашу цифровую платформу. Посетите наш сайт потокового вещания для получения дополнительной информации.{% endplaceholder %}
@@ -253,7 +257,7 @@
         <div class="qa-item">
             <div class="question">
                 <span>{% placeholder "question_4" or %}Какие преимущества я получаю как партнер оперного театра?{% endplaceholder %}</span>
-                <span class="arrow-emoji">⬇️</span>
+                <span class="arrow-emoji">▼</span>
             </div>
             <div class="answer">
                 {% placeholder "answer_4" or %}Партнеры пользуются различными преимуществами, включая приоритетное бронирование билетов, эксклюзивные мероприятия, экскурсии за кулисы и специальные скидки. Обратитесь в наш партнерский офис для получения подробной информации.{% endplaceholder %}
@@ -264,7 +268,7 @@
         <div class="qa-item">
             <div class="question">
                 <span>{% placeholder "question_5" or %}Каковы требования к дресс-коду для посещения спектаклей?{% endplaceholder %}</span>
-                <span class="arrow-emoji">⬇️</span>
+                <span class="arrow-emoji">▼</span>
             </div>
             <div class="answer">
                 {% placeholder "answer_5" or %}Хотя строгих требований к дресс-коду нет, обычно рекомендуется вечерняя одежда. Многие гости выбирают официальный наряд: мужчины носят костюмы или смокинги, женщины - вечерние платья или элегантные костюмы. Мы рекомендуем избегать слишком повседневной одежды из уважения к артистам и другим гостям.{% endplaceholder %}
