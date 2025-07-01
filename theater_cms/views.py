@@ -360,7 +360,17 @@ def home_view_ru(request):
     """Russian version of home page"""
     request.session['user_language'] = 'ru'
     event = determine_current_event()
-    return render(request, 'home_ru.html', {'current_event': event})
+    
+    context = {
+        'current_event': event,
+    }
+    
+    # Add Russian-specific variables if there's a current event
+    if event:
+        context['current_event_title_ru'] = event.get_title('ru')
+        context['current_event_composer_ru'] = event.get_composer('ru')
+    
+    return render(request, 'home_ru.html', context)
 
 def home_view(request):
     """English version of home page"""
