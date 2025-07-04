@@ -118,142 +118,158 @@
     }
 
     .event-header {
-        display: flex;
+        position: relative;
         width: 100%;
         margin-bottom: 25px;
-        align-items: flex-start;
+        min-height: 200px;
+        overflow: hidden;
     }
 
     .event-title-section {
-        flex: 0 0 75%;
-        padding-right: 15px;
+        float: left;
+        width: 70%;
+        padding-right: 20px;
+        box-sizing: border-box;
     }
 
     .event-image-section {
-        flex: 0 0 25%;
-        text-align: left;
+        float: right;
+        width: 30%;
+        text-align: center;
     }
 
     .event-title-section h1 {
-        font-size: 48px; /* Increased from 42px for better visibility */
-        margin-bottom: 12px;
+        font-size: 44px; /* Slightly reduced for better fit */
+        margin-bottom: 10px;
         color: #ffd700;
         font-weight: bold;
         text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        line-height: 1.2;
+        line-height: 1.1;
     }
 
     .event-composer {
-        font-size: 28px; /* Increased from 24px */
+        font-size: 26px; /* Slightly reduced */
         color: #e0e0e0;
-        margin-bottom: 12px;
+        margin-bottom: 10px;
         font-style: italic;
     }
 
     .event-dates {
-        font-size: 20px; /* Increased from 18px */
+        font-size: 18px; /* Slightly reduced */
         color: #ffd700;
         font-weight: bold;
         background: rgba(255, 215, 0, 0.1);
-        padding: 8px 16px;
-        border-radius: 20px;
+        padding: 6px 12px;
+        border-radius: 15px;
         display: inline-block;
     }
 
-
-
     .event-image-container {
-        border-radius: 10px;
+        border-radius: 8px;
         overflow: hidden;
-        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-        max-width: 280px; /* Slightly larger */
+        box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        max-width: 240px; /* Reduced size */
         width: 100%;
+        margin: 0 auto;
     }
 
     .event-image {
         width: 100%;
         height: auto;
         display: block;
-        max-height: 220px; /* Increased from 180px */
+        max-height: 180px; /* Reduced height */
         object-fit: cover;
     }
 
     .event-content {
-        display: flex;
+        clear: both;
         width: 100%;
-        margin-top: 25px;
-        gap: 15px;
+        margin-top: 20px;
+        overflow: hidden;
     }
 
     .event-content-cell {
-        flex: 1;
-        min-width: 0;
+        float: left;
+        width: 48%;
+        margin-right: 2%;
+        box-sizing: border-box;
+    }
+
+    .event-content-cell:last-child {
+        margin-right: 0;
     }
 
     .event-section {
         background: rgba(255, 255, 255, 0.08);
-        padding: 20px;
-        border-radius: 12px;
+        padding: 15px; /* Reduced padding */
+        border-radius: 10px;
         border-left: 4px solid #ffd700;
-        margin-bottom: 20px;
+        margin-bottom: 15px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         border: 1px solid rgba(255, 215, 0, 0.1);
+        height: auto;
+        min-height: 200px; /* Ensure consistent height */
     }
 
     .event-section h2 {
-        font-size: 30px; /* Increased from 26px */
+        font-size: 26px; /* Reduced for better fit */
         color: #ffd700;
-        margin-bottom: 15px;
+        margin-bottom: 12px;
         font-weight: bold;
         text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         border-bottom: 2px solid rgba(255, 215, 0, 0.3);
-        padding-bottom: 8px;
+        padding-bottom: 6px;
     }
 
     .event-section p {
-        font-size: 19px; /* Increased from 17px */
-        line-height: 1.6;
+        font-size: 17px; /* Reduced slightly */
+        line-height: 1.5;
         color: #e8e8e8;
-        margin-bottom: 8px;
-        display: flex;
-        align-items: flex-start;
+        margin-bottom: 6px;
+        overflow: hidden;
     }
 
     .event-section p strong {
         color: #ffd700;
         font-weight: 600;
-        flex: 0 0 35%;
-        padding-right: 10px;
+        float: left;
+        width: 35%;
+        padding-right: 8px;
+        box-sizing: border-box;
     }
 
     .event-section p span {
-        flex: 1;
+        float: right;
+        width: 65%;
         color: #f0f0f0;
+        box-sizing: border-box;
     }
 
     /* Special styling for cast content */
     .cast-content {
-        font-size: 19px; /* Increased from 17px */
-        line-height: 1.8;
+        font-size: 16px; /* Reduced for better fit */
+        line-height: 1.6;
         color: #e8e8e8;
         background: rgba(255, 255, 255, 0.03);
-        padding: 12px;
-        border-radius: 8px;
+        padding: 10px;
+        border-radius: 6px;
         border: 1px solid rgba(255, 215, 0, 0.1);
         white-space: pre-line; /* Preserve line breaks from content */
+        max-height: 140px; /* Limit height */
+        overflow-y: auto; /* Allow scrolling if needed */
     }
 
     .event-description-section {
-        display: block;
+        clear: both;
         width: 100%;
-        margin-bottom: 20px;
+        margin-bottom: 15px;
     }
 
     .event-description {
-        font-size: 20px; /* Increased from 18px */
-        line-height: 1.6;
+        font-size: 18px; /* Reduced slightly */
+        line-height: 1.5;
         color: #e0e0e0;
-        margin-bottom: 15px;
+        margin-bottom: 12px;
         text-align: justify;
     }
 
@@ -292,24 +308,23 @@
 
     /* Responsive adjustments for smaller content */
     @media (max-width: 1000px) {
-        .event-header {
-            flex-direction: column;
-        }
-        
         .event-title-section,
         .event-image-section {
-            flex: none;
+            float: none;
             width: 100%;
             padding: 0;
-            margin-bottom: 20px;
-        }
-        
-        .event-content {
-            flex-direction: column;
+            margin-bottom: 15px;
         }
         
         .event-content-cell {
-            margin-bottom: 20px;
+            float: none;
+            width: 100%;
+            margin-right: 0;
+            margin-bottom: 15px;
+        }
+        
+        .event-section {
+            min-height: auto;
         }
     }
 </style>
