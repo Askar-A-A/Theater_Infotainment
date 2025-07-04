@@ -118,11 +118,25 @@
     }
 
     .event-header {
-        display: grid;
-        grid-template-columns: 2fr 1fr;
-        gap: 30px;
+        display: table;
+        width: 100%;
+        table-layout: fixed;
         margin-bottom: 25px;
-        align-items: start;
+    }
+
+    .event-title-section {
+        display: table-cell;
+        width: 75%;
+        vertical-align: top;
+        padding-right: 15px;
+    }
+
+    .event-image-section {
+        display: table-cell;
+        width: 25%;
+        vertical-align: top;
+        text-align: left;
+        padding-left: 0;
     }
 
     .event-title-section h1 {
@@ -151,11 +165,7 @@
         display: inline-block;
     }
 
-    .event-image-section {
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-    }
+
 
     .event-image-container {
         border-radius: 10px;
@@ -174,10 +184,26 @@
     }
 
     .event-content {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
+        display: table;
+        width: 100%;
+        table-layout: fixed;
         margin-top: 25px;
+    }
+
+    .event-content-row {
+        display: table-row;
+    }
+
+    .event-content-cell {
+        display: table-cell;
+        width: 50%;
+        vertical-align: top;
+        padding-right: 15px;
+    }
+
+    .event-content-cell:last-child {
+        padding-right: 0;
+        padding-left: 15px;
     }
 
     .event-section {
@@ -238,7 +264,9 @@
     }
 
     .event-description-section {
-        grid-column: 1 / -1;
+        display: block;
+        width: 100%;
+        margin-bottom: 20px;
     }
 
     .event-description {
@@ -285,13 +313,26 @@
     /* Responsive adjustments for smaller content */
     @media (max-width: 1000px) {
         .event-header {
-            grid-template-columns: 1fr;
-            gap: 20px;
+            display: block;
+        }
+        
+        .event-title-section,
+        .event-image-section {
+            display: block;
+            width: 100%;
+            padding: 0;
+            margin-bottom: 20px;
         }
         
         .event-content {
-            grid-template-columns: 1fr;
-            gap: 20px;
+            display: block;
+        }
+        
+        .event-content-cell {
+            display: block;
+            width: 100%;
+            padding: 0;
+            margin-bottom: 20px;
         }
     }
 </style>
@@ -333,27 +374,35 @@
         </div>
     </div>
 
-    <!-- Event Content -->
-    <div class="event-content">
-        <div class="event-description-section">
+    <!-- Event Description - Full Width -->
+    <div class="event-description-section">
+        <div class="event-section">
             <h2>About the Performance</h2>
             <div class="event-description">
                 {{ event.about_content|safe|default:"Performance description will be updated soon." }}
             </div>
         </div>
+    </div>
 
-        <div class="event-section">
-            <h2>Performance Details</h2>
-            <p><strong>Language:</strong> <span>{{ event.language|default:"Not specified" }}</span></p>
-            <p><strong>Conductor:</strong> <span>{{ event.conductor|default:"Not specified" }}</span></p>
-            <p><strong>Director:</strong> <span>{{ event.director|default:"Not specified" }}</span></p>
-            <p><strong>Duration:</strong> <span>{{ event.duration|default:"Not specified" }}</span></p>
-        </div>
-
-        <div class="event-section">
-            <h2>Cast Information</h2>
-            <div class="cast-content">
-                {{ event.cast_content|safe|default:"Cast information will be updated soon." }}
+    <!-- Event Content - Two Columns -->
+    <div class="event-content">
+        <div class="event-content-row">
+            <div class="event-content-cell">
+                <div class="event-section">
+                    <h2>Performance Details</h2>
+                    <p><strong>Language:</strong> <span>{{ event.language|default:"Not specified" }}</span></p>
+                    <p><strong>Conductor:</strong> <span>{{ event.conductor|default:"Not specified" }}</span></p>
+                    <p><strong>Director:</strong> <span>{{ event.director|default:"Not specified" }}</span></p>
+                    <p><strong>Duration:</strong> <span>{{ event.duration|default:"Not specified" }}</span></p>
+                </div>
+            </div>
+            <div class="event-content-cell">
+                <div class="event-section">
+                    <h2>Cast Information</h2>
+                    <div class="cast-content">
+                        {{ event.cast_content|safe|default:"Cast information will be updated soon." }}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
