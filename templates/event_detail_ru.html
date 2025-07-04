@@ -118,25 +118,20 @@
     }
 
     .event-header {
-        display: table;
+        display: flex;
         width: 100%;
-        table-layout: fixed;
         margin-bottom: 25px;
+        align-items: flex-start;
     }
 
     .event-title-section {
-        display: table-cell;
-        width: 75%;
-        vertical-align: top;
+        flex: 0 0 75%;
         padding-right: 15px;
     }
 
     .event-image-section {
-        display: table-cell;
-        width: 25%;
-        vertical-align: top;
+        flex: 0 0 25%;
         text-align: left;
-        padding-left: 0;
     }
 
     .event-title-section h1 {
@@ -184,26 +179,15 @@
     }
 
     .event-content {
-        display: table;
+        display: flex;
         width: 100%;
-        table-layout: fixed;
         margin-top: 25px;
-    }
-
-    .event-content-row {
-        display: table-row;
+        gap: 15px;
     }
 
     .event-content-cell {
-        display: table-cell;
-        width: 50%;
-        vertical-align: top;
-        padding-right: 15px;
-    }
-
-    .event-content-cell:last-child {
-        padding-right: 0;
-        padding-left: 15px;
+        flex: 1;
+        min-width: 0;
     }
 
     .event-section {
@@ -231,23 +215,19 @@
         line-height: 1.6;
         color: #e8e8e8;
         margin-bottom: 8px;
-        display: table;
-        width: 100%;
-        table-layout: fixed;
+        display: flex;
+        align-items: flex-start;
     }
 
     .event-section p strong {
         color: #ffd700;
         font-weight: 600;
-        display: table-cell;
-        width: 35%;
-        vertical-align: top;
+        flex: 0 0 35%;
         padding-right: 10px;
     }
 
     .event-section p span {
-        display: table-cell;
-        vertical-align: top;
+        flex: 1;
         color: #f0f0f0;
     }
 
@@ -313,25 +293,22 @@
     /* Responsive adjustments for smaller content */
     @media (max-width: 1000px) {
         .event-header {
-            display: block;
+            flex-direction: column;
         }
         
         .event-title-section,
         .event-image-section {
-            display: block;
+            flex: none;
             width: 100%;
             padding: 0;
             margin-bottom: 20px;
         }
         
         .event-content {
-            display: block;
+            flex-direction: column;
         }
         
         .event-content-cell {
-            display: block;
-            width: 100%;
-            padding: 0;
             margin-bottom: 20px;
         }
     }
@@ -386,22 +363,20 @@
 
     <!-- Event Content - Two Columns -->
     <div class="event-content">
-        <div class="event-content-row">
-            <div class="event-content-cell">
-                <div class="event-section">
-                    <h2>Детали спектакля</h2>
-                    <p><strong>Язык:</strong> <span>{{ event_language_ru|default:"Не указан" }}</span></p>
-                    <p><strong>Дирижер:</strong> <span>{{ event_conductor_ru|default:"Не указан" }}</span></p>
-                    <p><strong>Режиссер:</strong> <span>{{ event_director_ru|default:"Не указан" }}</span></p>
-                    <p><strong>Продолжительность:</strong> <span>{{ event_duration_ru|default:"Не указана" }}</span></p>
-                </div>
+        <div class="event-content-cell">
+            <div class="event-section">
+                <h2>Детали спектакля</h2>
+                <p><strong>Язык:</strong> <span>{{ event_language_ru|default:"Не указан" }}</span></p>
+                <p><strong>Дирижер:</strong> <span>{{ event_conductor_ru|default:"Не указан" }}</span></p>
+                <p><strong>Режиссер:</strong> <span>{{ event_director_ru|default:"Не указан" }}</span></p>
+                <p><strong>Продолжительность:</strong> <span>{{ event_duration_ru|default:"Не указана" }}</span></p>
             </div>
-            <div class="event-content-cell">
-                <div class="event-section">
-                    <h2>Информация о составе</h2>
-                    <div class="cast-content">
-                        {{ event_cast_content_ru|safe|default:"Информация о составе скоро будет обновлена." }}
-                    </div>
+        </div>
+        <div class="event-content-cell">
+            <div class="event-section">
+                <h2>Информация о составе</h2>
+                <div class="cast-content">
+                    {{ event_cast_content_ru|safe|default:"Информация о составе скоро будет обновлена." }}
                 </div>
             </div>
         </div>
