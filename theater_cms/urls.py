@@ -14,6 +14,7 @@ urlpatterns = [
     
     # English routes (default)
     # path('home/', views.home_view, name='home'),
+    path('intro/', views.intro_view, name='intro'),
     path('sponsors/', views.sponsors_page, name='sponsors_page'),
     path('events/', views.event_list, name='event_list'),
     path('event/<slug:slug>/', views.event_detail, name='event_detail'),
@@ -21,6 +22,7 @@ urlpatterns = [
     path('thank-you/', views.thank_you_page, name='thank_you'),
     
     # Chinese routes
+    path('intro_zh/', views.intro_view_zh, name='intro_zh'),
     path('sponsors_zh/', views.sponsors_view_zh, name='sponsors_zh'),
     path('events_zh/', views.events_view_zh, name='events_zh'),
     path('event_zh/<slug:slug>/', views.event_detail_zh, name='event_detail_zh'),

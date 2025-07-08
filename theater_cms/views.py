@@ -385,10 +385,18 @@ def qa_view(request):
     return render(request, 'q&a.html')
 
 def current_event_zh(request):
-    """Redirect to the current event's Chinese detail page"""
+    """Redirect to the current event's detail page (Chinese)"""
     event = determine_current_event()
     if event:
-        return redirect('user_interactions:event_detail_zh', slug=event.slug)
+        return redirect(event.get_absolute_url_zh())
     else:
-        # If no events found, redirect to Chinese events list
-        return redirect('/events_zh/')
+        # If no events found, redirect to events list
+        return redirect('user_interactions:events_zh')
+
+def intro_view(request):
+    """English intro page - visual-only welcome page"""
+    return render(request, 'intro.html')
+
+def intro_view_zh(request):
+    """Chinese intro page - visual-only welcome page"""
+    return render(request, 'intro_zh.html')

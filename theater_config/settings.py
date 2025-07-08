@@ -152,6 +152,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 CMS_TEMPLATES = [
     # English templates
     ('greeting.html', 'Greeting Template'),
+    ('intro.html', 'Intro Template'),
     ('base.html', 'Base Template'),
     ('home.html', 'Home Template'),
     ('about.html', 'About Us Template'),
@@ -165,6 +166,7 @@ CMS_TEMPLATES = [
     
     # Chinese templates (all with _zh suffix)
     ('greeting_zh.html', 'Greeting Template (Chinese)'),
+    ('intro_zh.html', 'Intro Template (Chinese)'),
     ('base_zh.html', 'Base Template (Chinese)'),
     ('home_zh.html', 'Home Template (Chinese)'),
     ('about_zh.html', 'About Us Template (Chinese)'),
