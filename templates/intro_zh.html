@@ -53,8 +53,8 @@
         
         /* Logo container - Universal frame for all logo shapes */
         .opera-logo {
-            width: 280px;
-            height: 200px;
+            width: 320px;
+            height: 240px;
             margin: 0 auto 2rem;
             position: relative;
             background-color: rgba(255, 255, 255, 0.95);
@@ -80,7 +80,7 @@
         .welcome-text {
             font-family: Georgia, serif;
             font-size: 3.5rem;
-            margin-bottom: 1rem;
+            margin-bottom: 0.2rem;
             line-height: 1.2;
             color: #d4af37;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
@@ -159,13 +159,6 @@
             <h2 class="theater-name">
                 {% placeholder "theater_name" or %}歌剧院{% endplaceholder %}
             </h2>
-            
-            <!-- Optional subtitle -->
-            <div class="intro-subtitle">
-                {% placeholder "intro_subtitle" or %}
-                    在世界上最美丽的歌剧院之一体验非凡的演出
-                {% endplaceholder %}
-            </div>
         </div>
     </div>
 </body>
