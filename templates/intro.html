@@ -1,0 +1,95 @@
+{% load cms_tags menu_tags sekizai_tags %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>{% placeholder "intro_page_title" or %}Theater Display{% endplaceholder %}</title>
+    {% render_block "css" %}
+    <style>
+        /* Reset and base styles - Optimized for 1280x400 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 1280px;
+            height: 400px; 
+            max-height: 100%;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            overflow: hidden;
+        }
+
+        /* Content wrapper - Fixed for 1280x400 */
+        .content-wrapper {
+            width: 1280px;
+            height: 400px;
+            position: relative;
+            background: transparent;
+            overflow: hidden;
+        }
+        
+        /* Intro container - Full screen */
+        .intro-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 10;
+            background: #000;
+        }
+        
+        /* Logo container - Full screen coverage */
+        .opera-logo {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .opera-logo img {
+            max-width: 95%;
+            max-height: 95%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }
+
+        /* Mobile responsive - though primarily for 1280x400 */
+        @media screen and (max-width: 768px) {
+            .opera-logo {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    </style>
+    {% render_block "js" %}
+</head>
+
+<body>
+    {% cms_toolbar %}
+    <div class="content-wrapper">
+        <div class="intro-container">
+            <!-- Theater logo - Full screen -->
+            <div class="opera-logo">
+                {% placeholder "theater_logo" or %}
+                    <img src="{% static 'images/theater-logo.png' %}" alt="Theater Logo">
+                {% endplaceholder %}
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

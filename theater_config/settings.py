@@ -161,6 +161,7 @@ CMS_TEMPLATES = [
     ('feedback.html', 'Feedback Template'),
     ('feedback_thank_you.html', 'Feedback Thank You Template'),
     ('email_subscribe.html', 'Email Subscribe Template'),
+    ('intro.html', 'Intro Page'),
     
     # Russian templates (all with _ru suffix)
     ('greeting_ru.html', 'Greeting Template (Russian)'),
