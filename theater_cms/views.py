@@ -388,7 +388,7 @@ def current_event_zh(request):
     """Redirect to the current event's detail page (Chinese)"""
     event = determine_current_event()
     if event:
-        return redirect(event.get_absolute_url_zh())
+        return redirect(reverse('user_interactions:event_detail_zh', kwargs={'slug': event.slug}))
     else:
         # If no events found, redirect to events list
         return redirect('user_interactions:events_zh')
