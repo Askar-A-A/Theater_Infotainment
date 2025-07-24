@@ -1,8 +1,24 @@
 from pathlib import Path
 import os
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Detect current Git branch to use different databases
+def get_git_branch():
+    """Get current git branch name"""
+    try:
+        import subprocess
+        result = subprocess.run(['git', 'branch', '--show-current'], 
+                               capture_output=True, text=True, cwd=BASE_DIR)
+        branch = result.stdout.strip()
+        return branch if branch else 'main'
+    except:
+        return 'main'
+
+# Get current branch
+CURRENT_BRANCH = get_git_branch()
 
 
 # Quick-start development settings - unsuitable for production
@@ -91,7 +107,7 @@ WSGI_APPLICATION = 'theater_config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'db.sqlite3',
+        'NAME': f'db_{CURRENT_BRANCH}.sqlite3',  # Branch-specific database
     }
 }
 
