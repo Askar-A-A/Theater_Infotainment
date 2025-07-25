@@ -1,9 +1,9 @@
-{% extends "base_ru.html" %}
+{% extends "base_lt.html" %}
 {% load cms_tags %}
 {% load static %}
 
 {% block title %}
-    {{ event_title_ru }} - {% placeholder "theater_name" or %}Оперный театр{% endplaceholder %}
+    {{ event_title_lt }} - {% placeholder "theater_name" or %}Operos teatras{% endplaceholder %}
 {% endblock %}
 
 {% block wrapper_style %}
@@ -15,7 +15,7 @@
         width: 1280px;
     }
     
-    /* Hide the default navigation icons from base_ru.html to prevent overlap */
+    /* Hide the default navigation icons from base_lt.html to prevent overlap */
     .home-nav,
     .greetings-nav {
         display: none !important;
@@ -348,7 +348,7 @@
 {% block content %}
 <div class="theater-container" id="theater-container">
     <!-- Scroll Indicators - Match home page -->
-    <div class="scroll-indicator bottom visible" id="scroll-down">↕<span>Прокрутка</span></div>
+    <div class="scroll-indicator bottom visible" id="scroll-down">↕<span>Slinkimas</span></div>
     
     <!-- Fade overlays for better visual indication -->
     <div class="scroll-fade top" id="fade-top"></div>
@@ -359,10 +359,10 @@
     <div class="event-header">
         <div class="event-title-section">
             <h1 class="event-title">
-                {{ event_title_ru }}
+                {{ event_title_lt }}
             </h1>
             <div class="event-composer">
-                {{ event_composer_ru }}
+                {{ event_composer_lt }}
             </div>
             <div class="event-dates">
                 {{ event.date_range_display }}
@@ -371,10 +371,10 @@
         <div class="event-image-section">
             <div class="event-image-container">
                 {% if event.image %}
-                    <img src="{{ event.image.url }}" alt="{{ event_title_ru }}" class="event-image">
+                    <img src="{{ event.image.url }}" alt="{{ event_title_lt }}" class="event-image">
                 {% else %}
                     <div style="width: 100%; height: 220px; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; color: #888; font-size: 16px;">
-                        Изображение недоступно
+                        Paveikslas neprieinamas
                     </div>
                 {% endif %}
             </div>
@@ -384,9 +384,9 @@
     <!-- Event Description - Full Width -->
     <div class="event-description-section">
         <div class="event-section">
-            <h2>О спектакле</h2>
+            <h2>Apie spektaklį</h2>
             <div class="event-description">
-                {{ event_about_content_ru|safe|default:"Описание спектакля скоро будет обновлено." }}
+                {{ event_about_content_lt|safe|default:"Spektaklio aprašymas netrukus bus atnaujintas." }}
             </div>
         </div>
     </div>
@@ -395,37 +395,37 @@
     <div class="event-content">
         <div class="performance-details-section">
             <div class="event-section">
-                <h2>Детали спектакля</h2>
+                <h2>Spektaklio informacija</h2>
                 
                 <!-- Performance details in two columns -->
                 <div class="performance-details-grid">
                     <div class="performance-details-column">
                         <div class="detail-item">
-                            <span class="detail-label">Язык:</span>
-                            <span class="detail-value">{{ event_language_ru|default:"Не указан" }}</span>
+                            <span class="detail-label">Kalba:</span>
+                            <span class="detail-value">{{ event_language_lt|default:"Nenurodyta" }}</span>
                         </div>
                         <div class="detail-item">
-                            <span class="detail-label">Дирижер:</span>
-                            <span class="detail-value">{{ event_conductor_ru|default:"Не указан" }}</span>
+                            <span class="detail-label">Dirigentas:</span>
+                            <span class="detail-value">{{ event_conductor_lt|default:"Nenurodytas" }}</span>
                         </div>
                     </div>
                     <div class="performance-details-column">
                         <div class="detail-item">
-                            <span class="detail-label">Режиссер:</span>
-                            <span class="detail-value">{{ event_director_ru|default:"Не указан" }}</span>
+                            <span class="detail-label">Režisierius:</span>
+                            <span class="detail-value">{{ event_director_lt|default:"Nenurodytas" }}</span>
                         </div>
                         <div class="detail-item">
-                            <span class="detail-label">Продолжительность:</span>
-                            <span class="detail-value">{{ event_duration_ru|default:"Не указана" }}</span>
+                            <span class="detail-label">Trukmė:</span>
+                            <span class="detail-value">{{ event_duration_lt|default:"Nenurodyta" }}</span>
                         </div>
                     </div>
                 </div>
                 
                 <!-- Cast information within the same section -->
                 <div class="cast-section">
-                    <h3 style="color: #ffd700; font-size: 20px; margin-bottom: 10px; font-weight: bold;">Информация о составе</h3>
+                    <h3 style="color: #ffd700; font-size: 20px; margin-bottom: 10px; font-weight: bold;">Atlikėjų informacija</h3>
                     <div class="cast-content">
-                        {{ event_cast_content_ru|safe|default:"Информация о составе скоро будет обновлена." }}
+                        {{ event_cast_content_lt|safe|default:"Atlikėjų informacija netrukus bus atnaujinta." }}
                     </div>
                 </div>
             </div>
@@ -435,7 +435,7 @@
     <!-- Additional Details -->
     {% if event.additional_details %}
     <div class="event-section">
-        <h2>Дополнительная информация</h2>
+        <h2>Papildoma informacija</h2>
         <div class="additional-content">
             {{ event.additional_details|safe }}
         </div>
@@ -444,13 +444,13 @@
 
     <!-- Navigation buttons -->
     <div class="nav-buttons">
-        <a href="/events_ru/" class="nav-button">
+        <a href="/events_lt/" class="nav-button">
             <i class="fas fa-arrow-left"></i>
-            Назад к спектаклям
+            Atgal į spektaklius
         </a>
-        <a href="/home_ru/" class="nav-button">
+        <a href="/home_lt/" class="nav-button">
             <i class="fas fa-home"></i>
-            Главная
+            Pagrindinis
         </a>
     </div>
     </div> <!-- Close theater-content -->

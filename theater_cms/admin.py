@@ -157,41 +157,41 @@ class EventSponsorImageInline(admin.TabularInline):
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
-    list_display = ('title', 'title_ru_short', 'composer', 'date_range_display', 'performance_count', 'is_active', 'schedule_button')
+    list_display = ('title', 'title_lt_short', 'composer', 'date_range_display', 'performance_count', 'is_active', 'schedule_button')
     prepopulated_fields = {'slug': ('title',)}
     list_filter = ('is_active',)
-    search_fields = ('title', 'composer', 'title_zh', 'composer_zh')
+    search_fields = ('title', 'composer', 'title_lt', 'composer_lt')
     fieldsets = (
         ('Basic Information', {
             'fields': ('title', 'slug', 'composer', 'image', 'is_active', 'sort_order')
         }),
-        ('Russian Translation', {
-            'fields': ('title_zh', 'composer_zh'),
+        ('Lietuvių kalba (Lithuanian Translation)', {
+            'fields': ('title_lt', 'composer_lt'),  # Changed from _zh to _lt
             'classes': ('collapse',),
-            'description': 'Russian translations for basic information'
+            'description': 'Pagrindinės informacijos vertimai į lietuvių kalbą'
         }),
         ('Duration Information', {
-            'fields': ('standard_duration', 'duration', 'duration_zh'),
+            'fields': ('standard_duration', 'duration', 'duration_lt'),  # Changed from _zh to _lt
             'description': 'Standard duration is used to automatically calculate end times when scheduling performances.'
         }),
         ('Content Details (English)', {
             'fields': ('about_content', 'language', 'conductor', 'director', 'cast_content', 'additional_details'),
             'classes': ('collapse',),
         }),
-        ('Content Details (Russian)', {
-            'fields': ('about_content_zh', 'language_zh', 'conductor_zh', 'director_zh', 'cast_content_zh'),
+        ('Išsamūs duomenys (Lithuanian Content)', {
+            'fields': ('about_content_lt', 'language_lt', 'conductor_lt', 'director_lt', 'cast_content_lt'),  # Changed from _zh to _lt
             'classes': ('collapse',),
-            'description': 'Russian translations for detailed content'
+            'description': 'Išsamaus turinio vertimai į lietuvių kalbą'
         }),
     )
     inlines = [EventSponsorImageInline]
     
-    def title_ru_short(self, obj):
-        """Show shortened Russian title in list view"""
-        if obj.title_zh:
-            return obj.title_zh[:30] + "..." if len(obj.title_zh) > 30 else obj.title_zh
+    def title_lt_short(self, obj):
+        """Show shortened Lithuanian title in list view"""
+        if obj.title_lt:  # Changed from title_zh to title_lt
+            return obj.title_lt[:30] + "..." if len(obj.title_lt) > 30 else obj.title_lt
         return "-"
-    title_ru_short.short_description = 'Russian Title'
+    title_lt_short.short_description = 'Lietuvių pavadinimas'
     
     # Add a field for the help text above the inline
     def change_view(self, request, object_id, form_url='', extra_context=None):
@@ -597,10 +597,10 @@ class SeasonalSponsorAdmin(admin.ModelAdmin):
         # Add custom styling and the page content button
         extra_context['extra_content'] = """
         <div style="margin-bottom: 20px; padding: 15px; background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 4px;">
-            <h3 style="margin-top: 0; color: #417690;">Sponsors Page Settings</h3>
-            <p style="margin-bottom: 15px; color: #666;">Manage the title and introduction text that appears on both English and Russian sponsors pages.</p>
+            <h3 style="margin-top: 0; color: #417690;">Rėmėjų puslapio nustatymai</h3>
+            <p style="margin-bottom: 15px; color: #666;">Tvarkykite pavadinimą ir įžangos tekstą, kuris rodomas anglų ir lietuvių rėmėjų puslapiuose.</p>
             <a href="{}" class="button" style="background-color: #417690; color: white; padding: 8px 15px; text-decoration: none; border-radius: 4px; font-weight: bold;">
-                Edit Page Title & Intro Text
+                Redaguoti puslapio pavadinimą ir įžangos tekstą
             </a>
         </div>
         """.format(extra_context['page_content_url'])
@@ -617,27 +617,27 @@ class SeasonalSponsorAdmin(admin.ModelAdmin):
         class SponsorPageContentForm(forms.ModelForm):
             class Meta:
                 model = SponsorPageContent
-                fields = ['title', 'intro_text', 'title_ru', 'intro_text_ru']
+                fields = ['title', 'intro_text', 'title_lt', 'intro_text_lt']
                 widgets = {
                     'title': forms.TextInput(attrs={'style': 'width: 100%; font-size: 16px; padding: 8px;'}),
-                    'title_ru': forms.TextInput(attrs={'style': 'width: 100%; font-size: 16px; padding: 8px;'}),
+                    'title_lt': forms.TextInput(attrs={'style': 'width: 100%; font-size: 16px; padding: 8px;'}),
                     'intro_text': forms.Textarea(attrs={'style': 'width: 100%; min-height: 120px; resize: vertical;', 'rows': 5}),
-                    'intro_text_ru': forms.Textarea(attrs={'style': 'width: 100%; min-height: 120px; resize: vertical;', 'rows': 5}),
+                    'intro_text_lt': forms.Textarea(attrs={'style': 'width: 100%; min-height: 120px; resize: vertical;', 'rows': 5}),
                 }
         
         if request.method == 'POST':
             form = SponsorPageContentForm(request.POST, instance=content_instance)
             if form.is_valid():
                 form.save()
-                self.message_user(request, "Sponsors page content updated successfully.")
+                self.message_user(request, "Rėmėjų puslapio turinys sėkmingai atnaujintas.")
                 return redirect('admin:theater_cms_seasonalsponsor_changelist')
         else:
             form = SponsorPageContentForm(instance=content_instance)
         
         context = {
             'form': form,
-            'title': 'Edit Sponsors Page Content',
-            'subtitle': 'Manage the title and introduction text for both English and Russian sponsors pages',
+            'title': 'Redaguoti rėmėjų puslapio turinį',
+            'subtitle': 'Tvarkykite pavadinimą ir įžangos tekstą anglų ir lietuvių rėmėjų puslapiams',
             'opts': self.model._meta,
             'has_change_permission': True,
             'extra_style': """
@@ -718,7 +718,7 @@ class UserFeedbackAdmin(admin.ModelAdmin):
         if len(obj.comments) > 50:
             return f"{obj.comments[:50]}..."
         return obj.comments
-    display_comments.short_description = 'Comments'
+    display_comments.short_description = 'Komentarai'
     
     def has_add_permission(self, request):
         """Prevent admins from manually adding feedback"""
@@ -741,10 +741,10 @@ class UserFeedbackAdmin(admin.ModelAdmin):
         # Add a notice explaining why editing is disabled
         extra_context['additional_info'] = """
         <div style="margin: 20px 0; padding: 10px 15px; background-color: #fef9e7; border-left: 4px solid #f1c40f;">
-            <h3 style="margin-top: 0; color: #7d6608;">Feedback Integrity Notice</h3>
-            <p>User feedback cannot be edited to maintain the integrity and authenticity of customer reviews. 
-            This helps ensure transparency and trust in our feedback system.</p>
-            <p>Inappropriate content can still be removed using the delete option if necessary.</p>
+            <h3 style="margin-top: 0; color: #7d6608;">Atsiliepimų vientisumo pranešimas</h3>
+            <p>Vartotojų atsiliepimai negali būti redaguojami, kad būtų išsaugotas klientų atsiliepimų vientisumas ir autentiškumas. 
+            Tai padeda užtikrinti mūsų atsiliepimų sistemos skaidrumą ir patikimumą.</p>
+            <p>Netinkamas turinys vis dar gali būti pašalintas naudojant trynimo parinktį, jei reikia.</p>
         </div>
         """
         

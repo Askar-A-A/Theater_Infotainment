@@ -1,10 +1,10 @@
-{% extends "base_ru.html" %}
+{% extends "base_lt.html" %}
 {% load cms_tags %}
 {% load static %}
 {% load menu_tags %}
 
 {% block title %}
-    {% placeholder "home_page_title" or %}Оперный театр{% endplaceholder %}
+    {% placeholder "home_page_title" or %}Operos teatras{% endplaceholder %}
 {% endblock %}
 
 {% block wrapper_style %}
@@ -233,7 +233,7 @@
 {% block content %}
 <div class="theater-container" id="theater-container">
     <!-- Scroll Indicators -->
-    <div class="scroll-indicator bottom visible" id="scroll-down">↕<span>Прокрутка</span></div>
+    <div class="scroll-indicator bottom visible" id="scroll-down">↕<span>Slinkimas</span></div>
     
     <!-- Fade overlays for better visual indication -->
     <div class="scroll-fade top" id="fade-top"></div>
@@ -243,50 +243,50 @@
         <!-- Menu Items - Now including Today's Performance as first item -->
         <div class="menu-grid">
             <!-- Today's Performance as a menu item -->
-            <a href="{% url 'user_interactions:current_event_ru' %}" class="menu-item today-performance" style="text-decoration: none;">
+            <a href="{% url 'user_interactions:current_event_lt' %}" class="menu-item today-performance" style="text-decoration: none;">
                 {% if current_event and current_event.image %}
                     <div class="today-event-image">
                         <img src="{{ current_event.image.url }}" alt="{{ current_event.title }}">
                     </div>
                     <div class="menu-title">
-                        {{ current_event_title_ru }}
-                        {% if current_event_composer_ru %}
-                            <span class="event-composer">{{ current_event_composer_ru }}</span>
+                        {{ current_event_title_lt }}
+                        {% if current_event_composer_lt %}
+                            <span class="event-composer">{{ current_event_composer_lt }}</span>
                         {% endif %}
                     </div>
                 {% elif current_event %}
                     <div class="today-fallback">🎭</div>
                     <div class="menu-title">
-                        {{ current_event_title_ru }}
-                        {% if current_event_composer_ru %}
-                            <span class="event-composer">{{ current_event_composer_ru }}</span>
+                        {{ current_event_title_lt }}
+                        {% if current_event_composer_lt %}
+                            <span class="event-composer">{{ current_event_composer_lt }}</span>
                         {% endif %}
                     </div>
                 {% else %}
                     <div class="menu-icon">🎟️</div>
-                    <div class="menu-title">Сегодняшний спектакль</div>
+                    <div class="menu-title">Šiandienos spektaklis</div>
                 {% endif %}
             </a>
             
-            <a href="/events_ru/" class="menu-item">
+            <a href="/events_lt/" class="menu-item">
                 <div class="menu-icon">📅</div>
-                <h2 class="menu-title">Спектакли и события</h2>
+                <h2 class="menu-title">Spektakliai ir renginiai</h2>
             </a>
-            <a href="/about_ru/" class="menu-item">
+            <a href="/about_lt/" class="menu-item">
                 <div class="menu-icon">🎭</div>
-                <h2 class="menu-title">О нас</h2>
+                <h2 class="menu-title">Apie mus</h2>
             </a>
-            <a href="/qa_ru/" class="menu-item">
+            <a href="/qa_lt/" class="menu-item">
                 <div class="menu-icon">❓</div>
-                <h2 class="menu-title">Вопросы и ответы</h2>
+                <h2 class="menu-title">Klausimai ir atsakymai</h2>
             </a>
-            <a href="/email-subscribe_ru/" class="menu-item">
+            <a href="/email-subscribe_lt/" class="menu-item">
                 <div class="menu-icon">✉️</div>
-                <h2 class="menu-title">Подписка на рассылку</h2>
+                <h2 class="menu-title">Prenumeratos užsakymas</h2>
             </a>
-            <a href="/feedback_ru/" class="menu-item">
+            <a href="/feedback_lt/" class="menu-item">
                 <div class="menu-icon">💬</div>
-                <h2 class="menu-title">Оставить отзыв</h2>
+                <h2 class="menu-title">Palikti atsiliepimą</h2>
             </a>
         </div>
     </div>

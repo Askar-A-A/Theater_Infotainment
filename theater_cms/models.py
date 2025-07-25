@@ -63,8 +63,6 @@ class EventCard(CMSPlugin):
     
     def __str__(self):
         return self.title
-    
-
 
 # Models for user interaction/data
 
@@ -114,7 +112,6 @@ class QAItemPlugin(CMSPlugin):
     
     def __str__(self):
         return self.question
-    
 
 class Event(models.Model):
     title = models.CharField(max_length=200)
@@ -127,23 +124,23 @@ class Event(models.Model):
     cast_content = models.TextField(blank=True)
     duration = models.CharField(max_length=50, blank=True)
     
-    # Russian translation fields
-    title_zh = models.CharField(max_length=200, blank=True, verbose_name="Title (Russian)", 
-                               help_text="Russian translation of the event title")
-    composer_zh = models.CharField(max_length=100, blank=True, verbose_name="Composer (Russian)",
-                                  help_text="Russian translation of composer name")
-    about_content_zh = models.TextField(blank=True, verbose_name="About Content (Russian)",
-                                       help_text="Russian translation of the about content")
-    language_zh = models.CharField(max_length=100, blank=True, verbose_name="Language (Russian)",
-                                  help_text="e.g., 'На итальянском языке с русскими субтитрами'")
-    conductor_zh = models.CharField(max_length=100, blank=True, verbose_name="Conductor (Russian)",
-                                   help_text="Russian translation of conductor name")
-    director_zh = models.CharField(max_length=100, blank=True, verbose_name="Director (Russian)",
-                                  help_text="Russian translation of director name")
-    cast_content_zh = models.TextField(blank=True, verbose_name="Cast Content (Russian)",
-                                      help_text="Russian translation of cast information")
-    duration_zh = models.CharField(max_length=50, blank=True, verbose_name="Duration (Russian)",
-                                  help_text="e.g., 'Около 3 часов (включая антракт)'")
+    # Lithuanian translation fields
+    title_lt = models.CharField(max_length=200, blank=True, verbose_name="Pavadinimas (lietuviškai)", 
+                               help_text="Renginio pavadinimo lietuviškas vertimas")
+    composer_lt = models.CharField(max_length=100, blank=True, verbose_name="Kompozitorius (lietuviškai)",
+                                  help_text="Kompozitoriaus vardo lietuviškas vertimas")
+    about_content_lt = models.TextField(blank=True, verbose_name="Aprašymas (lietuviškai)",
+                                       help_text="Renginio aprašymo lietuviškas vertimas")
+    language_lt = models.CharField(max_length=100, blank=True, verbose_name="Kalba (lietuviškai)",
+                                  help_text="pvz., 'Italų kalba su lietuviškais subtitrais'")
+    conductor_lt = models.CharField(max_length=100, blank=True, verbose_name="Dirigentas (lietuviškai)",
+                                   help_text="Dirigento vardo lietuviškas vertimas")
+    director_lt = models.CharField(max_length=100, blank=True, verbose_name="Režisierius (lietuviškai)",
+                                  help_text="Režisieriaus vardo lietuviškas vertimas")
+    cast_content_lt = models.TextField(blank=True, verbose_name="Atlikėjų informacija (lietuviškai)",
+                                      help_text="Atlikėjų informacijos lietuviškas vertimas")
+    duration_lt = models.CharField(max_length=50, blank=True, verbose_name="Trukmė (lietuviškai)",
+                                  help_text="pvz., 'Apie 3 valandas (su pertrauka)'")
     
     image = models.ImageField(upload_to='events/', blank=True, null=True)
     is_active = models.BooleanField(default=True)
@@ -156,43 +153,43 @@ class Event(models.Model):
     
     # Helper methods for language-aware content
     def get_title(self, language='en'):
-        if language == 'ru' and self.title_zh:
-            return self.title_zh
+        if language == 'lt' and self.title_lt:
+            return self.title_lt
         return self.title
     
     def get_composer(self, language='en'):
-        if language == 'ru' and self.composer_zh:
-            return self.composer_zh
+        if language == 'lt' and self.composer_lt:
+            return self.composer_lt
         return self.composer
     
     def get_about_content(self, language='en'):
-        if language == 'ru' and self.about_content_zh:
-            return self.about_content_zh
+        if language == 'lt' and self.about_content_lt:
+            return self.about_content_lt
         return self.about_content
     
     def get_language(self, language='en'):
-        if language == 'ru' and self.language_zh:
-            return self.language_zh
+        if language == 'lt' and self.language_lt:
+            return self.language_lt
         return self.language
     
     def get_conductor(self, language='en'):
-        if language == 'ru' and self.conductor_zh:
-            return self.conductor_zh
+        if language == 'lt' and self.conductor_lt:
+            return self.conductor_lt
         return self.conductor
     
     def get_director(self, language='en'):
-        if language == 'ru' and self.director_zh:
-            return self.director_zh
+        if language == 'lt' and self.director_lt:
+            return self.director_lt
         return self.director
     
     def get_cast_content(self, language='en'):
-        if language == 'ru' and self.cast_content_zh:
-            return self.cast_content_zh
+        if language == 'lt' and self.cast_content_lt:
+            return self.cast_content_lt
         return self.cast_content
     
     def get_duration(self, language='en'):
-        if language == 'ru' and self.duration_zh:
-            return self.duration_zh
+        if language == 'lt' and self.duration_lt:
+            return self.duration_lt
         return self.duration
     
     def save(self, *args, **kwargs):
@@ -202,6 +199,9 @@ class Event(models.Model):
     
     def get_absolute_url(self):
         return reverse('user_interactions:event_detail', kwargs={'slug': self.slug})
+    
+    def get_absolute_url_lt(self):
+        return reverse('user_interactions:event_detail_lt', kwargs={'slug': self.slug})
     
     def update_date_range(self):
         """Update the start/end times and date range display based on performances"""
@@ -242,6 +242,8 @@ class Event(models.Model):
         ordering = ['sort_order', 'start_datetime']
         verbose_name = "Event"
         verbose_name_plural = "Events"
+
+# ... (Performance, SeasonalSponsor, EventSponsorImage classes remain the same) ...
 
 class Performance(models.Model):
     """Individual performance/showing of an event"""
@@ -308,17 +310,17 @@ class SponsorPageContent(models.Model):
         help_text="Introduction text displayed below the title"
     )
     
-    # Russian content
-    title_ru = models.CharField(
+    # Lithuanian content
+    title_lt = models.CharField(
         max_length=200,
-        default="Наши уважаемые спонсоры", 
-        verbose_name="Page Title (Russian)",
-        help_text="Main title displayed on the Russian sponsors page"
+        default="Mūsų gerbiami rėmėjai", 
+        verbose_name="Puslapio pavadinimas (lietuviškai)",
+        help_text="Pagrindinis pavadinimas, rodomas lietuviškame rėmėjų puslapyje"
     )
-    intro_text_ru = models.TextField(
-        default="Наш театр с гордостью благодарит спонсоров за их щедрую поддержку. Их приверженность искусству позволяет нам продолжать традиции совершенства и делиться магией оперы с аудиторией со всего мира.",
-        verbose_name="Introduction Text (Russian)", 
-        help_text="Introduction text displayed below the title on Russian page"
+    intro_text_lt = models.TextField(
+        default="Mūsų teatras didžiuojasi pripažindamas savo rėmėjų dosnų palaikymą. Jų atsidavimas menams leidžia mums tęsti tobulumo tradicijas ir dalytis operos magija su žiūrovais iš viso pasaulio.",
+        verbose_name="Įžangos tekstas (lietuviškai)", 
+        help_text="Įžangos tekstas, rodomas po pavadinimu lietuvių puslapyje"
     )
     
     def save(self, *args, **kwargs):

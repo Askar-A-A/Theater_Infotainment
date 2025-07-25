@@ -1,9 +1,9 @@
-{% extends "base_ru.html" %}
+{% extends "base_lt.html" %}
 {% load cms_tags %}
 {% load static %}
 
 {% block title %}
-    {% placeholder "about_page_title" or %}О нас - {% placeholder "theater_name" or %}Оперный театр{% endplaceholder %}{% endplaceholder %}
+    {% placeholder "about_page_title" or %}Apie mus - {% placeholder "theater_name" or %}Operos teatras{% endplaceholder %}{% endplaceholder %}
 {% endblock %}
 
 {% block wrapper_style %}
@@ -249,7 +249,7 @@
 <div class="theater-container">
     <div class="main-content" id="main-content">
         <!-- Only bottom indicator -->
-        <div class="scroll-indicator bottom visible" id="scroll-down">↕<span>Прокрутка</span></div>
+        <div class="scroll-indicator bottom visible" id="scroll-down">↕<span>Slinkimas</span></div>
         
         <!-- Fade overlays for better visual indication -->
         <div class="scroll-fade top" id="fade-top"></div>
@@ -260,23 +260,23 @@
             <div class="section-bg intro-bg"></div>
             <div class="content-box">
                 <div class="section-icon">🏛️</div>
-                <h2 class="section-title">{% placeholder "overview_title" or %}Добро пожаловать в наш театр{% endplaceholder %}</h2>
+                <h2 class="section-title">{% placeholder "overview_title" or %}Sveiki atvykę į mūsų teatrą{% endplaceholder %}</h2>
                 <div class="section-content">
                     {% placeholder "overview_content" or %}
                     <p>
-                        Добро пожаловать в наш театр - один из ведущих оперных театров мира и оплот культурного совершенства.
-                        На протяжении поколений мы посвящали себя представлению мирового уровня 
-                        оперных и балетных постановок, которые вдохновляют, бросают вызов и трогают наших зрителей.
+                        Sveiki atvykę į mūsų teatrą - vieną iš pasaulio pirmaujančių operos teatrų ir kultūrinio tobulumo centrą.
+                        Kartas po kartos mes skyrėme save pasaulinio lygio 
+                        operos ir baleto spektaklių pristatymui, kurie įkvepia, metą iššūkius ir paveiks mūsų žiūrovus.
                     </p>
                     <p>
-                        Наша приверженность художественным инновациям при сохранении классических традиций 
-                        делает нас культурным маяком в международном мире исполнительских искусств. 
-                        Каждый сезон мы собираем лучших певцов, музыкантов и творческих артистов 
-                        со всего мира, чтобы создавать незабываемые впечатления.
+                        Mūsų atsidavimas meninėms inovacijoms, tuo pačiu išsaugant klasikines tradicijas, 
+                        daro mus kultūriniu švyturiu tarptautiniame scenos menų pasaulyje. 
+                        Kiekvieną sezoną mes renkame geriausius dainininkus, muzikantus ir kūrybos menininkus 
+                        iš viso pasaulio, kad sukurtume neužmirštamus spektaklius.
                     </p>
                     <p>
-                        Мы приглашаем вас исследовать нашу богатую историю, отмеченные наградами постановки 
-                        и исключительные таланты, которые делают наш театр ценным культурным учреждением.
+                        Kviečiame jus pažinti mūsų turtingą istoriją, apdovanotus spektaklius 
+                        ir išskirtinius talentus, kurie daro mūsų teatrą vertinga kultūros įstaiga.
                     </p>
                     {% endplaceholder %}
                 </div>
@@ -288,26 +288,26 @@
             <div class="section-bg history-bg"></div>
             <div class="content-box">
                 <div class="section-icon">📜</div>
-                <h2 class="section-title">{% placeholder "history_title" or %}Наша богатая история{% endplaceholder %}</h2>
+                <h2 class="section-title">{% placeholder "history_title" or %}Mūsų turtinga istorija{% endplaceholder %}</h2>
                 <div class="section-content">
                     {% placeholder "history_content" or %}
                     <p>
-                        Наш театр имеет славную историю, начавшуюся с торжественного открытия в 1869 году, 
-                        когда он стал одним из самых архитектурно значимых оперных театров Европы. 
-                        Спроектированное знаменитыми архитекторами, это здание в стиле неоренессанса 
-                        быстро стало символом культурного совершенства и художественных достижений.
+                        Mūsų teatras turi šlovingą istoriją, prasidėjusią iškilmingu atidarmu 1869 metais, 
+                        kada jis tapo vienu iš architektūriškai reikšmingiausių Europos operos teatrų. 
+                        Suprojektuotas žymių architektų, šis neorenesanso stiliaus pastatas 
+                        greitai tapo kultūrinio tobulumo ir meninių pasiekimų simboliu.
                     </p>
                     <p>
-                        В эпоху Belle Époque и в начале 20-го века легендарные дирижеры и композиторы, 
-                        включая Густава Малера и Рихарда Штрауса, помогли утвердить нашу репутацию 
-                        в области музыкального совершенства и инноваций. Многие важные произведения 
-                        впервые были представлены на нашей сцене, закрепив наше место в музыкальной истории.
+                        Belle Époque epochoje ir XX amžiaus pradžioje legendiniai dirigentai ir kompozitoriai, 
+                        įskaitant Gustavą Mahlerį ir Richardą Štausą, padėjo utvirti mūsų reputaciją 
+                        muzikinio tobulumo ir inovacijų srityje. Daugelis svarbių kūrinių 
+                        pirmą kartą buvo pristatyti mūsų scenoje, įtvirtindami mūsų vietą muzikos istorijoje.
                     </p>
                     <p>
-                        Несмотря на вызовы, включая восстановление после Второй мировой войны, 
-                        наш театр продолжает процветать. В 2019 году мы отпраздновали 150 лет 
-                        художественных достижений, подтвердив наше обязательство сохранять 
-                        богатое наследие, принимая инновации будущего.
+                        Nepaisant iššūkių, įskaitant atkūrimą po Antrojo pasaulinio karo, 
+                        mūsų teatras tęsia klestėjimą. 2019 metais mes paminėjome 150 metų 
+                        meninių pasiekimų, patvirtindami mūsų įsipareigojimą išsaugoti 
+                        turtingą paveldą, priimant ateities inovacijas.
                     </p>
                     {% endplaceholder %}
                 </div>
@@ -319,21 +319,21 @@
             <div class="section-bg awards-bg"></div>
             <div class="content-box">
                 <div class="section-icon">🏆</div>
-                <h2 class="section-title">{% placeholder "awards_title" or %}Награды и признание{% endplaceholder %}</h2>
+                <h2 class="section-title">{% placeholder "awards_title" or %}Apdovanojimai ir pripažinimas{% endplaceholder %}</h2>
                 <div class="section-content">
                     {% placeholder "awards_intro" or %}
                     <p>
-                        Наша приверженность художественному совершенству была отмечена 
-                        многочисленными международными наградами и почестями. 
-                        Эти награды подчеркивают значительный вклад нашего театра 
-                        в исполнительские искусства и нашу преданность высочайшим 
-                        стандартам музыкальных и театральных постановок.
+                        Mūsų atsidavimas meniniam tobulumui buvo pažymėtas 
+                        daugybės tarptautinių apdovanojimų ir pagarbos ženklų. 
+                        Šie apdovanojimai pabrėžia reikšmingą mūsų teatro indėlį 
+                        į scenos menus ir mūsų atsidavimą aukščiausiems 
+                        muzikos ir teatro spektaklių standartams.
                     </p>
                     <p>
-                        Наши постановки получили признание во всем мире, особенно 
-                        за инновационные сценические интерпретации классических произведений, 
-                        превосходные оркестровые исполнения и нашу способность привлекать 
-                        и воспитывать выдающиеся вокальные таланты со всего мира.
+                        Mūsų spektakliai sulaukė pripažinimo visame pasaulyje, ypač 
+                        už novatoriškas klasikinių kūrinių scenines interpretacijas, 
+                        puikius orkestro atliekamus ir mūsų gebėjimą pritraukti 
+                        bei ugdyti išskirtinius vokalinius talentus iš viso pasaulio.
                     </p>
                     {% endplaceholder %}
                 </div>

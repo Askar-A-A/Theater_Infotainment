@@ -1,9 +1,9 @@
-{% extends "base_ru.html" %}
+{% extends "base_lt.html" %}
 {% load cms_tags %}
 {% load static %}
 
 {% block title %}
-    {% placeholder "subscribe_page_title" or %}Подписка - Оперный театр{% endplaceholder %}
+    {% placeholder "subscribe_page_title" or %}Prenumerata - Operos teatras{% endplaceholder %}
 {% endblock %}
 
 {% block wrapper_style %}
@@ -33,7 +33,7 @@
 
     .subscribe-content-box {
         width: 100%;
-        max-width: 900px; /* Increased for Russian text */
+        max-width: 900px; /* Increased for Lithuanian text */
         padding: 18px;
         background-color: rgba(0, 0, 0, 0.8);
         border: 3px solid #d4af37;
@@ -67,7 +67,7 @@
         line-height: 1.3;
         margin-bottom: 12px;
         margin-top: 0;
-        max-width: 95%; /* Increased for Russian text */
+        max-width: 95%; /* Increased for Lithuanian text */
         margin-left: auto;
         margin-right: auto;
     }
@@ -75,7 +75,7 @@
     /* Simplified form layout for Android WebView compatibility */
     .subscribe-form {
         width: 100%;
-        max-width: 700px; /* Increased for Russian text */
+        max-width: 700px; /* Increased for Lithuanian text */
         margin: 0 auto;
         text-align: left;
         /* COMPATIBILITY: Use block layout instead of flexbox for better Android support */
@@ -296,15 +296,15 @@
 <div class="subscribe-container">
     <div class="subscribe-content-box">
         <h1 class="subscribe-title">
-            {% placeholder "subscribe_title" or %}Будьте на связи{% endplaceholder %}
+            {% placeholder "subscribe_title" or %}Palaikykite ryšį{% endplaceholder %}
         </h1>
         
         <div class="divider"></div>
         
         <div class="subscribe-intro">
             {% placeholder "subscribe_intro" or %}
-                Подпишитесь на нашу рассылку, чтобы первыми узнавать о предстоящих спектаклях,
-                специальных мероприятиях и эксклюзивных предложениях театра.
+                Prenumeruokite mūsų naujienlaiškį, kad pirmieji sužinotumėte apie artėjančius spektaklius,
+                specialius renginius ir išskirtinius teatro pasiūlymus.
             {% endplaceholder %}
         </div>
         
@@ -315,9 +315,9 @@
             <div class="form-row">
                 <!-- Email field -->
                 <div class="form-group">
-                    <label for="email">Адрес электронной почты</label>
+                    <label for="email">El. pašto adresas</label>
                     <input type="email" id="email" name="email" class="form-control" 
-                           placeholder="Ваш адрес электронной почты" required
+                           placeholder="Jūsų el. pašto adresas" required
                            value="{{ request.session.subscription_data.email|default:'' }}">
                     {% if request.session.subscription_errors.email %}
                         <div class="error-message">
@@ -328,9 +328,9 @@
                 
                 <!-- Name field -->
                 <div class="form-group">
-                    <label for="name">Имя (необязательно)</label>
+                    <label for="name">Vardas (neprivaloma)</label>
                     <input type="text" id="name" name="name" class="form-control" 
-                           placeholder="Ваше имя"
+                           placeholder="Jūsų vardas"
                            value="{{ request.session.subscription_data.name|default:'' }}">
                 </div>
             </div>
@@ -339,7 +339,7 @@
             <div class="button-row">
                 <div class="button-cell">
                     <button type="submit" class="btn-subscribe">
-                        {% placeholder "subscribe_button_text" or %}Подписаться{% endplaceholder %}
+                        {% placeholder "subscribe_button_text" or %}Prenumeruoti{% endplaceholder %}
                     </button>
                 </div>
                 <div class="button-cell">
@@ -348,7 +348,7 @@
                         <input type="checkbox" id="preferences" name="preferences" 
                                {% if request.session.subscription_data.preferences %}checked{% endif %}>
                         <label for="preferences">
-                            Я хочу получать информацию о специальных мероприятиях, премьерах и эксклюзивных предложениях.
+                            Noriu gauti informaciją apie specialius renginius, premjeras ir išskirtinius pasiūlymus.
                         </label>
                     </div>
                 </div>
@@ -361,7 +361,7 @@
                 <p>{{ request.session.subscription_message }}</p>
             {% else %}
                 {% placeholder "subscribe_success" or %}
-                    <p>Спасибо за подписку на нашу рассылку. Вы будете получать обновления о наших предстоящих мероприятиях и спектаклях.</p>
+                    <p>Ačiū už prenumeratą. Gausite atnaujinimus apie mūsų artėjančius renginius ir spektaklius.</p>
                 {% endplaceholder %}
             {% endif %}
         </div>

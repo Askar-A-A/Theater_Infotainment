@@ -1,9 +1,9 @@
-{% extends "base_ru.html" %}
+{% extends "base_lt.html" %}
 {% load cms_tags %}
 {% load static %}
 
 {% block title %}
-    {% placeholder "qa_page_title" or %}Часто задаваемые вопросы - {% placeholder "theater_name" or %}Оперный театр{% endplaceholder %}{% endplaceholder %}
+    {% placeholder "qa_page_title" or %}Dažnai užduodami klausimai - {% placeholder "theater_name" or %}Operos teatras{% endplaceholder %}{% endplaceholder %}
 {% endblock %}
 
 {% block extra_css %}
@@ -210,68 +210,68 @@
 {% block content %}
 <div class="qa-container" id="qa-container">
     <!-- Scroll Indicators -->
-    <div class="scroll-indicator bottom visible" id="scroll-down">↕<span>Прокрутка</span></div>
+    <div class="scroll-indicator bottom visible" id="scroll-down">↕<span>Slinkimas</span></div>
     
     <!-- Fade overlays for better visual indication -->
     <div class="scroll-fade top" id="fade-top"></div>
     <div class="scroll-fade bottom" id="fade-bottom"></div>
     
-    <h1 class="page-title">{% placeholder "faq_heading" or %}Часто задаваемые вопросы{% endplaceholder %}</h1>
+    <h1 class="page-title">{% placeholder "faq_heading" or %}Dažnai užduodami klausimai{% endplaceholder %}</h1>
     <div class="qa-list">
         <!-- Core QA Items -->
         <!-- QA Item 1 -->
         <div class="qa-item">
             <div class="question">
-                <span>{% placeholder "question_1" or %}Где можно арендовать бинокль для оперы?{% endplaceholder %}</span>
+                <span>{% placeholder "question_1" or %}Kur galima išsinuomoti žiūronus operai?{% endplaceholder %}</span>
                 <span class="arrow-emoji">▼</span>
             </div>
             <div class="answer">
-                {% placeholder "answer_1" or %}Бинокли можно арендовать в гардеробе за небольшую плату. Может потребоваться залог.{% endplaceholder %}
+                {% placeholder "answer_1" or %}Žiūronus galima išsinuomoti rūbinėje už nedidelį mokestį. Gali prireikti užstato.{% endplaceholder %}
             </div>
         </div>
 
         <!-- QA Item 2 -->
         <div class="qa-item">
             <div class="question">
-                <span>{% placeholder "question_2" or %}К кому обратиться, если я потерял вещи во время спектакля?{% endplaceholder %}</span>
+                <span>{% placeholder "question_2" or %}Pas ką kreiptis, jei pamesiau daiktus spektaklio metu?{% endplaceholder %}</span>
                 <span class="arrow-emoji">▼</span>
             </div>
             <div class="answer">
-                {% placeholder "answer_2" or %}Пожалуйста, обратитесь к сотрудникам службы надзора в комнате отдыха справа от главной лестницы во время антракта или после спектакля.<br><br>
-                Если вы обнаружили пропажу позже, обратитесь в службу поддержки клиентов (внутренняя безопасность) по телефону +XX-XXX-XXXXXX или по адресу customerservice@theater.com.{% endplaceholder %}
+                {% placeholder "answer_2" or %}Prašome kreiptis į priežiūros darbuotojus poilsio kambaryje dešinėje nuo pagrindinio laiptų antrakto metu arba po spektaklio.<br><br>
+                Jei pamestos daiktus pastebėjote vėliau, kreipkitės į klientų aptarnavimo tarnybą (vidaus apsauga) telefonu +XX-XXX-XXXXXX arba el. paštu customerservice@theater.com.{% endplaceholder %}
             </div>
         </div>
 
         <!-- QA Item 3 -->
         <div class="qa-item">
             <div class="question">
-                <span>{% placeholder "question_3" or %}Могу ли я смотреть спектакли в прямом эфире дома?{% endplaceholder %}</span>
+                <span>{% placeholder "question_3" or %}Ar galiu žiūrėti spektaklius tiesiogiai namuose?{% endplaceholder %}</span>
                 <span class="arrow-emoji">▼</span>
             </div>
             <div class="answer">
-                {% placeholder "answer_3" or %}Да, избранные спектакли транслируются в прямом эфире через нашу цифровую платформу. Посетите наш сайт потокового вещания для получения дополнительной информации.{% endplaceholder %}
+                {% placeholder "answer_3" or %}Taip, išrinktų spektaklių tiesioginės transliacijos yra prieinamos per mūsų skaitmeninę platformą. Apsilankykite mūsų transliacijų svetainėje norėdami gauti daugiau informacijos.{% endplaceholder %}
             </div>
         </div>
 
         <!-- QA Item 4 -->
         <div class="qa-item">
             <div class="question">
-                <span>{% placeholder "question_4" or %}Какие преимущества я получаю как партнер оперного театра?{% endplaceholder %}</span>
+                <span>{% placeholder "question_4" or %}Kokius privalumus gaunu kaip operos teatro partneris?{% endplaceholder %}</span>
                 <span class="arrow-emoji">▼</span>
             </div>
             <div class="answer">
-                {% placeholder "answer_4" or %}Партнеры пользуются различными преимуществами, включая приоритетное бронирование билетов, эксклюзивные мероприятия, экскурсии за кулисы и специальные скидки. Обратитесь в наш партнерский офис для получения подробной информации.{% endplaceholder %}
+                {% placeholder "answer_4" or %}Partneriai mėgaujasi įvairiais privalumais, įskaitant pirmenybę bilietų rezervavime, ekskluzyvius renginius, ekskursijas už scenos ir specialias nuolaidas. Kreipkitės į mūsų partnerių biurą išsamesnei informacijai.{% endplaceholder %}
             </div>
         </div>
 
         <!-- QA Item 5 -->
         <div class="qa-item">
             <div class="question">
-                <span>{% placeholder "question_5" or %}Каковы требования к дресс-коду для посещения спектаклей?{% endplaceholder %}</span>
+                <span>{% placeholder "question_5" or %}Kokie yra aprangos kodai spektakliams lankyti?{% endplaceholder %}</span>
                 <span class="arrow-emoji">▼</span>
             </div>
             <div class="answer">
-                {% placeholder "answer_5" or %}Хотя строгих требований к дресс-коду нет, обычно рекомендуется вечерняя одежда. Многие гости выбирают официальный наряд: мужчины носят костюмы или смокинги, женщины - вечерние платья или элегантные костюмы. Мы рекомендуем избегать слишком повседневной одежды из уважения к артистам и другим гостям.{% endplaceholder %}
+                {% placeholder "answer_5" or %}Nors griežtų aprangos kodų nėra, paprastai rekomenduojama vakarinė apranga. Daugelis svečių renkasi formalų apdarą: vyrai dėvi kostiumus ar smokingus, moterys - vakarinius sukneles ar elegantiškus kostiumus. Rekomenduojame vengti per kasdienės aprangos iš pagarbos atlikėjams ir kitiems svečiams.{% endplaceholder %}
             </div>
         </div>
 

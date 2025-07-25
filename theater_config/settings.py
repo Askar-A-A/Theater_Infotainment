@@ -179,18 +179,18 @@ CMS_TEMPLATES = [
     ('email_subscribe.html', 'Email Subscribe Template'),
     ('intro.html', 'Intro Page'),
     
-    # Russian templates (all with _ru suffix)
-    ('greeting_ru.html', 'Greeting Template (Russian)'),
-    ('base_ru.html', 'Base Template (Russian)'),
-    ('home_ru.html', 'Home Template (Russian)'),
-    ('about_ru.html', 'About Us Template (Russian)'),
-    ('events_ru.html', 'Events Template (Russian)'),
-    ('event_detail_ru.html', 'Event Detail Template (Russian)'),
-    ('q&a_ru.html', 'Questions and Answers Template (Russian)'),
-    ('sponsors_ru.html', 'Sponsors Template (Russian)'),
-    ('feedback_ru.html', 'Feedback Template (Russian)'),
-    ('feedback_thank_you_ru.html', 'Feedback Thank You Template (Russian)'),
-    ('email_subscribe_ru.html', 'Email Subscribe Template (Russian)'),
+    # Lithuanian templates (all with _lt suffix)
+    ('greeting_lt.html', 'Greeting Template (Lithuanian)'),
+    ('base_lt.html', 'Base Template (Lithuanian)'),
+    ('home_lt.html', 'Home Template (Lithuanian)'),
+    ('about_lt.html', 'About Us Template (Lithuanian)'),
+    ('events_lt.html', 'Events Template (Lithuanian)'),
+    ('event_detail_lt.html', 'Event Detail Template (Lithuanian)'),
+    ('q&a_lt.html', 'Questions and Answers Template (Lithuanian)'),
+    ('sponsors_lt.html', 'Sponsors Template (Lithuanian)'),
+    ('feedback_lt.html', 'Feedback Template (Lithuanian)'),
+    ('feedback_thank_you_lt.html', 'Feedback Thank You Template (Lithuanian)'),
+    ('email_subscribe_lt.html', 'Email Subscribe Template (Lithuanian)'),
 ]
 
 SITE_ID = 1

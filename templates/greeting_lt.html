@@ -2,11 +2,11 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="lt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>{% placeholder "greeting_page_title" or %}Добро пожаловать - Оперный театр{% endplaceholder %}</title>
+    <title>{% placeholder "greeting_page_title" or %}Sveiki atvykę - Operos teatras{% endplaceholder %}</title>
     <link rel="stylesheet" href="{% static 'css/font-awesome/all.min.css' %}">
     {% render_block "css" %}
     <style>
@@ -271,7 +271,7 @@
             var languageDropdown = document.getElementById('languageDropdown');
             var selectedLanguageText = document.getElementById('selectedLanguage');
             
-            var activeLanguageName = "Русский";
+            var activeLanguageName = "Lietuvių";
             
             if (selectedLanguageText) {
                 selectedLanguageText.textContent = activeLanguageName;
@@ -318,12 +318,12 @@
             <div class="language-selector">
                 <div class="language-dropdown" id="languageDropdown">
                     <div class="language-selected">
-                        <span id="selectedLanguage">Русский</span>
+                        <span id="selectedLanguage">Lietuvių</span>
                         <span class="dropdown-arrow">▼</span>
                     </div>
                     <div class="language-options">
                         <a href="/" class="language-option" data-lang="English">English</a>
-                        <a href="/greeting_ru/" class="language-option active" data-lang="Русский">Русский</a>
+                        <a href="/greeting_lt/" class="language-option active" data-lang="Lietuvių">Lietuvių</a>
                     </div>
                 </div>
             </div>
@@ -339,11 +339,11 @@
                     
                     <div class="welcome-titles-container">
                         <h1 class="welcome-title">
-                            {% placeholder "greeting_title" or %}Добро пожаловать в{% endplaceholder %}
+                            {% placeholder "greeting_title" or %}Sveiki atvykę į{% endplaceholder %}
                         </h1>
                         
                         <h2 class="welcome-subtitle">
-                            {% placeholder "theater_name" or %}Название театра{% endplaceholder %}
+                            {% placeholder "theater_name" or %}Teatro pavadinimas{% endplaceholder %}
                         </h2>
                     </div>
                 </div>
@@ -354,10 +354,10 @@
                         <div class="welcome-text">
                             {% placeholder "greeting_text" or %}
                             <p>
-                                Откройте для себя исключительные представления в одном из самых 
-                                красивых оперных театров мира. Наша цифровая информационно-развлекательная 
-                                система предоставляет информацию о сегодняшних спектаклях, предстоящих 
-                                мероприятиях и богатой истории нашего знаменитого учреждения.
+                                Atraskite išskirtinius spektaklius viename iš gražiausių 
+                                operos teatrų pasaulyje. Mūsų skaitmeninė informacinė-pramogų 
+                                sistema suteikia informaciją apie šiandienos spektaklius, artėjančius 
+                                renginius ir turtingą mūsų garsios institucijos istoriją.
                             </p>
                             {% endplaceholder %}
                         </div>
@@ -367,7 +367,7 @@
         </div>
         
         <!-- Forward Navigation Icon -->
-        <a href="/sponsors_ru/" class="forward-nav">
+        <a href="/sponsors_lt/" class="forward-nav">
             <div class="forward-icon">
                 &#x27A1;
             </div>

@@ -1,9 +1,9 @@
-{% extends "base_ru.html" %}
+{% extends "base_lt.html" %}
 {% load cms_tags %}
 {% load static %}
 
 {% block title %}
-    Обратная связь - {% placeholder "theater_name" or %}Оперный театр{% endplaceholder %}
+    Atsiliepimai - {% placeholder "theater_name" or %}Operos teatras{% endplaceholder %}
 {% endblock %}
 
 {% block wrapper_style %}
@@ -228,15 +228,15 @@
 <div class="feedback-container">
     <div class="feedback-content-box">
         <h1 class="feedback-title">
-            {% placeholder "feedback_page_title" or %}Поделитесь своим мнением{% endplaceholder %}
+            {% placeholder "feedback_page_title" or %}Pasidalykite savo nuomone{% endplaceholder %}
         </h1>
         
         <div class="divider"></div>
         
         <div class="feedback-intro">
             {% placeholder "feedback_page_subtitle" or %}
-                Мы ценим ваше мнение и стремимся обеспечить лучший оперный опыт.
-                Пожалуйста, поделитесь с нами своими мыслями.
+                Vertiname jūsų nuomonę ir siekiame užtikrinti geriausią operos patirtį.
+                Prašome pasidalyti su mumis savo mintimis.
             {% endplaceholder %}
         </div>
         
@@ -246,9 +246,9 @@
             
             <!-- Name field -->
             <div class="form-group">
-                <label for="name" class="form-label">Имя</label>
+                <label for="name" class="form-label">Vardas</label>
                 <input type="text" id="name" name="name" class="form-control" 
-                       placeholder="Необязательно" 
+                       placeholder="Neprivaloma" 
                        value="{{ request.session.feedback_data.name|default:'' }}">
                 {% if request.session.feedback_errors.name %}
                     <div class="error-message">
@@ -259,7 +259,7 @@
             
             <!-- Rating field -->
             <div class="form-group">
-                <label class="form-label">Ваша оценка</label>
+                <label class="form-label">Jūsų įvertinimas</label>
                 <div class="rating-container">
                     <span class="star" data-rating="1">⭐</span>
                     <span class="star" data-rating="2">⭐</span>
@@ -277,9 +277,9 @@
             
             <!-- Comments field -->
             <div class="form-group full-width">
-                <label for="comments" class="form-label">Ваш отзыв</label>
+                <label for="comments" class="form-label">Jūsų atsiliepimas</label>
                 <textarea id="comments" name="comments" class="form-control" 
-                          placeholder="Пожалуйста, поделитесь своими мыслями, предложениями или впечатлениями...">{{ request.session.feedback_data.comments|default:'' }}</textarea>
+                          placeholder="Prašome pasidalyti savo mintimis, pasiūlymais ar įspūdžiais...">{{ request.session.feedback_data.comments|default:'' }}</textarea>
                 {% if request.session.feedback_errors.comments %}
                     <div class="error-message">
                         {{ request.session.feedback_errors.comments }}
@@ -288,7 +288,7 @@
             </div>
             
             <!-- Submit button -->
-            <button type="submit" class="submit-button">Отправить отзыв</button>
+            <button type="submit" class="submit-button">Siųsti atsiliepimą</button>
         </form>
     </div>
 </div>
