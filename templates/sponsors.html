@@ -153,33 +153,32 @@
         vertical-align: middle;
     }
 
-    /* Default size for multiple sponsors - increased but safe */
+    /* Default size for multiple sponsors */
     .sponsors-grid .sponsor-item {
         width: 140px;
         height: 90px;
     }
 
-    /* Large size when max sponsors across both boxes is 1 - increased */
+    /* FIXED: Medium size when max sponsors across both boxes is 1 - reduced to fit screen */
     .sponsors-page.max-sponsors-1 .sponsor-item {
-        width: 280px !important;
-        height: 180px !important;
-        margin: 8px;
-    }
-
-    /* Medium size when max sponsors across both boxes is 2 - increased */
-    .sponsors-page.max-sponsors-2 .sponsor-item {
-        width: 200px !important;
-        height: 130px !important;
+        width: 220px !important;
+        height: 140px !important;
         margin: 6px;
     }
 
-    /* Small-medium size when max sponsors across both boxes is 3 - reduced to ensure single row */
+    /* Medium size when max sponsors across both boxes is 2 */
+    .sponsors-page.max-sponsors-2 .sponsor-item {
+        width: 200px !important;
+        height: 120px !important;
+        margin: 5px;
+    }
+
+    /* Small-medium size when max sponsors across both boxes is 3 */
     .sponsors-page.max-sponsors-3 .sponsor-item {
         width: 140px !important;
         height: 85px !important;
         margin: 2px;
     }
-    
     .sponsor-item:hover {
         transform: translateY(-2px);
         box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
