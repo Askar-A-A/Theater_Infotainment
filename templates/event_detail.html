@@ -88,11 +88,6 @@
         background: linear-gradient(to bottom, rgba(59, 57, 57, 1), rgba(59, 57, 57, 0));
     }
 
-    .scroll-fade.bottom {
-        bottom: 0;
-        background: linear-gradient(to top, rgba(59, 57, 57, 1), rgba(59, 57, 57, 0));
-    }
-
     /* Event header - simplified layout */
     .event-header {
         width: 100%;
@@ -243,6 +238,8 @@
         overflow-y: auto;
         word-wrap: break-word;
         overflow-wrap: break-word;
+        /* Add padding to prevent scrollbar overlay on text */
+        padding-right: 15px;
     }
 
     .cast-member {
@@ -380,7 +377,6 @@
     
     <!-- Fade overlays -->
     <div class="scroll-fade top" id="fade-top"></div>
-    <div class="scroll-fade bottom" id="fade-bottom"></div>
     
     <!-- Event Header -->
     <div class="event-header">
@@ -465,7 +461,6 @@
         var container = document.getElementById('event-detail-container');
         var scrollDown = document.getElementById('scroll-down');
         var fadeTop = document.getElementById('fade-top');
-        var fadeBottom = document.getElementById('fade-bottom');
         
         function updateScrollIndicators() {
             if (!container) return;
@@ -479,11 +474,11 @@
             if (scrollTop < maxScroll - 10) {
                 scrollDown.classList.remove('hidden');
                 scrollDown.classList.add('visible');
-                fadeBottom.style.opacity = '1';
+                fadeTop.style.opacity = '1';
             } else {
                 scrollDown.classList.add('hidden');
                 scrollDown.classList.remove('visible');
-                fadeBottom.style.opacity = '0';
+                fadeTop.style.opacity = '0';
             }
         }
         
