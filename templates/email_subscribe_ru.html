@@ -19,124 +19,93 @@
 
 {% block extra_css %}
 <style>
-    /* Simplified styles for Android 6.0/7.0 WebView compatibility */
+    /* Optimized for 1280x400 viewport */
     .subscribe-container {
         width: 100%;
         height: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 8px;
+        padding: 4px;
         box-sizing: border-box;
-        overflow-y: auto;
     }
 
     .subscribe-content-box {
         width: 100%;
-        max-width: 900px; /* Increased for Russian text */
-        padding: 18px;
+        max-width: 900px;
+        padding: 12px 16px;
         background-color: rgba(0, 0, 0, 0.8);
-        border: 3px solid #d4af37;
-        border-radius: 15px;
+        border: 2px solid #d4af37;
+        border-radius: 8px;
         text-align: center;
         box-sizing: border-box;
     }
     
-    /* Compact title styles */
+    /* Compact title */
     .subscribe-title {
         color: #d4af37;
-        font-size: 1.8rem;
+        font-size: 1.4rem;
         font-weight: bold;
-        margin-bottom: 6px;
+        margin-bottom: 3px;
         margin-top: 0;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     }
 
-    /* Simple divider line */
+    /* Compact divider */
     .divider {
-        width: 100px;
+        width: 60px;
         height: 2px;
         background-color: #d4af37;
-        margin: 0 auto 10px auto;
+        margin: 0 auto 5px auto;
     }
 
     /* Compact intro text */
     .subscribe-intro {
         color: #ffffff;
-        font-size: 1rem;
-        line-height: 1.3;
-        margin-bottom: 12px;
+        font-size: 0.9rem;
+        line-height: 1.2;
+        margin-bottom: 8px;
         margin-top: 0;
-        max-width: 95%; /* Increased for Russian text */
+        max-width: 95%;
         margin-left: auto;
         margin-right: auto;
     }
     
-    /* Simplified form layout for Android WebView compatibility */
+    /* Vertical form layout */
     .subscribe-form {
         width: 100%;
-        max-width: 700px; /* Increased for Russian text */
+        max-width: 500px;
         margin: 0 auto;
-        text-align: left;
-        /* COMPATIBILITY: Use block layout instead of flexbox for better Android support */
-        display: block;
+        text-align: center;
     }
 
-    /* Form row for side-by-side inputs */
-    .form-row {
-        display: table;
-        width: 100%;
-        table-layout: fixed;
-        margin-bottom: 15px;
-    }
-
-    /* Compact form groups */
+    /* Form groups stacked vertically */
     .form-group {
-        margin-bottom: 12px;
+        margin-bottom: 6px;
         text-align: left;
-        /* COMPATIBILITY: Use table-cell for consistent layout */
-        display: table-cell;
-        padding-right: 10px;
-        vertical-align: top;
-        width: 50%;
     }
 
-    .form-group:last-child {
-        padding-right: 0;
-    }
-
-    .form-group.full-width {
-        display: block;
-        width: 100%;
-        margin-bottom: 15px;
-    }
-
-    /* Compact form labels */
+    /* Form labels */
     .form-group label {
         display: block;
         color: #ffffff;
-        font-size: 1.1rem;
+        font-size: 1rem;
         font-weight: bold;
-        margin-bottom: 4px;
+        margin-bottom: 2px;
         text-align: left;
-        /* Ensure labels don't break awkwardly */
-        word-wrap: break-word;
-        hyphens: auto;
     }
 
-    /* Compact form controls */
+    /* Form controls */
     .form-control {
         width: 100%;
         background-color: rgba(255, 255, 255, 0.1);
         border: 2px solid rgba(255, 255, 255, 0.3);
-        border-radius: 6px;
+        border-radius: 4px;
         color: #ffffff;
-        padding: 10px 12px; /* Slightly increased padding */
+        padding: 8px 10px;
         font-size: 1rem;
         box-sizing: border-box;
-        min-height: 38px; /* Slightly taller for touch targets */
-        /* COMPATIBILITY: Explicit width handling for Android WebView */
-        max-width: 100%;
+        min-height: 32px;
     }
 
     .form-control:focus {
@@ -148,48 +117,45 @@
     /* Placeholder text */
     .form-control::placeholder {
         color: rgba(255, 255, 255, 0.6);
-        /* COMPATIBILITY: Ensure placeholder doesn't overflow on Android */
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
     }
 
-    /* Button row for proper alignment */
-    .button-row {
-        display: table;
-        width: 100%;
-        table-layout: fixed;
-        margin-top: 10px;
+    /* Checkbox container */
+    .checkbox-container {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 6px;
+        margin-top: 4px;
+        text-align: left;
+    }
+    
+    .checkbox-container input[type="checkbox"] {
+        margin-right: 6px;
+        margin-top: 2px;
+        width: 14px;
+        height: 14px;
+    }
+    
+    .checkbox-container label {
+        color: #ffffff;
+        font-size: 0.9rem;
+        line-height: 1.2;
+        font-weight: normal;
     }
 
-    .button-cell {
-        display: table-cell;
-        vertical-align: top;
-        padding-right: 10px;
-    }
-
-    .button-cell:last-child {
-        padding-right: 0;
-    }
-
-    /* Compact subscribe button */
+    /* Subscribe button */
     .btn-subscribe {
-        display: block;
-        width: 100%;
-        padding: 12px 24px;
-        font-size: 1.1rem;
+        display: inline-block;
+        padding: 8px 20px;
+        font-size: 1rem;
         color: #d4af37;
         background-color: transparent;
         border: 2px solid #d4af37;
-        border-radius: 6px;
+        border-radius: 4px;
         text-decoration: none;
         font-weight: bold;
+        margin-top: 4px;
         cursor: pointer;
-        min-height: 42px; /* Consistent button height */
-        /* COMPATIBILITY: Explicit button styling for Android WebView */
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
+        min-width: 120px;
     }
 
     .btn-subscribe:hover {
@@ -197,97 +163,25 @@
         background-color: #d4af37;
     }
 
-    /* Compact checkbox container */
-    .checkbox-container {
-        display: block;
-        margin-top: 12px;
-        margin-bottom: 8px;
-        text-align: left;
-        /* COMPATIBILITY: Use block layout for better text wrapping */
-        line-height: 1.4;
-    }
-    
-    .checkbox-container input[type="checkbox"] {
-        /* COMPATIBILITY: Float checkbox for better text wrapping on Android */
-        float: left;
-        margin-right: 8px;
-        margin-top: 2px;
-        /* Explicit sizing for touch targets */
-        width: 16px;
-        height: 16px;
-    }
-    
-    .checkbox-container label {
-        color: #ffffff;
-        font-size: 0.95rem;
-        line-height: 1.4;
-        font-weight: normal;
-        /* COMPATIBILITY: Block display with proper text flow */
-        display: block;
-        margin-left: 24px; /* Space for checkbox */
-        word-wrap: break-word;
-        hyphens: auto;
-    }
-
-    /* Clear floats */
-    .checkbox-container::after {
-        content: "";
-        display: table;
-        clear: both;
-    }
-
     /* Error messages */
     .error-message {
         color: #ff6b6b;
-        font-size: 0.9rem;
-        margin-top: 3px;
+        font-size: 0.8rem;
+        margin-top: 2px;
         text-align: left;
     }
 
     /* Success message */
     .success-message {
         display: none;
-        padding: 12px;
+        padding: 8px;
         background-color: rgba(0, 150, 0, 0.2);
         border: 2px solid rgba(0, 150, 0, 0.5);
-        border-radius: 8px;
+        border-radius: 6px;
         color: #ffffff;
-        margin-top: 15px;
+        margin-top: 8px;
         text-align: center;
-    }
-
-    /* COMPATIBILITY: Fallback for smaller screens */
-    @media screen and (max-width: 1280px) {
-        .subscribe-container {
-            padding: 6px;
-        }
-        
-        .subscribe-content-box {
-            padding: 15px;
-            max-width: 95%;
-        }
-        
-        /* Stack form elements on smaller screens */
-        .form-row {
-            display: block;
-        }
-        
-        .form-group {
-            display: block;
-            width: 100%;
-            padding-right: 0;
-            margin-bottom: 15px;
-        }
-        
-        .button-row {
-            display: block;
-        }
-        
-        .button-cell {
-            display: block;
-            padding-right: 0;
-            margin-bottom: 10px;
-        }
+        font-size: 0.9rem;
     }
 </style>
 {% endblock %}
@@ -311,48 +205,40 @@
         <form id="subscribe-form" class="subscribe-form" method="post" action="{% url 'user_interactions:process_subscription' %}">
             {% csrf_token %}
             
-            <!-- Form fields in a row -->
-            <div class="form-row">
-                <!-- Email field -->
-                <div class="form-group">
-                    <label for="email">Адрес электронной почты</label>
-                    <input type="email" id="email" name="email" class="form-control" 
-                           placeholder="Ваш адрес электронной почты" required
-                           value="{{ request.session.subscription_data.email|default:'' }}">
-                    {% if request.session.subscription_errors.email %}
-                        <div class="error-message">
-                            {{ request.session.subscription_errors.email }}
-                        </div>
-                    {% endif %}
-                </div>
-                
-                <!-- Name field -->
-                <div class="form-group">
-                    <label for="name">Имя (необязательно)</label>
-                    <input type="text" id="name" name="name" class="form-control" 
-                           placeholder="Ваше имя"
-                           value="{{ request.session.subscription_data.name|default:'' }}">
-                </div>
+            <!-- Email field -->
+            <div class="form-group">
+                <label for="email">Адрес электронной почты</label>
+                <input type="email" id="email" name="email" class="form-control" 
+                       placeholder="Ваш адрес электронной почты" required
+                       value="{{ request.session.subscription_data.email|default:'' }}">
+                {% if request.session.subscription_errors.email %}
+                    <div class="error-message">
+                        {{ request.session.subscription_errors.email }}
+                    </div>
+                {% endif %}
             </div>
             
-            <!-- Button and checkbox row -->
-            <div class="button-row">
-                <div class="button-cell">
-                    <button type="submit" class="btn-subscribe">
-                        {% placeholder "subscribe_button_text" or %}Подписаться{% endplaceholder %}
-                    </button>
-                </div>
-                <div class="button-cell">
-                    <!-- Checkbox -->
-                    <div class="checkbox-container">
-                        <input type="checkbox" id="preferences" name="preferences" 
-                               {% if request.session.subscription_data.preferences %}checked{% endif %}>
-                        <label for="preferences">
-                            Я хочу получать информацию о специальных мероприятиях, премьерах и эксклюзивных предложениях.
-                        </label>
-                    </div>
-                </div>
+            <!-- Name field -->
+            <div class="form-group">
+                <label for="name">Имя (необязательно)</label>
+                <input type="text" id="name" name="name" class="form-control" 
+                       placeholder="Ваше имя"
+                       value="{{ request.session.subscription_data.name|default:'' }}">
             </div>
+            
+            <!-- Checkbox -->
+            <div class="checkbox-container">
+                <input type="checkbox" id="preferences" name="preferences" 
+                       {% if request.session.subscription_data.preferences %}checked{% endif %}>
+                <label for="preferences">
+                    Я хочу получать информацию о специальных мероприятиях, премьерах и эксклюзивных предложениях.
+                </label>
+            </div>
+            
+            <!-- Submit button -->
+            <button type="submit" class="btn-subscribe">
+                {% placeholder "subscribe_button_text" or %}Подписаться{% endplaceholder %}
+            </button>
         </form>
         
         <!-- Success message -->
@@ -370,18 +256,15 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Simplified JavaScript for WebView compatibility
         var subscribeForm = document.getElementById('subscribe-form');
         var successMessage = document.getElementById('success-message');
         
-        // If success message is visible, hide the form
         if (successMessage && successMessage.style.display === 'block') {
             if (subscribeForm) {
                 subscribeForm.style.display = 'none';
             }
         }
         
-        // Clear messages using basic XMLHttpRequest for older browser compatibility
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '{% url "user_interactions:clear_subscription_messages" %}', true);
         xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');

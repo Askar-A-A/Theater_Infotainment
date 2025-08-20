@@ -94,10 +94,7 @@
         background: linear-gradient(to bottom, rgba(59, 57, 57, 1), rgba(59, 57, 57, 0));
     }
 
-    .scroll-fade.bottom {
-        bottom: 0;
-        background: linear-gradient(to top, rgba(59, 57, 57, 1), rgba(59, 57, 57, 0));
-    }
+    /* Removed bottom scroll fade for better Android 6.0 WebView compatibility */
 
     /* Section styling - horizontal layout for 1280x400 */
     .content-section {
@@ -253,7 +250,6 @@
         
         <!-- Fade overlays for better visual indication -->
         <div class="scroll-fade top" id="fade-top"></div>
-        <div class="scroll-fade bottom" id="fade-bottom"></div>
         
         <!-- Introduction Section -->
         <div class="content-section" id="section-0">
@@ -348,7 +344,6 @@
         var container = document.getElementById('main-content');
         var scrollDown = document.getElementById('scroll-down');
         var fadeTop = document.getElementById('fade-top');
-        var fadeBottom = document.getElementById('fade-bottom');
         
         function updateScrollIndicators() {
             if (!container) return;
@@ -362,11 +357,9 @@
             if (scrollTop < maxScroll - 10) {
                 scrollDown.classList.remove('hidden');
                 scrollDown.classList.add('visible');
-                fadeBottom.style.opacity = '1';
             } else {
                 scrollDown.classList.add('hidden');
                 scrollDown.classList.remove('visible');
-                fadeBottom.style.opacity = '0';
             }
         }
         

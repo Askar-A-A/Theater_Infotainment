@@ -8,7 +8,6 @@
 
 {% block wrapper_style %}
 <style>
-    /* Disable scrolling for feedback page */
     .content-wrapper {
         overflow: hidden;
         height: 400px;
@@ -19,102 +18,93 @@
 
 {% block extra_css %}
 <style>
-    /* Compact styles for 1280x400 viewport */
+    /* Optimized for 1280x400 viewport */
     .feedback-container {
         width: 100%;
         height: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 8px;
+        padding: 4px;
         box-sizing: border-box;
-        overflow-y: auto;
     }
 
     .feedback-content-box {
         width: 100%;
-        max-width: 800px;
-        padding: 15px;
+        max-width: 900px;
+        padding: 12px 16px;
         background-color: rgba(0, 0, 0, 0.8);
-        border: 3px solid #d4af37;
-        border-radius: 15px;
+        border: 2px solid #d4af37;
+        border-radius: 8px;
         text-align: center;
         box-sizing: border-box;
     }
     
-    /* Compact title styles */
+    /* Compact title */
     .feedback-title {
         color: #d4af37;
-        font-size: 1.8rem;
+        font-size: 1.4rem;
         font-weight: bold;
-        margin-bottom: 6px;
+        margin-bottom: 3px;
         margin-top: 0;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     }
 
-    /* Smaller divider line */
+    /* Compact divider */
     .divider {
-        width: 100px;
+        width: 60px;
         height: 2px;
         background-color: #d4af37;
-        margin: 0 auto 8px auto;
+        margin: 0 auto 5px auto;
     }
 
     /* Compact intro text */
     .feedback-intro {
         color: #ffffff;
-        font-size: 1rem;
-        line-height: 1.3;
-        margin-bottom: 12px;
+        font-size: 0.9rem;
+        line-height: 1.2;
+        margin-bottom: 8px;
         margin-top: 0;
-        max-width: 90%;
+        max-width: 95%;
         margin-left: auto;
         margin-right: auto;
     }
     
-    /* Horizontal form layout for wider screen */
+    /* Vertical form layout */
     .feedback-form {
         width: 100%;
-        max-width: 700px;
+        max-width: 600px;
         margin: 0 auto;
         text-align: left;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 15px;
     }
 
-    /* Form groups - arranged horizontally */
+    /* Form groups */
     .form-group {
-        margin-bottom: 8px;
+        margin-bottom: 6px;
         text-align: left;
-        flex: 1;
-        min-width: 200px;
     }
 
-    .form-group.full-width {
-        flex: 100%;
-    }
-
-    /* Compact form labels */
+    /* Form labels */
     .form-label {
         display: block;
         color: #ffffff;
-        font-size: 1.1rem;
+        font-size: 1rem;
         font-weight: bold;
-        margin-bottom: 3px;
+        margin-bottom: 2px;
         text-align: left;
     }
 
-    /* Compact form controls */
+    /* Form controls */
     .form-control {
         width: 100%;
         background-color: rgba(255, 255, 255, 0.1);
         border: 2px solid rgba(255, 255, 255, 0.3);
-        border-radius: 6px;
+        border-radius: 4px;
         color: #ffffff;
-        padding: 10px 12px;
+        padding: 8px 10px;
         font-size: 1rem;
         box-sizing: border-box;
+        min-height: 32px;
     }
 
     .form-control:focus {
@@ -123,35 +113,29 @@
         border-color: #d4af37;
     }
 
-    /* Placeholder text */
     .form-control::placeholder {
         color: rgba(255, 255, 255, 0.6);
     }
 
-    /* Compact textarea */
+    /* Textarea */
     textarea.form-control {
-        min-height: 80px;
+        min-height: 60px;
         resize: vertical;
     }
 
-    /* Compact name field */
-    #name {
-        height: 38px;
-    }
-
-    /* Compact rating stars - horizontal layout */
+    /* Rating stars */
     .rating-container {
         display: flex;
         align-items: center;
         justify-content: flex-start;
         margin-top: 2px;
-        gap: 8px;
+        gap: 4px;
     }
 
     .star {
         color: rgba(255, 255, 255, 0.4);
         cursor: pointer;
-        font-size: 1.5rem;
+        font-size: 1.2rem;
         display: inline-block;
     }
 
@@ -159,21 +143,20 @@
         color: #ffd700;
     }
 
-    /* Compact submit button */
+    /* Submit button */
     .submit-button {
         display: inline-block;
-        padding: 10px 24px;
-        font-size: 1.1rem;
+        padding: 8px 20px;
+        font-size: 1rem;
         color: #d4af37;
         background-color: transparent;
         border: 2px solid #d4af37;
-        border-radius: 6px;
+        border-radius: 4px;
         text-decoration: none;
         font-weight: bold;
-        margin-top: 8px;
+        margin-top: 4px;
         cursor: pointer;
-        width: auto;
-        min-width: 140px;
+        min-width: 120px;
     }
 
     .submit-button:hover {
@@ -184,42 +167,22 @@
     /* Error messages */
     .error-message {
         color: #ff6b6b;
-        font-size: 0.9rem;
-        margin-top: 3px;
+        font-size: 0.8rem;
+        margin-top: 2px;
         text-align: left;
     }
 
     /* Success message */
     .success-message {
         display: none;
-        padding: 12px;
+        padding: 8px;
         background-color: rgba(0, 150, 0, 0.2);
         border: 2px solid rgba(0, 150, 0, 0.5);
-        border-radius: 8px;
+        border-radius: 6px;
         color: #ffffff;
-        margin-top: 15px;
+        margin-top: 8px;
         text-align: center;
-    }
-
-    /* Mobile responsive */
-    @media screen and (max-width: 1280px) {
-        .feedback-container {
-            padding: 6px;
-        }
-        
-        .feedback-content-box {
-            padding: 12px;
-        }
-        
-        .feedback-form {
-            flex-direction: column;
-            gap: 10px;
-        }
-        
-        .form-group {
-            flex: none;
-            min-width: auto;
-        }
+        font-size: 0.9rem;
     }
 </style>
 {% endblock %}
@@ -240,7 +203,6 @@
             {% endplaceholder %}
         </div>
         
-        <!-- Form container -->
         <form id="feedbackForm" class="feedback-form" method="post" action="{% url 'user_interactions:process_feedback' %}">
             {% csrf_token %}
             
@@ -276,7 +238,7 @@
             </div>
             
             <!-- Comments field -->
-            <div class="form-group full-width">
+            <div class="form-group">
                 <label for="comments" class="form-label">Ваш отзыв</label>
                 <textarea id="comments" name="comments" class="form-control" 
                           placeholder="Пожалуйста, поделитесь своими мыслями, предложениями или впечатлениями...">{{ request.session.feedback_data.comments|default:'' }}</textarea>
@@ -295,11 +257,9 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Simplified star rating for WebView compatibility
         var stars = document.querySelectorAll('.star');
         var ratingInput = document.getElementById('rating');
         
-        // Set initial star states
         if (ratingInput && ratingInput.value > 0) {
             for (var i = 0; i < stars.length; i++) {
                 var star = stars[i];
@@ -311,13 +271,11 @@
             }
         }
         
-        // Add click listeners
         for (var j = 0; j < stars.length; j++) {
             stars[j].onclick = function() {
                 var rating = this.getAttribute('data-rating');
                 ratingInput.value = rating;
                 
-                // Update all stars
                 for (var k = 0; k < stars.length; k++) {
                     var currentStar = stars[k];
                     var currentStarRating = parseInt(currentStar.getAttribute('data-rating'));
