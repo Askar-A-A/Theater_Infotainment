@@ -1,0 +1,169 @@
+/* Custom Sponsor Admin Styles */
+
+/* Hide default Django delete checkboxes */
+.field-DELETE {
+    display: none !important;
+}
+
+/* Style for trash icon delete buttons */
+.delete-sponsor-btn {
+    background: none !important;
+    border: none !important;
+    color: #dc3545 !important;
+    font-size: 18px !important;
+    cursor: pointer !important;
+    padding: 8px !important;
+    transition: all 0.2s ease !important;
+    border-radius: 3px !important;
+}
+
+.delete-sponsor-btn:hover {
+    background-color: #f8d7da !important;
+    transform: scale(1.1);
+}
+
+.delete-sponsor-btn:disabled {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+}
+
+/* Improve sponsor table layout */
+.field-delete_action {
+    text-align: center;
+    width: 80px;
+}
+
+.field-delete_action th {
+    text-align: center;
+}
+
+/* Style for image status indicators */
+.field-image_status span {
+    font-weight: bold;
+    padding: 4px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+.field-image_status span[style*="green"] {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.field-image_status span[style*="red"] {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f1b0b7;
+}
+
+/* Improve inline form styling */
+.tabular.inline-related .delete-sponsor-btn {
+    margin: 0 auto;
+    display: block;
+}
+
+/* Message styling for delete confirmations */
+.sponsor-delete-message {
+    animation: slideInRight 0.3s ease-out;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Improve table row hover effects */
+.results tbody tr:hover .delete-sponsor-btn {
+    background-color: #f8d7da !important;
+}
+
+/* Better spacing for inline forms */
+.tabular .field-delete_action {
+    vertical-align: middle;
+    text-align: center;
+}
+
+/* Hide the "Delete?" column header for default checkboxes */
+.results th.action-checkbox-column {
+    display: none !important;
+}
+
+.results td.action-checkbox {
+    display: none !important;
+}
+
+/* Improve inline form delete column */
+.inline-related .field-delete_action {
+    width: 60px;
+    text-align: center;
+}
+
+.inline-related .field-delete_action th {
+    width: 60px;
+    text-align: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .delete-sponsor-btn {
+        font-size: 16px !important;
+        padding: 6px !important;
+    }
+    
+    .field-delete_action {
+        width: 60px;
+    }
+}
+
+/* Tooltip styling */
+.delete-sponsor-btn[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 1000;
+    margin-bottom: 5px;
+}
+
+.delete-sponsor-btn[title]:hover::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent;
+    border-top-color: #333;
+    z-index: 1000;
+}
+
+/* Improve form validation error styling */
+.sponsor-form-errors {
+    background-color: #f8d7da;
+    border: 1px solid #f1b0b7;
+    color: #721c24;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+/* Better spacing for admin forms */
+.form-row .field-delete_action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+} 

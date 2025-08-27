@@ -33,6 +33,29 @@ def setup_admin_groups():
 
 # Call this function when Django loads (in apps.py or in a migration)
 
+# Custom forms for sponsor validation
+class SeasonalSponsorForm(forms.ModelForm):
+    class Meta:
+        model = SeasonalSponsor
+        fields = '__all__'
+    
+    def clean_image(self):
+        image = self.cleaned_data.get('image')
+        if not image:
+            raise forms.ValidationError("An image is required for all sponsors. Please upload a sponsor logo.")
+        return image
+
+class EventSponsorImageForm(forms.ModelForm):
+    class Meta:
+        model = EventSponsorImage
+        fields = '__all__'
+    
+    def clean_image(self):
+        image = self.cleaned_data.get('image')
+        if not image:
+            raise forms.ValidationError("An image is required for all sponsors. Please upload a sponsor logo.")
+        return image
+
 class PerformanceInline(admin.TabularInline):
     model = Performance
     extra = 0  # Show no empty forms by default, use bulk scheduler instead
@@ -152,6 +175,7 @@ class PerformanceInline(admin.TabularInline):
 
 class EventSponsorImageInline(admin.TabularInline):
     model = EventSponsorImage
+    form = EventSponsorImageForm  # Use our custom form with validation
     extra = 1  # Show one empty form by default
     fields = ('name', 'image')  # website removed from fields
 
@@ -551,7 +575,15 @@ class PerformanceAdmin(admin.ModelAdmin):
 
 @admin.register(SeasonalSponsor)
 class SeasonalSponsorAdmin(admin.ModelAdmin):
-    list_display = ('name',)
+    list_display = ('name', 'image_status')
+    form = SeasonalSponsorForm  # Use our custom form with validation
+    
+    def image_status(self, obj):
+        """Show whether sponsor has an image"""
+        if obj.image:
+            return format_html('<span style="color: green;">✓ Has Image</span>')
+        return format_html('<span style="color: red;">✗ Missing Image</span>')
+    image_status.short_description = 'Image Status'
     
     def get_urls(self):
         urls = super().get_urls()
