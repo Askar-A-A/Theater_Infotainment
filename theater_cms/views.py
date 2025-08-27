@@ -121,11 +121,35 @@ def process_subscription(request):
 @require_POST
 def clear_subscription_messages(request):
     """Clear subscription success/message flags from session."""
-    if 'subscription_success' in request.session:
-        del request.session['subscription_success']
-    if 'subscription_message' in request.session:
-        del request.session['subscription_message']
-    return JsonResponse({'status': 'ok'})
+    try:
+        # Clear all subscription-related session data
+        session_keys_to_clear = [
+            'subscription_success',
+            'subscription_message',
+            'subscription_errors',
+            'subscription_data'
+        ]
+        
+        cleared_keys = []
+        for key in session_keys_to_clear:
+            if key in request.session:
+                del request.session[key]
+                cleared_keys.append(key)
+        
+        # Ensure session is saved
+        request.session.modified = True
+        
+        return JsonResponse({
+            'status': 'success',
+            'cleared_keys': cleared_keys,
+            'message': 'Subscription messages cleared successfully'
+        })
+    except Exception as e:
+        # Return success even on error to prevent client-side issues
+        return JsonResponse({
+            'status': 'error',
+            'message': str(e)
+        })
 
 def determine_current_event():
     """Utility function to find the current or next event"""
@@ -340,6 +364,16 @@ def about_view_zh(request):
 def email_subscribe_zh(request):
     """Chinese version of email subscribe page"""
     request.session['user_language'] = 'zh'
+    
+    # Clear old messages if user navigates back to subscription page
+    # This provides a fallback if JavaScript clearing fails
+    if not request.session.get('subscription_success') and not request.session.get('subscription_message'):
+        # Only clear if there are no active messages to display
+        session_keys_to_clear = ['subscription_errors', 'subscription_data']
+        for key in session_keys_to_clear:
+            if key in request.session:
+                del request.session[key]
+    
     return render(request, 'email_subscribe_zh.html')
 
 def qa_view_zh(request):
@@ -377,6 +411,16 @@ def about_view(request):
 def email_subscribe(request):
     """English version of email subscribe page"""
     request.session['user_language'] = 'en'
+    
+    # Clear old messages if user navigates back to subscription page
+    # This provides a fallback if JavaScript clearing fails
+    if not request.session.get('subscription_success') and not request.session.get('subscription_message'):
+        # Only clear if there are no active messages to display
+        session_keys_to_clear = ['subscription_errors', 'subscription_data']
+        for key in session_keys_to_clear:
+            if key in request.session:
+                del request.session[key]
+    
     return render(request, 'email_subscribe.html')
 
 def qa_view(request):

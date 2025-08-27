@@ -38,6 +38,15 @@ class SeasonalSponsorForm(forms.ModelForm):
     class Meta:
         model = SeasonalSponsor
         fields = '__all__'
+        widgets = {
+            'image': forms.ClearableFileInput(attrs={'style': 'display: none;'}),  # Hide clear checkbox
+        }
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Remove the "clear" checkbox for image field since images are mandatory
+        if 'image' in self.fields:
+            self.fields['image'].widget = forms.FileInput()
     
     def clean_image(self):
         image = self.cleaned_data.get('image')
@@ -49,6 +58,15 @@ class EventSponsorImageForm(forms.ModelForm):
     class Meta:
         model = EventSponsorImage
         fields = '__all__'
+        widgets = {
+            'image': forms.ClearableFileInput(attrs={'style': 'display: none;'}),  # Hide clear checkbox
+        }
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Remove the "clear" checkbox for image field since images are mandatory
+        if 'image' in self.fields:
+            self.fields['image'].widget = forms.FileInput()
     
     def clean_image(self):
         image = self.cleaned_data.get('image')

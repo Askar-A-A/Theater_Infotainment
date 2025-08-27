@@ -171,16 +171,31 @@
         text-align: left;
     }
 
-    /* Success message */
+    /* Success message - Enhanced for Android WebView 6.0 compatibility */
     .success-message {
         display: none;
         padding: 15px;
-        background-color: rgba(0, 150, 0, 0.2);
-        border: 2px solid rgba(0, 150, 0, 0.5);
+        background-color: rgba(0, 150, 0, 0.3); /* Slightly more visible */
+        border: 2px solid #00AA00; /* Solid color for better WebView support */
         border-radius: 8px;
         color: #ffffff;
         margin-top: 20px;
         text-align: center;
+        font-weight: bold; /* Make text more prominent */
+        min-height: 50px; /* Ensure minimum height */
+        /* Simplified properties for WebView compatibility */
+        box-sizing: border-box;
+        width: 100%;
+        position: relative;
+        z-index: 10; /* Ensure it appears above other elements */
+    }
+    
+    /* Force visibility when active - fallback for WebView */
+    .success-message[style*="display: block"],
+    .success-message.show {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
     }
 
     /* Mobile responsive - more compact */
@@ -338,22 +353,51 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Simplified JavaScript for WebView compatibility
+        // Improved JavaScript for Android WebView 6.0 compatibility
         var subscribeForm = document.getElementById('subscribe-form');
         var successMessage = document.getElementById('success-message');
         
+        // More reliable check for success message visibility
+        var isSuccessVisible = successMessage && 
+            (successMessage.style.display === 'block' || 
+             window.getComputedStyle(successMessage).display === 'block');
+        
         // If success message is visible, hide the form
-        if (successMessage && successMessage.style.display === 'block') {
-            if (subscribeForm) {
-                subscribeForm.style.display = 'none';
-            }
+        if (isSuccessVisible && subscribeForm) {
+            subscribeForm.style.display = 'none';
         }
         
-        // Clear messages using basic XMLHttpRequest for older browser compatibility
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', '{% url "user_interactions:clear_subscription_messages" %}', true);
-        xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
-        xhr.send();
+        // Clear messages with delay and better error handling for WebView compatibility
+        setTimeout(function() {
+            try {
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '{% url "user_interactions:clear_subscription_messages" %}', true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+                
+                // Add timeout and error handling
+                xhr.timeout = 5000; // 5 second timeout
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4) {
+                        // Message cleared successfully or failed, but don't show errors to user
+                        console.log('Subscription messages cleared');
+                    }
+                };
+                xhr.onerror = function() {
+                    // Silent fail for WebView compatibility
+                    console.log('Failed to clear subscription messages');
+                };
+                xhr.ontimeout = function() {
+                    // Silent fail for WebView compatibility
+                    console.log('Timeout clearing subscription messages');
+                };
+                
+                xhr.send('csrfmiddlewaretoken={{ csrf_token }}');
+            } catch (e) {
+                // Silent fail for very old WebView versions
+                console.log('Error clearing subscription messages:', e);
+            }
+        }, 1000); // 1 second delay to ensure page is fully loaded
     });
 </script>
 {% endblock %}
