@@ -96,7 +96,19 @@ def process_subscription(request):
     
     # Check if email already exists
     if EmailSubscription.objects.filter(email=email).exists():
-        request.session['subscription_message'] = "You are already subscribed to our newsletter."
+        # Get user language for appropriate message
+        user_language = request.session.get('user_language', 'en')
+        if user_language == 'zh':
+            request.session['subscription_warning'] = "您已经订阅了我们的新闻通讯。"
+        else:
+            request.session['subscription_warning'] = "You are already subscribed to our newsletter."
+        
+        # Store the email for display but clear other data
+        request.session['subscription_data'] = {
+            'email': email,
+            'name': name,
+            'preferences': preferences
+        }
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
     
     # If valid, save the subscription
@@ -106,11 +118,15 @@ def process_subscription(request):
         receive_updates=preferences
     )
     
-    # Clear any stored errors/data
-    if 'subscription_errors' in request.session:
-        del request.session['subscription_errors']
-    if 'subscription_data' in request.session:
-        del request.session['subscription_data']
+    # Clear any stored errors/data/warnings
+    session_keys_to_clear = [
+        'subscription_errors', 
+        'subscription_data', 
+        'subscription_warning'
+    ]
+    for key in session_keys_to_clear:
+        if key in request.session:
+            del request.session[key]
     
     # Set success message
     request.session['subscription_success'] = True
@@ -126,6 +142,7 @@ def clear_subscription_messages(request):
         session_keys_to_clear = [
             'subscription_success',
             'subscription_message',
+            'subscription_warning',
             'subscription_errors',
             'subscription_data'
         ]

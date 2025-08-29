@@ -283,20 +283,162 @@ def setup_admin_groups():
 
 # Call this function when Django loads (in apps.py or in a migration)
 
+# Custom widget for better file input display
+class CustomFileInput(forms.FileInput):
+    """Custom file input that shows current file and selected filename"""
+    
+    def __init__(self, attrs=None):
+        super().__init__(attrs)
+    
+    def render(self, name, value, attrs=None, renderer=None):
+        from django.utils.safestring import mark_safe
+        
+        # Get the basic file input
+        input_html = super().render(name, value, attrs, renderer)
+        
+        # Add current file display if a file exists
+        current_file_html = ""
+        if value and hasattr(value, 'url'):
+            current_file_html = f'''
+            <div style="margin-bottom: 8px; padding: 6px; background-color: #e8f4fd; border: 1px solid #bee5eb; border-radius: 4px;">
+                <strong>Current file:</strong> 
+                <a href="{value.url}" target="_blank" style="color: #0056b3; text-decoration: none;">
+                    {value.name.split('/')[-1]}
+                </a>
+                <span style="font-size: 11px; color: #666; margin-left: 8px;">
+                    (Choose a new file to replace)
+                </span>
+            </div>
+            '''
+        
+        # Add JavaScript to show filename when file is selected (Android WebView 6.0 compatible)
+        # Use a unique timestamp to make the script work for multiple instances
+        import time
+        timestamp = str(int(time.time() * 1000))  # milliseconds timestamp
+        
+        js_code = f"""
+        <script>
+        (function() {{
+            // Wait for DOM to be ready
+            function initFileInput_{timestamp}() {{
+                // Try multiple possible IDs (regular form vs inline forms)
+                var possibleIds = ['id_{name}'];
+                
+                // For inline forms, the ID might be different
+                var formsets = document.querySelectorAll('input[name*="{name}"][type="file"]');
+                
+                // Handle all matching file inputs
+                for (var i = 0; i < formsets.length; i++) {{
+                    var fileInput = formsets[i];
+                    if (fileInput && !fileInput.hasAttribute('data-custom-initialized')) {{
+                        // Mark as initialized to avoid duplicate processing
+                        fileInput.setAttribute('data-custom-initialized', 'true');
+                        
+                        // Create a unique display div for this specific input
+                        var displayId = 'filename_display_' + fileInput.id + '_{timestamp}';
+                        var filenameDisplay = document.createElement('div');
+                        filenameDisplay.id = displayId;
+                        filenameDisplay.style.marginTop = '6px';
+                        filenameDisplay.style.padding = '6px';
+                        filenameDisplay.style.backgroundColor = '#d4edda';
+                        filenameDisplay.style.border = '1px solid #c3e6cb';
+                        filenameDisplay.style.borderRadius = '4px';
+                        filenameDisplay.style.fontSize = '12px';
+                        filenameDisplay.style.display = 'none';
+                        
+                        // Insert after the file input
+                        fileInput.parentNode.insertBefore(filenameDisplay, fileInput.nextSibling);
+                        
+                        // Update display when file is selected
+                        (function(input, display) {{
+                            input.addEventListener('change', function() {{
+                                if (this.files && this.files.length > 0) {{
+                                    display.innerHTML = '<strong>New file selected:</strong> ' + this.files[0].name;
+                                    display.style.display = 'block';
+                                    display.style.color = '#155724';
+                                }} else {{
+                                    display.style.display = 'none';
+                                }}
+                            }});
+                        }})(fileInput, filenameDisplay);
+                    }}
+                }}
+                
+                // Also handle the main form input by ID if it exists
+                var mainInput = document.getElementById('id_{name}');
+                if (mainInput && !mainInput.hasAttribute('data-custom-initialized')) {{
+                    mainInput.setAttribute('data-custom-initialized', 'true');
+                    
+                    var mainDisplayId = 'filename_display_id_{name}_{timestamp}';
+                    var mainFilenameDisplay = document.createElement('div');
+                    mainFilenameDisplay.id = mainDisplayId;
+                    mainFilenameDisplay.style.marginTop = '6px';
+                    mainFilenameDisplay.style.padding = '6px';
+                    mainFilenameDisplay.style.backgroundColor = '#d4edda';
+                    mainFilenameDisplay.style.border = '1px solid #c3e6cb';
+                    mainFilenameDisplay.style.borderRadius = '4px';
+                    mainFilenameDisplay.style.fontSize = '12px';
+                    mainFilenameDisplay.style.display = 'none';
+                    
+                    mainInput.parentNode.insertBefore(mainFilenameDisplay, mainInput.nextSibling);
+                    
+                    mainInput.addEventListener('change', function() {{
+                        var display = document.getElementById(mainDisplayId);
+                        if (this.files && this.files.length > 0) {{
+                            display.innerHTML = '<strong>New file selected:</strong> ' + this.files[0].name;
+                            display.style.display = 'block';
+                            display.style.color = '#155724';
+                        }} else {{
+                            display.style.display = 'none';
+                        }}
+                    }});
+                }}
+            }}
+            
+            // Try to initialize immediately, and also after a delay for dynamic content
+            if (document.readyState === 'loading') {{
+                document.addEventListener('DOMContentLoaded', initFileInput_{timestamp});
+            }} else {{
+                initFileInput_{timestamp}();
+            }}
+            
+            // Re-run for dynamically added forms (inline formsets)
+            setTimeout(initFileInput_{timestamp}, 500);
+            setTimeout(initFileInput_{timestamp}, 1000);
+        }})();
+        </script>
+        """
+        
+        # Mark the output as safe HTML so Django doesn't escape it
+        return mark_safe(current_file_html + input_html + js_code)
+
+# Custom forms for better file input widgets
+class EventForm(forms.ModelForm):
+    class Meta:
+        model = Event
+        fields = '__all__'
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Use our custom file input widget
+        if 'image' in self.fields:
+            self.fields['image'].widget = CustomFileInput(attrs={
+                'accept': 'image/*'
+            })
+
 # Custom forms for sponsor validation
 class SeasonalSponsorForm(forms.ModelForm):
     class Meta:
         model = SeasonalSponsor
         fields = '__all__'
-        widgets = {
-            'image': forms.ClearableFileInput(attrs={'style': 'display: none;'}),  # Hide clear checkbox
-        }
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Remove the "clear" checkbox for image field since images are mandatory
+        # Use our custom file input widget for seasonal sponsor images
         if 'image' in self.fields:
-            self.fields['image'].widget = forms.FileInput()
+            self.fields['image'].widget = CustomFileInput(attrs={
+                'accept': 'image/*'
+            })
     
     def clean_image(self):
         image = self.cleaned_data.get('image')
@@ -308,15 +450,14 @@ class EventSponsorImageForm(forms.ModelForm):
     class Meta:
         model = EventSponsorImage
         fields = '__all__'
-        widgets = {
-            'image': forms.ClearableFileInput(attrs={'style': 'display: none;'}),  # Hide clear checkbox
-        }
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Remove the "clear" checkbox for image field since images are mandatory
+        # Use our custom file input widget for sponsor images
         if 'image' in self.fields:
-            self.fields['image'].widget = forms.FileInput()
+            self.fields['image'].widget = CustomFileInput(attrs={
+                'accept': 'image/*'
+            })
     
     def clean_image(self):
         image = self.cleaned_data.get('image')
@@ -449,6 +590,7 @@ class EventSponsorImageInline(admin.TabularInline):
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
+    form = EventForm  # Use our custom form with better file input
     list_display = ('title', 'title_zh_short', 'composer', 'date_range_display', 'performance_count', 'is_active', 'schedule_button')
     prepopulated_fields = {'slug': ('title',)}
     list_filter = ('is_active',)
@@ -495,9 +637,42 @@ class EventAdmin(admin.ModelAdmin):
             "The section below is for manual adjustments to individual performances."
         )
         
-        # Add custom CSS for the performances section
+        # Add custom CSS for the performances section and file input improvements
         extra_context['extra_style'] = """
         <style>
+            /* Style the file input better - for both main forms and inline forms */
+            .field-image input[type="file"],
+            input[name*="image"][type="file"] {
+                padding: 6px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                background-color: #fff;
+                width: 100%;
+                max-width: 400px;
+            }
+            
+            /* Improve the overall field styling */
+            .field-image,
+            .field-box.field-image {
+                margin-bottom: 15px;
+            }
+            
+            .field-image label,
+            .field-box.field-image label {
+                font-weight: bold;
+                margin-bottom: 5px;
+                display: block;
+            }
+            
+            /* Style inline formset file inputs */
+            .tabular input[type="file"] {
+                padding: 4px;
+                border: 1px solid #ccc;
+                border-radius: 3px;
+                background-color: #fff;
+                width: 100%;
+                min-width: 200px;
+            }
             /* Improved performance section */
             #performance-section {
                 margin-top: 20px;

@@ -190,9 +190,29 @@
         z-index: 10; /* Ensure it appears above other elements */
     }
     
+    /* Warning message for duplicate emails - Android WebView 6.0 compatible */
+    .warning-message {
+        display: none;
+        padding: 15px;
+        background-color: rgba(255, 140, 0, 0.3); /* Orange background for warnings */
+        border: 2px solid #FF8C00; /* Orange border */
+        border-radius: 8px;
+        color: #ffffff;
+        margin-top: 20px;
+        text-align: center;
+        font-weight: bold;
+        min-height: 50px;
+        box-sizing: border-box;
+        width: 100%;
+        position: relative;
+        z-index: 10;
+    }
+    
     /* Force visibility when active - fallback for WebView */
     .success-message[style*="display: block"],
-    .success-message.show {
+    .success-message.show,
+    .warning-message[style*="display: block"],
+    .warning-message.show {
         display: block !important;
         visibility: visible !important;
         opacity: 1 !important;
@@ -339,14 +359,15 @@
         </form>
         
         <!-- Success message -->
-        <div id="success-message" class="success-message" style="{% if request.session.subscription_success or request.session.subscription_message %}display: block;{% endif %}">
-            {% if request.session.subscription_message %}
-                <p>{{ request.session.subscription_message }}</p>
-            {% else %}
-                {% placeholder "subscribe_success" or %}
-                    <p>Thank you for subscribing to our newsletter. You will receive updates about our upcoming events and performances.</p>
-                {% endplaceholder %}
-            {% endif %}
+        <div id="success-message" class="success-message" style="{% if request.session.subscription_success %}display: block;{% endif %}">
+            {% placeholder "subscribe_success" or %}
+                <p>Thank you for subscribing to our newsletter. You will receive updates about our upcoming events and performances.</p>
+            {% endplaceholder %}
+        </div>
+        
+        <!-- Warning message for duplicate emails -->
+        <div id="warning-message" class="warning-message" style="{% if request.session.subscription_warning %}display: block;{% endif %}">
+            <p>{{ request.session.subscription_warning }}</p>
         </div>
     </div>
 </div>
@@ -356,15 +377,42 @@
         // Improved JavaScript for Android WebView 6.0 compatibility
         var subscribeForm = document.getElementById('subscribe-form');
         var successMessage = document.getElementById('success-message');
+        var warningMessage = document.getElementById('warning-message');
         
         // More reliable check for success message visibility
         var isSuccessVisible = successMessage && 
             (successMessage.style.display === 'block' || 
              window.getComputedStyle(successMessage).display === 'block');
+             
+        // Check for warning message visibility
+        var isWarningVisible = warningMessage && 
+            (warningMessage.style.display === 'block' || 
+             window.getComputedStyle(warningMessage).display === 'block');
         
-        // If success message is visible, hide the form
+        // If success message is visible, hide the form and auto-hide after delay
         if (isSuccessVisible && subscribeForm) {
             subscribeForm.style.display = 'none';
+            
+            // Auto-hide success message after 10 seconds for Android WebView 6.0
+            setTimeout(function() {
+                if (successMessage) {
+                    successMessage.style.display = 'none';
+                    // Show form again after hiding success message
+                    if (subscribeForm) {
+                        subscribeForm.style.display = 'block';
+                    }
+                }
+            }, 10000); // 10 seconds - longer than warning to ensure user sees it
+        }
+        
+        // For warning messages, keep the form visible but clear after delay
+        if (isWarningVisible) {
+            // Auto-hide warning after 8 seconds for better UX
+            setTimeout(function() {
+                if (warningMessage) {
+                    warningMessage.style.display = 'none';
+                }
+            }, 8000);
         }
         
         // Clear messages with delay and better error handling for WebView compatibility
