@@ -7,6 +7,10 @@ local_settings.py
 db*.sqlite3
 media/
 
+# CMS Backups - These are environment-specific and shouldn't be shared
+cms_backups/
+*.backup.json
+
 # Virtual Environment
 new_venv/
 venv/
