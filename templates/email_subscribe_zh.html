@@ -364,16 +364,16 @@
         
         // If success message is visible, hide the form
         if (isSuccessVisible && subscribeForm) {
-            subscribeForm.style.display = 'none';
+                subscribeForm.style.display = 'none';
         }
         
         // Clear messages with delay and better error handling for WebView compatibility
         setTimeout(function() {
             try {
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', '{% url "user_interactions:clear_subscription_messages" %}', true);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '{% url "user_interactions:clear_subscription_messages" %}', true);
                 xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+        xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
                 
                 // Add timeout and error handling
                 xhr.timeout = 5000; // 5 second timeout
