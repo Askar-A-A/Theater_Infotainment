@@ -1,0 +1,40 @@
+{% extends "admin/index.html" %}
+{% load static %}
+
+{% block content %}
+{{ block.super }}
+
+{% if cms_backup_url %}
+<div class="dashboard-tools" style="margin-top: 20px;">
+    <div class="module">
+        <div class="module-header">
+            <h2>🛡️ CMS Tools</h2>
+        </div>
+        <div class="module-content">
+            <a href="{{ cms_backup_url }}" class="backup-link" style="
+                display: inline-block;
+                background: #417690;
+                color: white;
+                padding: 12px 20px;
+                text-decoration: none;
+                border-radius: 4px;
+                margin: 10px 0;
+                font-weight: bold;
+            ">
+                🛡️ CMS Backup & Restore
+            </a>
+            <p style="margin: 10px 0; color: #666;">
+                Create backups of your CMS pages and content, or restore from previous backups.
+            </p>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<style>
+.backup-link:hover {
+    background: #205067 !important;
+    color: white !important;
+}
+</style>
+{% endblock %} 

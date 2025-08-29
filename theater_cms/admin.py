@@ -2,12 +2,262 @@ from django.contrib import admin
 from django import forms
 from django.urls import path, reverse
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.utils.html import format_html
 from .models import Event, Performance, UserFeedback, EmailSubscription, SeasonalSponsor, EventSponsorImage, SponsorsPageContent
 from django.db import models
 from django.contrib.auth.models import Group, Permission
 from django.db.models import Q
+from django.core.management import call_command
+from django.contrib import messages
+from django.conf import settings
+import os
+import datetime
+import subprocess
+import json
+
+# CMS Backup and Restore Functions
+def backup_cms_data():
+    """Create a backup of all CMS data with optimized memory usage"""
+    import tempfile
+    from django.db import transaction
+    
+    try:
+        # Create backups directory if it doesn't exist
+        backup_dir = os.path.join(settings.BASE_DIR, 'cms_backups')
+        os.makedirs(backup_dir, exist_ok=True)
+        
+        # Generate filename with timestamp
+        timestamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
+        backup_file = os.path.join(backup_dir, f'cms_backup_{timestamp}.json')
+        
+        # Use Django's serialization directly with proper encoding
+        from django.core import serializers
+        from django.apps import apps
+        
+        # Get all models from the apps we want to backup
+        models_to_backup = []
+        app_labels = ['cms', 'djangocms_text_ckeditor', 'djangocms_picture', 'filer', 'theater_cms']
+        
+        for app_label in app_labels:
+            try:
+                app_config = apps.get_app_config(app_label)
+                models_to_backup.extend(app_config.get_models())
+            except LookupError:
+                # App not installed, skip it
+                continue
+        
+        # Use temporary file first, then move to final location for atomic operation
+        with tempfile.NamedTemporaryFile(mode='w', encoding='utf-8', suffix='.json', delete=False) as temp_file:
+            temp_path = temp_file.name
+            
+            # Stream objects directly to file to avoid memory issues with large datasets
+            temp_file.write('[\n')
+            first_object = True
+            object_count = 0
+            
+            for model in models_to_backup:
+                try:
+                    # Process in chunks to avoid memory issues
+                    queryset = model.objects.all()
+                    
+                    for obj in queryset.iterator(chunk_size=100):  # Process in batches
+                        try:
+                            # Serialize individual object
+                            serialized = serializers.serialize('json', [obj], ensure_ascii=False)
+                            # Remove the array brackets and add to our stream
+                            obj_data = json.loads(serialized)[0]
+                            
+                            if not first_object:
+                                temp_file.write(',\n')
+                            
+                            json.dump(obj_data, temp_file, ensure_ascii=False, indent=2)
+                            first_object = False
+                            object_count += 1
+                            
+                        except Exception as e:
+                            # Skip problematic objects
+                            print(f"Skipping object {obj}: {e}")
+                            continue
+                            
+                except Exception as e:
+                    # Skip problematic models
+                    print(f"Skipping model {model}: {e}")
+                    continue
+            
+            temp_file.write('\n]')
+        
+        # Validate the temporary file
+        try:
+            with open(temp_path, 'r', encoding='utf-8') as f:
+                json.load(f)
+        except json.JSONDecodeError as e:
+            # Remove corrupted file
+            if os.path.exists(temp_path):
+                os.remove(temp_path)
+            return None, f"Created backup file is corrupted: {str(e)}"
+        
+        # Check if we actually backed up some data
+        if object_count == 0:
+            if os.path.exists(temp_path):
+                os.remove(temp_path)
+            return None, "No data found to backup"
+        
+        # Check file size
+        file_size = os.path.getsize(temp_path)
+        if file_size < 50:  # Very small file likely means error
+            with open(temp_path, 'r', encoding='utf-8') as f:
+                content = f.read()
+            if os.path.exists(temp_path):
+                os.remove(temp_path)
+            return None, f"Backup file too small, likely an error: {content[:200]}"
+        
+        # Atomic move to final location
+        import shutil
+        shutil.move(temp_path, backup_file)
+        
+        return backup_file, f"Successfully backed up {object_count} objects"
+        
+    except Exception as e:
+        # Clean up temporary file if it exists
+        if 'temp_path' in locals() and os.path.exists(temp_path):
+            os.remove(temp_path)
+        return None, f"Backup creation error: {str(e)}"
+
+def restore_cms_data(backup_file):
+    """Restore CMS data from backup file with optimized transaction handling"""
+    from django.db import transaction
+    
+    try:
+        if not os.path.exists(backup_file):
+            return False, "Backup file not found"
+        
+        # Check file size first
+        file_size = os.path.getsize(backup_file)
+        if file_size < 50:
+            return False, f"Backup file is too small ({file_size} bytes) - likely corrupted"
+        
+        # Validate JSON format first with detailed error info
+        backup_data = None
+        try:
+            with open(backup_file, 'r', encoding='utf-8') as f:
+                content = f.read()
+                if not content.strip():
+                    return False, "Backup file is empty"
+                
+                # Try to parse JSON and store it
+                backup_data = json.loads(content)
+                if not isinstance(backup_data, list):
+                    return False, "Invalid backup format - expected list of objects"
+                
+        except json.JSONDecodeError as e:
+            # Provide more detailed error information
+            line_num = getattr(e, 'lineno', 'unknown')
+            col_num = getattr(e, 'colno', 'unknown')
+            char_pos = getattr(e, 'pos', 'unknown')
+            
+            # Show some context around the error
+            try:
+                with open(backup_file, 'r', encoding='utf-8') as f:
+                    content = f.read()
+                    start_pos = max(0, e.pos - 50) if hasattr(e, 'pos') else 0
+                    end_pos = min(len(content), e.pos + 50) if hasattr(e, 'pos') else 100
+                    context = content[start_pos:end_pos]
+                    
+                return False, f"Backup file is corrupted at line {line_num}, column {col_num} (char {char_pos}). Context: ...{context}..."
+            except:
+                return False, f"Backup file is corrupted: {str(e)}"
+        
+        except UnicodeDecodeError as e:
+            return False, f"Backup file encoding error: {str(e)}"
+        
+        # Restore with transaction for atomicity
+        try:
+            with transaction.atomic():
+                from django.core import serializers
+                
+                # Convert back to JSON string for serializer
+                json_data = json.dumps(backup_data, ensure_ascii=False)
+                
+                # Deserialize all objects
+                objects = list(serializers.deserialize('json', json_data))
+                
+                if not objects:
+                    return False, "No valid objects found in backup file"
+                
+                # Sort objects by dependency order (models that don't depend on others first)
+                # This helps avoid foreign key constraint errors
+                dependency_order = [
+                    'auth.user', 'auth.group', 'auth.permission',
+                    'sites.site',
+                    'filer.folder', 'filer.file', 'filer.image',
+                    'cms.page', 'cms.placeholder', 'cms.cmsplugin',
+                    'djangocms_text_ckeditor.text',
+                    'djangocms_picture.picture',
+                    'theater_cms.'  # All theater_cms models
+                ]
+                
+                def get_sort_key(obj):
+                    model_name = f"{obj.object._meta.app_label}.{obj.object._meta.model_name}"
+                    for i, pattern in enumerate(dependency_order):
+                        if model_name.startswith(pattern):
+                            return i
+                    return len(dependency_order)  # Unknown models last
+                
+                objects.sort(key=get_sort_key)
+                
+                # Save objects in order
+                saved_count = 0
+                skipped_count = 0
+                
+                for obj in objects:
+                    try:
+                        obj.save()
+                        saved_count += 1
+                    except Exception as e:
+                        # Log but continue with other objects
+                        skipped_count += 1
+                        print(f"Skipping object {obj.object._meta.model_name} (ID: {obj.object.pk}): {e}")
+                        continue
+            
+            return True, f"CMS data restored successfully. Saved: {saved_count}, Skipped: {skipped_count} objects"
+            
+        except Exception as e:
+            # More specific error handling
+            error_msg = str(e)
+            if "DoesNotExist" in error_msg:
+                return False, "Backup contains references to missing data. Try creating a fresh backup."
+            elif "IntegrityError" in error_msg:
+                return False, "Database integrity error. The backup may be incompatible with current database structure."
+            elif "ValidationError" in error_msg:
+                return False, "Data validation error. The backup data may be corrupted."
+            else:
+                return False, f"Restore failed: {error_msg[:300]}..."
+                
+    except Exception as e:
+        return False, f"Unexpected error: {str(e)[:300]}..."
+
+def get_backup_files():
+    """Get list of available backup files"""
+    backup_dir = os.path.join(settings.BASE_DIR, 'cms_backups')
+    if not os.path.exists(backup_dir):
+        return []
+    
+    files = []
+    for filename in os.listdir(backup_dir):
+        if filename.startswith('cms_backup_') and filename.endswith('.json'):
+            filepath = os.path.join(backup_dir, filename)
+            file_stat = os.stat(filepath)
+            files.append({
+                'name': filename,
+                'path': filepath,
+                'size': file_stat.st_size,
+                'date': datetime.datetime.fromtimestamp(file_stat.st_mtime)
+            })
+    
+    # Sort by date, newest first
+    files.sort(key=lambda x: x['date'], reverse=True)
+    return files
 
 # Create a function to set up admin groups
 def setup_admin_groups():
@@ -775,3 +1025,118 @@ class UserFeedbackAdmin(admin.ModelAdmin):
         return super().changeform_view(request, object_id, form_url, extra_context)
 
 admin.site.register(EmailSubscription)
+
+# CMS Backup Management Admin
+class CMSBackupAdmin:
+    """Custom admin for CMS backup and restore functionality"""
+    
+    def get_urls(self):
+        from django.urls import path
+        return [
+            path('cms-backup/', self.admin_site.admin_view(self.backup_view), name='cms_backup'),
+            path('cms-backup/create/', self.admin_site.admin_view(self.create_backup), name='cms_backup_create'),
+            path('cms-backup/restore/', self.admin_site.admin_view(self.restore_backup), name='cms_backup_restore'),
+            path('cms-backup/download/<str:filename>/', self.admin_site.admin_view(self.download_backup), name='cms_backup_download'),
+        ]
+    
+    def backup_view(self, request):
+        """Main backup management page"""
+        if request.method == 'POST':
+            action = request.POST.get('action')
+            
+            if action == 'create_backup':
+                backup_file, error = backup_cms_data()
+                if backup_file:
+                    messages.success(request, f'Backup created successfully: {os.path.basename(backup_file)}')
+                else:
+                    messages.error(request, f'Backup failed: {error}')
+            
+            elif action == 'restore_backup':
+                backup_filename = request.POST.get('backup_file')
+                if backup_filename:
+                    backup_dir = os.path.join(settings.BASE_DIR, 'cms_backups')
+                    backup_path = os.path.join(backup_dir, backup_filename)
+                    success, message = restore_cms_data(backup_path)
+                    
+                    if success:
+                        messages.success(request, message)
+                    else:
+                        messages.error(request, f'Restore failed: {message}')
+                else:
+                    messages.error(request, 'No backup file selected for restore')
+        
+        backup_files = get_backup_files()
+        
+        context = {
+            'title': 'CMS Backup Management',
+            'backup_files': backup_files,
+            'opts': {'app_label': 'theater_cms', 'model_name': 'backup'},
+        }
+        
+        return render(request, 'admin/cms_backup.html', context)
+    
+    def create_backup(self, request):
+        """AJAX endpoint for creating backup"""
+        if request.method == 'POST':
+            backup_file, error = backup_cms_data()
+            if backup_file:
+                return JsonResponse({
+                    'success': True, 
+                    'message': f'Backup created: {os.path.basename(backup_file)}'
+                })
+            else:
+                return JsonResponse({
+                    'success': False, 
+                    'message': f'Backup failed: {error}'
+                })
+        return JsonResponse({'success': False, 'message': 'Invalid request'})
+    
+    def restore_backup(self, request):
+        """AJAX endpoint for restoring backup"""
+        if request.method == 'POST':
+            backup_filename = request.POST.get('backup_file')
+            if backup_filename:
+                backup_dir = os.path.join(settings.BASE_DIR, 'cms_backups')
+                backup_path = os.path.join(backup_dir, backup_filename)
+                success, message = restore_cms_data(backup_path)
+                return JsonResponse({'success': success, 'message': message})
+            return JsonResponse({'success': False, 'message': 'No backup file specified'})
+        return JsonResponse({'success': False, 'message': 'Invalid request'})
+    
+    def download_backup(self, request, filename):
+        """Download a backup file"""
+        backup_dir = os.path.join(settings.BASE_DIR, 'cms_backups')
+        backup_path = os.path.join(backup_dir, filename)
+        
+        if os.path.exists(backup_path) and filename.startswith('cms_backup_'):
+            with open(backup_path, 'rb') as f:
+                response = HttpResponse(f.read(), content_type='application/json')
+                response['Content-Disposition'] = f'attachment; filename="{filename}"'
+                return response
+        
+        messages.error(request, 'Backup file not found')
+        return redirect('admin:cms_backup')
+
+# Register backup admin
+cms_backup_admin = CMSBackupAdmin()
+cms_backup_admin.admin_site = admin.site
+
+# Add backup URLs to admin
+original_get_urls = admin.site.get_urls
+
+def get_urls_with_backup():
+    urls = original_get_urls()
+    backup_urls = cms_backup_admin.get_urls()
+    return backup_urls + urls
+
+admin.site.get_urls = get_urls_with_backup
+
+# Override admin index to show backup link
+original_index = admin.site.index
+
+def index_with_backup(request, extra_context=None):
+    extra_context = extra_context or {}
+    extra_context['cms_backup_url'] = '/admin/cms-backup/'
+    return original_index(request, extra_context)
+
+admin.site.index = index_with_backup

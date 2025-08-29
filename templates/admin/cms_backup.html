@@ -1,0 +1,286 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block title %}CMS Backup Management{% endblock %}
+
+{% block extrahead %}
+<style>
+    /* Override admin header */
+    #header {
+        background: linear-gradient(135deg, #417690, #2c5f78);
+    }
+    
+    /* Main container styling */
+    .backup-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    
+    /* Header styling */
+    .backup-header {
+        background: linear-gradient(135deg, #417690, #2c5f78);
+        color: white;
+        padding: 30px;
+        border-radius: 8px;
+        margin-bottom: 30px;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    
+    .backup-header h1 {
+        margin: 0;
+        font-size: 32px;
+        font-weight: 300;
+    }
+    
+    .backup-header p {
+        margin: 10px 0 0 0;
+        opacity: 0.9;
+        font-size: 16px;
+    }
+    
+    /* Section styling */
+    .backup-section {
+        background: white;
+        border: 1px solid #e1e4e8;
+        border-radius: 8px;
+        padding: 25px;
+        margin-bottom: 25px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    
+    .backup-section h2 {
+        color: #2c5f78;
+        margin-top: 0;
+        margin-bottom: 15px;
+        font-size: 24px;
+        border-bottom: 2px solid #e1e4e8;
+        padding-bottom: 10px;
+    }
+    
+    /* Button styling */
+    .backup-button {
+        background: linear-gradient(135deg, #28a745, #20a13a);
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 4px rgba(40, 167, 69, 0.3);
+    }
+    
+    .backup-button:hover {
+        background: linear-gradient(135deg, #20a13a, #1e7e34);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(40, 167, 69, 0.4);
+    }
+    
+    .restore-button {
+        background: linear-gradient(135deg, #dc3545, #c82333);
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 4px rgba(220, 53, 69, 0.3);
+    }
+    
+    .restore-button:hover {
+        background: linear-gradient(135deg, #c82333, #bd2130);
+        transform: translateY(-1px);
+    }
+    
+    .download-button {
+        background: linear-gradient(135deg, #dc3545, #c82333);
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        text-decoration: none;
+        font-size: 12px;
+        display: inline-block;
+        transition: all 0.3s ease;
+        margin-right: 8px;
+        box-shadow: 0 2px 4px rgba(220, 53, 69, 0.3);
+    }
+    
+    .download-button:hover {
+        background: linear-gradient(135deg, #c82333, #bd2130);
+        color: white;
+        transform: translateY(-1px);
+    }
+    
+    /* Table styling */
+    .backup-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .backup-table th {
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        color: #495057;
+        padding: 15px;
+        text-align: left;
+        font-weight: 600;
+        border-bottom: 2px solid #dee2e6;
+    }
+    
+    .backup-table td {
+        padding: 12px 15px;
+        border-bottom: 1px solid #dee2e6;
+        vertical-align: middle;
+    }
+    
+    .backup-table tr:hover {
+        background-color: #f8f9fa;
+    }
+    
+    .backup-table tr:nth-child(even) {
+        background-color: #fdfdfd;
+    }
+    
+    /* Warning box styling */
+    .warning-box {
+        background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+        border: 1px solid #ffc107;
+        color: #856404;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 25px;
+        border-left: 5px solid #ffc107;
+    }
+    
+    .warning-box strong {
+        font-size: 18px;
+    }
+    
+    /* Info section */
+    .info-section {
+        background: linear-gradient(135deg, #d1ecf1, #bee5eb);
+        border: 1px solid #17a2b8;
+        border-radius: 8px;
+        padding: 20px;
+        border-left: 5px solid #17a2b8;
+    }
+    
+    .info-section h2 {
+        color: #0c5460;
+        border-bottom: 2px solid #17a2b8;
+    }
+    
+    .info-section ul {
+        margin: 15px 0;
+    }
+    
+    .info-section li {
+        margin: 8px 0;
+        padding-left: 5px;
+    }
+    
+    /* Empty state */
+    .empty-state {
+        text-align: center;
+        padding: 40px;
+        color: #6c757d;
+    }
+    
+    .empty-state i {
+        font-size: 48px;
+        margin-bottom: 15px;
+        opacity: 0.5;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="backup-container">
+    <!-- Modern Header -->
+    <div class="backup-header">
+        <h1>🛡️ CMS Backup Management</h1>
+        <p>Protect your content with automated backups and easy restoration</p>
+    </div>
+    
+    <div class="warning-box">
+        <strong>⚠️ Important Notice:</strong> Always create a backup before making major changes to your CMS content. 
+        Restoring a backup will overwrite all current CMS data including pages, content, and media files.
+    </div>
+
+    <!-- Create Backup Section -->
+    <div class="backup-section">
+        <h2>🔄 Create New Backup</h2>
+        <p>Create a complete backup of all CMS pages, content, and media files with timestamps.</p>
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="create_backup">
+            <button type="submit" class="backup-button">🛡️ Create Backup Now</button>
+        </form>
+    </div>
+
+    <!-- Existing Backups Section -->
+    <div class="backup-section">
+        <h2>📁 Existing Backups</h2>
+        {% if backup_files %}
+            <table class="backup-table">
+                <thead>
+                    <tr>
+                        <th>📄 Backup File</th>
+                        <th>📅 Date Created</th>
+                        <th>💾 File Size</th>
+                        <th>⚙️ Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for backup in backup_files %}
+                    <tr>
+                        <td><strong>{{ backup.name }}</strong></td>
+                        <td>{{ backup.date|date:"M d, Y - H:i:s" }}</td>
+                        <td>{{ backup.size|filesizeformat }}</td>
+                        <td>
+                            <a href="{% url 'admin:cms_backup_download' backup.name %}" class="download-button">📥 Download</a>
+                            <form method="post" style="display: inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="action" value="restore_backup">
+                                <input type="hidden" name="backup_file" value="{{ backup.name }}">
+                                <button type="submit" class="restore-button" 
+                                        onclick="return confirm('⚠️ WARNING: This will overwrite ALL current CMS data with the backup from {{ backup.date|date:"M d, Y - H:i:s" }}. Are you absolutely sure?')">
+                                    🔄 Restore
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="empty-state">
+                <div style="font-size: 48px; margin-bottom: 15px;">📦</div>
+                <h3>No backups found</h3>
+                <p>Create your first backup using the button above to get started.</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Instructions Section -->
+    <div class="backup-section info-section">
+        <h2>📖 How It Works</h2>
+        <ul>
+            <li><strong>🛡️ Create Backup:</strong> Creates a complete snapshot of all CMS pages, content, plugins, and media files</li>
+            <li><strong>📥 Download:</strong> Download backup files to your computer for safe offline storage</li>
+            <li><strong>🔄 Restore:</strong> Restore your CMS to exactly how it was when the backup was created</li>
+        </ul>
+        <p><strong>📦 What's included:</strong> Pages, placeholders, text content, images, media files, custom plugins, and all CMS data</p>
+        <p><strong>💾 Storage location:</strong> <code>cms_backups/</code> directory in your project root</p>
+    </div>
+</div>
+{% endblock %} 
