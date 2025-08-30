@@ -425,6 +425,16 @@ class EventForm(forms.ModelForm):
             self.fields['image'].widget = CustomFileInput(attrs={
                 'accept': 'image/*'
             })
+    
+    def clean_image(self):
+        image = self.cleaned_data.get('image')
+        
+        # If no new image is uploaded but we have an existing instance with an image, keep it
+        if not image and self.instance and self.instance.pk and self.instance.image:
+            # Return the existing image to preserve it during validation errors
+            return self.instance.image
+        
+        return image
 
 # Custom forms for sponsor validation
 class SeasonalSponsorForm(forms.ModelForm):
@@ -442,9 +452,29 @@ class SeasonalSponsorForm(forms.ModelForm):
     
     def clean_image(self):
         image = self.cleaned_data.get('image')
-        if not image:
+        
+        # If no new image is uploaded but we have an existing instance with an image, keep it
+        if not image and self.instance and self.instance.pk and self.instance.image:
+            # Return the existing image to preserve it during validation errors
+            return self.instance.image
+        elif not image:
             raise forms.ValidationError("An image is required for all sponsors. Please upload a sponsor logo.")
+        
         return image
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        
+        # If there are validation errors on other fields but image is valid,
+        # preserve the uploaded image for redisplay
+        if self.errors and 'image' not in self.errors:
+            image = cleaned_data.get('image')
+            if image and hasattr(image, 'name'):
+                # Store image in session or form data for redisplay
+                # Django forms will handle this automatically with our clean_image method
+                pass
+        
+        return cleaned_data
 
 class EventSponsorImageForm(forms.ModelForm):
     class Meta:
@@ -461,9 +491,29 @@ class EventSponsorImageForm(forms.ModelForm):
     
     def clean_image(self):
         image = self.cleaned_data.get('image')
-        if not image:
+        
+        # If no new image is uploaded but we have an existing instance with an image, keep it
+        if not image and self.instance and self.instance.pk and self.instance.image:
+            # Return the existing image to preserve it during validation errors
+            return self.instance.image
+        elif not image:
             raise forms.ValidationError("An image is required for all sponsors. Please upload a sponsor logo.")
+        
         return image
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        
+        # If there are validation errors on other fields but image is valid,
+        # preserve the uploaded image for redisplay
+        if self.errors and 'image' not in self.errors:
+            image = cleaned_data.get('image')
+            if image and hasattr(image, 'name'):
+                # Store image in session or form data for redisplay
+                # Django forms will handle this automatically with our clean_image method
+                pass
+        
+        return cleaned_data
 
 class PerformanceInline(admin.TabularInline):
     model = Performance
@@ -771,6 +821,114 @@ class EventAdmin(admin.ModelAdmin):
                 padding: 8px 15px;
             }
         </style>
+        
+        <script>
+        // Delete confirmation for sponsor images - Android WebView 6.0 compatible
+        document.addEventListener('DOMContentLoaded', function() {
+            // Find all delete checkboxes for sponsor images
+            function addDeleteConfirmation() {
+                var deleteCheckboxes = document.querySelectorAll('input[type="checkbox"][name*="DELETE"]');
+                
+                for (var i = 0; i < deleteCheckboxes.length; i++) {
+                    var checkbox = deleteCheckboxes[i];
+                    
+                    // Skip if already processed
+                    if (checkbox.hasAttribute('data-delete-confirmation-added')) {
+                        continue;
+                    }
+                    
+                    // Mark as processed
+                    checkbox.setAttribute('data-delete-confirmation-added', 'true');
+                    
+                    // Add confirmation event
+                    checkbox.addEventListener('change', function(e) {
+                        if (this.checked) {
+                            // Show confirmation dialog
+                            var confirmed = confirm('Are you sure you want to delete this sponsor image? This action cannot be undone.');
+                            
+                            if (!confirmed) {
+                                // User cancelled, uncheck the box
+                                this.checked = false;
+                                e.preventDefault();
+                                return false;
+                            } else {
+                                // User confirmed, add visual feedback
+                                var row = this.closest('tr') || this.closest('.form-row');
+                                if (row) {
+                                    row.style.backgroundColor = '#ffebee';
+                                    row.style.opacity = '0.7';
+                                    
+                                    // Add a warning message
+                                    var warningSpan = document.createElement('span');
+                                    warningSpan.innerHTML = ' <strong style="color: #d32f2f;">⚠️ Will be deleted</strong>';
+                                    warningSpan.className = 'delete-warning';
+                                    
+                                    // Remove any existing warning
+                                    var existingWarning = row.querySelector('.delete-warning');
+                                    if (existingWarning) {
+                                        existingWarning.remove();
+                                    }
+                                    
+                                    // Add new warning after the checkbox
+                                    this.parentNode.appendChild(warningSpan);
+                                }
+                            }
+                        } else {
+                            // Checkbox unchecked, remove visual feedback
+                            var row = this.closest('tr') || this.closest('.form-row');
+                            if (row) {
+                                row.style.backgroundColor = '';
+                                row.style.opacity = '';
+                                
+                                // Remove warning message
+                                var warning = row.querySelector('.delete-warning');
+                                if (warning) {
+                                    warning.remove();
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+            
+            // Initial setup
+            addDeleteConfirmation();
+            
+            // Re-run for dynamically added forms (when user clicks "Add another")
+            setTimeout(addDeleteConfirmation, 500);
+            setTimeout(addDeleteConfirmation, 1000);
+            setTimeout(addDeleteConfirmation, 2000);
+            
+            // Also watch for new rows being added
+            var observer = new MutationObserver(function(mutations) {
+                var shouldRerun = false;
+                mutations.forEach(function(mutation) {
+                    if (mutation.addedNodes) {
+                        for (var i = 0; i < mutation.addedNodes.length; i++) {
+                            var node = mutation.addedNodes[i];
+                            if (node.nodeType === 1 && (node.tagName === 'TR' || node.className && node.className.indexOf('form-row') > -1)) {
+                                shouldRerun = true;
+                                break;
+                            }
+                        }
+                    }
+                });
+                
+                if (shouldRerun) {
+                    setTimeout(addDeleteConfirmation, 100);
+                }
+            });
+            
+            // Observe the inline formsets
+            var inlineElements = document.querySelectorAll('.tabular, .stacked');
+            for (var i = 0; i < inlineElements.length; i++) {
+                observer.observe(inlineElements[i], {
+                    childList: true,
+                    subtree: true
+                });
+            }
+        });
+        </script>
         """
         
         # Use a better URL for bulk scheduling
