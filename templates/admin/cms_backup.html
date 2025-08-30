@@ -80,7 +80,7 @@
     }
     
     .restore-button {
-        background: linear-gradient(135deg, #dc3545, #c82333);
+        background: linear-gradient(135deg, #28a745, #20a13a);
         color: white;
         border: none;
         padding: 8px 16px;
@@ -88,33 +88,75 @@
         cursor: pointer;
         font-size: 14px;
         transition: all 0.3s ease;
-        box-shadow: 0 2px 4px rgba(220, 53, 69, 0.3);
+        box-shadow: 0 2px 4px rgba(40, 167, 69, 0.3);
     }
     
     .restore-button:hover {
-        background: linear-gradient(135deg, #c82333, #bd2130);
+        background: linear-gradient(135deg, #20a13a, #1e7e34);
         transform: translateY(-1px);
     }
     
     .download-button {
+        background: linear-gradient(135deg, #007bff, #0056b3);
+        color: white !important;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        text-decoration: none !important;
+        font-size: 12px;
+        display: inline-block;
+        transition: all 0.3s ease;
+        margin-right: 8px;
+        box-shadow: 0 2px 4px rgba(0, 123, 255, 0.3);
+    }
+    
+    .download-button:hover {
+        background: linear-gradient(135deg, #0056b3, #004085);
+        color: white !important;
+        text-decoration: none !important;
+        transform: translateY(-1px);
+    }
+    
+    .delete-button {
         background: linear-gradient(135deg, #dc3545, #c82333);
         color: white;
         border: none;
         padding: 6px 12px;
         border-radius: 4px;
         cursor: pointer;
-        text-decoration: none;
         font-size: 12px;
-        display: inline-block;
         transition: all 0.3s ease;
-        margin-right: 8px;
+        margin-left: 4px;
         box-shadow: 0 2px 4px rgba(220, 53, 69, 0.3);
     }
     
-    .download-button:hover {
-        background: linear-gradient(135deg, #c82333, #bd2130);
-        color: white;
+    .delete-button:hover {
+        background: linear-gradient(135deg, #bd2130, #a71e2a);
         transform: translateY(-1px);
+    }
+    
+    /* Notes styling */
+    .backup-notes {
+        font-style: italic;
+        color: #495057;
+    }
+    
+    .notes-tooltip {
+        color: #007bff;
+        cursor: help;
+        font-weight: bold;
+    }
+    
+    .form-group {
+        margin-bottom: 15px;
+    }
+    
+    .form-group label {
+        display: block;
+        font-weight: bold;
+        color: #495057;
+        margin-bottom: 5px;
     }
     
     /* Table styling */
@@ -223,7 +265,22 @@
         <form method="post">
             {% csrf_token %}
             <input type="hidden" name="action" value="create_backup">
-            <button type="submit" class="backup-button">🛡️ Create Backup Now</button>
+            
+            <div class="form-group">
+                <label for="backup_notes">📝 Backup Notes (Optional):</label>
+                <textarea 
+                    id="backup_notes" 
+                    name="backup_notes" 
+                    placeholder="Describe what changes are included in this backup (e.g., 'Added new events', 'Updated sponsor logos', 'Fixed template issues')..."
+                    rows="3"
+                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-family: inherit; resize: vertical; margin-top: 5px;"
+                ></textarea>
+                <small style="color: #666; font-style: italic;">
+                    Adding notes helps you identify what changes each backup contains.
+                </small>
+            </div>
+            
+            <button type="submit" class="backup-button" style="margin-top: 15px;">🛡️ Create Backup Now</button>
         </form>
     </div>
 
@@ -235,8 +292,9 @@
                 <thead>
                     <tr>
                         <th>📄 Backup File</th>
+                        <th>📝 Notes</th>
                         <th>📅 Date Created</th>
-                        <th>💾 File Size</th>
+                        <th>💾 Size / Objects</th>
                         <th>⚙️ Actions</th>
                     </tr>
                 </thead>
@@ -244,8 +302,23 @@
                     {% for backup in backup_files %}
                     <tr>
                         <td><strong>{{ backup.name }}</strong></td>
+                        <td>
+                            {% if backup.notes %}
+                                <span class="backup-notes">{{ backup.notes|truncatechars:60 }}</span>
+                                {% if backup.notes|length > 60 %}
+                                    <span class="notes-tooltip" title="{{ backup.notes }}">...</span>
+                                {% endif %}
+                            {% else %}
+                                <em style="color: #999;">No notes</em>
+                            {% endif %}
+                        </td>
                         <td>{{ backup.date|date:"M d, Y - H:i:s" }}</td>
-                        <td>{{ backup.size|filesizeformat }}</td>
+                        <td>
+                            {{ backup.size|filesizeformat }}
+                            {% if backup.object_count %}
+                                <br><small style="color: #666;">{{ backup.object_count }} objects</small>
+                            {% endif %}
+                        </td>
                         <td>
                             <a href="{% url 'admin:cms_backup_download' backup.name %}" class="download-button">📥 Download</a>
                             <form method="post" style="display: inline;">
@@ -257,6 +330,10 @@
                                     🔄 Restore
                                 </button>
                             </form>
+                            <button class="delete-button" 
+                                    onclick="deleteBackup('{{ backup.name }}', '{{ backup.date|date:"M d, Y - H:i:s" }}', '{{ backup.notes|default:"No notes" }}')">
+                                🗑️ Delete
+                            </button>
                         </td>
                     </tr>
                     {% endfor %}
@@ -275,12 +352,96 @@
     <div class="backup-section info-section">
         <h2>📖 How It Works</h2>
         <ul>
-            <li><strong>🛡️ Create Backup:</strong> Creates a complete snapshot of all CMS pages, content, plugins, and media files</li>
+            <li><strong>🛡️ Create Backup:</strong> Creates a complete snapshot of all CMS pages, content, plugins, and media files with optional notes</li>
+            <li><strong>📝 Backup Notes:</strong> Add descriptive notes to each backup to track what changes were made</li>
             <li><strong>📥 Download:</strong> Download backup files to your computer for safe offline storage</li>
             <li><strong>🔄 Restore:</strong> Restore your CMS to exactly how it was when the backup was created</li>
+            <li><strong>🗑️ Delete:</strong> Permanently remove old backups with double confirmation for safety</li>
         </ul>
         <p><strong>📦 What's included:</strong> Pages, placeholders, text content, images, media files, custom plugins, and all CMS data</p>
+        <p><strong>📝 Notes feature:</strong> Add descriptions like "Added new events", "Updated sponsor logos", "Fixed template issues" to track changes</p>
         <p><strong>💾 Storage location:</strong> <code>cms_backups/</code> directory in your project root</p>
+        <p><strong>⚠️ Safety:</strong> Delete operations require double confirmation and show full backup details before deletion</p>
     </div>
 </div>
+
+<script>
+// Delete backup functionality with enhanced confirmation - Android WebView 6.0 compatible
+function deleteBackup(filename, date, notes) {
+    // Create a detailed confirmation message
+    var message = '🗑️ DELETE BACKUP CONFIRMATION\n\n' +
+                  '⚠️ WARNING: This action cannot be undone!\n\n' +
+                  'Backup Details:\n' +
+                  '📄 File: ' + filename + '\n' +
+                  '📅 Date: ' + date + '\n' +
+                  '📝 Notes: ' + notes + '\n\n' +
+                  'Are you absolutely sure you want to DELETE this backup?\n\n' +
+                  'Type "DELETE" to confirm:';
+    
+    // First confirmation with details
+    var confirmDelete = confirm(message);
+    
+    if (!confirmDelete) {
+        return; // User cancelled
+    }
+    
+    // Second confirmation for extra safety
+    var finalConfirm = confirm('🚨 FINAL WARNING 🚨\n\n' +
+                               'You are about to permanently delete:\n' +
+                               filename + '\n\n' +
+                               'This backup will be GONE FOREVER!\n\n' +
+                               'Click OK to DELETE or Cancel to keep it.');
+    
+    if (!finalConfirm) {
+        return; // User cancelled final confirmation
+    }
+    
+    // Proceed with deletion
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '{% url "admin:cms_backup_delete" %}', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+    
+    // Handle response
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            try {
+                var response = JSON.parse(xhr.responseText);
+                if (response.success) {
+                    // Success - show message and reload page
+                    alert('✅ Backup deleted successfully!\n\n' + response.message);
+                    window.location.reload();
+                } else {
+                    // Error - show error message
+                    alert('❌ Delete failed!\n\n' + response.message);
+                }
+            } catch (e) {
+                // JSON parse error
+                alert('❌ Error processing server response.\n\nPlease try again or contact administrator.');
+            }
+        }
+    };
+    
+    // Handle network errors
+    xhr.onerror = function() {
+        alert('❌ Network error occurred.\n\nPlease check your connection and try again.');
+    };
+    
+    // Send request
+    var formData = 'backup_file=' + encodeURIComponent(filename) + 
+                   '&confirm_delete=true&csrfmiddlewaretoken={{ csrf_token }}';
+    xhr.send(formData);
+}
+
+// Add tooltips for truncated notes (simple implementation for WebView 6.0)
+document.addEventListener('DOMContentLoaded', function() {
+    var tooltips = document.querySelectorAll('.notes-tooltip');
+    for (var i = 0; i < tooltips.length; i++) {
+        tooltips[i].addEventListener('click', function() {
+            alert('📝 Full Notes:\n\n' + this.getAttribute('title'));
+        });
+    }
+});
+</script>
+
 {% endblock %} 

@@ -17,7 +17,7 @@ import subprocess
 import json
 
 # CMS Backup and Restore Functions
-def backup_cms_data():
+def backup_cms_data(notes=""):
     """Create a backup of all CMS data with optimized memory usage"""
     import tempfile
     from django.db import transaction
@@ -115,6 +115,24 @@ def backup_cms_data():
         # Atomic move to final location
         import shutil
         shutil.move(temp_path, backup_file)
+        
+        # Create metadata file with notes and backup info
+        metadata_file = backup_file.replace('.json', '_metadata.json')
+        backup_metadata = {
+            'backup_file': os.path.basename(backup_file),
+            'created_at': datetime.datetime.now().isoformat(),
+            'notes': notes.strip() if notes else "",
+            'object_count': object_count,
+            'file_size': os.path.getsize(backup_file),
+            'apps_included': ['cms', 'djangocms_text_ckeditor', 'djangocms_picture', 'filer', 'theater_cms']
+        }
+        
+        try:
+            with open(metadata_file, 'w', encoding='utf-8') as meta_f:
+                json.dump(backup_metadata, meta_f, ensure_ascii=False, indent=2)
+        except Exception as meta_error:
+            # Don't fail the backup if metadata creation fails
+            print(f"Warning: Could not create metadata file: {meta_error}")
         
         return backup_file, f"Successfully backed up {object_count} objects"
         
@@ -238,26 +256,69 @@ def restore_cms_data(backup_file):
         return False, f"Unexpected error: {str(e)[:300]}..."
 
 def get_backup_files():
-    """Get list of available backup files"""
+    """Get list of available backup files with metadata"""
     backup_dir = os.path.join(settings.BASE_DIR, 'cms_backups')
     if not os.path.exists(backup_dir):
         return []
     
     files = []
     for filename in os.listdir(backup_dir):
-        if filename.startswith('cms_backup_') and filename.endswith('.json'):
+        if filename.startswith('cms_backup_') and filename.endswith('.json') and not filename.endswith('_metadata.json'):
             filepath = os.path.join(backup_dir, filename)
+            metadata_path = filepath.replace('.json', '_metadata.json')
             file_stat = os.stat(filepath)
-            files.append({
+            
+            # Try to read metadata
+            metadata = {}
+            if os.path.exists(metadata_path):
+                try:
+                    with open(metadata_path, 'r', encoding='utf-8') as meta_f:
+                        metadata = json.load(meta_f)
+                except Exception:
+                    # If metadata is corrupted, continue with basic info
+                    pass
+            
+            file_info = {
                 'name': filename,
                 'path': filepath,
                 'size': file_stat.st_size,
-                'date': datetime.datetime.fromtimestamp(file_stat.st_mtime)
-            })
+                'date': datetime.datetime.fromtimestamp(file_stat.st_mtime),
+                'notes': metadata.get('notes', ''),
+                'object_count': metadata.get('object_count', 0),
+                'metadata_exists': os.path.exists(metadata_path)
+            }
+            
+            files.append(file_info)
     
     # Sort by date, newest first
     files.sort(key=lambda x: x['date'], reverse=True)
     return files
+
+def delete_backup_file(backup_filename):
+    """Delete a backup file and its metadata"""
+    try:
+        backup_dir = os.path.join(settings.BASE_DIR, 'cms_backups')
+        backup_path = os.path.join(backup_dir, backup_filename)
+        metadata_path = backup_path.replace('.json', '_metadata.json')
+        
+        if not os.path.exists(backup_path):
+            return False, "Backup file not found"
+        
+        # Validate filename for security
+        if not backup_filename.startswith('cms_backup_') or not backup_filename.endswith('.json'):
+            return False, "Invalid backup filename"
+        
+        # Delete backup file
+        os.remove(backup_path)
+        
+        # Delete metadata file if it exists
+        if os.path.exists(metadata_path):
+            os.remove(metadata_path)
+        
+        return True, f"Backup '{backup_filename}' deleted successfully"
+        
+    except Exception as e:
+        return False, f"Error deleting backup: {str(e)}"
 
 # Create a function to set up admin groups
 def setup_admin_groups():
@@ -1369,6 +1430,7 @@ class CMSBackupAdmin:
             path('cms-backup/', self.admin_site.admin_view(self.backup_view), name='cms_backup'),
             path('cms-backup/create/', self.admin_site.admin_view(self.create_backup), name='cms_backup_create'),
             path('cms-backup/restore/', self.admin_site.admin_view(self.restore_backup), name='cms_backup_restore'),
+            path('cms-backup/delete/', self.admin_site.admin_view(self.delete_backup), name='cms_backup_delete'),
             path('cms-backup/download/<str:filename>/', self.admin_site.admin_view(self.download_backup), name='cms_backup_download'),
         ]
     
@@ -1378,9 +1440,13 @@ class CMSBackupAdmin:
             action = request.POST.get('action')
             
             if action == 'create_backup':
-                backup_file, error = backup_cms_data()
+                notes = request.POST.get('backup_notes', '').strip()
+                backup_file, error = backup_cms_data(notes=notes)
                 if backup_file:
-                    messages.success(request, f'Backup created successfully: {os.path.basename(backup_file)}')
+                    if notes:
+                        messages.success(request, f'Backup created successfully: {os.path.basename(backup_file)} (Notes: {notes[:50]}{"..." if len(notes) > 50 else ""})')
+                    else:
+                        messages.success(request, f'Backup created successfully: {os.path.basename(backup_file)}')
                 else:
                     messages.error(request, f'Backup failed: {error}')
             
@@ -1397,6 +1463,21 @@ class CMSBackupAdmin:
                         messages.error(request, f'Restore failed: {message}')
                 else:
                     messages.error(request, 'No backup file selected for restore')
+            
+            elif action == 'delete_backup':
+                backup_filename = request.POST.get('backup_file')
+                confirm_delete = request.POST.get('confirm_delete') == 'yes'
+                
+                if backup_filename and confirm_delete:
+                    success, message = delete_backup_file(backup_filename)
+                    if success:
+                        messages.success(request, message)
+                    else:
+                        messages.error(request, message)
+                elif backup_filename and not confirm_delete:
+                    messages.error(request, 'Deletion cancelled: Confirmation required to delete backup files')
+                else:
+                    messages.error(request, 'No backup file selected for deletion')
         
         backup_files = get_backup_files()
         
@@ -1411,11 +1492,15 @@ class CMSBackupAdmin:
     def create_backup(self, request):
         """AJAX endpoint for creating backup"""
         if request.method == 'POST':
-            backup_file, error = backup_cms_data()
+            notes = request.POST.get('backup_notes', '').strip()
+            backup_file, error = backup_cms_data(notes=notes)
             if backup_file:
+                message = f'Backup created: {os.path.basename(backup_file)}'
+                if notes:
+                    message += f' (Notes: {notes[:50]}{"..." if len(notes) > 50 else ""})'
                 return JsonResponse({
                     'success': True, 
-                    'message': f'Backup created: {os.path.basename(backup_file)}'
+                    'message': message
                 })
             else:
                 return JsonResponse({
@@ -1434,6 +1519,21 @@ class CMSBackupAdmin:
                 success, message = restore_cms_data(backup_path)
                 return JsonResponse({'success': success, 'message': message})
             return JsonResponse({'success': False, 'message': 'No backup file specified'})
+        return JsonResponse({'success': False, 'message': 'Invalid request'})
+    
+    def delete_backup(self, request):
+        """AJAX endpoint for deleting backup"""
+        if request.method == 'POST':
+            backup_filename = request.POST.get('backup_file')
+            confirm_delete = request.POST.get('confirm_delete') == 'true'
+            
+            if backup_filename and confirm_delete:
+                success, message = delete_backup_file(backup_filename)
+                return JsonResponse({'success': success, 'message': message})
+            elif backup_filename and not confirm_delete:
+                return JsonResponse({'success': False, 'message': 'Deletion cancelled: Confirmation required'})
+            else:
+                return JsonResponse({'success': False, 'message': 'No backup file specified'})
         return JsonResponse({'success': False, 'message': 'Invalid request'})
     
     def download_backup(self, request, filename):
