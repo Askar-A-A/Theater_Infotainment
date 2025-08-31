@@ -35,7 +35,7 @@ def backup_cms_data(notes=""):
         for app_label in app_labels:
             try:
                 app_config = apps.get_app_config(app_label)
-                app_models = app_config.get_models()
+                app_models = list(app_config.get_models())  # Convert generator to list
                 models_to_backup.extend(app_models)
                 print(f"Backup: Including {len(app_models)} models from {app_label}")
                 

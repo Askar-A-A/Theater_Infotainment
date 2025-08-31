@@ -41,11 +41,27 @@ def process_feedback(request):
     # If valid, save the feedback
     rating_int = int(rating)
     
-    UserFeedback.objects.create(
-        name=name,
-        rating=rating_int,
-        comments=comments
-    )
+    try:
+        UserFeedback.objects.create(
+            name=name,
+            rating=rating_int,
+            comments=comments
+        )
+        
+        # Set success message for the template
+        request.session['feedback_success'] = True
+        
+        # Set language-specific success message based on the referring page
+        referrer = request.META.get('HTTP_REFERER', '')
+        if '_zh' in referrer or 'zh' in referrer:
+            request.session['feedback_success_message'] = "感谢您的反馈！我们重视您的意见。"
+        else:
+            request.session['feedback_success_message'] = "Thank you for your feedback! We appreciate your input."
+            
+    except Exception as e:
+        # If database save fails, set an error message
+        request.session['feedback_errors'] = {'general': 'Failed to save feedback. Please try again.'}
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
     
     # Clear any stored errors/data
     if 'feedback_errors' in request.session:
@@ -132,7 +148,7 @@ def process_subscription(request):
 
 @require_POST
 def clear_subscription_messages(request):
-    """Clear subscription success/message flags from session."""
+    """Clear subscription and feedback success/message flags from session."""
     try:
         # Clear all subscription-related session data
         session_keys_to_clear = [
@@ -140,7 +156,11 @@ def clear_subscription_messages(request):
             'subscription_message',
             'subscription_warning',
             'subscription_errors',
-            'subscription_data'
+            'subscription_data',
+            'feedback_success',
+            'feedback_success_message',
+            'feedback_errors',
+            'feedback_data'
         ]
         
         cleared_keys = []

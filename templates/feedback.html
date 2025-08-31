@@ -303,8 +303,17 @@
             {% endplaceholder %}
         </div>
         
+        <!-- Success message -->
+        {% if request.session.feedback_success %}
+        <div class="success-message" id="success-message" style="display: block;">
+            <h3 style="margin: 0 0 10px 0; color: #00ff00;">✅ Success!</h3>
+            <p style="margin: 0;">{{ request.session.feedback_success_message|default:"Thank you for your feedback! We appreciate your input." }}</p>
+        </div>
+        {% endif %}
+        
         <!-- Form container -->
-        <form id="feedbackForm" class="feedback-form" method="post" action="{% url 'user_interactions:process_feedback' %}">
+        <form id="feedbackForm" class="feedback-form" method="post" action="{% url 'user_interactions:process_feedback' %}" 
+              {% if request.session.feedback_success %}style="display: none;"{% endif %}>
             {% csrf_token %}
             
             <!-- Name field -->
@@ -358,6 +367,38 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // Handle success message display and auto-hide
+        var successMessage = document.getElementById('success-message');
+        var feedbackForm = document.getElementById('feedbackForm');
+        
+        if (successMessage && successMessage.style.display === 'block') {
+            // Auto-hide success message after 8 seconds and show form again
+            setTimeout(function() {
+                if (successMessage) {
+                    successMessage.style.display = 'none';
+                }
+                if (feedbackForm) {
+                    feedbackForm.style.display = 'block';
+                    // Reset form for next feedback
+                    feedbackForm.reset();
+                    document.getElementById('rating').value = '0';
+                    // Reset stars
+                    var stars = document.querySelectorAll('.star');
+                    for (var i = 0; i < stars.length; i++) {
+                        stars[i].classList.remove('active');
+                    }
+                }
+                
+                // Clear session messages via AJAX for Android WebView compatibility
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '{% url "user_interactions:clear_subscription_messages" %}', true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+                xhr.timeout = 5000;
+                xhr.send('clear_feedback=true&csrfmiddlewaretoken={{ csrf_token }}');
+            }, 8000); // 8 seconds
+        }
+        
         // Simplified star rating for WebView compatibility
         var stars = document.querySelectorAll('.star');
         var ratingInput = document.getElementById('rating');

@@ -418,23 +418,29 @@ function deleteBackup(filename, date, notes) {
                     }
                 } catch (e) {
                     // JSON parse error
-                    alert('❌ Error processing server response.\n\nResponse: ' + xhr.responseText);
+                    console.error('DELETE_BACKUP_JS: JSON parse error:', e);
+                    console.error('DELETE_BACKUP_JS: Response text:', xhr.responseText);
+                    alert('❌ Error processing server response.\n\nError: ' + e.message + '\n\nResponse: ' + xhr.responseText.substring(0, 200));
                 }
             } else {
                 // HTTP error
-                alert('❌ Server error (HTTP ' + xhr.status + ').\n\nPlease try again or contact administrator.');
+                console.error('DELETE_BACKUP_JS: HTTP error:', xhr.status, xhr.statusText);
+                console.error('DELETE_BACKUP_JS: Response:', xhr.responseText);
+                alert('❌ Server error (HTTP ' + xhr.status + ' ' + xhr.statusText + ').\n\nResponse: ' + xhr.responseText.substring(0, 200));
             }
         }
     };
     
     // Handle network errors
     xhr.onerror = function() {
+        console.error('DELETE_BACKUP_JS: Network error occurred');
         alert('❌ Network error occurred.\n\nPlease check your connection and try again.');
     };
     
     // Handle timeout
     xhr.timeout = 30000; // 30 second timeout
     xhr.ontimeout = function() {
+        console.error('DELETE_BACKUP_JS: Request timed out');
         alert('❌ Request timed out.\n\nPlease try again.');
     };
     
@@ -443,6 +449,12 @@ function deleteBackup(filename, date, notes) {
         'backup_file': filename,
         'confirm_delete': true
     });
+    
+    // Debug logging
+    console.log('DELETE_BACKUP_JS: Sending request to:', '{% url "admin:cms_backup_delete" %}');
+    console.log('DELETE_BACKUP_JS: Request data:', requestData);
+    console.log('DELETE_BACKUP_JS: Filename:', filename);
+    
     xhr.send(requestData);
 }
 

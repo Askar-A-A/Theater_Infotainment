@@ -22,15 +22,8 @@ class CMSBackupAdmin:
     """Custom admin interface for CMS backup and restore operations"""
     
     def get_urls(self):
-        """Define custom URLs for backup operations"""
-        urls = [
-            path('cms-backup/', self.backup_view, name='cms_backup'),
-            path('cms-backup/create/', self.create_backup, name='cms_backup_create'),
-            path('cms-backup/restore/', self.restore_backup, name='cms_backup_restore'),
-            path('cms-backup/download/<str:filename>/', self.download_backup, name='cms_backup_download'),
-            path('cms-backup/delete/', self.delete_backup, name='cms_backup_delete'),
-        ]
-        return urls
+        """URLs are handled by the global admin site override"""
+        return []
     
     def backup_view(self, request):
         """Main backup interface view"""
@@ -183,20 +176,28 @@ class CMSBackupAdmin:
         except Exception as e:
             raise Http404(f"Error reading file: {str(e)}")
     
-    @method_decorator(csrf_exempt)
     def delete_backup(self, request):
         """AJAX endpoint for deleting backups"""
+        print(f"DELETE_BACKUP_VIEW: Request method: {request.method}")
+        print(f"DELETE_BACKUP_VIEW: Content type: {getattr(request, 'content_type', 'unknown')}")
+        print(f"DELETE_BACKUP_VIEW: Request body: {request.body[:200] if hasattr(request, 'body') else 'no body'}")
+        
         if request.method == 'POST':
             try:
                 # Handle both JSON and form data
-                if request.content_type == 'application/json':
+                if hasattr(request, 'content_type') and 'application/json' in request.content_type:
                     data = json.loads(request.body)
                     backup_filename = data.get('backup_file')
+                    print(f"DELETE_BACKUP_VIEW: JSON data: {data}")
                 else:
                     # Handle form data
                     backup_filename = request.POST.get('backup_file')
+                    print(f"DELETE_BACKUP_VIEW: Form data: {dict(request.POST)}")
+                
+                print(f"DELETE_BACKUP_VIEW: Backup filename: {backup_filename}")
                 
                 if not backup_filename:
+                    print("DELETE_BACKUP_VIEW: ERROR - No backup filename provided")
                     return JsonResponse({
                         'success': False, 
                         'message': 'No backup file specified'
@@ -204,12 +205,15 @@ class CMSBackupAdmin:
                 
                 # Additional validation
                 if not backup_filename.startswith('cms_backup_') or not backup_filename.endswith('.json'):
+                    print(f"DELETE_BACKUP_VIEW: ERROR - Invalid filename format: {backup_filename}")
                     return JsonResponse({
                         'success': False, 
-                        'message': 'Invalid backup filename format'
+                        'message': f'Invalid backup filename format: {backup_filename}'
                     })
                 
+                print(f"DELETE_BACKUP_VIEW: Calling delete_backup_file({backup_filename})")
                 success, message = delete_backup_file(backup_filename)
+                print(f"DELETE_BACKUP_VIEW: Delete result: success={success}, message={message}")
                 
                 return JsonResponse({
                     'success': success, 
@@ -217,17 +221,22 @@ class CMSBackupAdmin:
                 })
                 
             except json.JSONDecodeError as e:
+                error_msg = f'JSON parsing error: {str(e)}'
+                print(f"DELETE_BACKUP_VIEW: ERROR - {error_msg}")
                 return JsonResponse({
                     'success': False, 
-                    'message': f'JSON parsing error: {str(e)}'
+                    'message': error_msg
                 })
             except Exception as e:
+                error_msg = f'Delete error: {str(e)}'
+                print(f"DELETE_BACKUP_VIEW: ERROR - {error_msg}")
                 return JsonResponse({
                     'success': False, 
-                    'message': f'Delete error: {str(e)}'
+                    'message': error_msg
                 })
         
-        return JsonResponse({'success': False, 'message': 'Invalid request method'})
+        print(f"DELETE_BACKUP_VIEW: ERROR - Invalid request method: {request.method}")
+        return JsonResponse({'success': False, 'message': f'Invalid request method: {request.method}'})
 
 
 # Create instance and register with admin
