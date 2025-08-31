@@ -298,25 +298,51 @@ def get_backup_files():
 def delete_backup_file(backup_filename):
     """Delete a backup file and its metadata"""
     try:
+        print(f"DELETE_BACKUP: Starting deletion of {backup_filename}")
+        
         backup_dir = os.path.join(settings.BASE_DIR, 'cms_backups')
         backup_path = os.path.join(backup_dir, backup_filename)
         metadata_path = backup_path.replace('.json', '_metadata.json')
         
+        print(f"DELETE_BACKUP: Backup path: {backup_path}")
+        print(f"DELETE_BACKUP: Metadata path: {metadata_path}")
+        
+        # Check if backup file exists
         if not os.path.exists(backup_path):
-            return False, "Backup file not found"
+            print(f"DELETE_BACKUP: ERROR - Backup file not found: {backup_path}")
+            return False, f"Backup file not found: {backup_filename}"
         
         # Validate filename for security
         if not backup_filename.startswith('cms_backup_') or not backup_filename.endswith('.json'):
-            return False, "Invalid backup filename"
+            print(f"DELETE_BACKUP: ERROR - Invalid filename format: {backup_filename}")
+            return False, f"Invalid backup filename format: {backup_filename}"
         
         # Delete backup file
+        print(f"DELETE_BACKUP: Deleting backup file...")
         os.remove(backup_path)
+        print(f"DELETE_BACKUP: ✅ Backup file deleted successfully")
         
         # Delete metadata file if it exists
         if os.path.exists(metadata_path):
+            print(f"DELETE_BACKUP: Deleting metadata file...")
             os.remove(metadata_path)
+            print(f"DELETE_BACKUP: ✅ Metadata file deleted successfully")
+        else:
+            print(f"DELETE_BACKUP: No metadata file to delete")
         
+        # Verify deletion
+        if os.path.exists(backup_path):
+            print(f"DELETE_BACKUP: ERROR - Backup file still exists after deletion!")
+            return False, "Failed to delete backup file - file still exists"
+        
+        print(f"DELETE_BACKUP: ✅ Deletion completed successfully")
         return True, f"Backup '{backup_filename}' deleted successfully"
         
+    except PermissionError as e:
+        error_msg = f"Permission denied deleting backup: {str(e)}"
+        print(f"DELETE_BACKUP: ERROR - {error_msg}")
+        return False, error_msg
     except Exception as e:
-        return False, f"Error deleting backup: {str(e)}"
+        error_msg = f"Error deleting backup: {str(e)}"
+        print(f"DELETE_BACKUP: ERROR - {error_msg}")
+        return False, error_msg

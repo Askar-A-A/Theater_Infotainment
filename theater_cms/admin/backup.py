@@ -188,13 +188,25 @@ class CMSBackupAdmin:
         """AJAX endpoint for deleting backups"""
         if request.method == 'POST':
             try:
-                data = json.loads(request.body)
-                backup_filename = data.get('backup_file')
+                # Handle both JSON and form data
+                if request.content_type == 'application/json':
+                    data = json.loads(request.body)
+                    backup_filename = data.get('backup_file')
+                else:
+                    # Handle form data
+                    backup_filename = request.POST.get('backup_file')
                 
                 if not backup_filename:
                     return JsonResponse({
                         'success': False, 
                         'message': 'No backup file specified'
+                    })
+                
+                # Additional validation
+                if not backup_filename.startswith('cms_backup_') or not backup_filename.endswith('.json'):
+                    return JsonResponse({
+                        'success': False, 
+                        'message': 'Invalid backup filename format'
                     })
                 
                 success, message = delete_backup_file(backup_filename)
@@ -204,10 +216,10 @@ class CMSBackupAdmin:
                     'message': message
                 })
                 
-            except json.JSONDecodeError:
+            except json.JSONDecodeError as e:
                 return JsonResponse({
                     'success': False, 
-                    'message': 'Invalid JSON data'
+                    'message': f'JSON parsing error: {str(e)}'
                 })
             except Exception as e:
                 return JsonResponse({

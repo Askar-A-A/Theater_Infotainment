@@ -399,25 +399,30 @@ function deleteBackup(filename, date, notes) {
     // Proceed with deletion
     var xhr = new XMLHttpRequest();
     xhr.open('POST', '{% url "admin:cms_backup_delete" %}', true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
     
     // Handle response
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
-            try {
-                var response = JSON.parse(xhr.responseText);
-                if (response.success) {
-                    // Success - show message and reload page
-                    alert('✅ Backup deleted successfully!\n\n' + response.message);
-                    window.location.reload();
-                } else {
-                    // Error - show error message
-                    alert('❌ Delete failed!\n\n' + response.message);
+            if (xhr.status === 200) {
+                try {
+                    var response = JSON.parse(xhr.responseText);
+                    if (response.success) {
+                        // Success - show message and reload page
+                        alert('✅ Backup deleted successfully!\n\n' + response.message);
+                        window.location.reload();
+                    } else {
+                        // Error - show error message
+                        alert('❌ Delete failed!\n\n' + response.message);
+                    }
+                } catch (e) {
+                    // JSON parse error
+                    alert('❌ Error processing server response.\n\nResponse: ' + xhr.responseText);
                 }
-            } catch (e) {
-                // JSON parse error
-                alert('❌ Error processing server response.\n\nPlease try again or contact administrator.');
+            } else {
+                // HTTP error
+                alert('❌ Server error (HTTP ' + xhr.status + ').\n\nPlease try again or contact administrator.');
             }
         }
     };
@@ -427,10 +432,18 @@ function deleteBackup(filename, date, notes) {
         alert('❌ Network error occurred.\n\nPlease check your connection and try again.');
     };
     
-    // Send request
-    var formData = 'backup_file=' + encodeURIComponent(filename) + 
-                   '&confirm_delete=true&csrfmiddlewaretoken={{ csrf_token }}';
-    xhr.send(formData);
+    // Handle timeout
+    xhr.timeout = 30000; // 30 second timeout
+    xhr.ontimeout = function() {
+        alert('❌ Request timed out.\n\nPlease try again.');
+    };
+    
+    // Send JSON request
+    var requestData = JSON.stringify({
+        'backup_file': filename,
+        'confirm_delete': true
+    });
+    xhr.send(requestData);
 }
 
 // Add tooltips for truncated notes (simple implementation for WebView 6.0)
