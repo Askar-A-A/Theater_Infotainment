@@ -367,11 +367,40 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Handle success message display and auto-hide
+        // Handle success message display and auto-hide - WebView 6.0 compatible
         var successMessage = document.getElementById('success-message');
         var feedbackForm = document.getElementById('feedbackForm');
         
-        if (successMessage && successMessage.style.display === 'block') {
+        // More reliable check for success message visibility - WebView 6.0 compatible
+        var isSuccessVisible = false;
+        
+        if (successMessage) {
+            // Multiple fallback methods for Android WebView 6.0
+            var successStyle = successMessage.getAttribute('style') || '';
+            var successDisplay = successMessage.style.display;
+            
+            isSuccessVisible = (
+                successStyle.indexOf('display: block') !== -1 ||
+                successDisplay === 'block' ||
+                successMessage.offsetHeight > 0 ||
+                {% if request.session.feedback_success %}true{% else %}false{% endif %}
+            );
+        }
+        
+        // Debug logging for WebView troubleshooting
+        console.log('FEEDBACK: Success visible:', isSuccessVisible);
+        
+        // Force display for Android WebView 6.0 if session flags are set
+        {% if request.session.feedback_success %}
+        if (successMessage) {
+            successMessage.style.display = 'block';
+            successMessage.style.visibility = 'visible';
+            successMessage.style.opacity = '1';
+            console.log('FEEDBACK: Forced success message display');
+        }
+        {% endif %}
+        
+        if (isSuccessVisible) {
             // Auto-hide success message after 8 seconds and show form again
             setTimeout(function() {
                 if (successMessage) {

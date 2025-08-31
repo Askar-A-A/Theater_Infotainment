@@ -111,9 +111,16 @@ def process_subscription(request):
         # Set language-specific warning message based on the referring page
         referrer = request.META.get('HTTP_REFERER', '')
         if '_zh' in referrer or 'zh' in referrer:
-            request.session['subscription_warning'] = "您已经订阅了我们的新闻通讯。"
+            warning_msg = "您已经订阅了我们的新闻通讯。"
         else:
-            request.session['subscription_warning'] = "You are already subscribed to our newsletter."
+            warning_msg = "You are already subscribed to our newsletter."
+            
+        request.session['subscription_warning'] = warning_msg
+        
+        # Debug logging for WebView troubleshooting
+        print(f"SUBSCRIPTION_WARNING: Email {email} already exists")
+        print(f"SUBSCRIPTION_WARNING: Referrer: {referrer}")
+        print(f"SUBSCRIPTION_WARNING: Warning message set: {warning_msg}")
         
         # Store the email for display but clear other data
         request.session['subscription_data'] = {
@@ -121,6 +128,10 @@ def process_subscription(request):
             'name': name,
             'preferences': preferences
         }
+        
+        # Force session save for Android WebView compatibility
+        request.session.modified = True
+        
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
     
     # If valid, save the subscription
@@ -343,6 +354,16 @@ def event_detail_zh(request, slug):
 
 def feedback_view_zh(request):
     """Chinese version of feedback page"""
+    
+    # Clear old error messages if user navigates back to feedback page
+    # This provides a fallback if JavaScript clearing fails
+    if not request.session.get('feedback_success') and not request.session.get('feedback_success_message'):
+        # Only clear if there are no active success messages to display
+        session_keys_to_clear = ['feedback_errors', 'feedback_data']
+        for key in session_keys_to_clear:
+            if key in request.session:
+                del request.session[key]
+    
     return render(request, 'feedback_zh.html')
 
 def about_view_zh(request):
@@ -383,6 +404,16 @@ def home_view(request):
 
 def feedback_view(request):
     """English version of feedback page"""
+    
+    # Clear old error messages if user navigates back to feedback page
+    # This provides a fallback if JavaScript clearing fails
+    if not request.session.get('feedback_success') and not request.session.get('feedback_success_message'):
+        # Only clear if there are no active success messages to display
+        session_keys_to_clear = ['feedback_errors', 'feedback_data']
+        for key in session_keys_to_clear:
+            if key in request.session:
+                del request.session[key]
+    
     return render(request, 'feedback.html')
 
 def about_view(request):

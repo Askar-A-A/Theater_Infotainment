@@ -190,22 +190,13 @@
         z-index: 10; /* Ensure it appears above other elements */
     }
     
-    /* Warning message for duplicate emails - Android WebView 6.0 compatible */
+    /* Warning message for duplicate emails - Simple style like feedback errors */
     .warning-message {
+        color: #ff6b6b;
+        font-size: 1rem;
+        margin-top: 5px;
+        text-align: left;
         display: none;
-        padding: 15px;
-        background-color: rgba(255, 140, 0, 0.3); /* Orange background for warnings */
-        border: 2px solid #FF8C00; /* Orange border */
-        border-radius: 8px;
-        color: #ffffff;
-        margin-top: 20px;
-        text-align: center;
-        font-weight: bold;
-        min-height: 50px;
-        box-sizing: border-box;
-        width: 100%;
-        position: relative;
-        z-index: 10;
     }
     
     /* Force visibility when active - fallback for WebView */
@@ -333,6 +324,13 @@
                         {{ request.session.subscription_errors.email }}
                     </div>
                 {% endif %}
+                <!-- Warning message for duplicate emails - positioned like feedback errors -->
+                <div id="warning-message" class="warning-message" 
+                     style="{% if request.session.subscription_warning %}display: block;{% else %}display: none;{% endif %}">
+                    {% if request.session.subscription_warning %}
+                        {{ request.session.subscription_warning }}
+                    {% endif %}
+                </div>
             </div>
             
             <!-- Name field -->
@@ -364,11 +362,7 @@
                 <p>感谢您订阅我们的新闻通讯。您将收到关于我们即将到来的活动和演出的更新。</p>
             {% endplaceholder %}
         </div>
-        
-        <!-- Warning message for duplicate emails -->
-        <div id="warning-message" class="warning-message" style="{% if request.session.subscription_warning %}display: block;{% endif %}">
-            <p>{{ request.session.subscription_warning }}</p>
-        </div>
+
     </div>
 </div>
 
@@ -379,15 +373,57 @@
         var successMessage = document.getElementById('success-message');
         var warningMessage = document.getElementById('warning-message');
         
-        // More reliable check for success message visibility
-        var isSuccessVisible = successMessage && 
-            (successMessage.style.display === 'block' || 
-             window.getComputedStyle(successMessage).display === 'block');
-             
-        // Check for warning message visibility
-        var isWarningVisible = warningMessage && 
-            (warningMessage.style.display === 'block' || 
-             window.getComputedStyle(warningMessage).display === 'block');
+        // More reliable check for success message visibility - WebView 6.0 compatible
+        var isSuccessVisible = false;
+        var isWarningVisible = false;
+        
+        if (successMessage) {
+            // Multiple fallback methods for Android WebView 6.0
+            var successStyle = successMessage.getAttribute('style') || '';
+            var successDisplay = successMessage.style.display;
+            
+            isSuccessVisible = (
+                successStyle.indexOf('display: block') !== -1 ||
+                successDisplay === 'block' ||
+                successMessage.offsetHeight > 0 ||
+                {% if request.session.subscription_success %}true{% else %}false{% endif %}
+            );
+        }
+        
+        if (warningMessage) {
+            // Multiple fallback methods for Android WebView 6.0
+            var warningStyle = warningMessage.getAttribute('style') || '';
+            var warningDisplay = warningMessage.style.display;
+            
+            isWarningVisible = (
+                warningStyle.indexOf('display: block') !== -1 ||
+                warningDisplay === 'block' ||
+                warningMessage.offsetHeight > 0 ||
+                {% if request.session.subscription_warning %}true{% else %}false{% endif %}
+            );
+        }
+        
+        // Debug logging for WebView troubleshooting
+        console.log('EMAIL_SUBSCRIBE_ZH: Success visible:', isSuccessVisible);
+        console.log('EMAIL_SUBSCRIBE_ZH: Warning visible:', isWarningVisible);
+        
+        // Force display for Android WebView 6.0 if session flags are set
+        {% if request.session.subscription_success %}
+        if (successMessage) {
+            successMessage.style.display = 'block';
+            successMessage.style.visibility = 'visible';
+            successMessage.style.opacity = '1';
+            console.log('EMAIL_SUBSCRIBE_ZH: Forced success message display');
+        }
+        {% endif %}
+        
+        {% if request.session.subscription_warning %}
+        if (warningMessage) {
+            warningMessage.style.display = 'block';
+            warningMessage.innerHTML = '{{ request.session.subscription_warning|escapejs }}';
+            console.log('EMAIL_SUBSCRIBE_ZH: Forced warning message display');
+        }
+        {% endif %}
         
         // If success message is visible, hide the form and auto-hide after delay
         if (isSuccessVisible && subscribeForm) {

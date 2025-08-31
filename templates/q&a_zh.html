@@ -276,6 +276,17 @@ addLoadEvent(function() {
     // Q&A functionality
     var questions = document.getElementsByClassName('question');
     
+    // DEBUG: Add WebView debugging for Q&A content
+    console.log('QA_DEBUG: Found ' + questions.length + ' questions');
+    var qaItems = document.getElementsByClassName('qa-item');
+    console.log('QA_DEBUG: Found ' + qaItems.length + ' qa-items');
+    
+    // Force visibility for WebView compatibility
+    for (var k = 0; k < qaItems.length; k++) {
+        qaItems[k].style.display = 'block';
+        qaItems[k].style.visibility = 'visible';
+    }
+    
     function closeAllAnswers(exceptQuestion) {
         for (var j = 0; j < questions.length; j++) {
             var question = questions[j];
