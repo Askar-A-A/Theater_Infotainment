@@ -4,9 +4,6 @@ from . import views
 app_name = 'user_interactions'
 
 urlpatterns = [
-    # Language switching
-    path('switch-language/', views.switch_language, name='switch_language'),
-    
     # Form processing (language-neutral)
     path('process_feedback/', views.process_feedback, name='process_feedback'),
     path('process_subscription/', views.process_subscription, name='process_subscription'),

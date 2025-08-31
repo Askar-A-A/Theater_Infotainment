@@ -53,12 +53,8 @@ def process_feedback(request):
     if 'feedback_data' in request.session:
         del request.session['feedback_data']
     
-    # Redirect to appropriate thank you page based on language
-    user_language = request.session.get('user_language', 'en')
-    if user_language == 'zh':
-        return redirect('/thank-you_zh/')
-    else:
-        return redirect('/thank-you/')
+    # Redirect back to referrer page (templates handle language)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 def thank_you_page(request):
     """
@@ -96,9 +92,9 @@ def process_subscription(request):
     
     # Check if email already exists
     if EmailSubscription.objects.filter(email=email).exists():
-        # Get user language for appropriate message
-        user_language = request.session.get('user_language', 'en')
-        if user_language == 'zh':
+        # Set language-specific warning message based on the referring page
+        referrer = request.META.get('HTTP_REFERER', '')
+        if '_zh' in referrer or 'zh' in referrer:
             request.session['subscription_warning'] = "您已经订阅了我们的新闻通讯。"
         else:
             request.session['subscription_warning'] = "You are already subscribed to our newsletter."
@@ -240,7 +236,6 @@ def home_with_current_event(request):
 
 def sponsors_page(request):
     """English version"""
-    request.session['user_language'] = 'en'
     seasonal_sponsors = SeasonalSponsor.objects.all()
     event = determine_current_event()
     event_sponsors = []
@@ -257,58 +252,18 @@ def sponsors_page(request):
         'sponsors_content': sponsors_content,
     })
 
-def switch_language(request):
-    """Simple language switching without complex i18n"""
-    if request.method != 'POST':
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
-        
-    language = request.POST.get('language', 'en')
-    next_page = request.POST.get('next', '/')
-    
-    # Store language choice in session
-    request.session['user_language'] = language
-    
-    # Simple redirect logic based on current page and target language
-    if language == 'zh':
-        # Redirect to Chinese version
-        if '/sponsors/' in next_page:
-            return redirect('/sponsors_zh/')
-        elif '/events/' in next_page:
-            return redirect('/events_zh/')
-        elif '/feedback/' in next_page:
-            return redirect('/feedback_zh/')
-        elif '/about/' in next_page:
-            return redirect('/about_zh/')
-        elif '/email/' in next_page:
-            return redirect('/email-subscribe_zh/')
-        elif '/qa/' in next_page or '/q&a/' in next_page:
-            return redirect('/qa_zh/')
-        elif '/home/' in next_page:
-            return redirect('/home_zh/')
-        else:
-            # Default to Chinese greeting page
-            return redirect('/greeting_zh/')
-    else:
-        # Redirect to English version (remove _zh suffix)
-        if '_zh/' in next_page:
-            clean_path = next_page.replace('_zh/', '/', 1)
-            if clean_path == '/qa/':
-                clean_path = '/q&a/'
-            elif clean_path == '/email-subscribe/':
-                clean_path = '/email/'
-            return redirect(clean_path)
-        else:
-            return redirect(next_page)
+# Language switching is handled through direct URL routing
+# English URLs: /sponsors/, /events/, etc.
+# Chinese URLs: /sponsors_zh/, /events_zh/, etc.
+# Templates contain direct links to switch between languages
 
 # Language-specific view functions for Chinese versions
 def greeting_view_zh(request):
     """Chinese version of greeting page"""
-    request.session['user_language'] = 'zh'
     return render(request, 'greeting_zh.html')
 
 def sponsors_view_zh(request):
     """Chinese version of sponsors page"""
-    request.session['user_language'] = 'zh'
     seasonal_sponsors = SeasonalSponsor.objects.all()
     event = determine_current_event()
     event_sponsors = []
@@ -327,7 +282,6 @@ def sponsors_view_zh(request):
 
 def events_view_zh(request):
     """Chinese version of events page"""
-    request.session['user_language'] = 'zh'
     events = Event.objects.filter(is_active=True).order_by('sort_order', 'start_datetime')
     
     # Add Chinese content for each event
@@ -344,7 +298,6 @@ def events_view_zh(request):
 
 def event_detail_zh(request, slug):
     """Chinese version of event detail page"""
-    request.session['user_language'] = 'zh'
     event = get_object_or_404(Event, slug=slug, is_active=True)
     
     now = timezone.now()
@@ -370,17 +323,14 @@ def event_detail_zh(request, slug):
 
 def feedback_view_zh(request):
     """Chinese version of feedback page"""
-    request.session['user_language'] = 'zh'
     return render(request, 'feedback_zh.html')
 
 def about_view_zh(request):
     """Chinese version of about page"""
-    request.session['user_language'] = 'zh'
     return render(request, 'about_zh.html')
 
 def email_subscribe_zh(request):
     """Chinese version of email subscribe page"""
-    request.session['user_language'] = 'zh'
     
     # Clear old messages if user navigates back to subscription page
     # This provides a fallback if JavaScript clearing fails
@@ -395,39 +345,32 @@ def email_subscribe_zh(request):
 
 def qa_view_zh(request):
     """Chinese version of Q&A page"""
-    request.session['user_language'] = 'zh'
     return render(request, 'q&a_zh.html')
 
 def thank_you_zh(request):
     """Chinese version of thank you page"""
-    request.session['user_language'] = 'zh'
     return render(request, 'feedback_thank_you_zh.html')
 
 def home_view_zh(request):
     """Chinese version of home page"""
-    request.session['user_language'] = 'zh'
     event = determine_current_event()
     return render(request, 'home_zh.html', {'current_event': event})
 
 def home_view(request):
     """English version of home page"""
-    request.session['user_language'] = 'en'
     event = determine_current_event()
     return render(request, 'home.html', {'current_event': event})
 
 def feedback_view(request):
     """English version of feedback page"""
-    request.session['user_language'] = 'en'
     return render(request, 'feedback.html')
 
 def about_view(request):
     """English version of about page"""
-    request.session['user_language'] = 'en'
     return render(request, 'about.html')
 
 def email_subscribe(request):
     """English version of email subscribe page"""
-    request.session['user_language'] = 'en'
     
     # Clear old messages if user navigates back to subscription page
     # This provides a fallback if JavaScript clearing fails
@@ -442,7 +385,6 @@ def email_subscribe(request):
 
 def qa_view(request):
     """English version of Q&A page"""
-    request.session['user_language'] = 'en'
     return render(request, 'q&a.html')
 
 def current_event_zh(request):
