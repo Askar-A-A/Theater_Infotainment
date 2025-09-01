@@ -58,6 +58,9 @@ def process_feedback(request):
         else:
             request.session['feedback_success_message'] = "Thank you for your feedback! We appreciate your input."
             
+        # Force session save for Android WebView compatibility
+        request.session.modified = True
+            
     except Exception as e:
         # If database save fails, set an error message
         request.session['feedback_errors'] = {'general': 'Failed to save feedback. Please try again.'}

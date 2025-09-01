@@ -371,33 +371,26 @@
         var successMessage = document.getElementById('success-message');
         var feedbackForm = document.getElementById('feedbackForm');
         
-        // More reliable check for success message visibility - WebView 6.0 compatible
-        var isSuccessVisible = false;
-        
-        if (successMessage) {
-            // Multiple fallback methods for Android WebView 6.0
-            var successStyle = successMessage.getAttribute('style') || '';
-            var successDisplay = successMessage.style.display;
-            
-            isSuccessVisible = (
-                successStyle.indexOf('display: block') !== -1 ||
-                successDisplay === 'block' ||
-                successMessage.offsetHeight > 0 ||
-                {% if request.session.feedback_success %}true{% else %}false{% endif %}
-            );
-        }
+        // Simplified success detection for Android WebView 6.0
+        var isSuccessVisible = {% if request.session.feedback_success %}true{% else %}false{% endif %};
         
         // Debug logging for WebView troubleshooting
-        console.log('FEEDBACK: Success visible:', isSuccessVisible);
+        console.log('FEEDBACK: Server says success:', isSuccessVisible);
+        console.log('FEEDBACK: Success message element exists:', !!successMessage);
         
-        // Force display for Android WebView 6.0 if session flags are set
+        // Always force display if server-side flag is set (most reliable for WebView)
         {% if request.session.feedback_success %}
         if (successMessage) {
             successMessage.style.display = 'block';
             successMessage.style.visibility = 'visible';
             successMessage.style.opacity = '1';
-            console.log('FEEDBACK: Forced success message display');
+            console.log('FEEDBACK: Success message force displayed');
         }
+        if (feedbackForm) {
+            feedbackForm.style.display = 'none';
+            console.log('FEEDBACK: Form hidden');
+        }
+        isSuccessVisible = true;
         {% endif %}
         
         if (isSuccessVisible) {
@@ -423,8 +416,28 @@
                 xhr.open('POST', '{% url "user_interactions:clear_subscription_messages" %}', true);
                 xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                 xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
-                xhr.timeout = 5000;
-                xhr.send('clear_feedback=true&csrfmiddlewaretoken={{ csrf_token }}');
+                xhr.timeout = 10000; // Longer timeout for WebView
+                
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4) {
+                        console.log('FEEDBACK: Clear session response:', xhr.status, xhr.responseText);
+                    }
+                };
+                
+                xhr.onerror = function() {
+                    console.log('FEEDBACK: Clear session network error - continuing anyway');
+                };
+                
+                xhr.ontimeout = function() {
+                    console.log('FEEDBACK: Clear session timeout - continuing anyway');
+                };
+                
+                try {
+                    xhr.send('clear_feedback=true&csrfmiddlewaretoken={{ csrf_token }}');
+                    console.log('FEEDBACK: Clear session request sent');
+                } catch (e) {
+                    console.log('FEEDBACK: Clear session send error:', e);
+                }
             }, 8000); // 8 seconds
         }
         

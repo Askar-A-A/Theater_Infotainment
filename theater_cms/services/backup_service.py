@@ -202,8 +202,54 @@ def restore_cms_data(backup_file):
                 if not objects:
                     return False, "No valid objects found in backup file"
                 
+                # CRITICAL FIX: Clear existing data before restore
+                print("RESTORE: Clearing existing CMS data before restore...")
+                
+                # Get models that need to be cleared (in reverse dependency order)
+                models_to_clear = []
+                app_labels = ['theater_cms', 'djangocms_picture', 'djangocms_text_ckeditor', 'cms']
+                
+                for app_label in app_labels:
+                    try:
+                        app_config = apps.get_app_config(app_label)
+                        app_models = list(app_config.get_models())
+                        models_to_clear.extend(app_models)
+                        print(f"RESTORE: Will clear {len(app_models)} models from {app_label}")
+                    except LookupError:
+                        continue
+                
+                # Clear data in reverse dependency order (children first, parents last)
+                clearing_order = [
+                    'theater_cms.qaitemplugin',
+                    'theater_cms.theaterlogo', 'theater_cms.sponsorlogo', 'theater_cms.eventcard',
+                    'theater_cms.eventsponsorimage', 'theater_cms.seasonalsponsor',
+                    'theater_cms.performance', 'theater_cms.event',
+                    'theater_cms.userfeedback', 'theater_cms.emailsubscription', 'theater_cms.sponsorspagecontent',
+                    'djangocms_text_ckeditor.text',
+                    'djangocms_picture.picture',
+                    'cms.cmsplugin',
+                    'cms.placeholder',
+                    # Don't clear cms.page - we want to keep page structure
+                ]
+                
+                cleared_count = 0
+                for model_name in clearing_order:
+                    app_label, model_class_name = model_name.split('.')
+                    try:
+                        app_config = apps.get_app_config(app_label)
+                        model_class = app_config.get_model(model_class_name)
+                        count = model_class.objects.count()
+                        if count > 0:
+                            model_class.objects.all().delete()
+                            cleared_count += count
+                            print(f"RESTORE: Cleared {count} {model_name} objects")
+                    except (LookupError, AttributeError):
+                        print(f"RESTORE: Model {model_name} not found, skipping")
+                        continue
+                
+                print(f"RESTORE: Cleared {cleared_count} total objects")
+                
                 # Sort objects by dependency order (models that don't depend on others first)
-                # This helps avoid foreign key constraint errors
                 dependency_order = [
                     'auth.user', 'auth.group', 'auth.permission',
                     'sites.site',
@@ -229,12 +275,13 @@ def restore_cms_data(backup_file):
                 
                 for obj in objects:
                     try:
-                        obj.save()
+                        # Force save even with existing primary keys
+                        obj.save(force_insert=False, force_update=False)
                         saved_count += 1
                     except Exception as e:
                         # Log but continue with other objects
                         skipped_count += 1
-                        print(f"Skipping object {obj.object._meta.model_name} (ID: {obj.object.pk}): {e}")
+                        print(f"RESTORE: Skipping object {obj.object._meta.model_name} (ID: {obj.object.pk}): {e}")
                         continue
             
             return True, f"CMS data restored successfully. Saved: {saved_count}, Skipped: {skipped_count} objects"

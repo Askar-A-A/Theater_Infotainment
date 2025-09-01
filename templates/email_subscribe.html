@@ -373,56 +373,39 @@
         var successMessage = document.getElementById('success-message');
         var warningMessage = document.getElementById('warning-message');
         
-        // More reliable check for success message visibility - WebView 6.0 compatible
-        var isSuccessVisible = false;
-        var isWarningVisible = false;
-        
-        if (successMessage) {
-            // Multiple fallback methods for Android WebView 6.0
-            var successStyle = successMessage.getAttribute('style') || '';
-            var successDisplay = successMessage.style.display;
-            
-            isSuccessVisible = (
-                successStyle.indexOf('display: block') !== -1 ||
-                successDisplay === 'block' ||
-                successMessage.offsetHeight > 0 ||
-                {% if request.session.subscription_success %}true{% else %}false{% endif %}
-            );
-        }
-        
-        if (warningMessage) {
-            // Multiple fallback methods for Android WebView 6.0
-            var warningStyle = warningMessage.getAttribute('style') || '';
-            var warningDisplay = warningMessage.style.display;
-            
-            isWarningVisible = (
-                warningStyle.indexOf('display: block') !== -1 ||
-                warningDisplay === 'block' ||
-                warningMessage.offsetHeight > 0 ||
-                {% if request.session.subscription_warning %}true{% else %}false{% endif %}
-            );
-        }
+        // Simplified detection for Android WebView 6.0 compatibility
+        var isSuccessVisible = {% if request.session.subscription_success %}true{% else %}false{% endif %};
+        var isWarningVisible = {% if request.session.subscription_warning %}true{% else %}false{% endif %};
         
         // Debug logging for WebView troubleshooting
-        console.log('EMAIL_SUBSCRIBE: Success visible:', isSuccessVisible);
-        console.log('EMAIL_SUBSCRIBE: Warning visible:', isWarningVisible);
+        console.log('EMAIL_SUBSCRIBE: Server says success:', isSuccessVisible);
+        console.log('EMAIL_SUBSCRIBE: Server says warning:', isWarningVisible);
+        console.log('EMAIL_SUBSCRIBE: Success element exists:', !!successMessage);
+        console.log('EMAIL_SUBSCRIBE: Warning element exists:', !!warningMessage);
         
-        // Force display for Android WebView 6.0 if session flags are set
+        // Always force display if server-side flags are set (most reliable for WebView)
         {% if request.session.subscription_success %}
         if (successMessage) {
             successMessage.style.display = 'block';
             successMessage.style.visibility = 'visible';
             successMessage.style.opacity = '1';
-            console.log('EMAIL_SUBSCRIBE: Forced success message display');
+            console.log('EMAIL_SUBSCRIBE: Success message force displayed');
         }
+        if (subscribeForm) {
+            subscribeForm.style.display = 'none';
+            console.log('EMAIL_SUBSCRIBE: Form hidden due to success');
+        }
+        isSuccessVisible = true;
         {% endif %}
         
         {% if request.session.subscription_warning %}
         if (warningMessage) {
             warningMessage.style.display = 'block';
+            warningMessage.style.visibility = 'visible';
             warningMessage.innerHTML = '{{ request.session.subscription_warning|escapejs }}';
-            console.log('EMAIL_SUBSCRIBE: Forced warning message display');
+            console.log('EMAIL_SUBSCRIBE: Warning message force displayed');
         }
+        isWarningVisible = true;
         {% endif %}
         
         // If success message is visible, hide the form and auto-hide after delay

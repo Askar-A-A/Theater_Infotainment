@@ -254,8 +254,16 @@
     </div>
     
     <div class="warning-box">
-        <strong>⚠️ Important Notice:</strong> Always create a backup before making major changes to your CMS content. 
-        Restoring a backup will overwrite all current CMS data including pages, content, and media files.
+        <strong>⚠️ CRITICAL NOTICE - RESTORE SYSTEM ENHANCED:</strong> The backup/restore system has been fixed to work properly. 
+        <br><br>
+        <strong>🔄 RESTORE PROCESS NOW:</strong>
+        <ul style="margin: 10px 0; padding-left: 20px;">
+            <li><strong>CLEARS ALL current CMS content</strong> (pages, text, images, plugins, Q&A)</li>
+            <li><strong>REPLACES</strong> it completely with backup data</li>
+            <li><strong>CANNOT BE UNDONE</strong> - current content will be permanently lost</li>
+            <li><strong>FIXES previous issue</strong> where restores didn't work properly</li>
+        </ul>
+        <strong>Always create a backup before making major changes or before restoring old backups!</strong>
     </div>
 
     <!-- Create Backup Section -->
@@ -321,15 +329,10 @@
                         </td>
                         <td>
                             <a href="{% url 'admin:cms_backup_download' backup.name %}" class="download-button">📥 Download</a>
-                            <form method="post" style="display: inline;">
-                                {% csrf_token %}
-                                <input type="hidden" name="action" value="restore_backup">
-                                <input type="hidden" name="backup_file" value="{{ backup.name }}">
-                                <button type="submit" class="restore-button" 
-                                        onclick="return confirm('⚠️ WARNING: This will overwrite ALL current CMS data with the backup from {{ backup.date|date:"M d, Y - H:i:s" }}. Are you absolutely sure?')">
-                                    🔄 Restore
-                                </button>
-                            </form>
+                            <button type="button" class="restore-button" 
+                                    onclick="restoreBackup('{{ backup.name }}', '{{ backup.date|date:"M d, Y - H:i:s" }}', '{{ backup.notes|default:"No notes" }}')">
+                                🔄 Restore
+                            </button>
                             <button class="delete-button" 
                                     onclick="deleteBackup('{{ backup.name }}', '{{ backup.date|date:"M d, Y - H:i:s" }}', '{{ backup.notes|default:"No notes" }}')">
                                 🗑️ Delete
@@ -455,6 +458,150 @@ function deleteBackup(filename, date, notes) {
     console.log('DELETE_BACKUP_JS: Request data:', requestData);
     console.log('DELETE_BACKUP_JS: Filename:', filename);
     
+    xhr.send(requestData);
+}
+
+// Restore backup functionality with enhanced confirmation - Android WebView 6.0 compatible
+function restoreBackup(filename, date, notes) {
+    
+    var message = '🔄 RESTORE BACKUP CONFIRMATION\n\n' +
+                  '⚠️ CRITICAL WARNING: This will CLEAR ALL current CMS content!\n\n' +
+                  'Current content will be PERMANENTLY DELETED and replaced with:\n\n' +
+                  'Backup Details:\n' +
+                  '📄 File: ' + filename + '\n' +
+                  '📅 Date: ' + date + '\n' +
+                  '📝 Notes: ' + notes + '\n\n' +
+                  '🚨 THIS ACTION CANNOT BE UNDONE! 🚨\n\n' +
+                  'Are you absolutely sure you want to RESTORE this backup?';
+    
+    // First confirmation with details
+    var confirmRestore = confirm(message);
+    
+    if (!confirmRestore) {
+        return; // User cancelled
+    }
+    
+    // Second confirmation for extra safety
+    var finalConfirm = confirm('🚨 FINAL WARNING - DATA WILL BE LOST 🚨\n\n' +
+                               'You are about to:\n' +
+                               '1. DELETE all current CMS content\n' +
+                               '2. REPLACE it with backup from: ' + date + '\n\n' +
+                               'Current pages, images, text, and plugins will be GONE!\n\n' +
+                               'Click OK to RESTORE or Cancel to keep current data.');
+    
+    if (!finalConfirm) {
+        return; // User cancelled final confirmation
+    }
+    
+    // Show loading message
+    alert('🔄 Starting restore process...\n\nThis may take a few moments.\nDo not refresh the page.');
+    
+    // First call without confirmation to get the warning
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '{% url "admin:cms_backup_restore" %}', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+    
+    // Handle response
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                try {
+                    var response = JSON.parse(xhr.responseText);
+                    if (response.success) {
+                        // Success - show message and reload page
+                        alert('✅ Backup restored successfully!\n\n' + response.message);
+                        window.location.reload();
+                    } else if (response.requires_confirmation) {
+                        // Need to send confirmed request
+                        sendConfirmedRestore(filename);
+                    } else {
+                        // Error - show error message
+                        alert('❌ Restore failed!\n\n' + response.message);
+                    }
+                } catch (e) {
+                    // JSON parse error
+                    console.error('RESTORE_BACKUP_JS: JSON parse error:', e);
+                    console.error('RESTORE_BACKUP_JS: Response text:', xhr.responseText);
+                    alert('❌ Error processing server response.\n\nError: ' + e.message + '\n\nResponse: ' + xhr.responseText.substring(0, 200));
+                }
+            } else {
+                // HTTP error
+                console.error('RESTORE_BACKUP_JS: HTTP error:', xhr.status, xhr.statusText);
+                console.error('RESTORE_BACKUP_JS: Response:', xhr.responseText);
+                alert('❌ Server error (HTTP ' + xhr.status + ' ' + xhr.statusText + ').\n\nResponse: ' + xhr.responseText.substring(0, 200));
+            }
+        }
+    };
+    
+    // Handle network errors
+    xhr.onerror = function() {
+        console.error('RESTORE_BACKUP_JS: Network error occurred');
+        alert('❌ Network error occurred.\n\nPlease check your connection and try again.');
+    };
+    
+    // Handle timeout
+    xhr.timeout = 60000; // 60 second timeout for restore
+    xhr.ontimeout = function() {
+        console.error('RESTORE_BACKUP_JS: Request timed out');
+        alert('❌ Request timed out.\n\nRestore may still be in progress. Please wait a moment before trying again.');
+    };
+    
+    // Send first request (without confirmation)
+    var requestData = JSON.stringify({
+        'backup_file': filename,
+        'confirm_restore': false
+    });
+    
+    console.log('RESTORE_BACKUP_JS: Sending initial request to:', '{% url "admin:cms_backup_restore" %}');
+    console.log('RESTORE_BACKUP_JS: Request data:', requestData);
+    
+    xhr.send(requestData);
+}
+
+// Send confirmed restore request
+function sendConfirmedRestore(filename) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '{% url "admin:cms_backup_restore" %}', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+    
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                try {
+                    var response = JSON.parse(xhr.responseText);
+                    if (response.success) {
+                        alert('✅ Backup restored successfully!\n\n' + response.message);
+                        window.location.reload();
+                    } else {
+                        alert('❌ Restore failed!\n\n' + response.message);
+                    }
+                } catch (e) {
+                    alert('❌ Error processing server response.\n\nError: ' + e.message);
+                }
+            } else {
+                alert('❌ Server error (HTTP ' + xhr.status + ').');
+            }
+        }
+    };
+    
+    xhr.onerror = function() {
+        alert('❌ Network error occurred.');
+    };
+    
+    xhr.timeout = 120000; // 2 minute timeout for actual restore
+    xhr.ontimeout = function() {
+        alert('❌ Restore timed out.\n\nPlease check if the restore completed successfully.');
+    };
+    
+    // Send confirmed request
+    var requestData = JSON.stringify({
+        'backup_file': filename,
+        'confirm_restore': true
+    });
+    
+    console.log('RESTORE_BACKUP_JS: Sending confirmed request');
     xhr.send(requestData);
 }
 

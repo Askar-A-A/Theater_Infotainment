@@ -128,6 +128,7 @@ class CMSBackupAdmin:
             try:
                 data = json.loads(request.body)
                 backup_filename = data.get('backup_file')
+                confirm_restore = data.get('confirm_restore', False)
                 
                 if not backup_filename:
                     return JsonResponse({
@@ -135,8 +136,19 @@ class CMSBackupAdmin:
                         'message': 'No backup file specified'
                     })
                 
+                # Require confirmation for restore due to data clearing
+                if not confirm_restore:
+                    return JsonResponse({
+                        'success': False, 
+                        'message': 'Restore confirmation required. This will CLEAR ALL current CMS content and replace it with backup data.',
+                        'requires_confirmation': True
+                    })
+                
                 backup_path = os.path.join(settings.BASE_DIR, 'cms_backups', backup_filename)
                 success, message = restore_cms_data(backup_path)
+                
+                if success:
+                    message = f"✅ {message}\n\n⚠️ All current CMS content was cleared and replaced with backup data."
                 
                 return JsonResponse({
                     'success': success, 
