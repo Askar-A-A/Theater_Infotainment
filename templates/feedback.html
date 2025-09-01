@@ -182,18 +182,6 @@
         text-align: left;
     }
 
-    /* Success message */
-    .success-message {
-        display: none;
-        padding: 15px;
-        background-color: rgba(0, 150, 0, 0.2);
-        border: 2px solid rgba(0, 150, 0, 0.5);
-        border-radius: 8px;
-        color: #ffffff;
-        margin-top: 20px;
-        text-align: center;
-    }
-
     /* Mobile responsive - more compact */
     @media screen and (max-width: 768px) {
         .feedback-container {
@@ -303,17 +291,8 @@
             {% endplaceholder %}
         </div>
         
-        <!-- Success message -->
-        {% if request.session.feedback_success %}
-        <div class="success-message" id="success-message" style="display: block;">
-            <h3 style="margin: 0 0 10px 0; color: #00ff00;">✅ Success!</h3>
-            <p style="margin: 0;">{{ request.session.feedback_success_message|default:"Thank you for your feedback! We appreciate your input." }}</p>
-        </div>
-        {% endif %}
-        
         <!-- Form container -->
-        <form id="feedbackForm" class="feedback-form" method="post" action="{% url 'user_interactions:process_feedback' %}" 
-              {% if request.session.feedback_success %}style="display: none;"{% endif %}>
+        <form class="feedback-form" method="post" action="{% url 'user_interactions:process_feedback' %}">
             {% csrf_token %}
             
             <!-- Name field -->
@@ -323,7 +302,7 @@
                        placeholder="Optional" 
                        value="{{ request.session.feedback_data.name|default:'' }}">
                 {% if request.session.feedback_errors.name %}
-                    <div class="error-message" style="color: #ff6b6b; font-size: 0.8rem; margin-top: 5px;">
+                    <div class="error-message">
                         {{ request.session.feedback_errors.name }}
                     </div>
                 {% endif %}
@@ -341,7 +320,7 @@
                     <input type="hidden" id="rating" name="rating" value="{{ request.session.feedback_data.rating|default:'0' }}">
                 </div>
                 {% if request.session.feedback_errors.rating %}
-                    <div class="error-message" style="color: #ff6b6b; font-size: 0.8rem; margin-top: 5px;">
+                    <div class="error-message">
                         {{ request.session.feedback_errors.rating }}
                     </div>
                 {% endif %}
@@ -353,7 +332,7 @@
                 <textarea id="comments" name="comments" class="form-control" 
                           placeholder="Please share your thoughts, suggestions, or experience...">{{ request.session.feedback_data.comments|default:'' }}</textarea>
                 {% if request.session.feedback_errors.comments %}
-                    <div class="error-message" style="color: #ff6b6b; font-size: 0.8rem; margin-top: 5px;">
+                    <div class="error-message">
                         {{ request.session.feedback_errors.comments }}
                     </div>
                 {% endif %}
@@ -367,80 +346,6 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Handle success message display and auto-hide - WebView 6.0 compatible
-        var successMessage = document.getElementById('success-message');
-        var feedbackForm = document.getElementById('feedbackForm');
-        
-        // Simplified success detection for Android WebView 6.0
-        var isSuccessVisible = {% if request.session.feedback_success %}true{% else %}false{% endif %};
-        
-        // Debug logging for WebView troubleshooting
-        console.log('FEEDBACK: Server says success:', isSuccessVisible);
-        console.log('FEEDBACK: Success message element exists:', !!successMessage);
-        
-        // Always force display if server-side flag is set (most reliable for WebView)
-        {% if request.session.feedback_success %}
-        if (successMessage) {
-            successMessage.style.display = 'block';
-            successMessage.style.visibility = 'visible';
-            successMessage.style.opacity = '1';
-            console.log('FEEDBACK: Success message force displayed');
-        }
-        if (feedbackForm) {
-            feedbackForm.style.display = 'none';
-            console.log('FEEDBACK: Form hidden');
-        }
-        isSuccessVisible = true;
-        {% endif %}
-        
-        if (isSuccessVisible) {
-            // Auto-hide success message after 8 seconds and show form again
-            setTimeout(function() {
-                if (successMessage) {
-                    successMessage.style.display = 'none';
-                }
-                if (feedbackForm) {
-                    feedbackForm.style.display = 'block';
-                    // Reset form for next feedback
-                    feedbackForm.reset();
-                    document.getElementById('rating').value = '0';
-                    // Reset stars
-                    var stars = document.querySelectorAll('.star');
-                    for (var i = 0; i < stars.length; i++) {
-                        stars[i].classList.remove('active');
-                    }
-                }
-                
-                // Clear session messages via AJAX for Android WebView compatibility
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', '{% url "user_interactions:clear_subscription_messages" %}', true);
-                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
-                xhr.timeout = 10000; // Longer timeout for WebView
-                
-                xhr.onreadystatechange = function() {
-                    if (xhr.readyState === 4) {
-                        console.log('FEEDBACK: Clear session response:', xhr.status, xhr.responseText);
-                    }
-                };
-                
-                xhr.onerror = function() {
-                    console.log('FEEDBACK: Clear session network error - continuing anyway');
-                };
-                
-                xhr.ontimeout = function() {
-                    console.log('FEEDBACK: Clear session timeout - continuing anyway');
-                };
-                
-                try {
-                    xhr.send('clear_feedback=true&csrfmiddlewaretoken={{ csrf_token }}');
-                    console.log('FEEDBACK: Clear session request sent');
-                } catch (e) {
-                    console.log('FEEDBACK: Clear session send error:', e);
-                }
-            }, 8000); // 8 seconds
-        }
-        
         // Simplified star rating for WebView compatibility
         var stars = document.querySelectorAll('.star');
         var ratingInput = document.getElementById('rating');

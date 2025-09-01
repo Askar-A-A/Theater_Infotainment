@@ -48,32 +48,23 @@ def process_feedback(request):
             comments=comments
         )
         
-        # Set success message for the template
-        request.session['feedback_success'] = True
+        # Clear any stored errors/data
+        if 'feedback_errors' in request.session:
+            del request.session['feedback_errors']
+        if 'feedback_data' in request.session:
+            del request.session['feedback_data']
         
-        # Set language-specific success message based on the referring page
+        # Redirect to appropriate thank you page based on language
         referrer = request.META.get('HTTP_REFERER', '')
         if '_zh' in referrer or 'zh' in referrer:
-            request.session['feedback_success_message'] = "感谢您的反馈！我们重视您的意见。"
+            return redirect('user_interactions:thank_you_zh')
         else:
-            request.session['feedback_success_message'] = "Thank you for your feedback! We appreciate your input."
-            
-        # Force session save for Android WebView compatibility
-        request.session.modified = True
+            return redirect('user_interactions:thank_you_page')
             
     except Exception as e:
         # If database save fails, set an error message
         request.session['feedback_errors'] = {'general': 'Failed to save feedback. Please try again.'}
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
-    
-    # Clear any stored errors/data
-    if 'feedback_errors' in request.session:
-        del request.session['feedback_errors']
-    if 'feedback_data' in request.session:
-        del request.session['feedback_data']
-    
-    # Redirect back to referrer page (templates handle language)
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 def thank_you_page(request):
     """
@@ -89,14 +80,14 @@ def process_subscription(request):
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
         
     # Extract form data
-    email = request.POST.get('email', '')
-    name = request.POST.get('name', '')
+    email = request.POST.get('email', '').strip().lower()  # Normalize email
+    name = request.POST.get('name', '').strip()
     preferences = request.POST.get('preferences', '') == 'on'  # Convert checkbox to boolean
     
     # Validate data
     errors = {}
     
-    if not email or '@' not in email:
+    if not email or '@' not in email or '.' not in email:
         errors['email'] = "Please provide a valid email address."
     
     # If there are errors, store them in session and redirect back
@@ -107,10 +98,11 @@ def process_subscription(request):
             'name': name,
             'preferences': preferences
         }
+        request.session.modified = True
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
     
-    # Check if email already exists
-    if EmailSubscription.objects.filter(email=email).exists():
+    # Check if email already exists (case-insensitive)
+    if EmailSubscription.objects.filter(email__iexact=email).exists():
         # Set language-specific warning message based on the referring page
         referrer = request.META.get('HTTP_REFERER', '')
         if '_zh' in referrer or 'zh' in referrer:
@@ -137,44 +129,58 @@ def process_subscription(request):
         
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
     
-    # If valid, save the subscription
-    EmailSubscription.objects.create(
-        email=email,
-        name=name,
-        receive_updates=preferences
-    )
-    
-    # Clear any stored errors/data/warnings
-    session_keys_to_clear = [
-        'subscription_errors', 
-        'subscription_data', 
-        'subscription_warning'
-    ]
-    for key in session_keys_to_clear:
-        if key in request.session:
-            del request.session[key]
-    
-    # Set success message
-    request.session['subscription_success'] = True
-    
-    # Redirect back to the same page to show success message
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+    # If valid, save the subscription with error handling
+    try:
+        subscription = EmailSubscription.objects.create(
+            email=email,
+            name=name,
+            receive_updates=preferences
+        )
+        
+        # Debug logging for successful subscription
+        print(f"SUBSCRIPTION_SUCCESS: Created subscription for {email}")
+        print(f"SUBSCRIPTION_SUCCESS: ID: {subscription.id}, Name: {name}, Preferences: {preferences}")
+        
+        # Clear any stored errors/data/warnings
+        session_keys_to_clear = [
+            'subscription_errors', 
+            'subscription_data', 
+            'subscription_warning'
+        ]
+        for key in session_keys_to_clear:
+            if key in request.session:
+                del request.session[key]
+        
+        # Set success message
+        request.session['subscription_success'] = True
+        request.session.modified = True
+        
+        # Redirect back to the same page to show success message
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+        
+    except Exception as e:
+        # Handle database errors
+        print(f"SUBSCRIPTION_ERROR: Failed to create subscription for {email}: {str(e)}")
+        request.session['subscription_errors'] = {'email': 'Failed to save subscription. Please try again.'}
+        request.session['subscription_data'] = {
+            'email': email,
+            'name': name,
+            'preferences': preferences
+        }
+        request.session.modified = True
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 @require_POST
 def clear_subscription_messages(request):
-    """Clear subscription and feedback success/message flags from session."""
+    """Clear subscription success/message flags from session."""
     try:
-        # Clear all subscription-related session data
+        # Clear only subscription-related session data
         session_keys_to_clear = [
             'subscription_success',
             'subscription_message',
             'subscription_warning',
             'subscription_errors',
-            'subscription_data',
-            'feedback_success',
-            'feedback_success_message',
-            'feedback_errors',
-            'feedback_data'
+            'subscription_data'
         ]
         
         cleared_keys = []
