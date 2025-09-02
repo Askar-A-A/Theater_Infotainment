@@ -20,8 +20,7 @@ def process_feedback(request):
     # Validate data
     errors = {}
     
-    if not comments.strip():
-        errors['comments'] = "Please provide your feedback."
+    # Comments are now optional - no validation needed
     
     if rating == '0' or not rating:
         errors['rating'] = "Please select a rating."

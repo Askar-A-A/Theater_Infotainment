@@ -174,12 +174,22 @@
         background-color: #d4af37;
     }
 
-    /* Error messages */
+    /* Error messages - Enhanced for WebView compatibility */
     .error-message {
-        color: #ff6b6b;
-        font-size: 1rem;
-        margin-top: 5px;
-        text-align: left;
+        color: #ff6b6b !important;
+        background-color: rgba(255, 107, 107, 0.1) !important;
+        border: 2px solid #ff6b6b !important;
+        border-radius: 4px !important;
+        font-size: 1rem !important;
+        font-weight: bold !important;
+        margin-top: 5px !important;
+        padding: 8px 12px !important;
+        text-align: left !important;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        min-height: 20px !important;
+        line-height: 1.2 !important;
     }
 
     /* Mobile responsive - more compact */
@@ -287,7 +297,7 @@
         <div class="feedback-intro">
             {% placeholder "feedback_page_subtitle" or %}
                 我们重视您的意见，致力于提供最佳的歌剧体验。
-                请与我们分享您的想法。
+                请为您的体验评分 - 额外评论是可选的。
             {% endplaceholder %}
         </div>
         
@@ -328,9 +338,9 @@
             
             <!-- Comments field -->
             <div class="form-group">
-                <label for="comments" class="form-label">您的反馈</label>
+                <label for="comments" class="form-label">您的反馈 <span style="color: rgba(255, 255, 255, 0.6); font-weight: normal;">(可选)</span></label>
                 <textarea id="comments" name="comments" class="form-control" 
-                          placeholder="请分享您的想法、建议或体验...">{{ request.session.feedback_data.comments|default:'' }}</textarea>
+                          placeholder="请分享您的想法、建议或体验... (可选)">{{ request.session.feedback_data.comments|default:'' }}</textarea>
                 {% if request.session.feedback_errors.comments %}
                     <div class="error-message">
                         {{ request.session.feedback_errors.comments }}
@@ -346,6 +356,24 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // Enhanced error message visibility for WebView compatibility
+        var errorMessages = document.querySelectorAll('.error-message');
+        for (var e = 0; e < errorMessages.length; e++) {
+            var errorMsg = errorMessages[e];
+            if (errorMsg && errorMsg.textContent.trim() !== '') {
+                // Force visibility for WebView
+                errorMsg.style.display = 'block';
+                errorMsg.style.visibility = 'visible';
+                errorMsg.style.opacity = '1';
+                errorMsg.style.color = '#ff6b6b';
+                errorMsg.style.backgroundColor = 'rgba(255, 107, 107, 0.1)';
+                errorMsg.style.border = '2px solid #ff6b6b';
+                errorMsg.style.padding = '8px 12px';
+                errorMsg.style.fontWeight = 'bold';
+                console.log('FEEDBACK_ERROR_ZH: Displayed error message:', errorMsg.textContent);
+            }
+        }
+        
         // Simplified star rating for WebView compatibility
         var stars = document.querySelectorAll('.star');
         var ratingInput = document.getElementById('rating');

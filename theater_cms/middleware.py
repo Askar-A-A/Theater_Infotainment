@@ -12,3 +12,25 @@ class DisableCOOPMiddleware:
             response.headers.pop('Cross-Origin-Opener-Policy', None)
             response.headers.pop('Cross-Origin-Embedder-Policy', None)
         return response 
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#  Now I am getting this issue. Before fixing it I want you to explain your thought 
+# process or at least the thought process a developer should have in order to tackle 
+# these kind of issues, because I want to improve, not just mindlessly generate the
+# solution with you. Though I do need you to provide the solution
