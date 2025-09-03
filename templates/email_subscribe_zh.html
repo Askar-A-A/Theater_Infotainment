@@ -171,24 +171,7 @@
         text-align: left;
     }
 
-    /* Success message - Enhanced for Android WebView 6.0 compatibility */
-    .success-message {
-        display: none;
-        padding: 15px;
-        background-color: rgba(0, 150, 0, 0.3); /* Slightly more visible */
-        border: 2px solid #00AA00; /* Solid color for better WebView support */
-        border-radius: 8px;
-        color: #ffffff;
-        margin-top: 20px;
-        text-align: center;
-        font-weight: bold; /* Make text more prominent */
-        min-height: 50px; /* Ensure minimum height */
-        /* Simplified properties for WebView compatibility */
-        box-sizing: border-box;
-        width: 100%;
-        position: relative;
-        z-index: 10; /* Ensure it appears above other elements */
-    }
+
     
     /* Warning message for duplicate emails - Simple style like feedback errors */
     .warning-message {
@@ -200,8 +183,6 @@
     }
     
     /* Force visibility when active - fallback for WebView */
-    .success-message[style*="display: block"],
-    .success-message.show,
     .warning-message[style*="display: block"],
     .warning-message.show {
         display: block !important;
@@ -355,49 +336,23 @@
                 {% placeholder "subscribe_button_text" or %}订阅{% endplaceholder %}
             </button>
         </form>
-        
-        <!-- Success message -->
-        <div id="success-message" class="success-message" style="{% if request.session.subscription_success %}display: block;{% endif %}">
-            {% placeholder "subscribe_success" or %}
-                <p>感谢您订阅我们的新闻通讯。您将收到关于我们即将到来的活动和演出的更新。</p>
-            {% endplaceholder %}
-        </div>
 
     </div>
 </div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Improved JavaScript for Android WebView 6.0 compatibility
-        var subscribeForm = document.getElementById('subscribe-form');
-        var successMessage = document.getElementById('success-message');
+        // Simplified JavaScript for Android WebView 6.0 compatibility - only warning handling
         var warningMessage = document.getElementById('warning-message');
         
         // Simplified detection for Android WebView 6.0 compatibility
-        var isSuccessVisible = {% if request.session.subscription_success %}true{% else %}false{% endif %};
         var isWarningVisible = {% if request.session.subscription_warning %}true{% else %}false{% endif %};
         
         // Debug logging for WebView troubleshooting
-        console.log('EMAIL_SUBSCRIBE_ZH: Server says success:', isSuccessVisible);
         console.log('EMAIL_SUBSCRIBE_ZH: Server says warning:', isWarningVisible);
-        console.log('EMAIL_SUBSCRIBE_ZH: Success element exists:', !!successMessage);
         console.log('EMAIL_SUBSCRIBE_ZH: Warning element exists:', !!warningMessage);
         
         // Always force display if server-side flags are set (most reliable for WebView)
-        {% if request.session.subscription_success %}
-        if (successMessage) {
-            successMessage.style.display = 'block';
-            successMessage.style.visibility = 'visible';
-            successMessage.style.opacity = '1';
-            console.log('EMAIL_SUBSCRIBE_ZH: Success message force displayed');
-        }
-        if (subscribeForm) {
-            subscribeForm.style.display = 'none';
-            console.log('EMAIL_SUBSCRIBE_ZH: Form hidden due to success');
-        }
-        isSuccessVisible = true;
-        {% endif %}
-        
         {% if request.session.subscription_warning %}
         if (warningMessage) {
             warningMessage.style.display = 'block';
@@ -407,22 +362,6 @@
         }
         isWarningVisible = true;
         {% endif %}
-        
-        // If success message is visible, hide the form and auto-hide after delay
-        if (isSuccessVisible && subscribeForm) {
-            subscribeForm.style.display = 'none';
-            
-            // Auto-hide success message after 10 seconds for Android WebView 6.0
-            setTimeout(function() {
-                if (successMessage) {
-                    successMessage.style.display = 'none';
-                    // Show form again after hiding success message
-                    if (subscribeForm) {
-                        subscribeForm.style.display = 'block';
-                    }
-                }
-            }, 10000); // 10 seconds - longer than warning to ensure user sees it
-        }
         
         // For warning messages, keep the form visible but clear after delay
         if (isWarningVisible) {
@@ -437,10 +376,10 @@
         // Clear messages with delay and better error handling for WebView compatibility
         setTimeout(function() {
             try {
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', '{% url "user_interactions:clear_subscription_messages" %}', true);
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '{% url "user_interactions:clear_subscription_messages" %}', true);
                 xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+                xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
                 
                 // Add timeout and error handling
                 xhr.timeout = 5000; // 5 second timeout

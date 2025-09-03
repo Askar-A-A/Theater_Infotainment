@@ -70,9 +70,15 @@ def process_feedback(request):
 
 def thank_you_page(request):
     """
-    English thank you page - uses the regular template
+    English thank you page for feedback - uses the regular template
     """
     return render(request, 'feedback_thank_you.html')
+
+def email_thank_you_page(request):
+    """
+    English thank you page for email subscription
+    """
+    return render(request, 'email_thank_you.html')
 
 def process_subscription(request):
     """Process email subscription form submissions."""
@@ -153,12 +159,12 @@ def process_subscription(request):
             if key in request.session:
                 del request.session[key]
         
-        # Set success message
-        request.session['subscription_success'] = True
-        request.session.modified = True
-        
-        # Redirect back to the same page to show success message
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+        # Redirect to appropriate thank you page based on language
+        referrer = request.META.get('HTTP_REFERER', '')
+        if '_zh' in referrer or 'zh' in referrer:
+            return redirect('user_interactions:email_thank_you_zh')
+        else:
+            return redirect('user_interactions:email_thank_you_page')
         
     except Exception as e:
         # Handle database errors
@@ -432,8 +438,12 @@ def qa_view_zh(request):
     return render(request, 'q&a_zh.html')
 
 def thank_you_zh(request):
-    """Chinese version of thank you page"""
+    """Chinese version of thank you page for feedback"""
     return render(request, 'feedback_thank_you_zh.html')
+
+def email_thank_you_zh(request):
+    """Chinese version of thank you page for email subscription"""
+    return render(request, 'email_thank_you_zh.html')
 
 def home_view_zh(request):
     """Chinese version of home page"""

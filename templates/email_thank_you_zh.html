@@ -1,0 +1,158 @@
+{% extends "base_zh.html" %}
+{% load cms_tags %}
+{% load static %}
+
+{% block title %}
+    谢谢 - {% placeholder "theater_name" or %}歌剧院{% endplaceholder %}
+{% endblock %}
+
+{% block wrapper_style %}
+<style>
+    /* Disable scrolling for thank you page */
+    .content-wrapper {
+        overflow: hidden;
+    }
+</style>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Simplified styles for Android 6.0 WebView compatibility */
+    .subscription-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .subscription-content-box {
+        width: 100%;
+        max-width: 600px;
+        padding: 40px 30px;
+        background-color: rgba(0, 0, 0, 0.8);
+        border: 3px solid #d4af37;
+        border-radius: 15px;
+        text-align: center;
+        box-sizing: border-box;
+    }
+    
+    /* Simplified title styles */
+    .subscription-title {
+        color: #d4af37;
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+        margin-top: 0;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Simple divider line */
+    .divider {
+        width: 200px;
+        height: 2px;
+        background-color: #d4af37;
+        margin: 0 auto 25px auto;
+    }
+
+    /* Message text */
+    .subscription-message {
+        color: #ffffff;
+        font-size: 1.2rem;
+        line-height: 1.6;
+        margin-bottom: 30px;
+        margin-top: 0;
+    }
+    
+    /* Simple button styles */
+    .home-button {
+        display: inline-block;
+        padding: 12px 30px;
+        font-size: 1.1rem;
+        color: #d4af37;
+        background-color: transparent;
+        border: 2px solid #d4af37;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+
+    .home-button:hover {
+        color: #000000;
+        background-color: #d4af37;
+    }
+
+    /* Mobile responsive */
+    @media screen and (max-width: 768px) {
+        .subscription-container {
+            padding: 15px;
+        }
+        
+        .subscription-content-box {
+            padding: 30px 20px;
+        }
+        
+        .subscription-title {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+        
+        .divider {
+            width: 150px;
+            margin-bottom: 20px;
+        }
+        
+        .subscription-message {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+        }
+        
+        .home-button {
+            padding: 10px 25px;
+            font-size: 1rem;
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        .subscription-content-box {
+            padding: 25px 15px;
+        }
+        
+        .subscription-title {
+            font-size: 1.8rem;
+        }
+        
+        .subscription-message {
+            font-size: 1rem;
+        }
+        
+        .home-button {
+            padding: 10px 20px;
+            font-size: 0.95rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="subscription-container">
+    <div class="subscription-content-box">
+        <h1 class="subscription-title">
+            {% placeholder "email_subscribe_thank_you_title_zh" or %}谢谢！{% endplaceholder %}
+        </h1>
+        
+        <div class="divider"></div>
+        
+        <p class="subscription-message">
+            {% placeholder "email_subscribe_thank_you_message_zh" or %}
+                感谢您订阅我们的新闻通讯！您将收到关于我们即将到来的活动和演出的更新。
+            {% endplaceholder %}
+        </p>
+        
+        <a href="/home_zh/" class="home-button">返回主页</a>
+    </div>
+</div>
+{% endblock %}

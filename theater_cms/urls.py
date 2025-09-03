@@ -22,6 +22,7 @@ urlpatterns = [
     path('event/<slug:slug>/', views.event_detail, name='event_detail'),
     path('current-event/', views.current_event, name='current_event'),
     path('thank-you/', views.thank_you_page, name='thank_you_page'),
+    path('email-thank-you/', views.email_thank_you_page, name='email_thank_you_page'),
     
     # Chinese routes
     path('intro_zh/', views.intro_view_zh, name='intro_zh'),
@@ -34,4 +35,5 @@ urlpatterns = [
     path('event_zh/<slug:slug>/', views.event_detail_zh, name='event_detail_zh'),
     path('current-event_zh/', views.current_event_zh, name='current_event_zh'),
     path('thank-you_zh/', views.thank_you_zh, name='thank_you_zh'),
+    path('email-thank-you_zh/', views.email_thank_you_zh, name='email_thank_you_zh'),
 ] 
