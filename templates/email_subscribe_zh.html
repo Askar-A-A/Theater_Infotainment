@@ -307,9 +307,9 @@
                 {% endif %}
                 <!-- Warning message for duplicate emails - positioned like feedback errors -->
                 <div id="warning-message" class="warning-message" 
-                     style="{% if request.session.subscription_warning %}display: block;{% else %}display: none;{% endif %}">
-                    {% if request.session.subscription_warning %}
-                        {{ request.session.subscription_warning }}
+                     style="{% if subscription_warning %}display: block;{% else %}display: none;{% endif %}">
+                    {% if subscription_warning %}
+                        {{ subscription_warning }}
                     {% endif %}
                 </div>
             </div>
@@ -346,18 +346,18 @@
         var warningMessage = document.getElementById('warning-message');
         
         // Simplified detection for Android WebView 6.0 compatibility
-        var isWarningVisible = {% if request.session.subscription_warning %}true{% else %}false{% endif %};
+        var isWarningVisible = {% if subscription_warning %}true{% else %}false{% endif %};
         
         // Debug logging for WebView troubleshooting
         console.log('EMAIL_SUBSCRIBE_ZH: Server says warning:', isWarningVisible);
         console.log('EMAIL_SUBSCRIBE_ZH: Warning element exists:', !!warningMessage);
         
         // Always force display if server-side flags are set (most reliable for WebView)
-        {% if request.session.subscription_warning %}
+        {% if subscription_warning %}
         if (warningMessage) {
             warningMessage.style.display = 'block';
             warningMessage.style.visibility = 'visible';
-            warningMessage.innerHTML = '{{ request.session.subscription_warning|escapejs }}';
+            warningMessage.innerHTML = '{{ subscription_warning|escapejs }}';
             console.log('EMAIL_SUBSCRIBE_ZH: Warning message force displayed');
         }
         isWarningVisible = true;

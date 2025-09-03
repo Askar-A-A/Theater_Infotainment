@@ -115,27 +115,26 @@ def process_subscription(request):
         referrer = request.META.get('HTTP_REFERER', '')
         if '_zh' in referrer or 'zh' in referrer:
             warning_msg = "您已经订阅了我们的新闻通讯。"
+            template_name = 'email_subscribe_zh.html'
         else:
             warning_msg = "You are already subscribed to our newsletter."
+            template_name = 'email_subscribe.html'
             
-        request.session['subscription_warning'] = warning_msg
-        
         # Debug logging for WebView troubleshooting
         print(f"SUBSCRIPTION_WARNING: Email {email} already exists")
         print(f"SUBSCRIPTION_WARNING: Referrer: {referrer}")
-        print(f"SUBSCRIPTION_WARNING: Warning message set: {warning_msg}")
+        print(f"SUBSCRIPTION_WARNING: Warning message: {warning_msg}")
         
-        # Store the email for display but clear other data
-        request.session['subscription_data'] = {
-            'email': email,
-            'name': name,
-            'preferences': preferences
+        # Render template directly with warning context (no session, no redirect)
+        context = {
+            'subscription_warning': warning_msg,
+            'subscription_data': {
+                'email': email,
+                'name': name,
+                'preferences': preferences
+            }
         }
-        
-        # Force session save for Android WebView compatibility
-        request.session.modified = True
-        
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+        return render(request, template_name, context)
     
     # If valid, save the subscription with error handling
     try:
