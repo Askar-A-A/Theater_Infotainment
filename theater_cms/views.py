@@ -29,7 +29,10 @@ def process_feedback(request):
     
     # If there are errors, store them in session and redirect back
     if errors:
-        request.session['feedback_errors'] = errors
+        # Store errors in the same format as email subscribe (single warning)
+        if 'rating' in errors:
+            request.session['feedback_warning'] = errors['rating']
+        
         request.session['feedback_data'] = {
             'name': name,
             'rating': rating,
@@ -210,7 +213,8 @@ def clear_feedback_messages(request):
         # Clear only feedback-related session data
         session_keys_to_clear = [
             'feedback_errors',
-            'feedback_data'
+            'feedback_data',
+            'feedback_warning'  # Add this
         ]
         
         cleared_keys = []

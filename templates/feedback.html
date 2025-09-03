@@ -370,18 +370,18 @@
         var warningMessage = document.getElementById('warning-message');
         
         // Simplified detection for Android WebView 6.0 compatibility
-        var isWarningVisible = {% if request.session.feedback_errors.rating %}true{% else %}false{% endif %};
+        var isWarningVisible = {% if request.session.feedback_warning %}true{% else %}false{% endif %};
         
         // Debug logging for WebView troubleshooting
         console.log('FEEDBACK: Server says warning:', isWarningVisible);
         console.log('FEEDBACK: Warning element exists:', !!warningMessage);
         
         // Always force display if server-side flags are set (most reliable for WebView)
-        {% if request.session.feedback_errors.rating %}
+        {% if request.session.feedback_warning %}
         if (warningMessage) {
             warningMessage.style.display = 'block';
             warningMessage.style.visibility = 'visible';
-            warningMessage.innerHTML = '{{ request.session.feedback_errors.rating|escapejs }}';
+            warningMessage.innerHTML = '{{ request.session.feedback_warning|escapejs }}';
             console.log('FEEDBACK: Warning message force displayed');
         }
         isWarningVisible = true;
