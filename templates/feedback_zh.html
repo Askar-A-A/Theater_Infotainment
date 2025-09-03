@@ -336,11 +336,6 @@
                     <span class="star" data-rating="5">⭐</span>
                     <input type="hidden" id="rating" name="rating" value="{{ request.session.feedback_data.rating|default:'0' }}">
                 </div>
-                {% if request.session.feedback_errors.rating %}
-                    <div class="error-message">
-                        {{ request.session.feedback_errors.rating }}
-                    </div>
-                {% endif %}
                 <!-- Warning message for rating errors - positioned like email subscribe -->
                 <div id="warning-message" class="warning-message" 
                      style="{% if request.session.feedback_errors.rating %}display: block;{% else %}display: none;{% endif %}">
@@ -394,13 +389,37 @@
         
         // For warning messages, keep the form visible but clear after delay
         if (isWarningVisible) {
-            // Auto-hide warning after 8 seconds for better UX
+            // Auto-hide warning after 4 seconds for better UX
             setTimeout(function() {
                 if (warningMessage) {
                     warningMessage.style.display = 'none';
                 }
-            }, 8000);
+            }, 4000);
         }
+        
+        // Clear messages with delay and better error handling for WebView compatibility
+        setTimeout(function() {
+            try {
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '{% url "user_interactions:clear_feedback_messages" %}', true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+                
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4) {
+                        if (xhr.status === 200) {
+                            console.log('FEEDBACK_ZH: Messages cleared successfully');
+                        } else {
+                            console.log('FEEDBACK_ZH: Failed to clear messages, but continuing');
+                        }
+                    }
+                };
+                
+                xhr.send('');
+            } catch (error) {
+                console.log('FEEDBACK_ZH: Error clearing messages:', error);
+            }
+        }, 12000); // Clear after 12 seconds
         
         // Simplified star rating for WebView compatibility
         var stars = document.querySelectorAll('.star');

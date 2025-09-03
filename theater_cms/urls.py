@@ -8,6 +8,7 @@ urlpatterns = [
     path('process_feedback/', views.process_feedback, name='process_feedback'),
     path('process_subscription/', views.process_subscription, name='process_subscription'),
     path('clear_subscription_messages/', views.clear_subscription_messages, name='clear_subscription_messages'),
+    path('clear_feedback_messages/', views.clear_feedback_messages, name='clear_feedback_messages'),
     
     # English routes (default)
     # path('home/', views.home_view, name='home'),

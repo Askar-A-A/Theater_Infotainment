@@ -203,6 +203,37 @@ def clear_subscription_messages(request):
             'message': str(e)
         })
 
+@require_POST
+def clear_feedback_messages(request):
+    """Clear feedback error/message flags from session."""
+    try:
+        # Clear only feedback-related session data
+        session_keys_to_clear = [
+            'feedback_errors',
+            'feedback_data'
+        ]
+        
+        cleared_keys = []
+        for key in session_keys_to_clear:
+            if key in request.session:
+                del request.session[key]
+                cleared_keys.append(key)
+        
+        # Ensure session is saved
+        request.session.modified = True
+        
+        return JsonResponse({
+            'status': 'success',
+            'cleared_keys': cleared_keys,
+            'message': 'Feedback messages cleared successfully'
+        })
+    except Exception as e:
+        # Return success even on error to prevent client-side issues
+        return JsonResponse({
+            'status': 'error',
+            'message': str(e)
+        })
+
 def determine_current_event():
     """Utility function to find the current or next event"""
     now = timezone.now()
