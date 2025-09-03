@@ -174,22 +174,29 @@
         background-color: #d4af37;
     }
 
-    /* Error messages - Enhanced for WebView compatibility */
+    /* Error messages - Simple style like email subscribe */
     .error-message {
-        color: #ff6b6b !important;
-        background-color: rgba(255, 107, 107, 0.1) !important;
-        border: 2px solid #ff6b6b !important;
-        border-radius: 4px !important;
-        font-size: 1rem !important;
-        font-weight: bold !important;
-        margin-top: 5px !important;
-        padding: 8px 12px !important;
-        text-align: left !important;
+        color: #ff6b6b;
+        font-size: 1rem;
+        margin-top: 5px;
+        text-align: left;
+    }
+    
+    /* Warning message for feedback errors - Simple style like email subscribe */
+    .warning-message {
+        color: #ff6b6b;
+        font-size: 1rem;
+        margin-top: 5px;
+        text-align: left;
+        display: none;
+    }
+    
+    /* Force visibility when active - fallback for WebView */
+    .warning-message[style*="display: block"],
+    .warning-message.show {
         display: block !important;
         visibility: visible !important;
         opacity: 1 !important;
-        min-height: 20px !important;
-        line-height: 1.2 !important;
     }
 
     /* Mobile responsive - more compact */
@@ -334,6 +341,13 @@
                         {{ request.session.feedback_errors.rating }}
                     </div>
                 {% endif %}
+                <!-- Warning message for rating errors - positioned like email subscribe -->
+                <div id="warning-message" class="warning-message" 
+                     style="{% if request.session.feedback_errors.rating %}display: block;{% else %}display: none;{% endif %}">
+                    {% if request.session.feedback_errors.rating %}
+                        {{ request.session.feedback_errors.rating }}
+                    {% endif %}
+                </div>
             </div>
             
             <!-- Comments field -->
@@ -356,22 +370,36 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Enhanced error message visibility for WebView compatibility
-        var errorMessages = document.querySelectorAll('.error-message');
-        for (var e = 0; e < errorMessages.length; e++) {
-            var errorMsg = errorMessages[e];
-            if (errorMsg && errorMsg.textContent.trim() !== '') {
-                // Force visibility for WebView
-                errorMsg.style.display = 'block';
-                errorMsg.style.visibility = 'visible';
-                errorMsg.style.opacity = '1';
-                errorMsg.style.color = '#ff6b6b';
-                errorMsg.style.backgroundColor = 'rgba(255, 107, 107, 0.1)';
-                errorMsg.style.border = '2px solid #ff6b6b';
-                errorMsg.style.padding = '8px 12px';
-                errorMsg.style.fontWeight = 'bold';
-                console.log('FEEDBACK_ERROR: Displayed error message:', errorMsg.textContent);
-            }
+        // Improved JavaScript for Android WebView 6.0 compatibility - copied from email subscribe
+        var feedbackForm = document.querySelector('.feedback-form');
+        var warningMessage = document.getElementById('warning-message');
+        
+        // Simplified detection for Android WebView 6.0 compatibility
+        var isWarningVisible = {% if request.session.feedback_errors.rating %}true{% else %}false{% endif %};
+        
+        // Debug logging for WebView troubleshooting
+        console.log('FEEDBACK: Server says warning:', isWarningVisible);
+        console.log('FEEDBACK: Warning element exists:', !!warningMessage);
+        
+        // Always force display if server-side flags are set (most reliable for WebView)
+        {% if request.session.feedback_errors.rating %}
+        if (warningMessage) {
+            warningMessage.style.display = 'block';
+            warningMessage.style.visibility = 'visible';
+            warningMessage.innerHTML = '{{ request.session.feedback_errors.rating|escapejs }}';
+            console.log('FEEDBACK: Warning message force displayed');
+        }
+        isWarningVisible = true;
+        {% endif %}
+        
+        // For warning messages, keep the form visible but clear after delay
+        if (isWarningVisible) {
+            // Auto-hide warning after 8 seconds for better UX
+            setTimeout(function() {
+                if (warningMessage) {
+                    warningMessage.style.display = 'none';
+                }
+            }, 8000);
         }
         
         // Simplified star rating for WebView compatibility
