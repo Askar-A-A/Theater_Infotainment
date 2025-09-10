@@ -260,9 +260,7 @@ class SponsorsPageContentAdmin(admin.ModelAdmin):
         }),
         ('Chinese Content', {
             'fields': ('sponsors_title_zh', 'sponsors_intro_zh')
-        }),
-        ('Metadata', {
-            'fields': ('updated_at',),
-            'classes': ('collapse',)
         })
     )
+    
+    readonly_fields = ('updated_at',)
