@@ -6,11 +6,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>{% placeholder "sponsors_page_title" or %}Mūsų rėmėjai - Opera teatras{% endplaceholder %}</title>
+    <title>{% placeholder "sponsors_page_title" or %}Mūsų rėmėjai - Operos teatras{% endplaceholder %}</title>
     <link rel="stylesheet" href="{% static 'css/font-awesome/all.min.css' %}">
     {% render_block "css" %}
 <style>
-    /* Reset and base styles - Fixed for 1280x400 */
+    /* Reset and base styles - Optimized for 1280x400 */
     * {
         margin: 0;
         padding: 0;
@@ -20,41 +20,45 @@
     html, body {
         margin: 0;
         padding: 0;
-        width: 1280px;
-        height: 400px; 
-        max-height: 100%;
+        width: 100vw;
+        height: 100vh;
+        max-width: 1280px;
+        max-height: 400px;
         color: #fff;
         font-family: Arial, sans-serif;
         line-height: 1.6;
         overflow: hidden;
+        background: rgb(59, 57, 57);
     }
 
-    /* Content wrapper - Fixed for 1280x400 */
+    /* Content wrapper - Full viewport */
     .content-wrapper {
-        width: 1280px;
-        height: 400px;
+        width: 100vw;
+        height: 100vh;
+        max-width: 1280px;
+        max-height: 400px;
         position: relative;
         background: rgb(59, 57, 57);
         overflow: hidden;
     }
     
-    /* Main container - Fixed for 1280x400 */
+    /* Main container - Optimized for device fit */
     .sponsors-container {
         width: 100%;
         height: 100%;
         position: relative;
-        padding: 10px;
+        padding: 6px;
         text-align: center;
         display: block;
     }
     
-    /* Title area - Fixed for 1280x400 */
+    /* Title area - Optimized for device fit */
     .sponsors-title {
         font-family: Georgia, serif;
-        font-size: 3.2rem;
+        font-size: 2.1rem;
         color: #d4af37;
-        margin-bottom: 0.5rem;
-        margin-top: 0.5rem;
+        margin-bottom: 0.05rem;
+        margin-top: 0;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     }
     
@@ -63,100 +67,121 @@
         display: none;
     }
     
-    /* Sponsors info - Fixed for 1280x400 */
+    /* Sponsors info - Optimized for device fit */
     .sponsors-intro {
         text-align: center;
         max-width: 99%;
-        margin: 0 auto 0.8rem;
+        margin: 0 auto 0.15rem;
         color: #ffffff;
         font-size: 1.1rem;
-        line-height: 1.5;
+        line-height: 1.1;
         font-family: Arial, sans-serif;
         font-weight: 300;
         background-color: rgba(0, 0, 0, 0.8);
         border: 2px solid rgba(255, 255, 255, 0.3);
-        border-radius: 10px;
-        padding: 16px 30px;
+        border-radius: 6px;
+        padding: 4px 12px;
         box-sizing: border-box;
     }
     
-    /* Sponsors row layout - Fixed for 1280x400 */
+    /* Sponsors row layout - Optimized for device fit */
     .sponsors-row {
         width: 100%;
-        margin-bottom: 12px;
+        margin-bottom: 2px;
         display: table;
         table-layout: fixed;
+        height: 180px;
     }
     
-    /* Sponsor category boxes - Fixed for 1280x400 */
+    /* Sponsor category boxes - Optimized for device fit */
     .sponsor-box {
         display: table-cell;
         width: 50%;
-        max-width: 450px;
+        max-width: 600px;
         background-color: rgba(0, 0, 0, 0.8);
         border: 2px solid rgba(255, 255, 255, 0.3);
-        border-radius: 10px;
-        padding: 12px;
+        border-radius: 6px;
+        padding: 4px;
         position: relative;
         vertical-align: top;
+        height: 180px;
+        overflow: hidden;
     }
     
-    /* Add spacing between boxes - Fixed for 1280x400 */
+    /* Add spacing between boxes - Optimized for 1280x400 */
     .sponsor-box:first-child {
-        padding-right: 6px;
+        padding-right: 5px;
     }
     
     .sponsor-box:last-child {
-        padding-left: 6px;
+        padding-left: 5px;
     }
     
-    /* Category headers - Fixed for 1280x400 */
+    /* Category headers - Optimized for 1280x400 */
     .sponsor-box-title {
         position: relative;
         text-align: center;
-        margin-bottom: 10px;
-        padding-bottom: 5px;
+        margin-bottom: 6px;
+        padding-bottom: 3px;
         border-bottom: 1px solid rgba(212, 175, 55, 0.4);
-    }
-    
-    .sponsor-box-title i {
-        color: #d4af37;
-        font-size: 1.5rem;
-        margin-right: 0.6rem;
-        vertical-align: middle;
+        font-size: 1.3rem;
     }
     
     .sponsor-box-title span {
         color: #d4af37;
-        font-size: 1.5rem;
+        font-size: 1.3rem;
         font-weight: bold;
         vertical-align: middle;
+        margin-left: 0.4rem;
     }
     
-    /* Sponsors grid - Fixed for 1280x400 */
+    /* Sponsors grid - Optimized for 1280x400 */
     .sponsors-grid {
         text-align: center;
         margin: 0 auto;
     }
     
-    /* Sponsor items - Fixed size for all sponsors */
+    /* Sponsor items - Responsive sizing for equal treatment */
     .sponsor-item {
         background-color: rgba(255, 255, 255, 0.95);
-        border-radius: 8px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        border-radius: 6px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         transition: transform 0.3s;
         display: inline-block;
-        margin: 5px;
+        margin: 4px;
         position: relative;
         vertical-align: middle;
-        /* Fixed size for all sponsors - equal treatment */
-        width: 190px;
-        height: 130px;
     }
-    
+
+    /* Default size for multiple sponsors */
+    .sponsors-grid .sponsor-item {
+        width: 140px;
+        height: 90px;
+    }
+
+    /* FIXED: Medium size when max sponsors across both boxes is 1 - reduced to fit screen */
+    .sponsors-page.max-sponsors-1 .sponsor-item {
+        width: 210px !important;
+        height: 125px !important;
+        margin: 6px;
+    }
+
+    /* Medium size when max sponsors across both boxes is 2 */
+    .sponsors-page.max-sponsors-2 .sponsor-item {
+        width: 200px !important;
+        height: 120px !important;
+        margin: 5px;
+    }
+
+    /* Small-medium size when max sponsors across both boxes is 3 */
+    .sponsors-page.max-sponsors-3 .sponsor-item {
+        width: 140px !important;
+        height: 85px !important;
+        margin: 2px;
+    }
     .sponsor-item:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
     }
     
     .sponsor-logo {
@@ -165,7 +190,7 @@
         height: 100%;
         max-width: 100%;
         max-height: 100%;
-        padding: 8px;
+        padding: 6px;
         /* Prevent logo stretching - maintain aspect ratio */
         object-fit: contain;
         box-sizing: border-box;
@@ -179,8 +204,8 @@
     /* Navigation buttons - consistent with base template */
     .forward-nav {
         position: absolute;
-        right: 15px;
-        top: 15px;
+        right: 12px;
+        top: 12px;
         z-index: 100;
         text-decoration: none !important;
         color: #ffffff !important;
@@ -195,19 +220,19 @@
     }
 
     .forward-icon {
-        width: 80px;
-        height: 80px;
+        width: 65px;
+        height: 65px;
         background: rgba(0,0,0,0.7);
         border-radius: 50%;
-        display: table-cell;
-        vertical-align: middle;
-        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         cursor: pointer;
         transition: background-color 0.3s;
-        font-size: 50px;
+        font-size: 40px;
         font-weight: bold;
-        line-height: 80px;
         color: #ffffff;
+        position: relative;
     }
 
     .forward-icon:hover {
@@ -216,6 +241,8 @@
 </style>
 {% render_block "js" %}
 <script>
+    console.log('Rėmėjų puslapis įkeltas (Lithuanian)');
+    
     /* Android 6.0 compatible event attachment with fallback */
     function addLoadEvent(func) {
         var oldonload = window.onload;
@@ -232,9 +259,40 @@
     }
 
     addLoadEvent(function() {
-        // No dynamic sizing needed - all sponsors are same size for equal treatment
-        // This ensures no sponsor appears more prominent than others
-        console.log('Rėmėjų puslapis įkeltas - visi rėmėjai rodomi vienodu dydžiu, kad būtų užtikrintas vienodas traktavimas');
+        // Smart sponsor sizing based on maximum sponsors across both boxes
+        var sponsorGrids = document.getElementsByClassName('sponsors-grid');
+        var maxSponsors = 0;
+        
+        // Find the maximum number of sponsors in any box, but limit to 3
+        for (var i = 0; i < sponsorGrids.length; i++) {
+            var grid = sponsorGrids[i];
+            var sponsors = grid.getElementsByClassName('sponsor-item');
+            
+            // Hide sponsors beyond the 3rd one
+            for (var j = 0; j < sponsors.length; j++) {
+                if (j >= 3) {
+                    sponsors[j].style.display = 'none';
+                }
+            }
+            
+            var count = Math.min(sponsors.length, 3); // Limit to max 3 sponsors per box
+            if (count > maxSponsors) {
+                maxSponsors = count;
+            }
+        }
+        
+        // Apply sizing class to the page based on maximum sponsors
+        var sponsorsContainer = document.querySelector('.sponsors-container');
+        if (sponsorsContainer) {
+            // Remove any existing max-sponsors classes
+            sponsorsContainer.className = sponsorsContainer.className.replace(/\bmax-sponsors-\d+\b/g, '');
+            sponsorsContainer.className += ' sponsors-page';
+            
+            // Add max-sponsors class for styling (max 3)
+            if (maxSponsors >= 1 && maxSponsors <= 3) {
+                sponsorsContainer.className += ' max-sponsors-' + maxSponsors;
+            }
+        }
     });
 </script>
 </head>
@@ -242,8 +300,6 @@
 <body>
     {% cms_toolbar %}
     <div class="content-wrapper">
-
-        
         <div class="sponsors-container">
             <h1 class="sponsors-title">{{ sponsors_content.sponsors_title_lt }}</h1>
             
@@ -259,7 +315,7 @@
                 {% if seasonal_sponsors %}
                 <div class="sponsor-box">
                     <div class="sponsor-box-title">
-                        <span style="color: #d4af37; font-size: 1.5rem; margin-right: 0.6rem; vertical-align: middle;">📅</span>
+                        📅
                         <span>Sezoniniai rėmėjai</span>
                     </div>
                     <div class="sponsors-grid">
@@ -282,7 +338,7 @@
                 {% if event_sponsors %}
                 <div class="sponsor-box">
                     <div class="sponsor-box-title">
-                        <span style="color: #d4af37; font-size: 1.5rem; margin-right: 0.6rem; vertical-align: middle;">🎭</span>
+                        🎭
                         <span>{{ event.title }} rėmėjai</span>
                     </div>
                     <div class="sponsors-grid">
@@ -302,9 +358,9 @@
                 {% endif %}
             </div>
             
-            <!-- Original enter button - hidden via CSS -->
+            <!-- Enter button -->
             <a href="/home_lt/" class="enter-button">
-                {% placeholder "enter_button_text" or %}Patekti į svetainę{% endplaceholder %}
+                {% placeholder "enter_button_text" or %}Įeiti į svetainę{% endplaceholder %}
             </a>
         </div>
         

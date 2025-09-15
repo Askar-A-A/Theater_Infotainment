@@ -4,7 +4,7 @@
 {% load menu_tags %}
 
 {% block title %}
-    {% placeholder "home_page_title" or %}Opera teatras{% endplaceholder %}
+    {% placeholder "home_page_title" or %}Teatro pavadinimas{% endplaceholder %}
 {% endblock %}
 
 {% block wrapper_style %}
@@ -12,61 +12,27 @@
     /* Ensure home page has no scrolling */
     .content-wrapper {
         overflow: hidden;
+        height: 400px;
+        width: 1280px;
     }
     
-    /* Hide back arrow on home page - nowhere to go back to */
+    /* Hide back arrow on home page since it doesn't make sense */
     .home-nav {
-        display: none !important;
+        display: none;
     }
 </style>
 {% endblock %}
 
 {% block extra_css %}
 <style>
-    /* Simplified styles for Android 6.0 WebView compatibility */
+    /* Simplified styles for Android 6.0 WebView compatibility - Optimized for 1280x400 */
 
-    /* Logo section styles - Compact for 1280x400 */
-    .logo-section {
-        position: absolute;
-        left: 0;
-        width: 100%;
-        top: 8px;
-        height: 70px;
-        display: block;
-        text-align: center;
-        z-index: 20;
-    }
-
-    .logo-container {
-        display: inline-block;
-        max-width: 90%;
-        margin: 0 auto;
-    }
-
-    .theater-logo {
-        max-height: 50px;
-        max-width: 100%;
-        width: auto;
-        height: auto;
-    }
-
-    /* Theater title styles */
-    .theater-title {
-        color: #d4af37;
-        text-align: center;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        margin-top: 5px;
-        font-size: 1.5rem;
-        font-weight: bold;
-        margin-bottom: 0;
-    }
-
-    /* Theater container - Optimized for 1280x400 */
+    /* Theater container - Full height for 1280x400 */
     .theater-container {
         width: 100%;
-        height: calc(100% - 78px);
-        margin-top: 78px;
-        padding: 8px 15px;
+        height: 100%;
+        margin-top: 0;
+        padding: 8px;
         overflow-y: auto;
         overflow-x: hidden;
         box-sizing: border-box;
@@ -98,7 +64,7 @@
     }
 
     .scroll-indicator.bottom {
-        bottom: 12px;
+        bottom: 10px;
     }
 
     .scroll-indicator.hidden {
@@ -110,8 +76,8 @@
     }
 
     .scroll-indicator span {
-        margin-left: 10px;
-        font-size: 18px;
+        margin-left: 12px;
+        font-size: 20px;
         font-weight: 700;
         color: #fff;
         letter-spacing: 0.5px;
@@ -137,44 +103,30 @@
         background: linear-gradient(to top, rgba(59, 57, 57, 1), rgba(59, 57, 57, 0));
     }
 
-    /* Main content - Horizontal layout for wider screen */
+    /* Main content - Single column layout */
     .main-content {
         width: 100%;
-        max-width: 1200px;
+        max-width: 900px;
         margin: 0 auto;
     }
 
-    /* Menu Grid - Two column layout for wider screen */
+    /* Menu Grid - Single column with compact items */
     .menu-grid {
         width: 100%;
-    }
-    
-    .menu-row {
-        display: table;
-        width: 100%;
-        table-layout: fixed;
-        margin-bottom: 10px;
-    }
-    
-    .menu-spacer {
-        display: table-cell;
-        width: 48%;
-        margin: 0 8px 0 0;
     }
 
     .menu-item {
         background-color: rgba(0, 0, 0, 0.8);
         border: 2px solid rgba(255, 255, 255, 0.3);
-        border-radius: 8px;
-        padding: 12px 15px;
-        margin: 0 8px 0 0;
+        border-radius: 10px;
+        padding: 12px 18px;
+        margin-bottom: 10px;
         cursor: pointer;
-        display: table-cell;
-        width: 48%;
-        min-height: 45px;
+        display: table;
+        width: 100%;
+        min-height: 40px;
         box-sizing: border-box;
         text-decoration: none !important;
-        vertical-align: top;
     }
 
     .menu-item:hover {
@@ -184,9 +136,9 @@
 
     .menu-icon {
         display: table-cell;
-        width: 40px;
+        width: 45px;
         color: #d4af37;
-        font-size: 1.5rem;
+        font-size: 1.8rem;
         vertical-align: middle;
         text-align: center;
     }
@@ -195,34 +147,31 @@
         display: table-cell;
         color: #ffffff;
         margin: 0;
-        font-size: 1.1rem;
+        font-size: 1.3rem;
         font-weight: bold;
         vertical-align: middle;
         padding-left: 12px;
     }
 
-    /* Special styling for today's performance - full width */
+    /* Special styling for today's performance */
     .menu-item.today-performance {
-        display: table;
-        width: 100%;
-        min-height: 100px;
+        min-height: 110px;
         padding: 15px;
         border: 3px solid #d4af37;
-        margin-bottom: 12px;
     }
 
     /* Image for today's performance */
     .menu-item.today-performance .today-event-image {
         display: table-cell;
-        width: 120px;
-        height: 90px;
+        width: 140px;
+        height: 100px;
         vertical-align: middle;
         text-align: center;
     }
 
     .menu-item.today-performance .today-event-image img {
-        width: 100px;
-        height: 75px;
+        width: 120px;
+        height: 85px;
         object-fit: contain;
         border-radius: 8px;
         background-color: rgba(0,0,0,0.1);
@@ -233,7 +182,7 @@
         display: table-cell;
         color: #ffffff;
         margin: 0;
-        font-size: 1.5rem;
+        font-size: 1.8rem;
         font-weight: bold;
         vertical-align: middle;
         padding-left: 15px;
@@ -244,27 +193,27 @@
     .menu-item.today-performance .event-composer {
         color: rgba(255,255,255,0.8);
         font-style: italic;
-        font-size: 1.1rem;
+        font-size: 1.3rem;
         font-weight: normal;
-        margin-top: 4px;
+        margin-top: 5px;
         display: block;
     }
 
     /* Fallback icons */
     .menu-item.today-performance .today-fallback {
         display: table-cell;
-        width: 120px;
+        width: 140px;
         color: #d4af37;
-        font-size: 3rem;
+        font-size: 4rem;
         vertical-align: middle;
         text-align: center;
     }
 
     .menu-item.today-performance .menu-icon {
         display: table-cell;
-        width: 120px;
+        width: 140px;
         color: #d4af37;
-        font-size: 3.5rem;
+        font-size: 4.5rem;
         vertical-align: middle;
         text-align: center;
     }
@@ -282,15 +231,6 @@
 {% endblock %}
 
 {% block content %}
-<!-- Logo section -->
-<div class="logo-section">
-    <div class="logo-container">
-        {% placeholder "theater_logo" or %}
-            <img src="{% static 'images/theater-logo.png' %}" alt="teatro logotipas" class="theater-logo">
-        {% endplaceholder %}
-    </div>
-</div>
-
 <div class="theater-container" id="theater-container">
     <!-- Scroll Indicators -->
     <div class="scroll-indicator bottom visible" id="scroll-down">↕<span>Slinkti</span></div>
@@ -328,34 +268,26 @@
                 {% endif %}
             </a>
             
-            <!-- Two-column layout for other menu items -->
-            <div class="menu-row">
-                <a href="/events_lt/" class="menu-item" style="text-decoration: none;">
-                    <div class="menu-icon">📅</div>
-                    <h2 class="menu-title">Spektakliai</h2>
-                </a>
-                <a href="/about_lt/" class="menu-item" style="text-decoration: none;">
-                    <div class="menu-icon">🎭</div>
-                    <h2 class="menu-title">Apie mus</h2>
-                </a>
-            </div>
-            <div class="menu-row">
-                <a href="/qa_lt/" class="menu-item" style="text-decoration: none;">
-                    <div class="menu-icon">❓</div>
-                    <h2 class="menu-title">Klausimai ir atsakymai</h2>
-                </a>
-                <a href="/email_subscribe_lt/" class="menu-item" style="text-decoration: none;">
-                    <div class="menu-icon">✉️</div>
-                    <h2 class="menu-title">Prenumeruoti naujienas</h2>
-                </a>
-            </div>
-            <div class="menu-row">
-                <a href="/feedback_lt/" class="menu-item" style="text-decoration: none;">
-                    <div class="menu-icon">💬</div>
-                    <h2 class="menu-title">Palikti atsiliepimą</h2>
-                </a>
-                <div class="menu-spacer"></div>
-            </div>
+            <a href="/events_lt/" class="menu-item" style="text-decoration: none;">
+                <div class="menu-icon">📅</div>
+                <h2 class="menu-title">Spektakliai ir renginiai</h2>
+            </a>
+            <a href="/about_lt/" class="menu-item" style="text-decoration: none;">
+                <div class="menu-icon">🎭</div>
+                <h2 class="menu-title">Apie mus</h2>
+            </a>
+            <a href="/qa_lt/" class="menu-item" style="text-decoration: none;">
+                <div class="menu-icon">❓</div>
+                <h2 class="menu-title">Klausimai ir atsakymai</h2>
+            </a>
+            <a href="/email_subscribe_lt/" class="menu-item" style="text-decoration: none;">
+                <div class="menu-icon">✉️</div>
+                <h2 class="menu-title">Prenumeruoti naujienlaiškį</h2>
+            </a>
+            <a href="/feedback_lt/" class="menu-item" style="text-decoration: none;">
+                <div class="menu-icon">💬</div>
+                <h2 class="menu-title">Palikti atsiliepimą</h2>
+            </a>
         </div>
     </div>
 </div>
