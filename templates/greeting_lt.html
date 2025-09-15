@@ -2,15 +2,15 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="lt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>{% placeholder "greeting_page_title" or %}欢迎 - 歌剧院{% endplaceholder %}</title>
+    <title>{% placeholder "greeting_page_title" or %}Sveiki atvykę - Opera teatras{% endplaceholder %}</title>
     <link rel="stylesheet" href="{% static 'css/font-awesome/all.min.css' %}">
     {% render_block "css" %}
     <style>
-        /* Reset and base styles - Optimized for 1024x600 */
+        /* Reset and base styles - Optimized for 1280x400 */
         * {
             margin: 0;
             padding: 0;
@@ -20,8 +20,8 @@
         html, body {
             margin: 0;
             padding: 0;
-            width: 1024px;
-            height: 600px; 
+            width: 1280px;
+            height: 400px; 
             max-height: 100%;
             color: #fff;
             font-family: Arial, sans-serif;
@@ -29,10 +29,10 @@
             overflow: hidden;
         }
 
-        /* Content wrapper - Fixed for 1024x600 */
+        /* Content wrapper - Fixed for 1280x400 */
         .content-wrapper {
-            width: 1024px;
-            height: 600px;
+            width: 1280px;
+            height: 400px;
             position: relative;
             background: rgb(59, 57, 57);
             overflow: hidden;
@@ -43,7 +43,7 @@
             display: none;
         }
         
-        /* Greeting container - Optimized for 1024x600 */
+        /* Greeting container - Optimized for 1280x400 */
         .greeting-container {
             width: 100%;
             height: 100%;
@@ -66,7 +66,7 @@
             margin-top: -25%; /* Approximate vertical centering */
         }
         
-        /* Language selector - Fixed for 1024x600 */
+        /* Language selector - Fixed for 1280x400 */
         .language-selector {
             position: absolute;
             top: 0.75rem;
@@ -169,13 +169,13 @@
             transform: translateY(-50%);
         }
         
-        /* Titles container - Fixed for 1024x600 */
+        /* Titles container - Fixed for 1280x400 */
         .welcome-titles-container {
             margin-bottom: 10px;
             text-align: center;
         }
         
-        /* Content styling - Fixed for 1024x600 */
+        /* Content styling - Fixed for 1280x400 */
         .welcome-title {
             font-family: Georgia, serif;
             font-size: 3.2rem;
@@ -210,7 +210,7 @@
             display: none;
         }
         
-        /* Welcome text frame - Fixed for 1024x600 */
+        /* Welcome text frame - Fixed for 1280x400 */
         .welcome-text-frame {
             border: 2px solid rgba(255, 255, 255, 0.3);
             padding: 1.2rem;
@@ -288,8 +288,8 @@
             var languageDropdown = document.getElementById('languageDropdown');
             var selectedLanguageText = document.getElementById('selectedLanguage');
             
-            // Set current language to Chinese
-            var activeLanguageName = "中文";
+            // Set current language to Lithuanian
+            var activeLanguageName = "Lietuvių";
             
             // Set the selected language text
             if (selectedLanguageText) {
@@ -341,12 +341,12 @@
             <div class="language-selector">
                 <div class="language-dropdown" id="languageDropdown">
                     <div class="language-selected">
-                        <span id="selectedLanguage">中文</span>
+                        <span id="selectedLanguage">Lietuvių</span>
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="language-options">
                         <a href="/" class="language-option" data-lang="English">English</a>
-                        <a href="/greetings_zh/" class="language-option active" data-lang="中文">中文</a>
+                        <a href="/greetings_lt/" class="language-option active" data-lang="Lietuvių">Lietuvių</a>
                     </div>
                 </div>
             </div>
@@ -360,11 +360,11 @@
                 
                 <div class="welcome-titles-container">
                     <h1 class="welcome-title">
-                        欢迎来到
+                        Sveiki atvykę į
                     </h1>
                     
                     <h2 class="welcome-subtitle">
-                        {% placeholder "theater_name" or %}剧院名称{% endplaceholder %}
+                        {% placeholder "theater_name" or %}Teatro pavadinimas{% endplaceholder %}
                     </h2>
                 </div>
                 
@@ -375,22 +375,22 @@
                     <div class="welcome-text">
                         {% placeholder "greeting_text" or %}
                         <p>
-                            在世界上最美丽的歌剧院之一体验非凡的演出。
-                            我们的数字信息娱乐系统提供今日演出、即将举行的活动
-                            以及我们著名机构丰富历史的相关信息。
+                            Patiriate išskirtinius spektaklius viename gražiausių pasaulio operų teatrų.
+                            Mūsų skaitmeninė informacijos ir pramogų sistema pateiks informaciją apie šios dienos spektaklius,
+                            artėjančius renginius ir mūsų garsios institucijos turtingas tradicijas.
                         </p>
                         {% endplaceholder %}
                     </div>
                 </div>
                 
-                <a href="/home_zh/" class="enter-button">
-                    进入
+                <a href="/home_lt/" class="enter-button">
+                    Patekti
                 </a>
             </div>
         </div>
         
         <!-- Forward Navigation Icon -->
-        <a href="/sponsors_zh/" class="forward-nav">
+        <a href="/sponsors_lt/" class="forward-nav">
             <div class="forward-icon">
                 &#x27A1;
             </div>

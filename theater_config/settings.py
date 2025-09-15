@@ -179,19 +179,19 @@ CMS_TEMPLATES = [
     ('feedback_thank_you.html', 'Feedback Thank You Template'),
     ('email_subscribe.html', 'Email Subscribe Template'),
     
-    # Chinese templates (all with _zh suffix)
-    ('greeting_zh.html', 'Greeting Template (Chinese)'),
-    ('intro_zh.html', 'Intro Template (Chinese)'),
-    ('base_zh.html', 'Base Template (Chinese)'),
-    ('home_zh.html', 'Home Template (Chinese)'),
-    ('about_zh.html', 'About Us Template (Chinese)'),
-    ('events_zh.html', 'Events Template (Chinese)'),
-    ('event_detail_zh.html', 'Event Detail Template (Chinese)'),
-    ('q&a_zh.html', 'Questions and Answers Template (Chinese)'),
-    ('sponsors_zh.html', 'Sponsors Template (Chinese)'),
-    ('feedback_zh.html', 'Feedback Template (Chinese)'),
-    ('feedback_thank_you_zh.html', 'Feedback Thank You Template (Chinese)'),
-    ('email_subscribe_zh.html', 'Email Subscribe Template (Chinese)'),
+    # Lithuanian templates (all with _lt suffix)
+    ('greeting_lt.html', 'Greeting Template (Lithuanian)'),
+    ('intro_lt.html', 'Intro Template (Lithuanian)'),
+    ('base_lt.html', 'Base Template (Lithuanian)'),
+    ('home_lt.html', 'Home Template (Lithuanian)'),
+    ('about_lt.html', 'About Us Template (Lithuanian)'),
+    ('events_lt.html', 'Events Template (Lithuanian)'),
+    ('event_detail_lt.html', 'Event Detail Template (Lithuanian)'),
+    ('q&a_lt.html', 'Questions and Answers Template (Lithuanian)'),
+    ('sponsors_lt.html', 'Sponsors Template (Lithuanian)'),
+    ('feedback_lt.html', 'Feedback Template (Lithuanian)'),
+    ('feedback_thank_you_lt.html', 'Feedback Thank You Template (Lithuanian)'),
+    ('email_subscribe_lt.html', 'Email Subscribe Template (Lithuanian)'),
 ]
 
 SITE_ID = 1

@@ -1,9 +1,9 @@
-{% extends "base_zh.html" %}
+{% extends "base_lt.html" %}
 {% load cms_tags %}
 {% load static %}
 
 {% block title %}
-    谢谢 - {% placeholder "theater_name" or %}歌剧院{% endplaceholder %}
+    Ačiū - {% placeholder "theater_name" or %}Opera teatras{% endplaceholder %}
 {% endblock %}
 
 {% block wrapper_style %}
@@ -18,7 +18,7 @@
 {% block extra_css %}
 <style>
     /* Simplified styles for Android 6.0 WebView compatibility */
-    .subscription-container {
+    .feedback-container {
         width: 100%;
         height: 100%;
         display: flex;
@@ -28,9 +28,9 @@
         box-sizing: border-box;
     }
 
-    .subscription-content-box {
+    .feedback-content-box {
         width: 100%;
-        max-width: 600px;
+        max-width: 800px;
         padding: 40px 30px;
         background-color: rgba(0, 0, 0, 0.8);
         border: 3px solid #d4af37;
@@ -40,7 +40,7 @@
     }
     
     /* Simplified title styles */
-    .subscription-title {
+    .feedback-title {
         color: #d4af37;
         font-size: 2.5rem;
         font-weight: bold;
@@ -58,7 +58,7 @@
     }
 
     /* Message text */
-    .subscription-message {
+    .feedback-message {
         color: #ffffff;
         font-size: 1.2rem;
         line-height: 1.6;
@@ -87,15 +87,15 @@
 
     /* Mobile responsive */
     @media screen and (max-width: 768px) {
-        .subscription-container {
+        .feedback-container {
             padding: 15px;
         }
         
-        .subscription-content-box {
+        .feedback-content-box {
             padding: 30px 20px;
         }
         
-        .subscription-title {
+        .feedback-title {
             font-size: 2rem;
             margin-bottom: 15px;
         }
@@ -105,7 +105,7 @@
             margin-bottom: 20px;
         }
         
-        .subscription-message {
+        .feedback-message {
             font-size: 1.1rem;
             margin-bottom: 25px;
         }
@@ -117,15 +117,15 @@
     }
 
     @media screen and (max-width: 480px) {
-        .subscription-content-box {
+        .feedback-content-box {
             padding: 25px 15px;
         }
         
-        .subscription-title {
+        .feedback-title {
             font-size: 1.8rem;
         }
         
-        .subscription-message {
+        .feedback-message {
             font-size: 1rem;
         }
         
@@ -138,21 +138,15 @@
 {% endblock %}
 
 {% block content %}
-<div class="subscription-container">
-    <div class="subscription-content-box">
-        <h1 class="subscription-title">
-            {% placeholder "email_subscribe_thank_you_title_zh" or %}谢谢！{% endplaceholder %}
-        </h1>
+<div class="feedback-container">
+    <div class="feedback-content-box">
+        <h1 class="feedback-title">Ačiū!</h1>
         
         <div class="divider"></div>
         
-        <p class="subscription-message">
-            {% placeholder "email_subscribe_thank_you_message_zh" or %}
-                感谢您订阅我们的新闻通讯！您将收到关于我们即将到来的活动和演出的更新。
-            {% endplaceholder %}
-        </p>
+        <p class="feedback-message">Labai dėkojame už jūsų atsiliepimą. Jūsų nuomonė padeda mums gerinti operos patirtį visiems.</p>
         
-        <a href="/home_zh/" class="home-button">返回主页</a>
+        <a href="/home_lt/" class="home-button">Grįžti į pagrindinį</a>
     </div>
 </div>
 {% endblock %}

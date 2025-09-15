@@ -1,17 +1,17 @@
-{% extends "base_zh.html" %}
+{% extends "base_lt.html" %}
 {% load cms_tags %}
 {% load static %}
 
 {% block title %}
-    演出与剧目 - {% placeholder "theater_name" or %}剧院名称{% endplaceholder %}
+    Spektakliai - {% placeholder "theater_name" or %}Teatro pavadinimas{% endplaceholder %}
 {% endblock %}
 
 {% block wrapper_style %}
 <style>
-    /* Fixed height for 1024x600 resolution */
+    /* Fixed height for 1280x400 resolution */
     .content-wrapper {
-        height: 600px;
-        width: 1024px;
+        height: 400px;
+        width: 1280px;
         overflow: hidden;
     }
 </style>
@@ -34,15 +34,15 @@
     .scroll-indicator {
         position: absolute;
         right: 8px;
-        min-width: 120px;
-        height: 56px;
+        min-width: 100px;
+        height: 45px;
         background: #000;
-        border-radius: 28px;
+        border-radius: 22px;
         display: flex;
         align-items: center;
         justify-content: center;
         color: #fff;
-        font-size: 40px;
+        font-size: 32px;
         font-weight: 900;
         z-index: 30;
         transition: opacity 0.3s;
@@ -67,8 +67,8 @@
     }
 
     .scroll-indicator span {
-        margin-left: 14px;
-        font-size: 22px;
+        margin-left: 10px;
+        font-size: 18px;
         font-weight: 700;
         color: #fff;
         letter-spacing: 0.5px;
@@ -78,8 +78,8 @@
     .scroll-fade {
         position: absolute;
         left: 0;
-        right: 75px;
-        height: 25px;
+        right: 65px;
+        height: 20px;
         pointer-events: none;
         z-index: 25;
     }
@@ -431,7 +431,7 @@
 {% block content %}
 <div class="theater-container" id="theater-container">
     <!-- Only bottom indicator -->
-    <div class="scroll-indicator bottom visible" id="scroll-down">↕<span>滚动</span></div>
+    <div class="scroll-indicator bottom visible" id="scroll-down">↕<span>Slinkti</span></div>
     
     <!-- Fade overlays for better visual indication -->
     <div class="scroll-fade top" id="fade-top"></div>
@@ -439,24 +439,24 @@
     
     <div class="page-header">
         <h1 class="page-title">
-            {% placeholder "events_page_title" or %}演出与剧目{% endplaceholder %}
+            {% placeholder "events_page_title" or %}Spektakliai{% endplaceholder %}
         </h1>
     </div>
 
     <div class="main-content">
-        {% if events_with_zh %}
-            {% for event_data in events_with_zh %}
+        {% if events_with_lt %}
+            {% for event_data in events_with_lt %}
                 <div class="content-section">
                     <div class="events-container">
-                        <a href="{% url 'user_interactions:event_detail_zh' slug=event_data.event.slug %}" class="event-card">
+                        <a href="{% url 'user_interactions:event_detail_lt' slug=event_data.event.slug %}" class="event-card">
                             <div class="event-image">
                                 {% if event_data.event.image %}
-                                    <img src="{{ event_data.event.image.url }}" alt="{{ event_data.title_zh }}">
+                                    <img src="{{ event_data.event.image.url }}" alt="{{ event_data.title_lt }}">
                                 {% endif %}
                             </div>
                             <div class="event-content">
-                                <h2 class="event-title">{{ event_data.title_zh }}</h2>
-                                <div class="event-composer">{{ event_data.composer_zh }}</div>
+                                <h2 class="event-title">{{ event_data.title_lt }}</h2>
+                                <div class="event-composer">{{ event_data.composer_lt }}</div>
                             </div>
                             <div class="event-date-section">
                                 <div class="event-date">{{ event_data.event.date_range_display }}</div>
@@ -468,23 +468,23 @@
                 <!-- Fallback static content -->
                 <div class="content-section">
                     <div class="events-container">
-                        <a href="/event_aida_zh/" class="event-card">
+                        <a href="/event_aida_lt/" class="event-card">
                             <div class="event-image">
                                 {% placeholder "event_1_image" or %}
-                                    <img src="{% static 'images/events/aida.jpg' %}" alt="阿依达">
+                                    <img src="{% static 'images/events/aida.jpg' %}" alt="Aida">
                                 {% endplaceholder %}
                             </div>
                             <div class="event-content">
                                 <h2 class="event-title">
-                                    {% placeholder "event_1_title" or %}阿依达{% endplaceholder %}
+                                    {% placeholder "event_1_title" or %}Aida{% endplaceholder %}
                                 </h2>
                                 <div class="event-composer">
-                                    {% placeholder "event_1_composer" or %}朱塞佩·威尔第{% endplaceholder %}
+                                    {% placeholder "event_1_composer" or %}Giuseppe Verdi{% endplaceholder %}
                                 </div>
                             </div>
                             <div class="event-date-section">
                                 <div class="event-date">
-                                    {% placeholder "event_1_date" or %}2024年1月15日 - 3月20日{% endplaceholder %}
+                                    {% placeholder "event_1_date" or %}2024 sausio 15 d. - kovo 20 d.{% endplaceholder %}
                                 </div>
                             </div>
                         </a>
@@ -493,23 +493,23 @@
 
                 <div class="content-section">
                     <div class="events-container">
-                        <a href="/event_carmen_zh/" class="event-card">
+                        <a href="/event_carmen_lt/" class="event-card">
                             <div class="event-image">
                                 {% placeholder "event_2_image" or %}
-                                    <img src="{% static 'images/events/carmen.jpg' %}" alt="卡门">
+                                    <img src="{% static 'images/events/carmen.jpg' %}" alt="Carmen">
                                 {% endplaceholder %}
                             </div>
                             <div class="event-content">
                                 <h2 class="event-title">
-                                    {% placeholder "event_2_title" or %}卡门{% endplaceholder %}
+                                    {% placeholder "event_2_title" or %}Carmen{% endplaceholder %}
                                 </h2>
                                 <div class="event-composer">
-                                    {% placeholder "event_2_composer" or %}乔治·比才{% endplaceholder %}
+                                    {% placeholder "event_2_composer" or %}Georges Bizet{% endplaceholder %}
                                 </div>
                             </div>
                             <div class="event-date-section">
                                 <div class="event-date">
-                                    {% placeholder "event_2_date" or %}2024年2月1日 - 4月15日{% endplaceholder %}
+                                    {% placeholder "event_2_date" or %}2024 vasario 1 d. - balandžio 15 d.{% endplaceholder %}
                                 </div>
                             </div>
                         </a>
@@ -518,23 +518,23 @@
 
                 <div class="content-section">
                     <div class="events-container">
-                        <a href="/event_magic-flute_zh/" class="event-card">
+                        <a href="/event_magic-flute_lt/" class="event-card">
                             <div class="event-image">
                                 {% placeholder "event_3_image" or %}
-                                    <img src="{% static 'images/events/magic-flute.jpg' %}" alt="魔笛">
+                                    <img src="{% static 'images/events/magic-flute.jpg' %}" alt="Stebuklingas fleita">
                                 {% endplaceholder %}
                             </div>
                             <div class="event-content">
                                 <h2 class="event-title">
-                                    {% placeholder "event_3_title" or %}魔笛{% endplaceholder %}
+                                    {% placeholder "event_3_title" or %}Stebuklingas fleita{% endplaceholder %}
                                 </h2>
                                 <div class="event-composer">
-                                    {% placeholder "event_3_composer" or %}沃尔夫冈·阿马德乌斯·莫扎特{% endplaceholder %}
+                                    {% placeholder "event_3_composer" or %}Wolfgang Amadeus Mozart{% endplaceholder %}
                                 </div>
                             </div>
                             <div class="event-date-section">
                                 <div class="event-date">
-                                    {% placeholder "event_3_date" or %}2024年3月10日 - 5月20日{% endplaceholder %}
+                                    {% placeholder "event_3_date" or %}2024 kovo 10 d. - gegužės 20 d.{% endplaceholder %}
                                 </div>
                             </div>
                         </a>
@@ -548,20 +548,20 @@
                     <a href="/event_aida_zh/" class="event-card">
                         <div class="event-image">
                             {% placeholder "event_1_image" or %}
-                                <img src="{% static 'images/events/aida.jpg' %}" alt="阿依达">
+                                <img src="{% static 'images/events/aida.jpg' %}" alt="Aida">
                             {% endplaceholder %}
                         </div>
                         <div class="event-content">
                             <h2 class="event-title">
-                                {% placeholder "event_1_title" or %}阿依达{% endplaceholder %}
+                                {% placeholder "event_1_title" or %}Aida{% endplaceholder %}
                             </h2>
                             <div class="event-composer">
-                                {% placeholder "event_1_composer" or %}朱塞佩·威尔第{% endplaceholder %}
+                                {% placeholder "event_1_composer" or %}Giuseppe Verdi{% endplaceholder %}
                             </div>
                         </div>
                         <div class="event-date-section">
                             <div class="event-date">
-                                {% placeholder "event_1_date" or %}2024年1月15日 - 3月20日{% endplaceholder %}
+                                {% placeholder "event_1_date" or %}2024 sausio 15 d. - kovo 20 d.{% endplaceholder %}
                             </div>
                         </div>
                     </a>

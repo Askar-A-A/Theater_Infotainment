@@ -127,23 +127,23 @@ class Event(models.Model):
     cast_content = models.TextField(blank=True)
     duration = models.CharField(max_length=50, blank=True)
     
-    # Chinese translation fields (new)
-    title_zh = models.CharField(max_length=200, blank=True, verbose_name="Title (Chinese)", 
-                               help_text="Chinese translation of the event title")
-    composer_zh = models.CharField(max_length=100, blank=True, verbose_name="Composer (Chinese)",
-                                  help_text="Chinese translation of composer name")
-    about_content_zh = models.TextField(blank=True, verbose_name="About Content (Chinese)",
-                                       help_text="Chinese translation of the about content")
-    language_zh = models.CharField(max_length=100, blank=True, verbose_name="Language (Chinese)",
-                                  help_text="e.g., '意大利语配中文字幕'")
-    conductor_zh = models.CharField(max_length=100, blank=True, verbose_name="Conductor (Chinese)",
-                                   help_text="Chinese translation of conductor name")
-    director_zh = models.CharField(max_length=100, blank=True, verbose_name="Director (Chinese)",
-                                  help_text="Chinese translation of director name")
-    cast_content_zh = models.TextField(blank=True, verbose_name="Cast Content (Chinese)",
-                                      help_text="Chinese translation of cast information")
-    duration_zh = models.CharField(max_length=50, blank=True, verbose_name="Duration (Chinese)",
-                                  help_text="e.g., '约3小时（含休息时间）'")
+    # Lithuanian translation fields (new)
+    title_lt = models.CharField(max_length=200, blank=True, verbose_name="Title (Lithuanian)", 
+                               help_text="Lithuanian translation of the event title")
+    composer_lt = models.CharField(max_length=100, blank=True, verbose_name="Composer (Lithuanian)",
+                                  help_text="Lithuanian translation of composer name")
+    about_content_lt = models.TextField(blank=True, verbose_name="About Content (Lithuanian)",
+                                       help_text="Lithuanian translation of the about content")
+    language_lt = models.CharField(max_length=100, blank=True, verbose_name="Language (Lithuanian)",
+                                  help_text="e.g., 'italų kalba su lietuviškais subtitrais'")
+    conductor_lt = models.CharField(max_length=100, blank=True, verbose_name="Conductor (Lithuanian)",
+                                   help_text="Lithuanian translation of conductor name")
+    director_lt = models.CharField(max_length=100, blank=True, verbose_name="Director (Lithuanian)",
+                                  help_text="Lithuanian translation of director name")
+    cast_content_lt = models.TextField(blank=True, verbose_name="Cast Content (Lithuanian)",
+                                      help_text="Lithuanian translation of cast information")
+    duration_lt = models.CharField(max_length=50, blank=True, verbose_name="Duration (Lithuanian)",
+                                  help_text="e.g., 'apie 3 valandas (su pertrauka)'")
     
     image = models.ImageField(upload_to='events/', blank=True, null=True)
     is_active = models.BooleanField(default=True)
@@ -156,43 +156,43 @@ class Event(models.Model):
     
     # Helper methods for language-aware content
     def get_title(self, language='en'):
-        if language == 'zh' and self.title_zh:
-            return self.title_zh
+        if language == 'lt' and self.title_lt:
+            return self.title_lt
         return self.title
     
     def get_composer(self, language='en'):
-        if language == 'zh' and self.composer_zh:
-            return self.composer_zh
+        if language == 'lt' and self.composer_lt:
+            return self.composer_lt
         return self.composer
     
     def get_about_content(self, language='en'):
-        if language == 'zh' and self.about_content_zh:
-            return self.about_content_zh
+        if language == 'lt' and self.about_content_lt:
+            return self.about_content_lt
         return self.about_content
     
     def get_language(self, language='en'):
-        if language == 'zh' and self.language_zh:
-            return self.language_zh
+        if language == 'lt' and self.language_lt:
+            return self.language_lt
         return self.language
     
     def get_conductor(self, language='en'):
-        if language == 'zh' and self.conductor_zh:
-            return self.conductor_zh
+        if language == 'lt' and self.conductor_lt:
+            return self.conductor_lt
         return self.conductor
     
     def get_director(self, language='en'):
-        if language == 'zh' and self.director_zh:
-            return self.director_zh
+        if language == 'lt' and self.director_lt:
+            return self.director_lt
         return self.director
     
     def get_cast_content(self, language='en'):
-        if language == 'zh' and self.cast_content_zh:
-            return self.cast_content_zh
+        if language == 'lt' and self.cast_content_lt:
+            return self.cast_content_lt
         return self.cast_content
     
     def get_duration(self, language='en'):
-        if language == 'zh' and self.duration_zh:
-            return self.duration_zh
+        if language == 'lt' and self.duration_lt:
+            return self.duration_lt
         return self.duration
     
     def save(self, *args, **kwargs):
@@ -308,17 +308,17 @@ class SponsorsPageContent(models.Model):
         help_text="Introduction text explaining the theater's relationship with sponsors"
     )
     
-    # Chinese content
-    sponsors_title_zh = models.CharField(
+    # Lithuanian content
+    sponsors_title_lt = models.CharField(
         max_length=200, 
-        default="我们尊贵的赞助商",
-        verbose_name="Sponsors Title (Chinese)",
-        help_text="Main title displayed at the top of the Chinese sponsors page"
+        default="Mūsų gerbiami rėmėjai",
+        verbose_name="Sponsors Title (Lithuanian)",
+        help_text="Main title displayed at the top of the Lithuanian sponsors page"
     )
-    sponsors_intro_zh = models.TextField(
-        default="我们剧院自豪地感谢赞助商的慷慨支持。他们对艺术的承诺使我们能够延续卓越传统，并与来自世界各地的观众分享歌剧的魅力。",
-        verbose_name="Sponsors Introduction (Chinese)",
-        help_text="Introduction text for Chinese sponsors page"
+    sponsors_intro_lt = models.TextField(
+        default="Mūsų teatras didžiuojasi dėkodamas rėmėjams už jų dosnų palaikymą. Jų atsidavimas menui leidžia mums tęsti puikumo tradiciją ir dalintis operos grožiu su žiūrovais iš viso pasaulio.",
+        verbose_name="Sponsors Introduction (Lithuanian)",
+        help_text="Introduction text for Lithuanian sponsors page"
     )
     
     updated_at = models.DateTimeField(auto_now=True)
@@ -344,8 +344,8 @@ class SponsorsPageContent(models.Model):
             defaults={
                 'sponsors_title_en': 'Our Esteemed Sponsors',
                 'sponsors_intro_en': 'Our theater is proud to acknowledge the generous support of our sponsors. Their commitment to the arts enables us to continue our tradition of excellence and share the magic of opera with audiences from around the world.',
-                'sponsors_title_zh': '我们尊贵的赞助商',
-                'sponsors_intro_zh': '我们剧院自豪地感谢赞助商的慷慨支持。他们对艺术的承诺使我们能够延续卓越传统，并与来自世界各地的观众分享歌剧的魅力。'
+                'sponsors_title_lt': 'Mūsų gerbiami rėmėjai',
+                'sponsors_intro_lt': 'Mūsų teatras didžiuojasi dėkodamas rėmėjams už jų dosnų palaikymą. Jų atsidavimas menui leidžia mums tęsti puikumo tradiciją ir dalintis operos grožiu su žiūrovais iš viso pasaulio.'
             }
         )
         return content

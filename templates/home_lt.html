@@ -1,10 +1,10 @@
-{% extends "base_zh.html" %}
+{% extends "base_lt.html" %}
 {% load cms_tags %}
 {% load static %}
 {% load menu_tags %}
 
 {% block title %}
-    {% placeholder "home_page_title" or %}歌剧院{% endplaceholder %}
+    {% placeholder "home_page_title" or %}Opera teatras{% endplaceholder %}
 {% endblock %}
 
 {% block wrapper_style %}
@@ -25,13 +25,13 @@
 <style>
     /* Simplified styles for Android 6.0 WebView compatibility */
 
-    /* Logo section styles - Compact for 1024x600 */
+    /* Logo section styles - Compact for 1280x400 */
     .logo-section {
         position: absolute;
         left: 0;
         width: 100%;
-        top: 10px;
-        height: 100px;
+        top: 8px;
+        height: 70px;
         display: block;
         text-align: center;
         z-index: 20;
@@ -44,7 +44,7 @@
     }
 
     .theater-logo {
-        max-height: 70px;
+        max-height: 50px;
         max-width: 100%;
         width: auto;
         height: auto;
@@ -55,18 +55,18 @@
         color: #d4af37;
         text-align: center;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        margin-top: 8px;
-        font-size: 2rem;
+        margin-top: 5px;
+        font-size: 1.5rem;
         font-weight: bold;
         margin-bottom: 0;
     }
 
-    /* Theater container - Compact layout */
+    /* Theater container - Optimized for 1280x400 */
     .theater-container {
         width: 100%;
-        height: calc(100% - 110px);
-        margin-top: 110px;
-        padding: 10px;
+        height: calc(100% - 78px);
+        margin-top: 78px;
+        padding: 8px 15px;
         overflow-y: auto;
         overflow-x: hidden;
         box-sizing: border-box;
@@ -77,15 +77,15 @@
     .scroll-indicator {
         position: absolute;
         right: 8px;
-        min-width: 120px;
-        height: 56px;
+        min-width: 100px;
+        height: 45px;
         background: #000;
-        border-radius: 28px;
+        border-radius: 22px;
         display: flex;
         align-items: center;
         justify-content: center;
         color: #fff;
-        font-size: 40px;
+        font-size: 32px;
         font-weight: 900;
         z-index: 30;
         transition: opacity 0.3s;
@@ -110,8 +110,8 @@
     }
 
     .scroll-indicator span {
-        margin-left: 14px;
-        font-size: 22px;
+        margin-left: 10px;
+        font-size: 18px;
         font-weight: 700;
         color: #fff;
         letter-spacing: 0.5px;
@@ -121,8 +121,8 @@
     .scroll-fade {
         position: absolute;
         left: 0;
-        right: 75px;
-        height: 25px;
+        right: 65px;
+        height: 20px;
         pointer-events: none;
         z-index: 25;
     }
@@ -137,30 +137,44 @@
         background: linear-gradient(to top, rgba(59, 57, 57, 1), rgba(59, 57, 57, 0));
     }
 
-    /* Main content - Single column layout */
+    /* Main content - Horizontal layout for wider screen */
     .main-content {
         width: 100%;
-        max-width: 750px;
+        max-width: 1200px;
         margin: 0 auto;
     }
 
-    /* Menu Grid - Single column with compact items */
+    /* Menu Grid - Two column layout for wider screen */
     .menu-grid {
         width: 100%;
+    }
+    
+    .menu-row {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+        margin-bottom: 10px;
+    }
+    
+    .menu-spacer {
+        display: table-cell;
+        width: 48%;
+        margin: 0 8px 0 0;
     }
 
     .menu-item {
         background-color: rgba(0, 0, 0, 0.8);
         border: 2px solid rgba(255, 255, 255, 0.3);
-        border-radius: 10px;
-        padding: 15px 20px;
-        margin-bottom: 12px;
+        border-radius: 8px;
+        padding: 12px 15px;
+        margin: 0 8px 0 0;
         cursor: pointer;
-        display: table;
-        width: 100%;
-        min-height: 50px;
+        display: table-cell;
+        width: 48%;
+        min-height: 45px;
         box-sizing: border-box;
         text-decoration: none !important;
+        vertical-align: top;
     }
 
     .menu-item:hover {
@@ -170,9 +184,9 @@
 
     .menu-icon {
         display: table-cell;
-        width: 50px;
+        width: 40px;
         color: #d4af37;
-        font-size: 1.8rem;
+        font-size: 1.5rem;
         vertical-align: middle;
         text-align: center;
     }
@@ -181,33 +195,36 @@
         display: table-cell;
         color: #ffffff;
         margin: 0;
-        font-size: 1.3rem;
+        font-size: 1.1rem;
         font-weight: bold;
         vertical-align: middle;
-        padding-left: 15px;
+        padding-left: 12px;
     }
 
-    /* Special styling for today's performance */
+    /* Special styling for today's performance - full width */
     .menu-item.today-performance {
-        min-height: 140px;
-        padding: 20px;
+        display: table;
+        width: 100%;
+        min-height: 100px;
+        padding: 15px;
         border: 3px solid #d4af37;
+        margin-bottom: 12px;
     }
 
     /* Image for today's performance */
     .menu-item.today-performance .today-event-image {
         display: table-cell;
-        width: 160px;
-        height: 120px;
+        width: 120px;
+        height: 90px;
         vertical-align: middle;
         text-align: center;
     }
 
     .menu-item.today-performance .today-event-image img {
-        width: 140px;
-        height: 105px;
+        width: 100px;
+        height: 75px;
         object-fit: contain;
-        border-radius: 10px;
+        border-radius: 8px;
         background-color: rgba(0,0,0,0.1);
     }
 
@@ -216,10 +233,10 @@
         display: table-cell;
         color: #ffffff;
         margin: 0;
-        font-size: 1.8rem;
+        font-size: 1.5rem;
         font-weight: bold;
         vertical-align: middle;
-        padding-left: 20px;
+        padding-left: 15px;
         line-height: 1.2;
     }
 
@@ -227,27 +244,27 @@
     .menu-item.today-performance .event-composer {
         color: rgba(255,255,255,0.8);
         font-style: italic;
-        font-size: 1.3rem;
+        font-size: 1.1rem;
         font-weight: normal;
-        margin-top: 6px;
+        margin-top: 4px;
         display: block;
     }
 
     /* Fallback icons */
     .menu-item.today-performance .today-fallback {
         display: table-cell;
-        width: 160px;
+        width: 120px;
         color: #d4af37;
-        font-size: 4rem;
+        font-size: 3rem;
         vertical-align: middle;
         text-align: center;
     }
 
     .menu-item.today-performance .menu-icon {
         display: table-cell;
-        width: 160px;
+        width: 120px;
         color: #d4af37;
-        font-size: 4.5rem;
+        font-size: 3.5rem;
         vertical-align: middle;
         text-align: center;
     }
@@ -269,14 +286,14 @@
 <div class="logo-section">
     <div class="logo-container">
         {% placeholder "theater_logo" or %}
-            <img src="{% static 'images/theater-logo.png' %}" alt="剧院标志" class="theater-logo">
+            <img src="{% static 'images/theater-logo.png' %}" alt="teatro logotipas" class="theater-logo">
         {% endplaceholder %}
     </div>
 </div>
 
 <div class="theater-container" id="theater-container">
     <!-- Scroll Indicators -->
-    <div class="scroll-indicator bottom visible" id="scroll-down">↕<span>滚动</span></div>
+    <div class="scroll-indicator bottom visible" id="scroll-down">↕<span>Slinkti</span></div>
     
     <!-- Fade overlays for better visual indication -->
     <div class="scroll-fade top" id="fade-top"></div>
@@ -286,7 +303,7 @@
         <!-- Menu Items - Now including Today's Performance as first item -->
         <div class="menu-grid">
             <!-- Today's Performance as a menu item -->
-            <a href="{% url 'user_interactions:current_event_zh' %}" class="menu-item today-performance" style="text-decoration: none;">
+            <a href="{% url 'user_interactions:current_event_lt' %}" class="menu-item today-performance" style="text-decoration: none;">
                 {% if current_event and current_event.image %}
                     <div class="today-event-image">
                         <img src="{{ current_event.image.url }}" alt="{{ current_event.title }}">
@@ -307,30 +324,38 @@
                     </div>
                 {% else %}
                     <div class="menu-icon">🎟️</div>
-                    <div class="menu-title">今日演出</div>
+                    <div class="menu-title">Šios dienos spektaklis</div>
                 {% endif %}
             </a>
             
-            <a href="/events_zh/" class="menu-item">
-                <div class="menu-icon">📅</div>
-                <h2 class="menu-title">演出活动</h2>
-            </a>
-            <a href="/about_zh/" class="menu-item">
-                <div class="menu-icon">🎭</div>
-                <h2 class="menu-title">关于我们</h2>
-            </a>
-            <a href="/qa_zh/" class="menu-item">
-                <div class="menu-icon">❓</div>
-                <h2 class="menu-title">问题与答案</h2>
-            </a>
-            <a href="/email_subscribe_zh/" class="menu-item">
-                <div class="menu-icon">✉️</div>
-                <h2 class="menu-title">订阅邮件</h2>
-            </a>
-            <a href="/feedback_zh/" class="menu-item">
-                <div class="menu-icon">💬</div>
-                <h2 class="menu-title">留下您的反馈</h2>
-            </a>
+            <!-- Two-column layout for other menu items -->
+            <div class="menu-row">
+                <a href="/events_lt/" class="menu-item" style="text-decoration: none;">
+                    <div class="menu-icon">📅</div>
+                    <h2 class="menu-title">Spektakliai</h2>
+                </a>
+                <a href="/about_lt/" class="menu-item" style="text-decoration: none;">
+                    <div class="menu-icon">🎭</div>
+                    <h2 class="menu-title">Apie mus</h2>
+                </a>
+            </div>
+            <div class="menu-row">
+                <a href="/qa_lt/" class="menu-item" style="text-decoration: none;">
+                    <div class="menu-icon">❓</div>
+                    <h2 class="menu-title">Klausimai ir atsakymai</h2>
+                </a>
+                <a href="/email_subscribe_lt/" class="menu-item" style="text-decoration: none;">
+                    <div class="menu-icon">✉️</div>
+                    <h2 class="menu-title">Prenumeruoti naujienas</h2>
+                </a>
+            </div>
+            <div class="menu-row">
+                <a href="/feedback_lt/" class="menu-item" style="text-decoration: none;">
+                    <div class="menu-icon">💬</div>
+                    <h2 class="menu-title">Palikti atsiliepimą</h2>
+                </a>
+                <div class="menu-spacer"></div>
+            </div>
         </div>
     </div>
 </div>

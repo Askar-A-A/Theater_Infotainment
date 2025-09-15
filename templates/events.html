@@ -8,10 +8,10 @@
 
 {% block wrapper_style %}
 <style>
-    /* Fixed height for 1024x600 resolution */
+    /* Fixed height for 1280x400 resolution */
     .content-wrapper {
-        height: 600px;
-        width: 1024px;
+        height: 400px;
+        width: 1280px;
         overflow: hidden;
     }
 </style>
@@ -34,15 +34,15 @@
     .scroll-indicator {
         position: absolute;
         right: 8px;
-        min-width: 120px;
-        height: 56px;
+        min-width: 100px;
+        height: 45px;
         background: #000;
-        border-radius: 28px;
+        border-radius: 22px;
         display: flex;
         align-items: center;
         justify-content: center;
         color: #fff;
-        font-size: 40px;
+        font-size: 32px;
         font-weight: 900;
         z-index: 30;
         transition: opacity 0.3s;
@@ -67,8 +67,8 @@
     }
 
     .scroll-indicator span {
-        margin-left: 14px;
-        font-size: 22px;
+        margin-left: 10px;
+        font-size: 18px;
         font-weight: 700;
         color: #fff;
         letter-spacing: 0.5px;
@@ -78,8 +78,8 @@
     .scroll-fade {
         position: absolute;
         left: 0;
-        right: 75px;
-        height: 25px;
+        right: 65px;
+        height: 20px;
         pointer-events: none;
         z-index: 25;
     }

@@ -2,15 +2,15 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="lt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>{% placeholder "sponsors_page_title" or %}我们的赞助商 - 歌剧院{% endplaceholder %}</title>
+    <title>{% placeholder "sponsors_page_title" or %}Mūsų rėmėjai - Opera teatras{% endplaceholder %}</title>
     <link rel="stylesheet" href="{% static 'css/font-awesome/all.min.css' %}">
     {% render_block "css" %}
 <style>
-    /* Reset and base styles - Fixed for 1024x600 */
+    /* Reset and base styles - Fixed for 1280x400 */
     * {
         margin: 0;
         padding: 0;
@@ -20,8 +20,8 @@
     html, body {
         margin: 0;
         padding: 0;
-        width: 1024px;
-        height: 600px; 
+        width: 1280px;
+        height: 400px; 
         max-height: 100%;
         color: #fff;
         font-family: Arial, sans-serif;
@@ -29,16 +29,16 @@
         overflow: hidden;
     }
 
-    /* Content wrapper - Fixed for 1024x600 */
+    /* Content wrapper - Fixed for 1280x400 */
     .content-wrapper {
-        width: 1024px;
-        height: 600px;
+        width: 1280px;
+        height: 400px;
         position: relative;
         background: rgb(59, 57, 57);
         overflow: hidden;
     }
     
-    /* Main container - Fixed for 1024x600 */
+    /* Main container - Fixed for 1280x400 */
     .sponsors-container {
         width: 100%;
         height: 100%;
@@ -48,7 +48,7 @@
         display: block;
     }
     
-    /* Title area - Fixed for 1024x600 */
+    /* Title area - Fixed for 1280x400 */
     .sponsors-title {
         font-family: Georgia, serif;
         font-size: 3.2rem;
@@ -63,7 +63,7 @@
         display: none;
     }
     
-    /* Sponsors info - Fixed for 1024x600 */
+    /* Sponsors info - Fixed for 1280x400 */
     .sponsors-intro {
         text-align: center;
         max-width: 99%;
@@ -80,7 +80,7 @@
         box-sizing: border-box;
     }
     
-    /* Sponsors row layout - Fixed for 1024x600 */
+    /* Sponsors row layout - Fixed for 1280x400 */
     .sponsors-row {
         width: 100%;
         margin-bottom: 12px;
@@ -88,7 +88,7 @@
         table-layout: fixed;
     }
     
-    /* Sponsor category boxes - Fixed for 1024x600 */
+    /* Sponsor category boxes - Fixed for 1280x400 */
     .sponsor-box {
         display: table-cell;
         width: 50%;
@@ -101,7 +101,7 @@
         vertical-align: top;
     }
     
-    /* Add spacing between boxes - Fixed for 1024x600 */
+    /* Add spacing between boxes - Fixed for 1280x400 */
     .sponsor-box:first-child {
         padding-right: 6px;
     }
@@ -110,7 +110,7 @@
         padding-left: 6px;
     }
     
-    /* Category headers - Fixed for 1024x600 */
+    /* Category headers - Fixed for 1280x400 */
     .sponsor-box-title {
         position: relative;
         text-align: center;
@@ -133,7 +133,7 @@
         vertical-align: middle;
     }
     
-    /* Sponsors grid - Fixed for 1024x600 */
+    /* Sponsors grid - Fixed for 1280x400 */
     .sponsors-grid {
         text-align: center;
         margin: 0 auto;
@@ -234,7 +234,7 @@
     addLoadEvent(function() {
         // No dynamic sizing needed - all sponsors are same size for equal treatment
         // This ensures no sponsor appears more prominent than others
-        console.log('赞助商页面已加载 - 所有赞助商显示相同大小以确保平等待遇');
+        console.log('Rėmėjų puslapis įkeltas - visi rėmėjai rodomi vienodu dydžiu, kad būtų užtikrintas vienodas traktavimas');
     });
 </script>
 </head>
@@ -245,12 +245,12 @@
 
         
         <div class="sponsors-container">
-            <h1 class="sponsors-title">{{ sponsors_content.sponsors_title_zh }}</h1>
+            <h1 class="sponsors-title">{{ sponsors_content.sponsors_title_lt }}</h1>
             
             <div class="divider"></div>
             
             <div class="sponsors-intro">
-                {{ sponsors_content.sponsors_intro_zh }}
+                {{ sponsors_content.sponsors_intro_lt }}
             </div>
             
             <!-- Side-by-side sponsor sections -->
@@ -260,7 +260,7 @@
                 <div class="sponsor-box">
                     <div class="sponsor-box-title">
                         <span style="color: #d4af37; font-size: 1.5rem; margin-right: 0.6rem; vertical-align: middle;">📅</span>
-                        <span>季度赞助商</span>
+                        <span>Sezoniniai rėmėjai</span>
                     </div>
                     <div class="sponsors-grid">
                         {% for sponsor in seasonal_sponsors %}
@@ -283,7 +283,7 @@
                 <div class="sponsor-box">
                     <div class="sponsor-box-title">
                         <span style="color: #d4af37; font-size: 1.5rem; margin-right: 0.6rem; vertical-align: middle;">🎭</span>
-                        <span>{{ event.title }} 的赞助商</span>
+                        <span>{{ event.title }} rėmėjai</span>
                     </div>
                     <div class="sponsors-grid">
                         {% for sponsor in event_sponsors %}
@@ -303,13 +303,13 @@
             </div>
             
             <!-- Original enter button - hidden via CSS -->
-            <a href="/home_zh/" class="enter-button">
-                {% placeholder "enter_button_text" or %}进入网站{% endplaceholder %}
+            <a href="/home_lt/" class="enter-button">
+                {% placeholder "enter_button_text" or %}Patekti į svetainę{% endplaceholder %}
             </a>
         </div>
         
         <!-- Forward Navigation Icon -->
-        <a href="/home_zh/" class="forward-nav">
+        <a href="/home_lt/" class="forward-nav">
             <div class="forward-icon">
                 &#x27A1;
             </div>

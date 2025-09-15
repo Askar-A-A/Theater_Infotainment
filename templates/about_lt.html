@@ -1,17 +1,17 @@
-{% extends "base_zh.html" %}
+{% extends "base_lt.html" %}
 {% load cms_tags %}
 {% load static %}
 
 {% block title %}
-    {% placeholder "about_page_title" or %}关于我们 - {% placeholder "theater_name" or %}歌剧院{% endplaceholder %}{% endplaceholder %}
+    {% placeholder "about_page_title" or %}Apie mus - {% placeholder "theater_name" or %}Opera teatras{% endplaceholder %}{% endplaceholder %}
 {% endblock %}
 
 {% block wrapper_style %}
 <style>
-    /* Fixed height for 1024x600 resolution */
+    /* Fixed height for 1280x400 resolution */
     .content-wrapper {
-        height: 600px;
-        width: 1024px;
+        height: 400px;
+        width: 1280px;
         overflow: hidden;
     }
 </style>
@@ -285,7 +285,7 @@
 <div class="theater-container">
     <div class="main-content" id="main-content">
         <!-- Only bottom indicator -->
-        <div class="scroll-indicator bottom visible" id="scroll-down">↕<span>滚动</span></div>
+        <div class="scroll-indicator bottom visible" id="scroll-down">↕<span>Slinkti</span></div>
         
         <!-- Fade overlays for better visual indication -->
         <div class="scroll-fade top" id="fade-top"></div>
@@ -295,7 +295,7 @@
             <div class="section-bg intro-bg"></div>
             <div class="content-box">
                 <div class="section-icon">🏛️</div>
-                <h2 class="section-title">{% placeholder "overview_title" or %}欢迎来到我们的剧院{% endplaceholder %}</h2>
+                <h2 class="section-title">{% placeholder "overview_title" or %}Sveiki atvykę į mūsų teatrą{% endplaceholder %}</h2>
                 <div class="section-content">
                     {% placeholder "overview_content" or %}
                     <p>

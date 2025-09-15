@@ -24,16 +24,16 @@ urlpatterns = [
     path('thank-you/', views.thank_you_page, name='thank_you_page'),
     path('email-thank-you/', views.email_thank_you_page, name='email_thank_you_page'),
     
-    # Chinese routes
-    path('intro_zh/', views.intro_view_zh, name='intro_zh'),
-    path('feedback_zh/', views.feedback_view_zh, name='feedback_view_zh'),
-    path('email-subscribe_zh/', views.email_subscribe_zh, name='email_subscribe_zh'),
-    path('about_zh/', views.about_view_zh, name='about_view_zh'),
-    path('qa_zh/', views.qa_view_zh, name='qa_view_zh'),
-    path('sponsors_zh/', views.sponsors_view_zh, name='sponsors_zh'),
-    path('events_zh/', views.events_view_zh, name='events_zh'),
-    path('event_zh/<slug:slug>/', views.event_detail_zh, name='event_detail_zh'),
-    path('current-event_zh/', views.current_event_zh, name='current_event_zh'),
-    path('thank-you_zh/', views.thank_you_zh, name='thank_you_zh'),
-    path('email-thank-you_zh/', views.email_thank_you_zh, name='email_thank_you_zh'),
+    # Lithuanian routes
+    path('intro_lt/', views.intro_view_lt, name='intro_lt'),
+    path('feedback_lt/', views.feedback_view_lt, name='feedback_view_lt'),
+    path('email-subscribe_lt/', views.email_subscribe_lt, name='email_subscribe_lt'),
+    path('about_lt/', views.about_view_lt, name='about_view_lt'),
+    path('qa_lt/', views.qa_view_lt, name='qa_view_lt'),
+    path('sponsors_lt/', views.sponsors_view_lt, name='sponsors_lt'),
+    path('events_lt/', views.events_view_lt, name='events_lt'),
+    path('event_lt/<slug:slug>/', views.event_detail_lt, name='event_detail_lt'),
+    path('current-event_lt/', views.current_event_lt, name='current_event_lt'),
+    path('thank-you_lt/', views.thank_you_lt, name='thank_you_lt'),
+    path('email-thank-you_lt/', views.email_thank_you_lt, name='email_thank_you_lt'),
 ] 
