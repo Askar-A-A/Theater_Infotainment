@@ -1,9 +1,9 @@
-{% extends "base_lt.html" %}
+{% extends "base_ru.html" %}
 {% load cms_tags %}
 {% load static %}
 
 {% block title %}
-    {% placeholder "subscribe_page_title" or %}Prenumeruoti - Operos teatras{% endplaceholder %}
+    {% placeholder "subscribe_page_title" or %}Подписка - Оперный театр{% endplaceholder %}
 {% endblock %}
 
 {% block wrapper_style %}
@@ -190,15 +190,15 @@
 <div class="subscribe-container">
     <div class="subscribe-content-box">
         <h1 class="subscribe-title">
-            {% placeholder "subscribe_title" or %}Būkite prisijungę{% endplaceholder %}
+            {% placeholder "subscribe_title" or %}Оставайтесь на связи{% endplaceholder %}
         </h1>
         
         <div class="divider"></div>
         
         <div class="subscribe-intro">
             {% placeholder "subscribe_intro" or %}
-                Prenumeruokite mūsų naujienlaiškį ir pirmieji sužinokite apie artėjančius spektaklius,
-                specialius renginius ir išskirtinius operos teatro pasiūlymus.
+                Подпишитесь на нашу рассылку и первыми узнавайте о предстоящих спектаклях,
+                специальных мероприятиях и эксклюзивных предложениях оперного театра.
             {% endplaceholder %}
         </div>
         
@@ -207,9 +207,9 @@
             
             <!-- Email field -->
             <div class="form-group">
-                <label for="email">El. pašto adresas</label>
+                <label for="email">Адрес электронной почты</label>
                 <input type="email" id="email" name="email" class="form-control" 
-                       placeholder="Jūsų el. pašto adresas" required
+                       placeholder="Ваш адрес электронной почты" required
                        value="{{ request.session.subscription_data.email|default:'' }}">
                 {% if request.session.subscription_errors.email %}
                     <div class="error-message">
@@ -220,9 +220,9 @@
             
             <!-- Name field -->
             <div class="form-group">
-                <label for="name">Vardas (neprivaloma)</label>
+                <label for="name">Имя (необязательно)</label>
                 <input type="text" id="name" name="name" class="form-control" 
-                       placeholder="Jūsų vardas"
+                       placeholder="Ваше имя"
                        value="{{ request.session.subscription_data.name|default:'' }}">
             </div>
             
@@ -231,13 +231,13 @@
                 <input type="checkbox" id="preferences" name="preferences" 
                        {% if request.session.subscription_data.preferences %}checked{% endif %}>
                 <label for="preferences">
-                    Norėčiau gauti informaciją apie specialius renginius, premjeras ir išskirtinius pasiūlymus.
+                    Я хотел бы получать информацию о специальных мероприятиях, премьерах и эксклюзивных предложениях.
                 </label>
             </div>
             
             <!-- Submit button -->
             <button type="submit" class="btn-subscribe">
-                {% placeholder "subscribe_button_text" or %}Prenumeruoti{% endplaceholder %}
+                {% placeholder "subscribe_button_text" or %}Подписаться{% endplaceholder %}
             </button>
         </form>
         
@@ -247,7 +247,7 @@
                 <p>{{ request.session.subscription_message }}</p>
             {% else %}
                 {% placeholder "subscribe_success" or %}
-                    <p>Ačiū, kad užsiprenumeravote mūsų naujienlaiškį. Gausite informaciją apie artėjančius renginius ir spektaklius.</p>
+                    <p>Благодарим вас за подписку на нашу рассылку! Вы будете получать информацию о предстоящих мероприятиях и спектаклях.</p>
                 {% endplaceholder %}
             {% endif %}
         </div>

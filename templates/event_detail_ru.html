@@ -1,9 +1,9 @@
-{% extends "base_lt.html" %}
+{% extends "base_ru.html" %}
 {% load cms_tags %}
 {% load static %}
 
 {% block title %}
-    {% placeholder "event_detail_title" or %}{{ event_title_lt }} - {% placeholder "theater_name" or %}Opera teatras{% endplaceholder %}{% endplaceholder %}
+    {% placeholder "event_detail_title" or %}{{ event_title_ru }} - {% placeholder "theater_name" or %}Оперный театр{% endplaceholder %}{% endplaceholder %}
 {% endblock %}
 
 {% block wrapper_style %}
@@ -393,7 +393,7 @@
 {% block content %}
 <div class="event-detail-container" id="event-detail-container">
     <!-- Only bottom indicator -->
-    <div class="scroll-indicator bottom visible" id="scroll-down">↕<span>Slinkti</span></div>
+    <div class="scroll-indicator bottom visible" id="scroll-down">↕<span>прокрутка</span></div>
     
     <!-- Fade overlays for better visual indication -->
     <div class="scroll-fade top" id="fade-top"></div>
@@ -402,10 +402,10 @@
     <div class="event-header">
         <div class="event-title-section">
             <h1 class="event-title">
-                {{ event_title_lt }}
+                {{ event_title_ru }}
             </h1>
             <div class="event-composer">
-                {{ event_composer_lt }}
+                {{ event_composer_ru }}
             </div>
             <div class="event-dates">
                 {{ event.date_range_display }}
@@ -414,7 +414,7 @@
         <div class="event-image-section">
             <div class="event-image-container">
                 {% if event.image %}
-                    <img src="{{ event.image.url }}" alt="{{ event_title_lt }}">
+                    <img src="{{ event.image.url }}" alt="{{ event_title_ru }}">
                 {% endif %}
             </div>
         </div>
@@ -423,46 +423,46 @@
     <!-- Event Content -->
     <div class="event-content">
         <div class="event-description-section">
-            <h2>Apie spektaklį</h2>
+            <h2>О спектакле</h2>
             <div class="event-description">
-                {{ event_about_lt|safe }}
+                {{ event_about_ru|safe }}
                 
                 {% placeholder "event_additional_description" or %}{% endplaceholder %}
             </div>
             
-            <a href="/events_lt/" class="back-button">← Grįžti į spektaklių sąrašą</a>
+            <a href="/events_ru/" class="back-button">← Вернуться к списку спектаклей</a>
         </div>
         
         <div class="event-sidebar">
             <div class="event-info-item">
-                <div class="info-label">Spektaklio trukmė</div>
-                <div class="info-value">{{ event_duration_lt|default:"apie 3 valandas (su pertrauka)" }}</div>
+                <div class="info-label">Продолжительность</div>
+                <div class="info-value">{{ event_duration_ru|default:"около 3 часов (включая антракт)" }}</div>
             </div>
             
             <div class="event-info-item">
-                <div class="info-label">Spektaklio kalba</div>
-                <div class="info-value">{{ event_language_lt|default:"originali kalba su lietuviškai subtitrais" }}</div>
+                <div class="info-label">Язык спектакля</div>
+                <div class="info-value">{{ event_language_ru|default:"на оригинальном языке с русскими субтитрами" }}</div>
             </div>
             
             <div class="event-info-item">
-                <div class="info-label">Dirigentas</div>
-                <div class="info-value">{{ event_conductor_lt|default:"bus paskelbta" }}</div>
+                <div class="info-label">Дирижер</div>
+                <div class="info-value">{{ event_conductor_ru|default:"будет объявлено" }}</div>
             </div>
             
             <div class="event-info-item">
-                <div class="info-label">Režisierius</div>
-                <div class="info-value">{{ event_director_lt|default:"bus paskelbta" }}</div>
+                <div class="info-label">Режиссер</div>
+                <div class="info-value">{{ event_director_ru|default:"будет объявлено" }}</div>
             </div>
             
             <div class="event-info-item">
-                <div class="info-label">Pagrindiniai atlikėjai</div>
+                <div class="info-label">Основные исполнители</div>
                 <div class="cast-content">
-                    {% if event_cast_lt %}
-                        {{ event_cast_lt|safe }}
+                    {% if event_cast_ru %}
+                        {{ event_cast_ru|safe }}
                     {% else %}
                         <div class="cast-member">
-                            <div class="character-name">Pagrindinis veikėjas</div>
-                            <div class="actor-name">Bus paskelbta</div>
+                            <div class="character-name">Главная роль</div>
+                            <div class="actor-name">Будет объявлено</div>
                         </div>
                     {% endif %}
                 </div>

@@ -1,9 +1,9 @@
-{% extends "base_lt.html" %}
+{% extends "base_ru.html" %}
 {% load cms_tags %}
 {% load static %}
 
 {% block title %}
-    Ačiū - {% placeholder "theater_name" or %}Opera teatras{% endplaceholder %}
+    Спасибо - {% placeholder "theater_name" or %}Оперный театр{% endplaceholder %}
 {% endblock %}
 
 {% block wrapper_style %}
@@ -141,18 +141,18 @@
 <div class="subscription-container">
     <div class="subscription-content-box">
         <h1 class="subscription-title">
-            {% placeholder "email_subscribe_thank_you_title_lt" or %}Ačiū!{% endplaceholder %}
+            {% placeholder "email_subscribe_thank_you_title_ru" or %}Спасибо!{% endplaceholder %}
         </h1>
         
         <div class="divider"></div>
         
         <p class="subscription-message">
-            {% placeholder "email_subscribe_thank_you_message_lt" or %}
-                Ačiū, kad užsiprenumeravote mūsų naujienlaiškį! Gausite informaciją apie artėjančius renginius ir spektaklius.
+            {% placeholder "email_subscribe_thank_you_message_ru" or %}
+                Благодарим вас за подписку на нашу рассылку! Вы будете получать обновления о наших предстоящих событиях и спектаклях.
             {% endplaceholder %}
         </p>
         
-        <a href="/home_lt/" class="home-button">Grįžti į pagrindinį</a>
+        <a href="/home_ru/" class="home-button">Вернуться на главную</a>
     </div>
 </div>
 {% endblock %}

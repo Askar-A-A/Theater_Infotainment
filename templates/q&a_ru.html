@@ -1,9 +1,9 @@
-{% extends "base_lt.html" %}
+{% extends "base_ru.html" %}
 {% load cms_tags %}
 {% load static %}
 
 {% block title %}
-    {% placeholder "qa_page_title" or %}Dažnai užduodami klausimai - {% placeholder "theater_name" or %}Opera teatras{% endplaceholder %}{% endplaceholder %}
+    {% placeholder "qa_page_title" or %}Часто задаваемые вопросы - {% placeholder "theater_name" or %}Оперный театр{% endplaceholder %}{% endplaceholder %}
 {% endblock %}
 
 {% block extra_css %}
@@ -206,13 +206,13 @@
 {% block content %}
 <div class="qa-container" id="qa-container">
     <!-- Scroll Indicators -->
-    <div class="scroll-indicator bottom visible" id="scroll-down">↕<span>Slinkti</span></div>
+    <div class="scroll-indicator bottom visible" id="scroll-down">↕<span>прокрутка</span></div>
     
     <!-- Fade overlays for better visual indication -->
     <div class="scroll-fade top" id="fade-top"></div>
     <div class="scroll-fade bottom" id="fade-bottom"></div>
     
-    <h1 class="page-title">{% placeholder "faq_heading" or %}Dažnai užduodami klausimai{% endplaceholder %}</h1>
+    <h1 class="page-title">{% placeholder "faq_heading_ru" or %}Часто задаваемые вопросы{% endplaceholder %}</h1>
     <div class="qa-list">
         <!-- Questions Managed through CMS -->
         {% placeholder "additional_questions" or %}

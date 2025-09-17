@@ -2,11 +2,11 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="lt">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>{% placeholder "sponsors_page_title" or %}Mūsų rėmėjai - Operos teatras{% endplaceholder %}</title>
+    <title>{% placeholder "sponsors_page_title" or %}Наши спонсоры - Оперный театр{% endplaceholder %}</title>
     <link rel="stylesheet" href="{% static 'css/font-awesome/all.min.css' %}">
     {% render_block "css" %}
 <style>
@@ -241,7 +241,7 @@
 </style>
 {% render_block "js" %}
 <script>
-    console.log('Rėmėjų puslapis įkeltas (Lithuanian)');
+    console.log('Страница спонсоров загружена (Russian)');
     
     /* Android 6.0 compatible event attachment with fallback */
     function addLoadEvent(func) {
@@ -301,12 +301,12 @@
     {% cms_toolbar %}
     <div class="content-wrapper">
         <div class="sponsors-container">
-            <h1 class="sponsors-title">{{ sponsors_content.sponsors_title_lt }}</h1>
+            <h1 class="sponsors-title">{{ sponsors_content.sponsors_title_ru }}</h1>
             
             <div class="divider"></div>
             
             <div class="sponsors-intro">
-                {{ sponsors_content.sponsors_intro_lt }}
+                {{ sponsors_content.sponsors_intro_ru }}
             </div>
             
             <!-- Side-by-side sponsor sections -->
@@ -316,7 +316,7 @@
                 <div class="sponsor-box">
                     <div class="sponsor-box-title">
                         📅
-                        <span>Sezoniniai rėmėjai</span>
+                        <span>Сезонные спонсоры</span>
                     </div>
                     <div class="sponsors-grid">
                         {% for sponsor in seasonal_sponsors %}
@@ -339,7 +339,7 @@
                 <div class="sponsor-box">
                     <div class="sponsor-box-title">
                         🎭
-                        <span>{{ event.title }} rėmėjai</span>
+                        <span>Спонсоры {{ event.title }}</span>
                     </div>
                     <div class="sponsors-grid">
                         {% for sponsor in event_sponsors %}
@@ -359,13 +359,13 @@
             </div>
             
             <!-- Enter button -->
-            <a href="/home_lt/" class="enter-button">
-                {% placeholder "enter_button_text" or %}Įeiti į svetainę{% endplaceholder %}
+            <a href="/home_ru/" class="enter-button">
+                {% placeholder "enter_button_text" or %}Войти на сайт{% endplaceholder %}
             </a>
         </div>
         
         <!-- Forward Navigation Icon -->
-        <a href="/home_lt/" class="forward-nav">
+        <a href="/home_ru/" class="forward-nav">
             <div class="forward-icon">
                 &#x27A1;
             </div>
