@@ -24,16 +24,16 @@ urlpatterns = [
     path('thank-you/', views.thank_you_page, name='thank_you_page'),
     path('email-thank-you/', views.email_thank_you_page, name='email_thank_you_page'),
     
-    # Lithuanian routes
-    path('intro_lt/', views.intro_view_lt, name='intro_lt'),
-    path('feedback_lt/', views.feedback_view_lt, name='feedback_view_lt'),
-    path('email-subscribe_lt/', views.email_subscribe_lt, name='email_subscribe_lt'),
-    path('about_lt/', views.about_view_lt, name='about_view_lt'),
-    path('qa_lt/', views.qa_view_lt, name='qa_view_lt'),
-    path('sponsors_lt/', views.sponsors_view_lt, name='sponsors_lt'),
-    path('events_lt/', views.events_view_lt, name='events_lt'),
-    path('event_lt/<slug:slug>/', views.event_detail_lt, name='event_detail_lt'),
-    path('current-event_lt/', views.current_event_lt, name='current_event_lt'),
-    path('thank-you_lt/', views.thank_you_lt, name='thank_you_lt'),
-    path('email-thank-you_lt/', views.email_thank_you_lt, name='email_thank_you_lt'),
+    # Russian routes
+    path('intro_ru/', views.intro_view_ru, name='intro_ru'),
+    path('feedback_ru/', views.feedback_view_ru, name='feedback_view_ru'),
+    path('email-subscribe_ru/', views.email_subscribe_ru, name='email_subscribe_ru'),
+    path('about_ru/', views.about_view_ru, name='about_view_ru'),
+    path('qa_ru/', views.qa_view_ru, name='qa_view_ru'),
+    path('sponsors_ru/', views.sponsors_view_ru, name='sponsors_ru'),
+    path('events_ru/', views.events_view_ru, name='events_ru'),
+    path('event_ru/<slug:slug>/', views.event_detail_ru, name='event_detail_ru'),
+    path('current-event_ru/', views.current_event_ru, name='current_event_ru'),
+    path('thank-you_ru/', views.thank_you_ru, name='thank_you_ru'),
+    path('email-thank-you_ru/', views.email_thank_you_ru, name='email_thank_you_ru'),
 ] 

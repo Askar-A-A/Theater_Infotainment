@@ -58,8 +58,8 @@ def process_feedback(request):
         
         # Redirect to appropriate thank you page based on language
         referrer = request.META.get('HTTP_REFERER', '')
-        if '_lt' in referrer or 'lt' in referrer:
-            return redirect('user_interactions:thank_you_lt')
+        if '_ru' in referrer or 'ru' in referrer:
+            return redirect('user_interactions:thank_you_ru')
         else:
             return redirect('user_interactions:thank_you_page')
             
@@ -113,9 +113,9 @@ def process_subscription(request):
     if EmailSubscription.objects.filter(email__iexact=email).exists():
         # Set language-specific warning message based on the referring page
         referrer = request.META.get('HTTP_REFERER', '')
-        if '_lt' in referrer or 'lt' in referrer:
-            warning_msg = "Jūs jau esate užsiprenumeravę mūsų naujienlaiškį."
-            template_name = 'email_subscribe_lt.html'
+        if '_ru' in referrer or 'ru' in referrer:
+            warning_msg = "Вы уже подписаны на нашу рассылку."
+            template_name = 'email_subscribe_ru.html'
         else:
             warning_msg = "You are already subscribed to our newsletter."
             template_name = 'email_subscribe.html'
@@ -160,8 +160,8 @@ def process_subscription(request):
         
         # Redirect to appropriate thank you page based on language
         referrer = request.META.get('HTTP_REFERER', '')
-        if '_lt' in referrer or 'lt' in referrer:
-            return redirect('user_interactions:email_thank_you_lt')
+        if '_ru' in referrer or 'ru' in referrer:
+            return redirect('user_interactions:email_thank_you_ru')
         else:
             return redirect('user_interactions:email_thank_you_page')
         
@@ -333,16 +333,16 @@ def sponsors_page(request):
 
 # Language switching is handled through direct URL routing
 # English URLs: /sponsors/, /events/, etc.
-# Lithuanian URLs: /sponsors_lt/, /events_lt/, etc.
+# Russian URLs: /sponsors_ru/, /events_ru/, etc.
 # Templates contain direct links to switch between languages
 
-# Language-specific view functions for Lithuanian versions
-def greeting_view_lt(request):
-    """Lithuanian version of greeting page"""
-    return render(request, 'greeting_lt.html')
+# Language-specific view functions for Russian versions
+def greeting_view_ru(request):
+    """Russian version of greeting page"""
+    return render(request, 'greeting_ru.html')
 
-def sponsors_view_lt(request):
-    """Lithuanian version of sponsors page"""
+def sponsors_view_ru(request):
+    """Russian version of sponsors page"""
     seasonal_sponsors = SeasonalSponsor.objects.all()
     event = determine_current_event()
     event_sponsors = []
@@ -352,56 +352,56 @@ def sponsors_view_lt(request):
     # Get sponsors page content
     sponsors_content = SponsorsPageContent.get_content()
 
-    return render(request, 'sponsors_lt.html', {
+    return render(request, 'sponsors_ru.html', {
         'seasonal_sponsors': seasonal_sponsors,
         'event_sponsors': event_sponsors,
         'event': event,
         'sponsors_content': sponsors_content,
     })
 
-def events_view_lt(request):
-    """Lithuanian version of events page"""
+def events_view_ru(request):
+    """Russian version of events page"""
     events = Event.objects.filter(is_active=True).order_by('sort_order', 'start_datetime')
     
-    # Add Lithuanian content for each event
-    events_with_lt = []
+    # Add Russian content for each event
+    events_with_ru = []
     for event in events:
         event_dict = {
             'event': event,
-            'title_lt': event.get_title('lt'),
-            'composer_lt': event.get_composer('lt'),
+            'title_ru': event.get_title('ru'),
+            'composer_ru': event.get_composer('ru'),
         }
-        events_with_lt.append(event_dict)
+        events_with_ru.append(event_dict)
     
-    return render(request, 'events_lt.html', {'events_with_lt': events_with_lt})
+    return render(request, 'events_ru.html', {'events_with_ru': events_with_ru})
 
-def event_detail_lt(request, slug):
-    """Lithuanian version of event detail page"""
+def event_detail_ru(request, slug):
+    """Russian version of event detail page"""
     event = get_object_or_404(Event, slug=slug, is_active=True)
     
     now = timezone.now()
     upcoming_performances = event.performances.filter(start_time__gt=now).order_by('start_time')
     performance_dates = event.performances.dates('start_time', 'day')
     
-    # Pre-process Lithuanian content
+    # Pre-process Russian content
     context = {
         'event': event,
         'upcoming_performances': upcoming_performances,
         'performance_dates': performance_dates,
-        'event_title_lt': event.get_title('lt'),
-        'event_composer_lt': event.get_composer('lt'),
-        'event_about_lt': event.get_about_content('lt'),
-        'event_language_lt': event.get_language('lt'),
-        'event_conductor_lt': event.get_conductor('lt'),
-        'event_director_lt': event.get_director('lt'),
-        'event_cast_lt': event.get_cast_content('lt'),
-        'event_duration_lt': event.get_duration('lt'),
+        'event_title_ru': event.get_title('ru'),
+        'event_composer_ru': event.get_composer('ru'),
+        'event_about_ru': event.get_about_content('ru'),
+        'event_language_ru': event.get_language('ru'),
+        'event_conductor_ru': event.get_conductor('ru'),
+        'event_director_ru': event.get_director('ru'),
+        'event_cast_ru': event.get_cast_content('ru'),
+        'event_duration_ru': event.get_duration('ru'),
     }
     
-    return render(request, 'event_detail_lt.html', context)
+    return render(request, 'event_detail_ru.html', context)
 
-def feedback_view_lt(request):
-    """Lithuanian version of feedback page"""
+def feedback_view_ru(request):
+    """Russian version of feedback page"""
     
     # Clear old error messages if user navigates back to feedback page
     # This provides a fallback if JavaScript clearing fails
@@ -412,14 +412,14 @@ def feedback_view_lt(request):
             if key in request.session:
                 del request.session[key]
     
-    return render(request, 'feedback_lt.html')
+    return render(request, 'feedback_ru.html')
 
-def about_view_lt(request):
-    """Lithuanian version of about page"""
-    return render(request, 'about_lt.html')
+def about_view_ru(request):
+    """Russian version of about page"""
+    return render(request, 'about_ru.html')
 
-def email_subscribe_lt(request):
-    """Lithuanian version of email subscribe page"""
+def email_subscribe_ru(request):
+    """Russian version of email subscribe page"""
     
     # Clear old messages if user navigates back to subscription page
     # This provides a fallback if JavaScript clearing fails
@@ -430,24 +430,24 @@ def email_subscribe_lt(request):
             if key in request.session:
                 del request.session[key]
     
-    return render(request, 'email_subscribe_lt.html')
+    return render(request, 'email_subscribe_ru.html')
 
-def qa_view_lt(request):
-    """Lithuanian version of Q&A page"""
-    return render(request, 'q&a_lt.html')
+def qa_view_ru(request):
+    """Russian version of Q&A page"""
+    return render(request, 'q&a_ru.html')
 
-def thank_you_lt(request):
-    """Lithuanian version of thank you page for feedback"""
-    return render(request, 'feedback_thank_you_lt.html')
+def thank_you_ru(request):
+    """Russian version of thank you page for feedback"""
+    return render(request, 'feedback_thank_you_ru.html')
 
-def email_thank_you_lt(request):
-    """Lithuanian version of thank you page for email subscription"""
-    return render(request, 'email_thank_you_lt.html')
+def email_thank_you_ru(request):
+    """Russian version of thank you page for email subscription"""
+    return render(request, 'email_thank_you_ru.html')
 
-def home_view_lt(request):
-    """Lithuanian version of home page"""
+def home_view_ru(request):
+    """Russian version of home page"""
     event = determine_current_event()
-    return render(request, 'home_lt.html', {'current_event': event})
+    return render(request, 'home_ru.html', {'current_event': event})
 
 def home_view(request):
     """English version of home page"""
@@ -490,19 +490,19 @@ def qa_view(request):
     """English version of Q&A page"""
     return render(request, 'q&a.html')
 
-def current_event_lt(request):
-    """Redirect to the current event's detail page (Lithuanian)"""
+def current_event_ru(request):
+    """Redirect to the current event's detail page (Russian)"""
     event = determine_current_event()
     if event:
-        return redirect(reverse('user_interactions:event_detail_lt', kwargs={'slug': event.slug}))
+        return redirect(reverse('user_interactions:event_detail_ru', kwargs={'slug': event.slug}))
     else:
         # If no events found, redirect to events list
-        return redirect('user_interactions:events_lt')
+        return redirect('user_interactions:events_ru')
 
 def intro_view(request):
     """English intro page - visual-only welcome page"""
     return render(request, 'intro.html')
 
-def intro_view_lt(request):
-    """Lithuanian intro page - visual-only welcome page"""
-    return render(request, 'intro_lt.html')
+def intro_view_ru(request):
+    """Russian intro page - visual-only welcome page"""
+    return render(request, 'intro_ru.html')

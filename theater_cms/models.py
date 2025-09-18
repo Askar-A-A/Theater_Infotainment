@@ -127,23 +127,23 @@ class Event(models.Model):
     cast_content = models.TextField(blank=True)
     duration = models.CharField(max_length=50, blank=True)
     
-    # Lithuanian translation fields (new)
-    title_lt = models.CharField(max_length=200, blank=True, verbose_name="Title (Lithuanian)", 
-                               help_text="Lithuanian translation of the event title")
-    composer_lt = models.CharField(max_length=100, blank=True, verbose_name="Composer (Lithuanian)",
-                                  help_text="Lithuanian translation of composer name")
-    about_content_lt = models.TextField(blank=True, verbose_name="About Content (Lithuanian)",
-                                       help_text="Lithuanian translation of the about content")
-    language_lt = models.CharField(max_length=100, blank=True, verbose_name="Language (Lithuanian)",
-                                  help_text="e.g., 'italų kalba su lietuviškais subtitrais'")
-    conductor_lt = models.CharField(max_length=100, blank=True, verbose_name="Conductor (Lithuanian)",
-                                   help_text="Lithuanian translation of conductor name")
-    director_lt = models.CharField(max_length=100, blank=True, verbose_name="Director (Lithuanian)",
-                                  help_text="Lithuanian translation of director name")
-    cast_content_lt = models.TextField(blank=True, verbose_name="Cast Content (Lithuanian)",
-                                      help_text="Lithuanian translation of cast information")
-    duration_lt = models.CharField(max_length=50, blank=True, verbose_name="Duration (Lithuanian)",
-                                  help_text="e.g., 'apie 3 valandas (su pertrauka)'")
+    # Russian translation fields (new)
+    title_ru = models.CharField(max_length=200, blank=True, verbose_name="Title (Russian)", 
+                               help_text="Russian translation of the event title")
+    composer_ru = models.CharField(max_length=100, blank=True, verbose_name="Composer (Russian)",
+                                  help_text="Russian translation of composer name")
+    about_content_ru = models.TextField(blank=True, verbose_name="About Content (Russian)",
+                                       help_text="Russian translation of the about content")
+    language_ru = models.CharField(max_length=100, blank=True, verbose_name="Language (Russian)",
+                                  help_text="e.g., 'на оригинальном языке с русскими субтитрами'")
+    conductor_ru = models.CharField(max_length=100, blank=True, verbose_name="Conductor (Russian)",
+                                   help_text="Russian translation of conductor name")
+    director_ru = models.CharField(max_length=100, blank=True, verbose_name="Director (Russian)",
+                                  help_text="Russian translation of director name")
+    cast_content_ru = models.TextField(blank=True, verbose_name="Cast Content (Russian)",
+                                      help_text="Russian translation of cast information")
+    duration_ru = models.CharField(max_length=50, blank=True, verbose_name="Duration (Russian)",
+                                  help_text="e.g., 'около 3 часов (включая антракты)'")
     
     image = models.ImageField(upload_to='events/', blank=True, null=True)
     is_active = models.BooleanField(default=True)
@@ -156,43 +156,43 @@ class Event(models.Model):
     
     # Helper methods for language-aware content
     def get_title(self, language='en'):
-        if language == 'lt' and self.title_lt:
-            return self.title_lt
+        if language == 'ru' and self.title_ru:
+            return self.title_ru
         return self.title
     
     def get_composer(self, language='en'):
-        if language == 'lt' and self.composer_lt:
-            return self.composer_lt
+        if language == 'ru' and self.composer_ru:
+            return self.composer_ru
         return self.composer
     
     def get_about_content(self, language='en'):
-        if language == 'lt' and self.about_content_lt:
-            return self.about_content_lt
+        if language == 'ru' and self.about_content_ru:
+            return self.about_content_ru
         return self.about_content
     
     def get_language(self, language='en'):
-        if language == 'lt' and self.language_lt:
-            return self.language_lt
+        if language == 'ru' and self.language_ru:
+            return self.language_ru
         return self.language
     
     def get_conductor(self, language='en'):
-        if language == 'lt' and self.conductor_lt:
-            return self.conductor_lt
+        if language == 'ru' and self.conductor_ru:
+            return self.conductor_ru
         return self.conductor
     
     def get_director(self, language='en'):
-        if language == 'lt' and self.director_lt:
-            return self.director_lt
+        if language == 'ru' and self.director_ru:
+            return self.director_ru
         return self.director
     
     def get_cast_content(self, language='en'):
-        if language == 'lt' and self.cast_content_lt:
-            return self.cast_content_lt
+        if language == 'ru' and self.cast_content_ru:
+            return self.cast_content_ru
         return self.cast_content
     
     def get_duration(self, language='en'):
-        if language == 'lt' and self.duration_lt:
-            return self.duration_lt
+        if language == 'ru' and self.duration_ru:
+            return self.duration_ru
         return self.duration
     
     def save(self, *args, **kwargs):
@@ -308,17 +308,17 @@ class SponsorsPageContent(models.Model):
         help_text="Introduction text explaining the theater's relationship with sponsors"
     )
     
-    # Lithuanian content
-    sponsors_title_lt = models.CharField(
+    # Russian content
+    sponsors_title_ru = models.CharField(
         max_length=200, 
-        default="Mūsų gerbiami rėmėjai",
-        verbose_name="Sponsors Title (Lithuanian)",
-        help_text="Main title displayed at the top of the Lithuanian sponsors page"
+        default="Наши уважаемые спонсоры",
+        verbose_name="Sponsors Title (Russian)",
+        help_text="Main title displayed at the top of the Russian sponsors page"
     )
-    sponsors_intro_lt = models.TextField(
-        default="Mūsų teatras didžiuojasi dėkodamas rėmėjams už jų dosnų palaikymą. Jų atsidavimas menui leidžia mums tęsti puikumo tradiciją ir dalintis operos grožiu su žiūrovais iš viso pasaulio.",
-        verbose_name="Sponsors Introduction (Lithuanian)",
-        help_text="Introduction text for Lithuanian sponsors page"
+    sponsors_intro_ru = models.TextField(
+        default="Наш театр с гордостью выражает благодарность нашим спонсорам за их щедрую поддержку. Их преданность искусству позволяет нам продолжать традицию совершенства и делиться волшебством оперы со зрителями со всего мира.",
+        verbose_name="Sponsors Introduction (Russian)",
+        help_text="Introduction text for Russian sponsors page"
     )
     
     updated_at = models.DateTimeField(auto_now=True)
@@ -344,8 +344,8 @@ class SponsorsPageContent(models.Model):
             defaults={
                 'sponsors_title_en': 'Our Esteemed Sponsors',
                 'sponsors_intro_en': 'Our theater is proud to acknowledge the generous support of our sponsors. Their commitment to the arts enables us to continue our tradition of excellence and share the magic of opera with audiences from around the world.',
-                'sponsors_title_lt': 'Mūsų gerbiami rėmėjai',
-                'sponsors_intro_lt': 'Mūsų teatras didžiuojasi dėkodamas rėmėjams už jų dosnų palaikymą. Jų atsidavimas menui leidžia mums tęsti puikumo tradiciją ir dalintis operos grožiu su žiūrovais iš viso pasaulio.'
+                'sponsors_title_ru': 'Наши уважаемые спонсоры',
+                'sponsors_intro_ru': 'Наш театр с гордостью выражает благодарность нашим спонсорам за их щедрую поддержку. Их преданность искусству позволяет нам продолжать традицию совершенства и делиться волшебством оперы со зрителями со всего мира.'
             }
         )
         return content

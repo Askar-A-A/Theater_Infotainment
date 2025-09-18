@@ -33,8 +33,8 @@ class EventAdmin(admin.ModelAdmin):
             'fields': ('is_active', 'sort_order', 'start_datetime', 'end_datetime'),
             'classes': ('collapse',)
         }),
-        ('Lithuanian Translations', {
-            'fields': ('title_lt', 'composer_lt', 'about_content_lt', 'language_lt', 'conductor_lt', 'director_lt', 'cast_content_lt', 'duration_lt'),
+        ('Russian Translations', {
+            'fields': ('title_ru', 'composer_ru', 'about_content_ru', 'language_ru', 'conductor_ru', 'director_ru', 'cast_content_ru', 'duration_ru'),
             'classes': ('collapse',)
         })
     )
@@ -251,15 +251,15 @@ class SponsorsPageContentAdmin(admin.ModelAdmin):
     """Simple admin for SponsorsPageContent model"""
     list_display = ('sponsors_title_en', 'updated_at')
     list_filter = ('updated_at',)
-    search_fields = ('sponsors_title_en', 'sponsors_intro_en', 'sponsors_title_lt', 'sponsors_intro_lt')
+    search_fields = ('sponsors_title_en', 'sponsors_intro_en', 'sponsors_title_ru', 'sponsors_intro_ru')
     ordering = ('-updated_at',)
     
     fieldsets = (
         ('English Content', {
             'fields': ('sponsors_title_en', 'sponsors_intro_en')
         }),
-        ('Lithuanian Content', {
-            'fields': ('sponsors_title_lt', 'sponsors_intro_lt')
+        ('Russian Content', {
+            'fields': ('sponsors_title_ru', 'sponsors_intro_ru')
         })
     )
     
