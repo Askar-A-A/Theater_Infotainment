@@ -11,7 +11,8 @@ urlpatterns = [
     path('clear_feedback_messages/', views.clear_feedback_messages, name='clear_feedback_messages'),
     
     # English routes (default)
-    # path('home/', views.home_view, name='home'),
+    path('home/', views.home_view, name='home'),
+    path('greetings/', views.greeting_view, name='greetings'),
     path('intro/', views.intro_view, name='intro'),
     path('feedback/', views.feedback_view, name='feedback_view'),
     path('email-subscribe/', views.email_subscribe, name='email_subscribe'),
@@ -24,16 +25,18 @@ urlpatterns = [
     path('thank-you/', views.thank_you_page, name='thank_you_page'),
     path('email-thank-you/', views.email_thank_you_page, name='email_thank_you_page'),
     
-    # Chinese routes
-    path('intro_zh/', views.intro_view_zh, name='intro_zh'),
-    path('feedback_zh/', views.feedback_view_zh, name='feedback_view_zh'),
-    path('email-subscribe_zh/', views.email_subscribe_zh, name='email_subscribe_zh'),
-    path('about_zh/', views.about_view_zh, name='about_view_zh'),
-    path('qa_zh/', views.qa_view_zh, name='qa_view_zh'),
-    path('sponsors_zh/', views.sponsors_view_zh, name='sponsors_zh'),
-    path('events_zh/', views.events_view_zh, name='events_zh'),
-    path('event_zh/<slug:slug>/', views.event_detail_zh, name='event_detail_zh'),
-    path('current-event_zh/', views.current_event_zh, name='current_event_zh'),
-    path('thank-you_zh/', views.thank_you_zh, name='thank_you_zh'),
-    path('email-thank-you_zh/', views.email_thank_you_zh, name='email_thank_you_zh'),
+    # Arabic routes
+    path('home_ar/', views.home_view_ar, name='home_ar'),
+    path('greetings_ar/', views.greeting_view_ar, name='greetings_ar'),
+    path('intro_ar/', views.intro_view_ar, name='intro_ar'),
+    path('feedback_ar/', views.feedback_view_ar, name='feedback_view_ar'),
+    path('email-subscribe_ar/', views.email_subscribe_ar, name='email_subscribe_ar'),
+    path('about_ar/', views.about_view_ar, name='about_view_ar'),
+    path('qa_ar/', views.qa_view_ar, name='qa_view_ar'),
+    path('sponsors_ar/', views.sponsors_view_ar, name='sponsors_ar'),
+    path('events_ar/', views.events_view_ar, name='events_ar'),
+    path('event_ar/<slug:slug>/', views.event_detail_ar, name='event_detail_ar'),
+    path('current-event_ar/', views.current_event_ar, name='current_event_ar'),
+    path('thank-you_ar/', views.thank_you_ar, name='thank_you_ar'),
+    path('email-thank-you_ar/', views.email_thank_you_ar, name='email_thank_you_ar'),
 ] 

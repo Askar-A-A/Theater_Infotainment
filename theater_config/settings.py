@@ -179,19 +179,19 @@ CMS_TEMPLATES = [
     ('feedback_thank_you.html', 'Feedback Thank You Template'),
     ('email_subscribe.html', 'Email Subscribe Template'),
     
-    # Chinese templates (all with _zh suffix)
-    ('greeting_zh.html', 'Greeting Template (Chinese)'),
-    ('intro_zh.html', 'Intro Template (Chinese)'),
-    ('base_zh.html', 'Base Template (Chinese)'),
-    ('home_zh.html', 'Home Template (Chinese)'),
-    ('about_zh.html', 'About Us Template (Chinese)'),
-    ('events_zh.html', 'Events Template (Chinese)'),
-    ('event_detail_zh.html', 'Event Detail Template (Chinese)'),
-    ('q&a_zh.html', 'Questions and Answers Template (Chinese)'),
-    ('sponsors_zh.html', 'Sponsors Template (Chinese)'),
-    ('feedback_zh.html', 'Feedback Template (Chinese)'),
-    ('feedback_thank_you_zh.html', 'Feedback Thank You Template (Chinese)'),
-    ('email_subscribe_zh.html', 'Email Subscribe Template (Chinese)'),
+    # Arabic templates (all with _ar suffix)
+    ('greeting_ar.html', 'Greeting Template (Arabic)'),
+    ('intro_ar.html', 'Intro Template (Arabic)'),
+    ('base_ar.html', 'Base Template (Arabic)'),
+    ('home_ar.html', 'Home Template (Arabic)'),
+    ('about_ar.html', 'About Us Template (Arabic)'),
+    ('events_ar.html', 'Events Template (Arabic)'),
+    ('event_detail_ar.html', 'Event Detail Template (Arabic)'),
+    ('q&a_ar.html', 'Questions and Answers Template (Arabic)'),
+    ('sponsors_ar.html', 'Sponsors Template (Arabic)'),
+    ('feedback_ar.html', 'Feedback Template (Arabic)'),
+    ('feedback_thank_you_ar.html', 'Feedback Thank You Template (Arabic)'),
+    ('email_subscribe_ar.html', 'Email Subscribe Template (Arabic)'),
 ]
 
 SITE_ID = 1

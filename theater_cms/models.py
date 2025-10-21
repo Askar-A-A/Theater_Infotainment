@@ -127,23 +127,23 @@ class Event(models.Model):
     cast_content = models.TextField(blank=True)
     duration = models.CharField(max_length=50, blank=True)
     
-    # Chinese translation fields (new)
-    title_zh = models.CharField(max_length=200, blank=True, verbose_name="Title (Chinese)", 
-                               help_text="Chinese translation of the event title")
-    composer_zh = models.CharField(max_length=100, blank=True, verbose_name="Composer (Chinese)",
-                                  help_text="Chinese translation of composer name")
-    about_content_zh = models.TextField(blank=True, verbose_name="About Content (Chinese)",
-                                       help_text="Chinese translation of the about content")
-    language_zh = models.CharField(max_length=100, blank=True, verbose_name="Language (Chinese)",
-                                  help_text="e.g., '意大利语配中文字幕'")
-    conductor_zh = models.CharField(max_length=100, blank=True, verbose_name="Conductor (Chinese)",
-                                   help_text="Chinese translation of conductor name")
-    director_zh = models.CharField(max_length=100, blank=True, verbose_name="Director (Chinese)",
-                                  help_text="Chinese translation of director name")
-    cast_content_zh = models.TextField(blank=True, verbose_name="Cast Content (Chinese)",
-                                      help_text="Chinese translation of cast information")
-    duration_zh = models.CharField(max_length=50, blank=True, verbose_name="Duration (Chinese)",
-                                  help_text="e.g., '约3小时（含休息时间）'")
+    # Arabic translation fields
+    title_ar = models.CharField(max_length=200, blank=True, verbose_name="Title (Arabic)", 
+                               help_text="Arabic translation of the event title")
+    composer_ar = models.CharField(max_length=100, blank=True, verbose_name="Composer (Arabic)",
+                                  help_text="Arabic translation of composer name")
+    about_content_ar = models.TextField(blank=True, verbose_name="About Content (Arabic)",
+                                       help_text="Arabic translation of the about content")
+    language_ar = models.CharField(max_length=100, blank=True, verbose_name="Language (Arabic)",
+                                  help_text="e.g., 'العرض باللغة الأصلية مع ترجمة عربية'")
+    conductor_ar = models.CharField(max_length=100, blank=True, verbose_name="Conductor (Arabic)",
+                                   help_text="Arabic translation of conductor name")
+    director_ar = models.CharField(max_length=100, blank=True, verbose_name="Director (Arabic)",
+                                  help_text="Arabic translation of director name")
+    cast_content_ar = models.TextField(blank=True, verbose_name="Cast Content (Arabic)",
+                                      help_text="Arabic translation of cast information")
+    duration_ar = models.CharField(max_length=50, blank=True, verbose_name="Duration (Arabic)",
+                                  help_text="e.g., 'حوالي 3 ساعات (مع الاستراحة)'")
     
     image = models.ImageField(upload_to='events/', blank=True, null=True)
     is_active = models.BooleanField(default=True)
@@ -156,43 +156,43 @@ class Event(models.Model):
     
     # Helper methods for language-aware content
     def get_title(self, language='en'):
-        if language == 'zh' and self.title_zh:
-            return self.title_zh
+        if language == 'ar' and self.title_ar:
+            return self.title_ar
         return self.title
     
     def get_composer(self, language='en'):
-        if language == 'zh' and self.composer_zh:
-            return self.composer_zh
+        if language == 'ar' and self.composer_ar:
+            return self.composer_ar
         return self.composer
     
     def get_about_content(self, language='en'):
-        if language == 'zh' and self.about_content_zh:
-            return self.about_content_zh
+        if language == 'ar' and self.about_content_ar:
+            return self.about_content_ar
         return self.about_content
     
     def get_language(self, language='en'):
-        if language == 'zh' and self.language_zh:
-            return self.language_zh
+        if language == 'ar' and self.language_ar:
+            return self.language_ar
         return self.language
     
     def get_conductor(self, language='en'):
-        if language == 'zh' and self.conductor_zh:
-            return self.conductor_zh
+        if language == 'ar' and self.conductor_ar:
+            return self.conductor_ar
         return self.conductor
     
     def get_director(self, language='en'):
-        if language == 'zh' and self.director_zh:
-            return self.director_zh
+        if language == 'ar' and self.director_ar:
+            return self.director_ar
         return self.director
     
     def get_cast_content(self, language='en'):
-        if language == 'zh' and self.cast_content_zh:
-            return self.cast_content_zh
+        if language == 'ar' and self.cast_content_ar:
+            return self.cast_content_ar
         return self.cast_content
     
     def get_duration(self, language='en'):
-        if language == 'zh' and self.duration_zh:
-            return self.duration_zh
+        if language == 'ar' and self.duration_ar:
+            return self.duration_ar
         return self.duration
     
     def save(self, *args, **kwargs):
@@ -308,17 +308,17 @@ class SponsorsPageContent(models.Model):
         help_text="Introduction text explaining the theater's relationship with sponsors"
     )
     
-    # Chinese content
-    sponsors_title_zh = models.CharField(
+    # Arabic content
+    sponsors_title_ar = models.CharField(
         max_length=200, 
-        default="我们尊贵的赞助商",
-        verbose_name="Sponsors Title (Chinese)",
-        help_text="Main title displayed at the top of the Chinese sponsors page"
+        default="رعاتنا المحترمون",
+        verbose_name="Sponsors Title (Arabic)",
+        help_text="Main title displayed at the top of the Arabic sponsors page"
     )
-    sponsors_intro_zh = models.TextField(
-        default="我们剧院自豪地感谢赞助商的慷慨支持。他们对艺术的承诺使我们能够延续卓越传统，并与来自世界各地的观众分享歌剧的魅力。",
-        verbose_name="Sponsors Introduction (Chinese)",
-        help_text="Introduction text for Chinese sponsors page"
+    sponsors_intro_ar = models.TextField(
+        default="يفتخر مسرحنا بالاعتراف بالدعم السخي من رعاتنا. التزامهم بالفنون يمكننا من مواصلة تقليد التميز ومشاركة سحر الأوبرا مع الجماهير من جميع أنحاء العالم.",
+        verbose_name="Sponsors Introduction (Arabic)",
+        help_text="Introduction text for Arabic sponsors page"
     )
     
     updated_at = models.DateTimeField(auto_now=True)
@@ -344,8 +344,8 @@ class SponsorsPageContent(models.Model):
             defaults={
                 'sponsors_title_en': 'Our Esteemed Sponsors',
                 'sponsors_intro_en': 'Our theater is proud to acknowledge the generous support of our sponsors. Their commitment to the arts enables us to continue our tradition of excellence and share the magic of opera with audiences from around the world.',
-                'sponsors_title_zh': '我们尊贵的赞助商',
-                'sponsors_intro_zh': '我们剧院自豪地感谢赞助商的慷慨支持。他们对艺术的承诺使我们能够延续卓越传统，并与来自世界各地的观众分享歌剧的魅力。'
+                'sponsors_title_ar': 'رعاتنا المحترمون',
+                'sponsors_intro_ar': 'يفتخر مسرحنا بالاعتراف بالدعم السخي من رعاتنا. التزامهم بالفنون يمكننا من مواصلة تقليد التميز ومشاركة سحر الأوبرا مع الجماهير من جميع أنحاء العالم.'
             }
         )
         return content
