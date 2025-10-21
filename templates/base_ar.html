@@ -1,9 +1,9 @@
 {% load cms_tags menu_tags sekizai_tags %}
 {% load static %}
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="ar" dir="rtl">
 <head>
-    <title>{% block title %}剧院显示系统{% endblock title %}</title>
+    <title>{% block title %}نظام عرض المسرح{% endblock title %}</title>
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="{% static 'css/font-awesome/all.min.css' %}">
     <!-- Removed Google Fonts reference -->
@@ -23,9 +23,10 @@
             width: 1024px;
             height: 600px; 
             color: #fff;
-            font-family: "Microsoft YaHei", "SimHei", Arial, sans-serif;
+            font-family: "Tahoma", "Arial Unicode MS", Arial, sans-serif;
             line-height: 1.6;
             overflow: hidden;
+            direction: rtl;
         }
 
         /* Define standard content wrapper */
@@ -125,12 +126,12 @@
         {% block content %}{% endblock content %}
         
         <!-- Back Navigation Icon -->
-        <a href="/home_zh/" class="home-nav">
+        <a href="/home_ar/" class="home-nav">
             <div class="back-icon">
                 &#x2B05;
             </div>
         </a>
-        <a href="/greetings_zh/" class="greetings-nav">
+        <a href="/greetings_ar/" class="greetings-nav">
             <div class="greetings-icon">
                 🏠
             </div>    

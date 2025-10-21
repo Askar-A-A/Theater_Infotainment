@@ -1,9 +1,9 @@
-{% extends "base_zh.html" %}
+{% extends "base_ar.html" %}
 {% load cms_tags %}
 {% load static %}
 
 {% block title %}
-    谢谢 - {% placeholder "theater_name" or %}歌剧院{% endplaceholder %}
+    شكراً لكم - {% placeholder "theater_name" or %}دار الأوبرا{% endplaceholder %}
 {% endblock %}
 
 {% block wrapper_style %}
@@ -141,18 +141,18 @@
 <div class="subscription-container">
     <div class="subscription-content-box">
         <h1 class="subscription-title">
-            {% placeholder "email_subscribe_thank_you_title_zh" or %}谢谢！{% endplaceholder %}
+            {% placeholder "email_subscribe_thank_you_title_ar" or %}شكراً لكم!{% endplaceholder %}
         </h1>
         
         <div class="divider"></div>
         
         <p class="subscription-message">
-            {% placeholder "email_subscribe_thank_you_message_zh" or %}
-                感谢您订阅我们的新闻通讯！您将收到关于我们即将到来的活动和演出的更新。
+            {% placeholder "email_subscribe_thank_you_message_ar" or %}
+                شكراً لكم على الاشتراك في نشرتنا الإخبارية! ستتلقون تحديثات حول فعالياتنا وعروضنا القادمة.
             {% endplaceholder %}
         </p>
         
-        <a href="/home_zh/" class="home-button">返回主页</a>
+        <a href="/home_ar/" class="home-button">العودة للصفحة الرئيسية</a>
     </div>
 </div>
 {% endblock %}

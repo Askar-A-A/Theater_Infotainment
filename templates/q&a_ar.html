@@ -1,9 +1,9 @@
-{% extends "base_zh.html" %}
+{% extends "base_ar.html" %}
 {% load cms_tags %}
 {% load static %}
 
 {% block title %}
-    {% placeholder "qa_page_title" or %}常见问题 - {% placeholder "theater_name" or %}歌剧院{% endplaceholder %}{% endplaceholder %}
+    {% placeholder "qa_page_title" or %}الأسئلة الشائعة - {% placeholder "theater_name" or %}دار الأوبرا{% endplaceholder %}{% endplaceholder %}
 {% endblock %}
 
 {% block extra_css %}
@@ -206,13 +206,13 @@
 {% block content %}
 <div class="qa-container" id="qa-container">
     <!-- Scroll Indicators -->
-    <div class="scroll-indicator bottom visible" id="scroll-down">↕<span>滚动</span></div>
+    <div class="scroll-indicator bottom visible" id="scroll-down">↕<span>تمرير</span></div>
     
     <!-- Fade overlays for better visual indication -->
     <div class="scroll-fade top" id="fade-top"></div>
     <div class="scroll-fade bottom" id="fade-bottom"></div>
     
-    <h1 class="page-title">{% placeholder "faq_heading" or %}常见问题{% endplaceholder %}</h1>
+    <h1 class="page-title">{% placeholder "faq_heading" or %}الأسئلة الشائعة{% endplaceholder %}</h1>
     <div class="qa-list">
         <!-- Questions Managed through CMS -->
         {% placeholder "additional_questions" or %}
@@ -277,9 +277,9 @@ addLoadEvent(function() {
     var questions = document.getElementsByClassName('question');
     
     // DEBUG: Add WebView debugging for Q&A content
-    console.log('QA_DEBUG: Found ' + questions.length + ' questions');
+    console.log('QA_AR_DEBUG: Found ' + questions.length + ' questions');
     var qaItems = document.getElementsByClassName('qa-item');
-    console.log('QA_DEBUG: Found ' + qaItems.length + ' qa-items');
+    console.log('QA_AR_DEBUG: Found ' + qaItems.length + ' qa-items');
     
     // Force visibility for WebView compatibility
     for (var k = 0; k < qaItems.length; k++) {

@@ -1,9 +1,9 @@
-{% extends "base_zh.html" %}
+{% extends "base_ar.html" %}
 {% load cms_tags %}
 {% load static %}
 
 {% block title %}
-    {% placeholder "event_detail_title" or %}{{ event_title_zh }} - {% placeholder "theater_name" or %}歌剧院{% endplaceholder %}{% endplaceholder %}
+    {% placeholder "event_detail_title" or %}{{ event_title_ar }} - {% placeholder "theater_name" or %}دار الأوبرا{% endplaceholder %}{% endplaceholder %}
 {% endblock %}
 
 {% block wrapper_style %}
@@ -393,7 +393,7 @@
 {% block content %}
 <div class="event-detail-container" id="event-detail-container">
     <!-- Only bottom indicator -->
-    <div class="scroll-indicator bottom visible" id="scroll-down">↕<span>滚动</span></div>
+    <div class="scroll-indicator bottom visible" id="scroll-down">↕<span>تمرير</span></div>
     
     <!-- Fade overlays for better visual indication -->
     <div class="scroll-fade top" id="fade-top"></div>
@@ -402,10 +402,10 @@
     <div class="event-header">
         <div class="event-title-section">
             <h1 class="event-title">
-                {{ event_title_zh }}
+                {{ event_title_ar }}
             </h1>
             <div class="event-composer">
-                {{ event_composer_zh }}
+                {{ event_composer_ar }}
             </div>
             <div class="event-dates">
                 {{ event.date_range_display }}
@@ -414,7 +414,7 @@
         <div class="event-image-section">
             <div class="event-image-container">
                 {% if event.image %}
-                    <img src="{{ event.image.url }}" alt="{{ event_title_zh }}">
+                    <img src="{{ event.image.url }}" alt="{{ event_title_ar }}">
                 {% endif %}
             </div>
         </div>
@@ -423,46 +423,46 @@
     <!-- Event Content -->
     <div class="event-content">
         <div class="event-description-section">
-            <h2>关于演出</h2>
+            <h2>حول العرض</h2>
             <div class="event-description">
-                {{ event_about_zh|safe }}
+                {{ event_about_ar|safe }}
                 
                 {% placeholder "event_additional_description" or %}{% endplaceholder %}
             </div>
             
-            <a href="/events_zh/" class="back-button">← 返回演出列表</a>
+            <a href="/events_ar/" class="back-button">← العودة لقائمة العروض</a>
         </div>
         
         <div class="event-sidebar">
             <div class="event-info-item">
-                <div class="info-label">演出时长</div>
-                <div class="info-value">{{ event_duration_zh|default:"约3小时（含休息时间）" }}</div>
+                <div class="info-label">مدة العرض</div>
+                <div class="info-value">{{ event_duration_ar|default:"حوالي 3 ساعات (مع الاستراحة)" }}</div>
             </div>
             
             <div class="event-info-item">
-                <div class="info-label">演出语言</div>
-                <div class="info-value">{{ event_language_zh|default:"原语言演出，配中文字幕" }}</div>
+                <div class="info-label">لغة العرض</div>
+                <div class="info-value">{{ event_language_ar|default:"العرض باللغة الأصلية مع ترجمة عربية" }}</div>
             </div>
             
             <div class="event-info-item">
-                <div class="info-label">指挥</div>
-                <div class="info-value">{{ event_conductor_zh|default:"待公布" }}</div>
+                <div class="info-label">قائد الأوركسترا</div>
+                <div class="info-value">{{ event_conductor_ar|default:"سيتم الإعلان عنه" }}</div>
             </div>
             
             <div class="event-info-item">
-                <div class="info-label">导演</div>
-                <div class="info-value">{{ event_director_zh|default:"待公布" }}</div>
+                <div class="info-label">المخرج</div>
+                <div class="info-value">{{ event_director_ar|default:"سيتم الإعلان عنه" }}</div>
             </div>
             
             <div class="event-info-item">
-                <div class="info-label">主要演员</div>
+                <div class="info-label">الممثلون الرئيسيون</div>
                 <div class="cast-content">
-                    {% if event_cast_zh %}
-                        {{ event_cast_zh|safe }}
+                    {% if event_cast_ar %}
+                        {{ event_cast_ar|safe }}
                     {% else %}
                         <div class="cast-member">
-                            <div class="character-name">主角</div>
-                            <div class="actor-name">待公布</div>
+                            <div class="character-name">الدور الرئيسي</div>
+                            <div class="actor-name">سيتم الإعلان عنه</div>
                         </div>
                     {% endif %}
                 </div>

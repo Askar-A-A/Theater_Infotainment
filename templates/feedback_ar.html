@@ -1,9 +1,9 @@
-{% extends "base_zh.html" %}
+{% extends "base_ar.html" %}
 {% load cms_tags %}
 {% load static %}
 
 {% block title %}
-    反馈 - {% placeholder "theater_name" or %}歌剧院{% endplaceholder %}
+    التعليقات - {% placeholder "theater_name" or %}دار الأوبرا{% endplaceholder %}
 {% endblock %}
 
 {% block wrapper_style %}
@@ -296,15 +296,15 @@
 <div class="feedback-container">
     <div class="feedback-content-box">
         <h1 class="feedback-title">
-            {% placeholder "feedback_page_title" or %}分享您的反馈{% endplaceholder %}
+            {% placeholder "feedback_page_title" or %}شاركوا تعليقاتكم{% endplaceholder %}
         </h1>
         
         <div class="divider"></div>
         
         <div class="feedback-intro">
             {% placeholder "feedback_page_subtitle" or %}
-                我们重视您的意见，致力于提供最佳的歌剧体验。
-                请为您的体验评分 - 额外评论是可选的。
+                نقدر آراءكم ونلتزم بتقديم أفضل تجربة أوبرا.
+                يرجى تقييم تجربتكم - التعليقات الإضافية اختيارية.
             {% endplaceholder %}
         </div>
         
@@ -314,9 +314,9 @@
             
             <!-- Name field -->
             <div class="form-group">
-                <label for="name" class="form-label">姓名</label>
+                <label for="name" class="form-label">الاسم</label>
                 <input type="text" id="name" name="name" class="form-control" 
-                       placeholder="可选" 
+                       placeholder="اختياري" 
                        value="{{ request.session.feedback_data.name|default:'' }}">
                 {% if request.session.feedback_errors.name %}
                     <div class="error-message">
@@ -327,7 +327,7 @@
             
             <!-- Rating field -->
             <div class="form-group">
-                <label class="form-label">您的评分</label>
+                <label class="form-label">تقييمكم</label>
                 <div class="rating-container">
                     <span class="star" data-rating="1">⭐</span>
                     <span class="star" data-rating="2">⭐</span>
@@ -347,9 +347,9 @@
             
             <!-- Comments field -->
             <div class="form-group">
-                <label for="comments" class="form-label">您的反馈 <span style="color: rgba(255, 255, 255, 0.6); font-weight: normal;">(可选)</span></label>
+                <label for="comments" class="form-label">تعليقاتكم <span style="color: rgba(255, 255, 255, 0.6); font-weight: normal;">(اختياري)</span></label>
                 <textarea id="comments" name="comments" class="form-control" 
-                          placeholder="请分享您的想法、建议或体验... (可选)">{{ request.session.feedback_data.comments|default:'' }}</textarea>
+                          placeholder="يرجى مشاركة أفكاركم واقتراحاتكم أو تجربتكم... (اختياري)">{{ request.session.feedback_data.comments|default:'' }}</textarea>
                 {% if request.session.feedback_errors.comments %}
                     <div class="error-message">
                         {{ request.session.feedback_errors.comments }}
@@ -358,7 +358,7 @@
             </div>
             
             <!-- Submit button -->
-            <button type="submit" class="submit-button">提交反馈</button>
+            <button type="submit" class="submit-button">إرسال التعليقات</button>
         </form>
     </div>
 </div>
@@ -373,8 +373,8 @@
         var isWarningVisible = {% if request.session.feedback_warning %}true{% else %}false{% endif %};
         
         // Debug logging for WebView troubleshooting
-        console.log('FEEDBACK_ZH: Server says warning:', isWarningVisible);
-        console.log('FEEDBACK_ZH: Warning element exists:', !!warningMessage);
+        console.log('FEEDBACK_AR: Server says warning:', isWarningVisible);
+        console.log('FEEDBACK_AR: Warning element exists:', !!warningMessage);
         
         // Always force display if server-side flags are set (most reliable for WebView)
         {% if request.session.feedback_warning %}
@@ -382,7 +382,7 @@
             warningMessage.style.display = 'block';
             warningMessage.style.visibility = 'visible';
             warningMessage.innerHTML = '{{ request.session.feedback_warning|escapejs }}';
-            console.log('FEEDBACK_ZH: Warning message force displayed');
+            console.log('FEEDBACK_AR: Warning message force displayed');
         }
         isWarningVisible = true;
         {% endif %}
@@ -408,16 +408,16 @@
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState === 4) {
                         if (xhr.status === 200) {
-                            console.log('FEEDBACK_ZH: Messages cleared successfully');
+                            console.log('FEEDBACK_AR: Messages cleared successfully');
                         } else {
-                            console.log('FEEDBACK_ZH: Failed to clear messages, but continuing');
+                            console.log('FEEDBACK_AR: Failed to clear messages, but continuing');
                         }
                     }
                 };
                 
                 xhr.send('');
             } catch (error) {
-                console.log('FEEDBACK_ZH: Error clearing messages:', error);
+                console.log('FEEDBACK_AR: Error clearing messages:', error);
             }
         }, 12000); // Clear after 12 seconds
         

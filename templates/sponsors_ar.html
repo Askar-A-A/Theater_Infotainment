@@ -2,11 +2,11 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>{% placeholder "sponsors_page_title" or %}我们的赞助商 - 歌剧院{% endplaceholder %}</title>
+    <title>{% placeholder "sponsors_page_title" or %}رعاتنا - دار الأوبرا{% endplaceholder %}</title>
     <link rel="stylesheet" href="{% static 'css/font-awesome/all.min.css' %}">
     {% render_block "css" %}
 <style>
@@ -24,9 +24,10 @@
         height: 600px; 
         max-height: 100%;
         color: #fff;
-        font-family: Arial, sans-serif;
+        font-family: "Tahoma", "Arial Unicode MS", Arial, sans-serif;
         line-height: 1.6;
         overflow: hidden;
+        direction: rtl;
     }
 
     /* Content wrapper - Fixed for 1024x600 */
@@ -234,7 +235,7 @@
     addLoadEvent(function() {
         // No dynamic sizing needed - all sponsors are same size for equal treatment
         // This ensures no sponsor appears more prominent than others
-        console.log('赞助商页面已加载 - 所有赞助商显示相同大小以确保平等待遇');
+        console.log('تم تحميل صفحة الرعاة - جميع الرعاة يظهرون بنفس الحجم لضمان المعاملة العادلة');
     });
 </script>
 </head>
@@ -245,12 +246,12 @@
 
         
         <div class="sponsors-container">
-            <h1 class="sponsors-title">{{ sponsors_content.sponsors_title_zh }}</h1>
+            <h1 class="sponsors-title">{{ sponsors_content.sponsors_title_ar }}</h1>
             
             <div class="divider"></div>
             
             <div class="sponsors-intro">
-                {{ sponsors_content.sponsors_intro_zh }}
+                {{ sponsors_content.sponsors_intro_ar }}
             </div>
             
             <!-- Side-by-side sponsor sections -->
@@ -260,7 +261,7 @@
                 <div class="sponsor-box">
                     <div class="sponsor-box-title">
                         <span style="color: #d4af37; font-size: 1.5rem; margin-right: 0.6rem; vertical-align: middle;">📅</span>
-                        <span>季度赞助商</span>
+                        <span>الرعاة الموسميون</span>
                     </div>
                     <div class="sponsors-grid">
                         {% for sponsor in seasonal_sponsors %}
@@ -283,7 +284,7 @@
                 <div class="sponsor-box">
                     <div class="sponsor-box-title">
                         <span style="color: #d4af37; font-size: 1.5rem; margin-right: 0.6rem; vertical-align: middle;">🎭</span>
-                        <span>{{ event.title }} 的赞助商</span>
+                        <span>رعاة {{ event.title }}</span>
                     </div>
                     <div class="sponsors-grid">
                         {% for sponsor in event_sponsors %}
@@ -303,13 +304,13 @@
             </div>
             
             <!-- Original enter button - hidden via CSS -->
-            <a href="/home_zh/" class="enter-button">
-                {% placeholder "enter_button_text" or %}进入网站{% endplaceholder %}
+            <a href="/home_ar/" class="enter-button">
+                {% placeholder "enter_button_text" or %}دخول الموقع{% endplaceholder %}
             </a>
         </div>
         
         <!-- Forward Navigation Icon -->
-        <a href="/home_zh/" class="forward-nav">
+        <a href="/home_ar/" class="forward-nav">
             <div class="forward-icon">
                 &#x27A1;
             </div>
