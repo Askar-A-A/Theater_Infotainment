@@ -1,6 +1,7 @@
 {% extends "base_ar.html" %}
 {% load cms_tags %}
 {% load static %}
+{% load theater_tags %}
 
 {% block title %}
     العروض والمسرحيات - {% placeholder "theater_name" or %}اسم المسرح{% endplaceholder %}
@@ -455,11 +456,11 @@
                                 {% endif %}
                             </div>
                             <div class="event-content">
-                                <h2 class="event-title">{{ event_data.title_ar }}</h2>
-                                <div class="event-composer">{{ event_data.composer_ar }}</div>
+                                <h2 class="event-title">{{ event_data.title_ar|default:event_data.event.title }}</h2>
+                                <div class="event-composer">{{ event_data.composer_ar|default:event_data.event.composer }}</div>
                             </div>
                             <div class="event-date-section">
-                                <div class="event-date">{{ event_data.event.date_range_display }}</div>
+                                <div class="event-date">{{ event_data.event.date_range_display|translate_to_arabic|default:"التواريخ ستعلن قريباً" }}</div>
                             </div>
                         </a>
                     </div>

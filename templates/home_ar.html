@@ -1,7 +1,9 @@
+
 {% extends "base_ar.html" %}
 {% load cms_tags %}
 {% load static %}
 {% load menu_tags %}
+{% load theater_tags %}
 
 {% block title %}
     {% placeholder "home_page_title" or %}دار الأوبرا{% endplaceholder %}
@@ -292,17 +294,17 @@
                         <img src="{{ current_event.image.url }}" alt="{{ current_event.title }}">
                     </div>
                     <div class="menu-title">
-                        {{ current_event.title }}
-                        {% if current_event.composer %}
-                            <span class="event-composer">{{ current_event.composer }}</span>
+                        {{ current_event.title_ar|default:current_event.title }}
+                        {% if current_event.composer_ar or current_event.composer %}
+                            <span class="event-composer">{{ current_event.composer_ar|default:current_event.composer }}</span>
                         {% endif %}
                     </div>
                 {% elif current_event %}
                     <div class="today-fallback">🎭</div>
                     <div class="menu-title">
-                        {{ current_event.title }}
-                        {% if current_event.composer %}
-                            <span class="event-composer">{{ current_event.composer }}</span>
+                        {{ current_event.title_ar|default:current_event.title }}
+                        {% if current_event.composer_ar or current_event.composer %}
+                            <span class="event-composer">{{ current_event.composer_ar|default:current_event.composer }}</span>
                         {% endif %}
                     </div>
                 {% else %}

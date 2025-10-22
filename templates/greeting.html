@@ -280,83 +280,6 @@
             display: none;
         }
 
-        /* User status display - matches greeting page styling */
-        .user-status-display {
-            position: absolute;
-            top: 120px; /* Moved down below the forward arrow */
-            right: 1.5rem;
-            z-index: 20;
-            max-width: 320px;
-        }
-
-        .user-info-frame {
-            border: 2px solid rgba(212, 175, 55, 0.4);
-            padding: 1rem;
-            border-radius: 10px;
-            background-color: rgba(0, 0, 0, 0.85);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-        }
-
-        .user-status-title {
-            font-family: Georgia, serif;
-            font-size: 1.2rem;
-            color: #d4af37;
-            margin-bottom: 0.8rem;
-            text-align: center;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-            font-weight: 600;
-        }
-
-        .user-details {
-            display: block;
-            margin-bottom: 0; /* Removed bottom margin since no logout button */
-        }
-
-        .user-field {
-            display: block;
-            color: #ffffff;
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-            font-family: Arial, sans-serif;
-            line-height: 1.4;
-        }
-
-        .user-field:last-child {
-            margin-bottom: 0; /* No margin on last field */
-        }
-
-        .user-field i {
-            color: #d4af37;
-            width: 18px;
-            margin-right: 8px;
-            text-align: center;
-        }
-
-        .user-field strong {
-            color: #cccccc;
-            margin-right: 6px;
-        }
-
-        /* Responsive adjustments for smaller screens */
-        @media (max-width: 1100px) {
-            .user-status-display {
-                max-width: 280px;
-                top: 0.5rem;
-                right: 1rem;
-            }
-            
-            .user-info-frame {
-                padding: 0.8rem;
-            }
-            
-            .user-status-title {
-                font-size: 1.1rem;
-            }
-            
-            .user-field {
-                font-size: 0.85rem;
-            }
-        }
     </style>
     {% render_block "js" %}
     <script>
@@ -416,32 +339,7 @@
     
     <div class="content-wrapper">
         <div class="greeting-container">
-            <!-- User login status display - matches page styling -->
-            {% if user.is_authenticated %}
-            <div class="user-status-display">
-                <div class="user-info-frame">
-                    <div class="user-info-content">
-                        <h3 class="user-status-title">System Administrator</h3>
-                        <div class="user-details">
-                            <span class="user-field">
-                                <i class="fas fa-user"></i>
-                                <strong>User:</strong> {{ user.username }}
-                            </span>
-                            <span class="user-field">
-                                <i class="fas fa-shield-alt"></i>
-                                <strong>Role:</strong> {% if user.is_staff %}Staff Member{% else %}Regular User{% endif %}
-                            </span>
-                            <span class="user-field">
-                                <i class="fas fa-clock"></i>
-                                <strong>Status:</strong> Authenticated
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% endif %}
-            
-            <!-- Language selector - simplified to just switch to Chinese -->
+            <!-- Language selector - simplified to just switch to Arabic -->
             <div class="language-selector">
                 <div class="language-dropdown" id="languageDropdown">
                     <div class="language-selected">

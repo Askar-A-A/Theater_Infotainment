@@ -1,6 +1,7 @@
 {% extends "base_ar.html" %}
 {% load cms_tags %}
 {% load static %}
+{% load theater_tags %}
 
 {% block title %}
     {% placeholder "event_detail_title" or %}{{ event_title_ar }} - {% placeholder "theater_name" or %}دار الأوبرا{% endplaceholder %}{% endplaceholder %}
@@ -408,7 +409,7 @@
                 {{ event_composer_ar }}
             </div>
             <div class="event-dates">
-                {{ event.date_range_display }}
+                {{ event.date_range_display|translate_to_arabic|default:"التواريخ ستعلن قريباً" }}
             </div>
         </div>
         <div class="event-image-section">
