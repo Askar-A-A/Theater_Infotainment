@@ -283,7 +283,7 @@
                 <div class="sponsor-box">
                     <div class="sponsor-box-title">
                         <span style="color: #d4af37; font-size: 1.5rem; margin-right: 0.6rem; vertical-align: middle;">🎭</span>
-                        <span>رعاة {{ event.title }}</span>
+                        <span>رعاة {{ event.title_ar|default:event.title }}</span>
                     </div>
                     <div class="sponsors-grid">
                         {% for sponsor in event_sponsors %}
