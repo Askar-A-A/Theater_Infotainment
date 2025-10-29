@@ -7,6 +7,7 @@ from django.conf.urls.i18n import i18n_patterns
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('theater_cms.urls')),  # Include your app's URLs at root level
+    path('payments/', include('theater_payments.urls')),  # Add payments URLs
     path('', include('cms.urls')),  # CMS URLs - moved outside i18n_patterns
 ]
 

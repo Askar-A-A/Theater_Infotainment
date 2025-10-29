@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'mptt',
     'djangocms_picture',
     'theater_cms',
+    'theater_payments',
 ]
 
 MIDDLEWARE = [

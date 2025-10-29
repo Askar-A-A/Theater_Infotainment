@@ -1,0 +1,185 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{% block title %}Theater Payments{% endblock title %}</title>
+    <meta name="viewport" content="width=1024, height=600, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="{% static 'css/font-awesome/all.min.css' %}">
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Payment system - Fixed 1024x600 configuration */
+        html, body {
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 1024px !important;
+            height: 600px !important;
+            max-width: 1024px !important;
+            max-height: 600px !important;
+            min-width: 1024px !important;
+            min-height: 600px !important;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: rgb(59, 57, 57) !important;
+            overflow: hidden !important;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        /* Payment content wrapper */
+        .content-wrapper {
+            width: 1024px !important;
+            height: 600px !important;
+            max-width: 1024px !important;
+            max-height: 600px !important;
+            position: relative;
+            background: rgb(59, 57, 57) !important;
+            overflow: hidden !important;
+        }
+
+        /* Navigation Icons for Payment System */
+        .home-nav {
+            position: fixed;
+            right: 20px;
+            top: 20px;
+            z-index: 1000;
+            text-decoration: none !important;
+            color: #ffffff !important;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 12px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .home-nav:hover {
+            background: rgba(0, 0, 0, 0.8);
+            transform: scale(1.1);
+        }
+
+        .home-nav:visited,
+        .home-nav:link,
+        .home-nav:active {
+            text-decoration: none !important;
+            color: #ffffff !important;
+        }
+
+        /* Main content area */
+        .main-content {
+            width: 1024px;
+            height: 600px;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Payment specific styles */
+        .payment-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Button styles */
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #2196F3;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #1976D2;
+            transform: translateY(-2px);
+        }
+
+        .btn-warning {
+            background: #FF9800;
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: #F57C00;
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: #f44336;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #d32f2f;
+            transform: translateY(-2px);
+        }
+
+        /* Fixed 1024x600 layout - no responsive needed */
+
+        /* Custom scrollbar for better visibility */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(212, 175, 55, 0.7);
+            border-radius: 6px;
+            border: 2px solid rgba(59, 57, 57, 0.3);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(212, 175, 55, 0.9);
+        }
+
+        /* Ensure main content scrolls properly */
+        .main-content {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(212, 175, 55, 0.7) rgba(255, 255, 255, 0.1);
+        }
+
+        {% block extra_css %}{% endblock %}
+    </style>
+</head>
+<body>
+    {% block content %}{% endblock content %}
+    
+    <script>
+        // Common payment system JavaScript
+        {% block extra_js %}{% endblock %}
+    </script>
+</body>
+</html>

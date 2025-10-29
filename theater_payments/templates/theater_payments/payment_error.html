@@ -1,0 +1,31 @@
+{% extends "theater_payments/base_payment.html" %}
+
+{% block title %}Payment Error - Theater Payments{% endblock title %}
+
+{% block content %}
+<div class="content-wrapper">
+    <!-- Navigation Icons -->
+    <a href="/home/" class="home-nav">
+        <i class="fas fa-home" style="font-size: 24px;"></i>
+    </a>
+
+    <div class="main-content" style="display: flex; justify-content: center; align-items: center; min-height: 500px;">
+        <div class="payment-card error-container" style="border: 2px solid #f44336; text-align: center; max-width: 500px;">
+            <div style="font-size: 64px; margin-bottom: 20px;">⚠️</div>
+            <h1 style="color: #f44336; margin-bottom: 20px; font-size: 2rem;">Payment Error</h1>
+            <p style="font-size: 18px; margin-bottom: 30px; line-height: 1.6;">{{ error }}</p>
+            
+            <div class="action-buttons">
+                <button onclick="window.location.href='{% url 'theater_payments:menu' %}'" 
+                        class="btn btn-primary" style="margin: 0 10px;">
+                    Back to Menu
+                </button>
+                <button onclick="window.location.href='/home/'" 
+                        class="btn btn-secondary" style="margin: 0 10px;">
+                    Home
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

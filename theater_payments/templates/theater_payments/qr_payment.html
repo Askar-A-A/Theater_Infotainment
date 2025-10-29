@@ -1,0 +1,88 @@
+{% extends "theater_payments/base_payment.html" %}
+
+{% block title %}Payment - Theater Payments{% endblock title %}
+
+{% block content %}
+<div class="content-wrapper">
+    <!-- Navigation Icons -->
+    <a href="/home/" class="home-nav">
+        <i class="fas fa-home" style="font-size: 24px;"></i>
+    </a>
+
+    <div class="main-content" style="display: flex; justify-content: center; align-items: center; min-height: 500px;">
+        <div class="payment-card" style="text-align: center; max-width: 600px;">
+            <h1 style="margin-bottom: 30px; font-size: 2.5rem;">Scan to Pay</h1>
+            
+            <!-- QR Code Display -->
+            <div class="qr-code-container" style="background: white; padding: 20px; border-radius: 15px; margin: 30px 0; display: inline-block;">
+                <img src="data:image/png;base64,{{ qr_image_data }}" alt="QR Code" style="width: 200px; height: 200px;">
+            </div>
+            
+            <!-- Order Summary -->
+            <div class="order-summary" style="background: rgba(0,0,0,0.3); border-radius: 10px; padding: 20px; margin: 20px 0;">
+                <h3 style="margin-bottom: 15px;">Order Summary</h3>
+                {% for item in items %}
+                <div style="display: flex; justify-content: space-between; margin: 10px 0; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.2);">
+                    <span>{{ item.quantity }}x {{ item.menu_item.name }}</span>
+                    <span>${{ item.total_price }}</span>
+                </div>
+                {% endfor %}
+                <div style="display: flex; justify-content: space-between; margin-top: 15px; padding-top: 15px; border-top: 2px solid #4CAF50; font-weight: bold; font-size: 18px;">
+                    <span>Total:</span>
+                    <span>${{ payment_session.total_amount }}</span>
+                </div>
+            </div>
+            
+            <!-- Payment Instructions -->
+            <div class="payment-instructions" style="margin: 30px 0; font-size: 16px; line-height: 1.6;">
+                <p style="margin-bottom: 15px;">📱 <strong>How to pay:</strong></p>
+                <ol style="text-align: left; max-width: 400px; margin: 0 auto;">
+                    <li>Open your banking app or payment app</li>
+                    <li>Select "Scan QR Code" or "Pay by QR"</li>
+                    <li>Point your camera at the QR code above</li>
+                    <li>Confirm the payment amount</li>
+                    <li>Complete the payment</li>
+                </ol>
+            </div>
+            
+            <!-- Session Info -->
+            <div class="session-info" style="font-size: 14px; color: #ccc; margin-top: 30px;">
+                <p>Session ID: {{ payment_session.session_id }}</p>
+                <p>Expires: {{ payment_session.expires_at|date:"M d, Y H:i" }}</p>
+            </div>
+            
+            <!-- Action Buttons -->
+            <div class="action-buttons" style="margin-top: 30px;">
+                <button onclick="window.location.href='{% url 'theater_payments:menu' %}'" 
+                        class="btn btn-secondary" style="margin: 0 10px;">
+                    Back to Menu
+                </button>
+                <button onclick="window.print()" 
+                        class="btn btn-warning" style="margin: 0 10px;">
+                    Print Receipt
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Auto-refresh page every 30 seconds to check payment status (for future enhancement)
+setTimeout(function() {
+    // For MVP, we'll just show the QR code
+    // In future versions, we can add payment status checking
+}, 30000);
+
+// Print-specific styles
+const printStyles = `
+<style media="print">
+    body * { visibility: hidden; }
+    .payment-container, .payment-container * { visibility: visible; }
+    .payment-container { position: absolute; left: 0; top: 0; width: 100%; }
+    .action-buttons { display: none !important; }
+    .home-nav { display: none !important; }
+</style>
+`;
+document.head.insertAdjacentHTML('beforeend', printStyles);
+</script>
+{% endblock content %}

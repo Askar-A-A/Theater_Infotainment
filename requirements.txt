@@ -17,3 +17,4 @@ djangocms-text-ckeditor==5.1.7
 easy-thumbnails==2.10
 pillow==11.1.0
 python-dotenv==1.0.1
+qrcode==8.0
